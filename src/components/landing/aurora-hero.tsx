@@ -62,17 +62,25 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
           }}
         />
 
-        {/* Subtle Grid Lines Overlay */}
+        {/* Subtle Grid Lines Overlay (Dark & Light optimized) */}
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.07] dark:block hidden"
           style={{
             backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
           }}
         />
+        <div
+          className="absolute inset-0 opacity-[0.05] block dark:hidden"
+          style={{
+            backgroundImage: `linear-gradient(to right, #0f172a 1px, transparent 1px), linear-gradient(to bottom, #0f172a 1px, transparent 1px)`,
+            backgroundSize: "60px 60px",
+          }}
+        />
 
         {/* Bottom Fade Mask */}
-        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#07080c] via-[#07080c]/80 to-transparent" />
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#07080c] via-[#07080c]/80 to-transparent dark:block hidden" />
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/90 to-transparent block dark:hidden" />
       </div>
 
       {/* Main Hero Content */}

@@ -149,6 +149,7 @@ body {
 /* ========================================================
    LIGHT MODE PALETTE TRANSFORMATION
    Institutional Luxury Commodity Brokerage Light Theme
+   (Executive Institutional Grade — LME, Bloomberg & Stripe standard)
    ======================================================== */
 
 html.light {
@@ -159,18 +160,18 @@ html.light {
   --gvce-surface: #ffffff;
   --gvce-border: #e2e8f0;
   --gvce-border-hover: #cbd5e1;
-  --gvce-text-primary: #0f172a;
-  --gvce-text-secondary: #334155;
-  --gvce-text-muted: #64748b;
+  --gvce-text-primary: #090d16;
+  --gvce-text-secondary: #1e293b;
+  --gvce-text-muted: #475569;
 }
 
 html.light,
 html.light body {
   background-color: #f8fafc !important;
-  color: #0f172a !important;
+  color: #090d16 !important;
 }
 
-/* Light Mode Background Overrides */
+/* Light Mode Background Overrides — Rich Multi-Layer Elevation */
 html.light [class*="bg-[#050609]"],
 html.light [class*="bg-[#07080c]"],
 html.light [class*="bg-[#08090e]"],
@@ -180,6 +181,7 @@ html.light [class*="bg-[#0c0e15]"] {
   background-color: #f8fafc !important;
 }
 
+/* Primary Content Cards & Bento Panels */
 html.light [class*="bg-[#0c0e17]"],
 html.light [class*="bg-[#0d0f17]"],
 html.light [class*="bg-[#0e1017]"],
@@ -187,9 +189,18 @@ html.light [class*="bg-[#0e1018]"],
 html.light [class*="bg-[#0e101a]"],
 html.light [class*="bg-[#0e111a]"] {
   background-color: #ffffff !important;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 6px 16px -2px rgba(15, 23, 42, 0.05), 0 0 0 1px rgba(226, 232, 240, 0.6) !important;
 }
 
+/* Subtle Interactive Card Hover State */
+html.light [class*="bg-[#0c0e17]"]:hover,
+html.light [class*="bg-[#0d0f17]"]:hover,
+html.light [class*="bg-[#0e1017]"]:hover {
+  box-shadow: 0 12px 28px -4px rgba(184, 115, 51, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(184, 115, 51, 0.3) !important;
+}
+
+/* Sub-Panels, Inner Spec Boxes & Subtle Backdrops */
 html.light [class*="bg-[#0f1118]"],
 html.light [class*="bg-[#0f111a]"],
 html.light [class*="bg-[#0f121d]"],
@@ -197,12 +208,13 @@ html.light [class*="bg-[#10121d]"],
 html.light [class*="bg-[#10131f]"],
 html.light [class*="bg-[#121420]"],
 html.light [class*="bg-[#121422]"],
-html.light [class*="bg-[#121522]"],
 html.light [class*="bg-[#121524]"],
 html.light [class*="bg-[#131625]"] {
-  background-color: #f1f5f9 !important;
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
 }
 
+/* Neutral Chips & Inner Icon Containers */
 html.light [class*="bg-[#141724]"],
 html.light [class*="bg-[#141726]"],
 html.light [class*="bg-[#141829]"],
@@ -210,14 +222,14 @@ html.light [class*="bg-[#161824]"],
 html.light [class*="bg-[#161826]"],
 html.light [class*="bg-[#161929]"],
 html.light [class*="bg-[#161a29]"],
-html.light [class*="bg-[#17141f]"],
-html.light [class*="bg-[#171a2c]"],
 html.light [class*="bg-[#181a27]"],
-html.light [class*="bg-[#181d2e]"] {
-  background-color: #e2e8f0 !important;
+html.light [class*="bg-[#181d2e]"],
+html.light [class*="bg-[#1b1f2e]"] {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
 }
 
-/* Light Mode Borders */
+/* Light Mode Borders & Dividers */
 html.light [class*="border-[#161824]"],
 html.light [class*="border-[#181b29]"],
 html.light [class*="border-[#1a1d2e]"],
@@ -244,11 +256,14 @@ html.light [class*="divide-[#1f2233]"] > :not([hidden]) ~ :not([hidden]) {
    High-contrast, deeply legible dark slate shades
    ======================================================== */
 
+html.light h1,
+html.light h2,
+html.light h3,
 html.light .text-white,
 html.light .text-\[\#f8fafc\],
 html.light [class*="text-[#f8fafc]"],
 html.light .text-gray-100 {
-  color: #0f172a !important;
+  color: #090d16 !important;
 }
 
 html.light .text-gray-200 {
@@ -267,18 +282,24 @@ html.light .text-gray-500 {
   color: #64748b !important;
 }
 
-/* Step numerals & subtle badges */
+/* Step numerals & architectural watermarks (Clean silver in light mode) */
 html.light .text-\[\#23273b\] {
-  color: #94a3b8 !important;
+  color: #cbd5e1 !important;
+}
+html.light .group:hover .text-\[\#23273b\],
+html.light .text-\[\#23273b\]:hover {
+  color: #b87333 !important;
 }
 
 /* Deep readable accent colors in Light Mode */
 html.light .text-\[\#d4956b\] {
   color: #b87333 !important;
+  font-weight: 600;
 }
 
 html.light .text-\[\#c9a961\] {
   color: #9a7628 !important;
+  font-weight: 600;
 }
 
 html.light .text-sky-400 {
@@ -298,8 +319,89 @@ html.light .text-yellow-400 {
 }
 
 /* ========================================================
+   SECTOR TABS & CATALOG BENTO PILLS (Vibrant Light Styling)
+   ======================================================== */
+
+/* Inactive Sector Tabs Pills in Light Mode */
+html.light #sectors button:not([class*="border-[#b87333]"]) {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+html.light #sectors button:not([class*="border-[#b87333]"]):hover {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #090d16 !important;
+}
+
+/* Active Sector Tab Pill in Light Mode */
+html.light #sectors button[class*="border-[#b87333]"],
+html.light button[class*="border-[#b87333]"].bg-\[\#181a27\],
+html.light button[class*="border-[#b87333]"] {
+  background-color: #ffffff !important;
+  border-color: #b87333 !important;
+  color: #090d16 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px -2px rgba(184, 115, 51, 0.22), 0 0 0 1px #b87333 !important;
+}
+
+/* ========================================================
+   DEAL ROOM SIMULATOR & ENCRYPTED CHAT (Institutional Terminal Look)
+   ======================================================== */
+
+html.light [class*="bg-[#090a10]"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.08), 0 1px 3px 0 rgba(15, 23, 42, 0.04) !important;
+}
+
+html.light [class*="bg-[#0e1018]"] {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light [class*="bg-[#0c0e15]"] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Buyer Message Bubble (Refined Blue Tint) */
+html.light [class*="bg-[#121522]"] {
+  background-color: #f0f7ff !important;
+  border-color: #bae6fd !important;
+  box-shadow: 0 1px 4px rgba(14, 165, 233, 0.08) !important;
+}
+html.light [class*="bg-[#121522]"] p {
+  color: #0c4a6e !important;
+  font-weight: 500 !important;
+}
+
+/* Supplier Message Bubble (Warm Bronze / Copper Tint) */
+html.light [class*="bg-[#17141f]"] {
+  background-color: #fffbf7 !important;
+  border-color: #fed7aa !important;
+  box-shadow: 0 1px 4px rgba(184, 115, 51, 0.08) !important;
+}
+html.light [class*="bg-[#17141f]"] p {
+  color: #451a03 !important;
+  font-weight: 500 !important;
+}
+
+/* Broker Anti-Leak / Sanctions Safety Notice */
+html.light [class*="bg-[#121420]"][class*="border-[#b87333]"],
+html.light [class*="bg-[#121420]"].border-\[\#b87333\]\/30 {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+  color: #92400e !important;
+}
+html.light [class*="bg-[#121420]"][class*="border-[#b87333]"] strong,
+html.light [class*="bg-[#121420]"].border-\[\#b87333\]\/30 strong {
+  color: #78350f !important;
+}
+
+/* ========================================================
    COLORED CTA BUTTONS & BADGES (PRESERVE WHITE TEXT)
-   Targeted strictly to buttons/links/badges to prevent leaks
    ======================================================== */
 
 html.light button.bg-gradient-to-r,
@@ -329,22 +431,51 @@ html.light .bg-blue-600 span {
   color: #ffffff !important;
 }
 
-/* Active sector pill in sectors bento */
-html.light button[class*="border-[#b87333]"].bg-\[\#181a27\],
-html.light button[class*="border-[#b87333]"] {
+/* CTA Buttons Luxury Light Mode Shadow */
+html.light a.bg-gradient-to-r,
+html.light button.bg-gradient-to-r {
+  box-shadow: 0 4px 14px rgba(184, 115, 51, 0.32), 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+}
+html.light a.bg-gradient-to-r:hover,
+html.light button.bg-gradient-to-r:hover {
+  box-shadow: 0 8px 24px rgba(184, 115, 51, 0.42), 0 3px 6px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Trust Eyebrow Badges */
+html.light .inline-flex.rounded-full[class*="bg-[#121420]"] {
+  background-color: #ffffff !important;
+  border-color: rgba(184, 115, 51, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(184, 115, 51, 0.1) !important;
+}
+
+/* Popular / Recommended Pricing Tier */
+html.light [class*="bg-[#0e111a]"][class*="border-[#b87333]"] {
   background-color: #ffffff !important;
   border-color: #b87333 !important;
-  color: #0f172a !important;
+  box-shadow: 0 20px 40px -10px rgba(184, 115, 51, 0.22), 0 0 0 1px #b87333 !important;
+}
+
+/* Secondary Button in Hero */
+html.light a[href="#sectors"] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+}
+html.light a[href="#sectors"]:hover {
+  background-color: #f8fafc !important;
+  border-color: #b87333 !important;
+  color: #090d16 !important;
 }
 
 /* Light Mode Hover States */
 html.light [class*="hover:text-white"]:hover {
-  color: #0f172a !important;
+  color: #090d16 !important;
 }
 html.light [class*="hover:bg-[#161824]"]:hover,
 html.light [class*="hover:bg-[#0f1118]"]:hover,
 html.light [class*="hover:bg-[#141724]"]:hover {
-  background-color: #e2e8f0 !important;
+  background-color: #f1f5f9 !important;
 }
 
 /* Light Mode Inputs, Selects & Textareas */
@@ -352,7 +483,7 @@ html.light input:not([type="checkbox"]):not([type="radio"]),
 html.light select,
 html.light textarea {
   background-color: #ffffff !important;
-  color: #0f172a !important;
+  color: #090d16 !important;
   border-color: #cbd5e1 !important;
 }
 
@@ -363,13 +494,16 @@ html.light textarea::placeholder {
 
 /* Light Mode Headers, Footers and Glass Panels */
 html.light header {
-  background-color: rgba(255, 255, 255, 0.94) !important;
-  border-color: #e2e8f0 !important;
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-color: rgba(226, 232, 240, 0.85) !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04) !important;
 }
 
 html.light header nav {
-  background-color: rgba(241, 245, 249, 0.95) !important;
-  border-color: #cbd5e1 !important;
+  background-color: rgba(241, 245, 249, 0.85) !important;
+  border-color: rgba(203, 213, 225, 0.6) !important;
 }
 
 html.light footer {
@@ -378,20 +512,41 @@ html.light footer {
 }
 
 html.light .glass-panel {
-  background: rgba(255, 255, 255, 0.90) !important;
-  border-color: #e2e8f0 !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-color: rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05) !important;
 }
 
 html.light .glass-panel-elevated {
   background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
   border-color: rgba(184, 115, 51, 0.35) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 12px 32px -4px rgba(184, 115, 51, 0.14), 0 2px 8px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.light .copper-gradient-text {
-  background: linear-gradient(135deg, #0f172a 0%, #b87333 55%, #8b5a2b 100%) !important;
+  background: linear-gradient(135deg, #090d16 0%, #b87333 45%, #92400e 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 1px 1px rgba(184, 115, 51, 0.15));
+}
+
+/* Floating Theme Switcher in Light Mode */
+html.light aside[aria-label="Theme Switcher"] button {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04) !important;
+}
+html.light aside[aria-label="Theme Switcher"] button:hover {
+  border-color: #b87333 !important;
+  box-shadow: 0 14px 30px -4px rgba(184, 115, 51, 0.24) !important;
+}
+html.light aside[aria-label="Theme Switcher"] span {
+  color: #090d16 !important;
+  font-weight: 600 !important;
 }
 
 /* Custom Scrollbars in Light Mode */
