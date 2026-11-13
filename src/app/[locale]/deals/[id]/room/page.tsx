@@ -219,8 +219,8 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
 
       {/* Main Deal Room Work Area */}
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1">
-        {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 border-b border-[#1f2233] pb-4 mb-6">
+        {/* Navigation Tabs - Swipeable on mobile viewports */}
+        <div className="flex items-center gap-2 border-b border-[#1f2233] pb-4 mb-6 overflow-x-auto no-scrollbar w-full">
           <button
             onClick={() => setActiveTab("chat")}
             className={cn(
