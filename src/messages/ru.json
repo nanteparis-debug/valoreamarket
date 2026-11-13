@@ -13,7 +13,15 @@
     "signIn": "Войти",
     "getStarted": "Начать",
     "dashboard": "Панель",
-    "language": "Язык"
+    "language": "Язык",
+    "brokerDesk": "Брокерский стол",
+    "compliance": "Комплаенс",
+    "security": "Безопасность",
+    "dealRooms": "Торговые комнаты",
+    "billing": "Подписки и счета",
+    "verifiedBadge": "Верифицировано",
+    "siteSubtitle": "Глобальная верифицированная товарно-сырьевая биржа",
+    "referenceCurrency": "Базовая валюта"
   },
   "hero": {
     "badge": "Нам доверяют компании из 50+ стран",
@@ -26,7 +34,13 @@
       "deals": "Deals Completed",
       "companies": "Verified Companies",
       "volume": "Trade Volume"
-    }
+    },
+    "subhead": "Международный B2B-брокеридж физических сырьевых товаров",
+    "asvsBadge": "Сертифицировано OWASP ASVS",
+    "pillarKyc": "Многоэтапная верификация KYC/KYB",
+    "pillarDealRooms": "Шифрованные торговые комнаты WebRTC",
+    "pillarDocs": "Документы с водяными знаками и цензурированием",
+    "pillarLangs": "8 языков и расчеты в долларах США"
   },
   "sectors": {
     "title": "Секторы сырьевых товаров",
@@ -40,7 +54,16 @@
     "sugar": "Сахар",
     "viewAll": "View All Products",
     "buyRequest": "Buy Request",
-    "supplyOffer": "Supply Offer"
+    "supplyOffer": "Supply Offer",
+    "badge": "7 верифицированных сырьевых секторов",
+    "catalogCode": "Код каталога:",
+    "usdDenominated": "Номинировано в USD",
+    "delivery": "Поставка: FOB / CIF / CFR",
+    "verifiedSpecs": "Верифицированные характеристики",
+    "benchmarkSpecs": "Базовые спецификации:",
+    "coaInspection": "Сертификаты COA и инспекция SGS готовы",
+    "usdPerTon": "USD / Метрическая тонна",
+    "supportedIncoterms": "Поддерживаемые Incoterms:"
   },
   "howItWorks": {
     "title": "How It Works",
@@ -60,7 +83,8 @@
     "step4": {
       "title": "Agree & Trade",
       "description": "Sign agreements, finalize terms, and proceed to settlement through your banking channels."
-    }
+    },
+    "phaseOf": "Этап {num} из 04"
   },
   "features": {
     "title": "Why GVCE",
@@ -88,7 +112,25 @@
     "commissions": {
       "title": "Transparent Commissions",
       "description": "Clear commission structure tied to deal milestones with full audit trail and invoicing."
-    }
+    },
+    "eyebrow": "Банковские стандарты безопасности",
+    "step1Badge": "Этап 01",
+    "step1Title": "Представитель KYC",
+    "step1Desc": "Биометрическая и правовая идентификация",
+    "step2Badge": "Этап 02",
+    "step2Title": "Компания KYB",
+    "step2Desc": "Реестры и проверка бенефициаров (UBO)",
+    "step3Badge": "Этап 03",
+    "step3Title": "Права на груз",
+    "step3Desc": "Подтверждение поставки и санкционный скрининг",
+    "passkeyBadge": "Ключи доступа FIDO2 WebAuthn",
+    "passkeySub": "Защита от фишинга",
+    "dealRoomsBadge": "E2EE Аудио и видеосвязь",
+    "dealRoomsSub": "Под контролем брокера",
+    "watermarkSample": "Безопасный просмотр: [ПОКУПАТЕЛЬ-ALPHA-89] • Сессия: [2026-11-13]",
+    "ownerConsent": "Требуется согласие владельца для скачивания",
+    "antiCopy": "Защита от копирования и печати",
+    "originalEncrypted": "Оригинал остается зашифрованным"
   },
   "pricing": {
     "title": "Subscription Plans",
@@ -137,7 +179,12 @@
       ]
     },
     "registerFree": "Регистрация бесплатно",
-    "getStarted": "Начать работу"
+    "getStarted": "Начать работу",
+    "usdHeader": "Номинировано в USD • Корпоративный уровень",
+    "note": "Подписка тарифицируется в USD • Брокерская комиссия начисляется отдельно",
+    "savePercent": "Скидка 20%",
+    "recommended": "Рекомендуемый",
+    "usdCurrency": "USD"
   },
   "footer": {
     "description": "Trusted international brokerage connecting verified buyers and suppliers of commodities worldwide.",
@@ -153,7 +200,17 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved."
+    "rights": "© {year} GVCE. All rights reserved.",
+    "platformCatalog": "Каталог сырьевых товаров",
+    "platformBroker": "Командный центр брокера",
+    "platformCompliance": "Проверка KYC/KYB",
+    "platformBilling": "Подписки и счета",
+    "platformSecurity": "Ключи доступа и активные сессии",
+    "legalNcnda": "Соглашение о необходе и конфиденциальности (NCNDA)",
+    "legalBrokerage": "Брокеридж и бескастодиальные расчеты за груз",
+    "badgeUsd": "Базовые расчеты в USD",
+    "badgeBanks": "Независимые банковские каналы",
+    "badgeVerified": "Верифицированный международный брокеридж"
   },
   "auth": {
     "signIn": "Sign In",
@@ -315,5 +372,30 @@
     "noResults": "No results found",
     "showMore": "Show More",
     "showLess": "Show Less"
+  },
+  "dealRoomPreview": {
+    "badge": "Интерактивная демонстрация сделки",
+    "title": "Анонимная торговая комната под контролем брокера",
+    "subtitle": "Полная конфиденциальность без утечек контактов. E2EE-видео LiveKit, водяные знаки и арбитраж.",
+    "roomReference": "КОМНАТА",
+    "e2eeActive": "ШИФРОВАНИЕ E2EE АКТИВНО",
+    "dealSummary": "50 000 т Дизель EN 590 10PPM • CIF Роттердам • USD 740/т",
+    "buyerAlias": "Покупатель-Alpha-24",
+    "supplierAlias": "Поставщик-Nordic-77",
+    "brokerLead": "Ведущий брокер (GVCE)",
+    "tabChat": "Зашифрованный чат",
+    "tabDocuments": "Защищенные документы",
+    "tabAgreements": "Договоры и этапы",
+    "sampleMessage1": "Требуется поставка CIF Роттердам с 10 по 20 декабря. Гарантируете ли вы инспекцию SGS в порту погрузки?",
+    "sampleMessage2": "Да, инспекция SGS в порту погрузки полностью подтверждена. Паспорт качества загружен во вкладку Документы.",
+    "leakNotice": "Зашифрованная сессия — все сообщения проверяются для предотвращения утечки прямых контактов.",
+    "enterRoomBtn": "Войти в торговую комнату",
+    "doc1Title": "Сертификат качества (COA) - Партия НПЗ #441",
+    "doc1Type": "Сертификат соответствия",
+    "doc2Title": "Независимый инспекционный отчет SGS",
+    "doc2Type": "Сертифицированный отчет",
+    "previewBtn": "Просмотр с водяным знаком",
+    "agreementTitle": "Договор купли-продажи дизельного топлива EN590 и график комиссий",
+    "agreementTerms": "Поставщик: Поставщик-Nordic-77 | Покупатель: Покупатель-Alpha-24 | Объем: 50 000 т | Цена: USD 740/т CIF Роттердам | Расчеты: 100% аккредитив через коммерческие банки | Брокерская комиссия: 1,25% USD."
   }
 }

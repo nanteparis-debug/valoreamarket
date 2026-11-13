@@ -2,13 +2,12 @@
 
 import React, { useState, useMemo } from "react";
 import { useRouter } from "@/i18n/routing";
-import { COMMODITY_SECTORS } from "@/lib/constants";
+import { useParams } from "next/navigation";
+import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { COMMODITY_SECTORS, getSectorTitle, getCommodityItemName } from "@/lib/constants";
 import {
   Search,
-  Filter,
-  ArrowRight,
   ArrowLeft,
-  FileCheck2,
   ShieldCheck,
   Fuel,
   Gauge,
@@ -44,6 +43,10 @@ const MULTILANG_KEYWORDS: Record<string, string[]> = {
 
 export default function CatalogPage() {
   const router = useRouter();
+  const params = useParams();
+  const locale = (params?.locale as string) || "en";
+  const t = getSubpageTranslations(locale);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSector, setSelectedSector] = useState("all");
 
@@ -91,13 +94,13 @@ export default function CatalogPage() {
           className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4 rtl:rotate-180" />
-          <span>Back to Home</span>
+          <span>{t.catalog.backHome}</span>
         </button>
 
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#b87333] animate-pulse" />
           <span className="text-xs font-mono text-gray-300">
-            GVCE Global Verified Commodity Catalog (7 Sectors)
+            {t.catalog.topBanner}
           </span>
         </div>
       </header>
@@ -109,56 +112,56 @@ export default function CatalogPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#23273b] text-xs font-mono text-[#d4956b] mb-2">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>International Trade Specifications</span>
+              <span>{t.catalog.badge}</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Commodity Catalog & Specifications
+              {t.catalog.title}
             </h1>
             <p className="text-xs sm:text-sm text-gray-400 mt-1">
-              Explore standardized grades, delivery parameters, and inspection requirements across global commodities.
+              {t.catalog.subtitle}
             </p>
           </div>
 
           {/* Search Box */}
           <div className="w-full md:w-80 relative">
-            <Search className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 rtl:left-auto rtl:right-3.5" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search (e.g. Brent, EN590, Urea, ديزل, كبريت)..."
-              className="w-full bg-[#121422] border border-[#23273b] rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#b87333]"
+              placeholder={t.catalog.searchPlaceholder}
+              className="w-full bg-[#121422] border border-[#23273b] rounded-xl pl-10 pr-4 rtl:pr-10 rtl:pl-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#b87333]"
             />
           </div>
         </div>
 
         {/* Sector Quick Filters */}
-        <div className="w-full overflow-x-auto pb-2 no-scrollbar">
-          <div className="flex items-center gap-2 min-w-max px-1">
+        <div className="w-full overflow-x-auto pb-2 no-scrollbar" dir="inherit">
+          <div className="inline-flex items-center gap-2 min-w-full px-4 sm:px-6 justify-start lg:justify-center">
             <button
               onClick={() => setSelectedSector("all")}
               className={cn(
-                "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border",
+                "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border shrink-0",
                 selectedSector === "all"
                   ? "bg-[#b87333] border-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
                   : "bg-[#0c0e17] border-[#23273b] text-gray-400 hover:text-white"
               )}
             >
-              All Sectors ({COMMODITY_SECTORS.reduce((acc, s) => acc + s.items.length, 0)})
+              {t.catalog.allSectors} ({COMMODITY_SECTORS.reduce((acc, s) => acc + s.items.length, 0)})
             </button>
             {COMMODITY_SECTORS.map((s) => (
               <button
                 key={s.id}
                 onClick={() => setSelectedSector(s.id)}
                 className={cn(
-                  "px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all border flex items-center gap-2",
+                  "px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all border flex items-center gap-2 shrink-0",
                   selectedSector === s.id
                     ? "bg-[#181d2e] border-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
                     : "bg-[#0c0e17] border-[#23273b] text-gray-400 hover:text-white"
                 )}
               >
                 {SECTOR_ICONS[s.icon]}
-                <span>{s.slug.replace(/-/g, " ").toUpperCase()}</span>
+                <span>{getSectorTitle(s.titleKey, locale)}</span>
               </button>
             ))}
           </div>
@@ -177,26 +180,26 @@ export default function CatalogPage() {
                     {SECTOR_ICONS[item.sectorIcon]}
                   </div>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    SGS Inspected
+                    {t.catalog.sgsInspected}
                   </span>
                 </div>
 
                 <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[#d4956b] transition-colors">
-                  {item.name}
+                  {getCommodityItemName(item.name, locale)}
                 </h3>
                 <p className="text-xs text-gray-400 mt-2 font-mono leading-relaxed">
-                  <span className="text-gray-500 block mb-0.5">Benchmark Specifications:</span>
+                  <span className="text-gray-500 block mb-0.5">{t.catalog.benchmarkSpecs}</span>
                   {item.specs}
                 </p>
 
                 <div className="mt-4 pt-3 border-t border-[#1a1d2e] space-y-1.5 text-xs text-gray-400">
                   <div className="flex items-center justify-between font-mono">
-                    <span className="text-gray-500">Pricing Basis:</span>
-                    <span className="text-white font-semibold">USD / Metric Ton</span>
+                    <span className="text-gray-500">{t.catalog.pricingBasis}</span>
+                    <span className="text-white font-semibold">{t.catalog.pricingValue}</span>
                   </div>
                   <div className="flex items-center justify-between font-mono">
-                    <span className="text-gray-500">Incoterms:</span>
-                    <span className="text-[#d4956b]">FOB / CIF / CFR</span>
+                    <span className="text-gray-500">{t.catalog.incoterms}</span>
+                    <span className="text-[#d4956b]">{t.catalog.incotermsValue}</span>
                   </div>
                 </div>
               </div>
@@ -213,7 +216,7 @@ export default function CatalogPage() {
                   }
                   className="py-2.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white text-xs font-semibold shadow-md shadow-[#b87333]/15 transition-all text-center"
                 >
-                  Buy Request
+                  {t.catalog.buyRequest}
                 </button>
 
                 <button
@@ -226,7 +229,7 @@ export default function CatalogPage() {
                   }
                   className="py-2.5 rounded-xl bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b] hover:border-[#b87333]/40 text-xs font-semibold transition-all text-center"
                 >
-                  Supply Offer
+                  {t.catalog.supplyOffer}
                 </button>
               </div>
             </div>
@@ -236,7 +239,7 @@ export default function CatalogPage() {
         {filteredMaterials.length === 0 && (
           <div className="text-center py-16 p-8 rounded-3xl bg-[#0c0e17] border border-[#23273b]">
             <p className="text-gray-400 text-sm">
-              No commodities matched your search query &quot;{searchQuery}&quot;.
+              {t.catalog.noResults} &quot;{searchQuery}&quot;.
             </p>
             <button
               onClick={() => {
@@ -245,14 +248,14 @@ export default function CatalogPage() {
               }}
               className="mt-3 text-xs text-[#d4956b] underline font-mono"
             >
-              Reset filters
+              {t.catalog.resetFilters}
             </button>
           </div>
         )}
       </main>
 
       <footer className="py-6 border-t border-[#1f2233] text-center text-xs text-gray-500 font-mono">
-        GVCE International Commodities Catalog • Benchmark Reference USD
+        {t.catalog.footerText}
       </footer>
     </div>
   );

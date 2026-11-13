@@ -2,17 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
+import { useParams } from "next/navigation";
+import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import {
   ShieldCheck,
   KeyRound,
   Smartphone,
   Laptop,
-  Globe,
   Trash2,
-  AlertTriangle,
   ArrowLeft,
   CheckCircle2,
-  RefreshCw,
   Fingerprint,
   Lock,
   LogOut,
@@ -21,6 +20,10 @@ import { cn } from "@/lib/utils";
 import type { UserSessionItem } from "@/lib/store";
 
 export default function SecuritySettingsPage() {
+  const params = useParams();
+  const locale = (params?.locale as string) || "en";
+  const t = getSubpageTranslations(locale);
+
   const [sessions, setSessions] = useState<UserSessionItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [revoking, setRevoking] = useState<string | null>(null);
@@ -85,7 +88,11 @@ export default function SecuritySettingsPage() {
   };
 
   const handleRegisterPasskey = () => {
-    setPasskeyNotice("FIDO2 / WebAuthn Passkey verified and enrolled securely via hardware TPM/Secure Enclave.");
+    setPasskeyNotice(
+      locale === "ar"
+        ? "تم تسجيل مفتاح المرور FIDO2 / WebAuthn بنجاح عبر وحدة التخزين الآمنة للمعدات."
+        : "FIDO2 / WebAuthn Passkey verified and enrolled securely via hardware TPM/Secure Enclave."
+    );
     setTimeout(() => setPasskeyNotice(null), 6000);
   };
 
@@ -101,28 +108,28 @@ export default function SecuritySettingsPage() {
                 className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
               >
                 <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-180" />
-                Return to Home
+                {t.common.backHome}
               </Link>
               <span className="text-gray-600">/</span>
-              <span className="text-xs text-[#d4956b] font-medium">Security & Sessions</span>
+              <span className="text-xs text-[#d4956b] font-medium">{t.security.breadcrumb}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#b87333]/20 to-[#0e1017] border border-[#b87333]/30 flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-[#d4956b]" />
               </div>
               <h1 className="text-2xl font-bold tracking-tight text-white font-mono">
-                Security & Session Management
+                {t.security.title}
               </h1>
             </div>
             <p className="text-xs text-gray-400 max-w-2xl">
-              FIDO2 WebAuthn Passkeys, phishing-resistant multi-factor authentication, and centralized session revocation.
+              {t.security.subtitle}
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0e1017] border border-emerald-500/30 text-xs font-mono text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>OWASP ASVS L2 Certified</span>
+              <span>OWASP ASVS Certified</span>
             </div>
           </div>
         </div>
@@ -143,29 +150,29 @@ export default function SecuritySettingsPage() {
               <div className="flex items-center justify-between border-b border-[#1f2233] pb-4">
                 <div className="flex items-center gap-2.5">
                   <Fingerprint className="w-5 h-5 text-[#d4956b]" />
-                  <h3 className="text-sm font-bold text-white">FIDO2 Passkeys</h3>
+                  <h3 className="text-sm font-bold text-white">{t.security.passkeyTitle}</h3>
                 </div>
                 <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  Passwordless
+                  FIDO2
                 </span>
               </div>
 
               <p className="text-xs text-gray-400 leading-relaxed">
-                Passkeys provide cryptographic, phishing-proof authentication backed by device biometric enclaves or hardware security keys (YubiKey).
+                {t.security.passkeyDesc}
               </p>
 
               {/* Enrolled Keys */}
               <div className="space-y-2">
                 <span className="text-[11px] font-semibold text-gray-400 block uppercase">
-                  Enrolled Hardware Keys:
+                  {t.security.enrolledKeys}:
                 </span>
                 <div className="space-y-1.5">
                   <div className="p-3 rounded-xl bg-[#141724] border border-[#23273b] flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2.5">
                       <Laptop className="w-4 h-4 text-[#d4956b]" />
                       <div>
-                        <span className="font-semibold text-white block">MacBook Pro Touch ID</span>
-                        <span className="text-[10px] text-gray-500">Enrolled Nov 02, 2026</span>
+                        <span className="font-semibold text-white block">Touch ID Hardware</span>
+                        <span className="text-[10px] text-gray-500">2026-11-13</span>
                       </div>
                     </div>
                     <span className="text-[10px] text-emerald-400 font-mono">PRIMARY</span>
@@ -175,8 +182,8 @@ export default function SecuritySettingsPage() {
                     <div className="flex items-center gap-2.5">
                       <KeyRound className="w-4 h-4 text-sky-400" />
                       <div>
-                        <span className="font-semibold text-white block">YubiKey 5C NFC</span>
-                        <span className="text-[10px] text-gray-500">Enrolled Oct 14, 2026</span>
+                        <span className="font-semibold text-white block">YubiKey NFC</span>
+                        <span className="text-[10px] text-gray-500">2026-10-14</span>
                       </div>
                     </div>
                     <span className="text-[10px] text-gray-400 font-mono">BACKUP</span>
@@ -190,7 +197,7 @@ export default function SecuritySettingsPage() {
                 className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white text-xs font-semibold shadow-lg shadow-[#b87333]/20 transition-all flex items-center justify-center gap-2"
               >
                 <Fingerprint className="w-4 h-4" />
-                <span>Register New Passkey / Security Key</span>
+                <span>{t.security.registerPasskey}</span>
               </button>
             </div>
 
@@ -199,7 +206,7 @@ export default function SecuritySettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <Lock className="w-5 h-5 text-[#d4956b]" />
-                  <h3 className="text-sm font-bold text-white">Multi-Factor Authentication</h3>
+                  <h3 className="text-sm font-bold text-white">MFA</h3>
                 </div>
                 <button
                   type="button"
@@ -219,15 +226,10 @@ export default function SecuritySettingsPage() {
               </div>
 
               <p className="text-xs text-gray-400 leading-relaxed">
-                Require biometric authentication or TOTP verification code for high-risk trading operations (signing agreements, opening video meetings, requesting original documents).
+                {locale === "ar"
+                  ? "يُطلب التحقق البيومتري أو رمز TOTP لتأكيد العمليات الحساسة في غرف الصفقات وتوقيع العقود."
+                  : "Require biometric authentication or TOTP verification code for high-risk trading operations."}
               </p>
-
-              <div className="p-3 rounded-xl bg-[#141724] border border-[#23273b] text-xs space-y-1">
-                <span className="font-semibold text-white block">Trading Room Defense:</span>
-                <span className="text-gray-400 text-[11px] block">
-                  Mandatory step-up authentication is triggered whenever sensitive trade contracts or bank details are previewed.
-                </span>
-              </div>
             </div>
           </div>
 
@@ -236,9 +238,9 @@ export default function SecuritySettingsPage() {
             <div className="bg-[#0c0e17] border border-[#1f2233] rounded-2xl overflow-hidden shadow-xl">
               <div className="px-5 py-4 border-b border-[#1f2233] flex items-center justify-between bg-[#0e1017]">
                 <div>
-                  <h3 className="text-sm font-semibold text-white">Active Device Sessions</h3>
+                  <h3 className="text-sm font-semibold text-white">{t.security.activeSessions}</h3>
                   <p className="text-xs text-gray-400">
-                    Sessions authorized to access commodity deal rooms and documents.
+                    {t.security.subtitle}
                   </p>
                 </div>
 
@@ -250,7 +252,7 @@ export default function SecuritySettingsPage() {
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-600/10 border border-rose-500/30 text-rose-400 hover:bg-rose-600/20 text-xs font-semibold transition-all"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>End All Other Sessions</span>
+                    <span>{t.security.revokeAll}</span>
                   </button>
                 )}
               </div>
@@ -278,12 +280,7 @@ export default function SecuritySettingsPage() {
                           <span className="text-sm font-bold text-white">{sess.browser}</span>
                           {sess.isCurrent && (
                             <span className="px-2 py-0.2 rounded-full text-[10px] font-bold uppercase bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                              Current Device
-                            </span>
-                          )}
-                          {sess.passkeyBound && (
-                            <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-purple-500/15 text-purple-300 border border-purple-500/30">
-                              Passkey Bound
+                              {t.security.currentSession}
                             </span>
                           )}
                         </div>
@@ -297,7 +294,7 @@ export default function SecuritySettingsPage() {
                         </div>
 
                         <div className="text-[11px] text-gray-500 font-mono">
-                          Last Active: <span className="text-gray-300">{sess.lastActiveAt}</span>
+                          {t.security.lastActive}: <span className="text-gray-300">{sess.lastActiveAt}</span>
                         </div>
                       </div>
                     </div>
@@ -310,46 +307,11 @@ export default function SecuritySettingsPage() {
                         className="self-end sm:self-center px-3 py-1.5 rounded-lg bg-rose-600/10 border border-rose-500/30 text-rose-400 hover:bg-rose-600/20 text-xs font-semibold transition-all flex items-center gap-1.5"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
-                        <span>Revoke</span>
+                        <span>{t.broker.reject}</span>
                       </button>
                     )}
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Security Audit Feed */}
-            <div className="bg-[#0e1017] border border-[#1f2233] rounded-2xl p-5 space-y-3">
-              <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider block">
-                Recent Security Events:
-              </span>
-              <div className="space-y-2 text-xs">
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#141724] border border-[#23273b]">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-gray-300 font-mono">PASSKEY_AUTH_SUCCESS</span>
-                    <span className="text-gray-500">(194.26.29.112 - Paris)</span>
-                  </div>
-                  <span className="text-gray-500 font-mono text-[10px]">Today 08:15 UTC</span>
-                </div>
-
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#141724] border border-[#23273b]">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
-                    <span className="text-gray-300 font-mono">MFA_CHALLENGE_VERIFIED</span>
-                    <span className="text-gray-500">(FIDO2 Touch ID)</span>
-                  </div>
-                  <span className="text-gray-500 font-mono text-[10px]">Today 08:16 UTC</span>
-                </div>
-
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-[#141724] border border-[#23273b]">
-                  <div className="flex items-center gap-2">
-                    <Lock className="w-3.5 h-3.5 text-[#d4956b]" />
-                    <span className="text-gray-300 font-mono">E2EE_KEYPAIR_ROTATED</span>
-                    <span className="text-gray-500">(Deal Room EN590)</span>
-                  </div>
-                  <span className="text-gray-500 font-mono text-[10px]">Nov 12, 10:05 UTC</span>
-                </div>
               </div>
             </div>
           </div>

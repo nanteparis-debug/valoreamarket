@@ -24,6 +24,14 @@ interface NavbarProps {
     signIn: string;
     getStarted: string;
     language: string;
+    brokerDesk?: string;
+    compliance?: string;
+    security?: string;
+    dealRooms?: string;
+    billing?: string;
+    verifiedBadge?: string;
+    siteSubtitle?: string;
+    referenceCurrency?: string;
   };
 }
 
@@ -79,11 +87,11 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               <span className="text-xl font-bold tracking-wider text-white font-mono flex items-center gap-1.5">
                 GVCE
                 <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-[#b87333]/20 text-[#d4956b] border border-[#b87333]/30 font-sans font-semibold">
-                  Verified
+                  {translations.verifiedBadge || "Verified"}
                 </span>
               </span>
               <span className="text-[10px] text-gray-400 tracking-tight hidden sm:inline-block">
-                Global Verified Commodities Exchange
+                {translations.siteSubtitle || "Global Verified Commodities Exchange"}
               </span>
             </div>
           </Link>
@@ -100,13 +108,13 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               href="/broker"
               className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
             >
-              Broker Desk
+              {translations.brokerDesk || "Broker Desk"}
             </Link>
             <Link
               href="/compliance"
               className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
             >
-              Compliance
+              {translations.compliance || "Compliance"}
             </Link>
             <Link
               href="/billing"
@@ -118,7 +126,7 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               href="/settings/security"
               className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
             >
-              Security
+              {translations.security || "Security"}
             </Link>
           </nav>
 
@@ -128,7 +136,7 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#121420] border border-[#23273b] text-xs font-mono text-gray-300">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               <span className="font-semibold text-white">USD</span>
-              <span className="text-gray-500 text-[10px]">Reference</span>
+              <span className="text-gray-500 text-[10px]">{translations.referenceCurrency || "Reference"}</span>
             </div>
 
             {/* Language Selector Dropdown */}
@@ -239,35 +247,35 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              Deal Rooms (Live Demo)
+              {translations.dealRooms || "Deal Rooms"}
             </Link>
             <Link
               href="/broker"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              Broker Command Center
+              {translations.brokerDesk || "Broker Command Center"}
             </Link>
             <Link
               href="/compliance"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              Compliance & Verification
+              {translations.compliance || "Compliance & Verification"}
             </Link>
             <Link
               href="/billing"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              {translations.pricing} & Invoices
+              {translations.billing || translations.pricing}
             </Link>
             <Link
               href="/settings/security"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              Security & Active Sessions
+              {translations.security || "Security & Active Sessions"}
             </Link>
           </nav>
 

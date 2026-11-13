@@ -25,6 +25,12 @@ interface AuroraHeroProps {
       companies: string;
       volume: string;
     };
+    subhead?: string;
+    asvsBadge?: string;
+    pillarKyc?: string;
+    pillarDealRooms?: string;
+    pillarDocs?: string;
+    pillarLangs?: string;
   };
 }
 
@@ -77,16 +83,18 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
           <span className="text-xs sm:text-sm font-medium text-gray-200">
             {translations.badge}
           </span>
-          <span className="text-xs text-[#d4956b] font-mono hidden sm:inline-block">
-            • OWASP ASVS Verified
-          </span>
+          {translations.asvsBadge && (
+            <span className="text-xs text-[#d4956b] font-mono hidden sm:inline-block">
+              • {translations.asvsBadge}
+            </span>
+          )}
         </div>
 
         {/* Headline */}
         <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-4xl leading-[1.12]">
           <span className="block">{translations.title}</span>
           <span className="block mt-2 copper-gradient-text">
-            B2B Commodities Brokerage
+            {translations.subhead || "B2B Commodities Brokerage"}
           </span>
         </h1>
 
@@ -117,19 +125,19 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
         <div className="mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-gray-400">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f1118]/60 border border-[#23273b]">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>KYC & KYB Multi-Stage Verification</span>
+            <span>{translations.pillarKyc || "KYC & KYB Multi-Stage Verification"}</span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f1118]/60 border border-[#23273b]">
             <Video className="w-4 h-4 text-[#d4956b]" />
-            <span>Encrypted WebRTC Deal Rooms</span>
+            <span>{translations.pillarDealRooms || "Encrypted WebRTC Deal Rooms"}</span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f1118]/60 border border-[#23273b]">
             <FileCheck2 className="w-4 h-4 text-sky-400" />
-            <span>Watermarked Redacted Documents</span>
+            <span>{translations.pillarDocs || "Watermarked Redacted Documents"}</span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f1118]/60 border border-[#23273b]">
             <Globe2 className="w-4 h-4 text-purple-400" />
-            <span>8 Languages & USD Pricing</span>
+            <span>{translations.pillarLangs || "8 Languages & USD Pricing"}</span>
           </div>
         </div>
 

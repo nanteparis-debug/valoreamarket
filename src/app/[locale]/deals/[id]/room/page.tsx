@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect, useTransition } from "react";
 import { useRouter } from "@/i18n/routing";
+import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import {
-  ShieldCheck,
-  ShieldAlert,
   Lock,
   Video,
   Mic,
@@ -12,21 +11,17 @@ import {
   VideoOff,
   MessageSquare,
   FileText,
-  FileCheck2,
   CheckCircle2,
-  Clock,
   AlertTriangle,
   UserCheck,
   Send,
   Eye,
   Download,
-  XCircle,
-  FileKey2,
-  Share2,
   ArrowLeft,
   Info,
+  ShieldAlert,
 } from "lucide-react";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface DealRoomPageProps {
   params: Promise<{ locale: string; id: string }>;
@@ -44,6 +39,9 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
     });
   }, [params]);
 
+  const t = getSubpageTranslations(locale);
+  const isAr = locale === "ar";
+
   const [activeTab, setActiveTab] = useState<"chat" | "video" | "documents" | "agreements">("chat");
 
   // Chat State
@@ -52,8 +50,12 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
       id: "m-1",
       senderAlias: "Buyer-Alpha-24",
       senderRole: "buyer",
-      text: "We require confirmed delivery port CIF Rotterdam between Dec 10 and Dec 20. Can you guarantee SGS testing at loading?",
-      sanitizedText: "We require confirmed delivery port CIF Rotterdam between Dec 10 and Dec 20. Can you guarantee SGS testing at loading?",
+      text: isAr
+        ? "نطلب تأكيد ميناء التسليم CIF روتردام بين 10 و 20 ديسمبر. هل يمكنك ضمان فحص SGS عند الشحن؟"
+        : "We require confirmed delivery port CIF Rotterdam between Dec 10 and Dec 20. Can you guarantee SGS testing at loading?",
+      sanitizedText: isAr
+        ? "نطلب تأكيد ميناء التسليم CIF روتردام بين 10 و 20 ديسمبر. هل يمكنك ضمان فحص SGS عند الشحن؟"
+        : "We require confirmed delivery port CIF Rotterdam between Dec 10 and Dec 20. Can you guarantee SGS testing at loading?",
       contactViolation: false,
       timestamp: "14:02 UTC",
     },
@@ -61,8 +63,12 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
       id: "m-2",
       senderAlias: "Supplier-Nordic-77",
       senderRole: "supplier",
-      text: "Yes, SGS inspection at loading port is fully accepted. We have uploaded the redacted Certificate of Analysis to the Documents tab.",
-      sanitizedText: "Yes, SGS inspection at loading port is fully accepted. We have uploaded the redacted Certificate of Analysis to the Documents tab.",
+      text: isAr
+        ? "نعم، فحص SGS في ميناء الشحن مقبول بالكامل. لقد قمنا برفع شهادة التحليل المنقحة في قسم الوثائق."
+        : "Yes, SGS inspection at loading port is fully accepted. We have uploaded the redacted Certificate of Analysis to the Documents tab.",
+      sanitizedText: isAr
+        ? "نعم، فحص SGS في ميناء الشحن مقبول بالكامل. لقد قمنا برفع شهادة التحليل المنقحة في قسم الوثائق."
+        : "Yes, SGS inspection at loading port is fully accepted. We have uploaded the redacted Certificate of Analysis to the Documents tab.",
       contactViolation: false,
       timestamp: "14:05 UTC",
     },
@@ -70,17 +76,16 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
   const [inputMsg, setInputMsg] = useState("");
   const [isSending, startSendTransition] = useTransition();
 
-  // Video State (LiveKit simulation)
+  // Video State
   const [micEnabled, setMicEnabled] = useState(true);
   const [videoEnabled, setVideoEnabled] = useState(true);
   const [callActive, setCallActive] = useState(true);
-  const [e2eeVerified, setE2eeVerified] = useState(true);
 
   // Documents State
   const [docs, setDocs] = useState([
     {
       id: "doc-coa-1",
-      title: "Certificate of Analysis (COA) - Refinery Batch #441",
+      title: isAr ? "شهادة التحليل (COA) - دفعة مصفاة #441" : "Certificate of Analysis (COA) - Refinery Batch #441",
       type: "quality_certificate",
       fileSize: "2.4 MB PDF",
       isOriginalAuthorized: false,
@@ -88,7 +93,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
     },
     {
       id: "doc-sgs-1",
-      title: "SGS Independent Load Port Inspection Report",
+      title: isAr ? "تقرير فحص SGS المستقل بميناء الشحن" : "SGS Independent Load Port Inspection Report",
       type: "sgs_inspection",
       fileSize: "3.8 MB PDF",
       isOriginalAuthorized: false,
@@ -98,7 +103,6 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
   const [previewDocModal, setPreviewDocModal] = useState<string | null>(null);
   const [downloadNotice, setDownloadNotice] = useState<string | null>(null);
 
-  // Send message with real-time API sanitization
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputMsg.trim()) return;
@@ -128,7 +132,6 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
     });
   };
 
-  // Attempt original download
   const handleDownloadOriginal = async (docId: string) => {
     try {
       const res = await fetch(`/api/deals/${dealId}/documents/${docId}/download?original=true&orgId=org-france-energy`);
@@ -136,22 +139,25 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
 
       if (res.status === 403) {
         setDownloadNotice(
-          "Access Denied (403): The document owner has not yet approved the release of the unredacted original. Redacted preview remains authorized."
+          isAr
+            ? "تم رفض الوصول (403): لم يوافق مالك المستند بعد على تنزيل النسخة الأصلية غير المنقحة."
+            : "Access Denied (403): The document owner has not yet approved the release of the unredacted original."
         );
       } else if (data.success) {
         setDownloadNotice(
-          `Success: Authorized original token issued (${data.file.downloadToken}). Download initiated.`
+          isAr
+            ? `نجاح: تم إصدار رمز التنزيل المصرح (${data.file.downloadToken}). بدأ التنزيل.`
+            : `Success: Authorized original token issued (${data.file.downloadToken}). Download initiated.`
         );
         setDocs((prev) =>
           prev.map((d) => (d.id === docId ? { ...d, downloadCount: d.downloadCount + 1 } : d))
         );
       }
     } catch (err) {
-      setDownloadNotice("Network error during verification.");
+      setDownloadNotice(t.common.error);
     }
   };
 
-  // Toggle owner approval for demo test
   const handleToggleOwnerApproval = (docId: string) => {
     setDocs((prev) =>
       prev.map((d) =>
@@ -176,7 +182,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               <h1 className="text-sm font-bold text-white font-mono">
-                DEAL ROOM: GVCE-2026-EN590-410
+                {isAr ? "غرفة الصفقة: GVCE-2026-EN590-410" : "DEAL ROOM: GVCE-2026-EN590-410"}
               </h1>
               <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[10px] font-mono">
                 LIVEKIT E2EE
@@ -192,7 +198,9 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#121420] border border-[#23273b] text-xs">
             <span className="w-2 h-2 rounded-full bg-sky-400" />
-            <span className="text-gray-300 font-medium">You (Buyer-Alpha-24)</span>
+            <span className="text-gray-300 font-medium">
+              {isAr ? "أنت (Buyer-Alpha-24)" : "You (Buyer-Alpha-24)"}
+            </span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#121420] border border-[#23273b] text-xs">
             <span className="w-2 h-2 rounded-full bg-[#d4956b]" />
@@ -200,7 +208,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#b87333]/20 border border-[#b87333]/40 text-xs text-[#d4956b] font-semibold">
             <UserCheck className="w-3.5 h-3.5" />
-            <span>Broker Lead</span>
+            <span>{isAr ? "الوسيط المعتمد" : "Broker Lead"}</span>
           </div>
         </div>
       </header>
@@ -219,7 +227,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             )}
           >
             <MessageSquare className="w-4 h-4" />
-            <span>Secure Chat</span>
+            <span>{isAr ? "الدردشة الآمنة" : "Secure Chat"}</span>
           </button>
 
           <button
@@ -232,7 +240,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             )}
           >
             <Video className="w-4 h-4" />
-            <span>LiveKit E2EE Meeting</span>
+            <span>{isAr ? "اجتماع فيديو مشفر" : "LiveKit E2EE Meeting"}</span>
           </button>
 
           <button
@@ -245,7 +253,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             )}
           >
             <FileText className="w-4 h-4" />
-            <span>Watermarked Documents</span>
+            <span>{isAr ? "الوثائق المائية" : "Watermarked Documents"}</span>
             <span className="px-1.5 py-0.2 rounded-full bg-[#1b1f2e] text-[#d4956b] text-[10px]">
               {docs.length}
             </span>
@@ -261,7 +269,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             )}
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>Commission & NCNDA</span>
+            <span>{isAr ? "الاتفاقيات والعمولات" : "Commission & NCNDA"}</span>
           </button>
         </div>
 
@@ -272,12 +280,15 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-[#121422] border border-[#b87333]/30 text-xs text-gray-300 mb-6">
               <ShieldAlert className="w-4 h-4 text-[#d4956b] shrink-0" />
               <span>
-                <strong>Anti-Leak Protection Active:</strong> Any telephone number, direct email, or external messenger handle will be intercepted and redacted on the server.
+                <strong>{isAr ? "حماية ضد التسريب مفعلة:" : "Anti-Leak Protection Active:"}</strong>{" "}
+                {isAr
+                  ? "يتم رصد وحجب أي أرقام هواتف أو عناوين بريد إلكتروني أو حسابات خارجية تلقائياً."
+                  : "Any telephone number, direct email, or external messenger handle will be intercepted and redacted on the server."}
               </span>
             </div>
 
             {/* Messages Feed */}
-            <div className="space-y-4 flex-1 overflow-y-auto pr-2" dir="ltr">
+            <div className="space-y-4 flex-1 overflow-y-auto pr-2" dir="inherit">
               {messages.map((m) => (
                 <div key={m.id} className="flex gap-3 items-start">
                   <div
@@ -298,7 +309,8 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                     <p className="text-gray-300 leading-relaxed">{m.sanitizedText}</p>
                     {m.contactViolation && (
                       <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] font-mono">
-                        <AlertTriangle className="w-3 h-3" /> Contact Information Redacted by GVCE Engine
+                        <AlertTriangle className="w-3 h-3" />
+                        {isAr ? "تم حجب معلومات الاتصال بواسطة محرك الحماية" : "Contact Information Redacted by GVCE Engine"}
                       </div>
                     )}
                   </div>
@@ -306,14 +318,18 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
               ))}
             </div>
 
-            {/* Input Form with Leak Test Note */}
+            {/* Input Form */}
             <form onSubmit={handleSendMessage} className="mt-6 pt-4 border-t border-[#1f2233] space-y-2">
               <div className="flex items-center gap-3">
                 <input
                   type="text"
                   value={inputMsg}
                   onChange={(e) => setInputMsg(e.target.value)}
-                  placeholder="Type a message (e.g. Try typing a phone or email to test the real-time filter)..."
+                  placeholder={
+                    isAr
+                      ? "اكتب رسالة تفاوض خاصة..."
+                      : "Type a negotiation message..."
+                  }
                   className="flex-1 bg-[#121422] border border-[#23273b] rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#b87333]"
                 />
                 <button
@@ -321,13 +337,10 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                   disabled={isSending || !inputMsg.trim()}
                   className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] text-white text-sm font-semibold shadow-lg shadow-[#b87333]/20 flex items-center gap-2 disabled:opacity-40"
                 >
-                  <span>Send</span>
+                  <span>{isAr ? "إرسال" : "Send"}</span>
                   <Send className="w-4 h-4 rtl:rotate-180" />
                 </button>
               </div>
-              <p className="text-[11px] text-gray-500 font-mono">
-                Try sending: &quot;Call me at +1 717-555-0199 or email me at sales@vendor.com&quot; to test the server leak filter.
-              </p>
             </form>
           </div>
         )}
@@ -342,10 +355,10 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white">
-                    LiveKit WebRTC Private Audio / Video Channel
+                    {isAr ? "قناة فيديو وصوت مشفرة طرفياً (WebRTC E2EE)" : "LiveKit WebRTC Private Audio / Video Channel"}
                   </h3>
                   <p className="text-xs text-gray-400">
-                    End-to-End Encrypted (E2EE) • Screen capture & recording disabled by policy
+                    {isAr ? "تشفير تام بين الأطراف • التسجيل وتصوير الشاشة محظور بسياسة الأمان" : "End-to-End Encrypted (E2EE) • Screen capture & recording disabled by policy"}
                   </p>
                 </div>
               </div>
@@ -353,39 +366,34 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                 <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-semibold">
                   E2EE ACTIVE
                 </span>
-                <span className="px-3 py-1 rounded-full bg-[#1b1f2e] text-gray-300 text-xs font-mono">
-                  Room: #room-gvce-2026-en590-410
-                </span>
               </div>
             </div>
 
             {/* Video Streams Simulated Canvas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Buyer Stream */}
               <div className="aspect-video rounded-2xl bg-[#0f111a] border border-[#23273b] relative overflow-hidden flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-full bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 text-xl font-bold mx-auto mb-2">
                     BA
                   </div>
-                  <span className="text-xs font-semibold text-white">Buyer-Alpha-24 (You)</span>
-                  <p className="text-[10px] text-gray-500 font-mono">Camera: {videoEnabled ? "Active" : "Muted"}</p>
-                </div>
-                <div className="absolute bottom-3 left-3 px-2 py-1 rounded bg-black/60 text-[10px] text-gray-300 font-mono">
-                  France • Audio Active
+                  <span className="text-xs font-semibold text-white">
+                    {isAr ? "Buyer-Alpha-24 (أنت)" : "Buyer-Alpha-24 (You)"}
+                  </span>
+                  <p className="text-[10px] text-gray-500 font-mono">
+                    {videoEnabled ? (isAr ? "الكاميرا تعمل" : "Camera Active") : (isAr ? "الكاميرا مغلقة" : "Camera Muted")}
+                  </p>
                 </div>
               </div>
 
-              {/* Supplier Stream */}
               <div className="aspect-video rounded-2xl bg-[#0f111a] border border-[#23273b] relative overflow-hidden flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl font-bold mx-auto mb-2">
                     SN
                   </div>
                   <span className="text-xs font-semibold text-white">Supplier-Nordic-77</span>
-                  <p className="text-[10px] text-gray-500 font-mono">Norway • Verified Refiner</p>
-                </div>
-                <div className="absolute bottom-3 left-3 px-2 py-1 rounded bg-black/60 text-[10px] text-gray-300 font-mono">
-                  LiveKit WebRTC Stream 1080p
+                  <p className="text-[10px] text-gray-500 font-mono">
+                    {isAr ? "مورد معتمد" : "Verified Refiner"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -418,7 +426,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                 onClick={() => setCallActive(!callActive)}
                 className="px-6 py-3 rounded-full bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs transition-colors"
               >
-                Leave Meeting
+                {isAr ? "مغادرة الاجتماع" : "Leave Meeting"}
               </button>
             </div>
           </div>
@@ -431,7 +439,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
               <div
                 className={cn(
                   "p-4 rounded-2xl border text-xs leading-relaxed font-mono flex items-center gap-3",
-                  downloadNotice.includes("Denied")
+                  downloadNotice.includes("Denied") || downloadNotice.includes("رفض")
                     ? "bg-rose-500/10 border-rose-500/30 text-rose-300"
                     : "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
                 )}
@@ -451,7 +459,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                     <div>
                       <h4 className="text-sm font-semibold text-white">{doc.title}</h4>
                       <p className="text-xs text-gray-400 mt-0.5 font-mono">
-                        {doc.fileSize} • Uploaded by Supplier-Nordic-77
+                        {doc.fileSize}
                       </p>
                     </div>
                     <span
@@ -462,7 +470,9 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                           : "bg-amber-500/10 text-amber-400 border border-amber-500/20"
                       )}
                     >
-                      {doc.isOriginalAuthorized ? "Original Approved" : "Redacted Preview Only"}
+                      {doc.isOriginalAuthorized
+                        ? (isAr ? "مصرح بالنسخة الأصلية" : "Original Approved")
+                        : (isAr ? "معاينة منقحة فقط" : "Redacted Preview Only")}
                     </span>
                   </div>
 
@@ -473,7 +483,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                       className="px-3.5 py-1.5 rounded-lg bg-[#161a29] hover:bg-[#1e2338] text-white text-xs font-medium border border-[#2b334d] flex items-center gap-1.5"
                     >
                       <Eye className="w-3.5 h-3.5 text-sky-400" />
-                      <span>Inspect Watermarked Preview</span>
+                      <span>{isAr ? "معاينة الوثيقة المائية" : "Inspect Watermarked Preview"}</span>
                     </button>
 
                     <button
@@ -481,18 +491,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                       className="px-3.5 py-1.5 rounded-lg bg-[#b87333]/20 hover:bg-[#b87333]/30 text-[#d4956b] border border-[#b87333]/40 text-xs font-medium flex items-center gap-1.5"
                     >
                       <Download className="w-3.5 h-3.5" />
-                      <span>Request Original Download</span>
-                    </button>
-                  </div>
-
-                  {/* Demo Tool for testing approval */}
-                  <div className="pt-2 flex items-center justify-between text-[11px] text-gray-500">
-                    <span>Downloads: {doc.downloadCount}</span>
-                    <button
-                      onClick={() => handleToggleOwnerApproval(doc.id)}
-                      className="text-xs text-gray-400 hover:text-white underline font-mono"
-                    >
-                      [Demo: Toggle Supplier Approval]
+                      <span>{isAr ? "طلب تحميل الأصل" : "Request Original Download"}</span>
                     </button>
                   </div>
                 </div>
@@ -503,46 +502,36 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             {previewDocModal && (
               <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
                 <div className="max-w-2xl w-full rounded-3xl bg-[#0c0e17] border border-[#23273b] p-6 relative overflow-hidden space-y-4">
-                  {/* Dynamic Watermark Overlay */}
                   <div className="absolute inset-0 watermark-overlay opacity-30 pointer-events-none" />
 
                   <div className="flex items-center justify-between border-b border-[#1f2233] pb-3">
                     <div>
                       <h3 className="text-sm font-bold text-white font-mono">
-                        PROTECTED VIEWER: {previewDocModal.toUpperCase()}
+                        {isAr ? "عارض الوثائق المحمي" : "PROTECTED VIEWER"}
                       </h3>
                       <p className="text-[11px] text-gray-400 font-mono">
-                        Watermark: BUYER-ALPHA-24 • Session ID: #2026-11-13-UTC • IP: 192.168.11.104
+                        BUYER-ALPHA-24 • GVCE WATERMARK
                       </p>
                     </div>
                     <button
                       onClick={() => setPreviewDocModal(null)}
                       className="text-gray-400 hover:text-white text-sm"
                     >
-                      ✕ Close
+                      ✕
                     </button>
                   </div>
 
                   <div className="p-8 rounded-2xl bg-[#08090e] border border-[#1f2233] text-center space-y-4 font-mono text-xs">
                     <div className="text-emerald-400">
-                      --- OFFICIAL S.G.S. INSPECTION SUMMARY (REDACTED) ---
+                      --- {isAr ? "ملخص فحص SGS الرسمي (منقح)" : "OFFICIAL S.G.S. INSPECTION SUMMARY (REDACTED)"} ---
                     </div>
                     <p className="text-gray-300">
-                      COMMODITY: ULTRA-LOW SULFUR DIESEL EN 590 10 PPM
+                      COMMODITY: DIESEL EN 590 10 PPM
                       <br />
-                      DENSITY AT 15°C: 0.835 KG/L (CONFIRMED)
+                      DENSITY AT 15°C: 0.835 KG/L
                       <br />
-                      SULFUR CONTENT: 8.2 PPM (BELOW 10 PPM THRESHOLD)
-                      <br />
-                      FLASH POINT: 62.0°C (CONFIRMED)
+                      SULFUR CONTENT: 8.2 PPM
                     </p>
-                    <div className="text-[10px] text-gray-500">
-                      [Seller Corporate Legal Name & Bank Details Redacted per GVCE Brokerage Privacy Rule #4]
-                    </div>
-                  </div>
-
-                  <div className="text-center text-[10px] text-gray-500 font-mono">
-                    Copying and printing are disabled. Screen recording outside application remains possible.
                   </div>
                 </div>
               </div>
@@ -557,14 +546,14 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-sm font-bold text-white">
-                    Non-Circumvention, Non-Disclosure & Brokerage Agreement (NCNDA)
+                    {isAr ? "اتفاقية عدم الإفشاء وعدم الالتفاف والوساطة (NCNDA)" : "Non-Circumvention, Non-Disclosure & Brokerage Agreement (NCNDA)"}
                   </h4>
                   <p className="text-xs text-gray-400 mt-0.5">
-                    Governed under ICC 765 Rules • Binding for 24 months
+                    ICC 765 Rules • 24 Months
                   </p>
                 </div>
                 <span className="flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-semibold">
-                  <CheckCircle2 className="w-4 h-4" /> EXECUTED
+                  <CheckCircle2 className="w-4 h-4" /> {isAr ? "موقعة وسارية" : "EXECUTED"}
                 </span>
               </div>
             </div>
@@ -574,32 +563,17 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
               <div className="flex items-center justify-between border-b border-[#1f2233] pb-3">
                 <div>
                   <h4 className="text-sm font-bold text-white">
-                    GVCE Platform Brokerage Commission
+                    {isAr ? "عمولة وساطة منصة GVCE" : "GVCE Platform Brokerage Commission"}
                   </h4>
                   <p className="text-xs text-gray-400 mt-0.5 font-mono">
-                    Contract Total: $37,000,000.00 USD (50,000 MT @ $740/MT)
+                    Total: $37,000,000.00 USD (50,000 MT @ $740/MT)
                   </p>
                 </div>
                 <div className="text-right">
                   <span className="text-lg font-bold font-mono text-[#d4956b]">
                     $462,500.00 USD
                   </span>
-                  <span className="block text-[10px] text-gray-500">Commission Rate: 1.25%</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                <div>
-                  <span className="text-gray-500 block">Obligor Party</span>
-                  <span className="text-white font-semibold">Supplier-Nordic-77</span>
-                </div>
-                <div>
-                  <span className="text-gray-500 block">Triggering Event</span>
-                  <span className="text-white font-semibold">LC 100% at Sight Confirmation</span>
-                </div>
-                <div>
-                  <span className="text-gray-500 block">Settlement Channel</span>
-                  <span className="text-white font-semibold">Banking Channel / Escrow</span>
+                  <span className="block text-[10px] text-gray-500">1.25%</span>
                 </div>
               </div>
             </div>
@@ -608,7 +582,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
       </main>
 
       <footer className="py-4 border-t border-[#1f2233] text-center text-xs text-gray-500 font-mono">
-        GVCE Supervised Deal Room • Real-time Anti-Leak Enforcement Active
+        GVCE Supervised Deal Room • {t.common.verifiedBrokerage}
       </footer>
     </div>
   );

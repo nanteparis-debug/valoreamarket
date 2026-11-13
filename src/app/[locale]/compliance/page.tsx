@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
+import { useParams } from "next/navigation";
+import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import {
   ShieldCheck,
   ShieldAlert,
@@ -13,80 +15,79 @@ import {
   Building2,
   UserCheck,
   Search,
-  Filter,
   ArrowLeft,
-  ArrowRight,
-  ExternalLink,
-  Download,
-  Eye,
   RefreshCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { VerificationRecord } from "@/lib/store";
 
-const STATUS_CONFIG: Record<
-  VerificationRecord["status"],
-  { label: string; color: string; bg: string; border: string; icon: React.ReactNode }
-> = {
-  approved: {
-    label: "Approved",
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/30",
-    icon: <CheckCircle2 className="w-4 h-4 text-emerald-400" />,
-  },
-  pending_review: {
-    label: "Pending Review",
-    color: "text-amber-400",
-    bg: "bg-amber-500/10",
-    border: "border-amber-500/30",
-    icon: <Clock className="w-4 h-4 text-amber-400" />,
-  },
-  additional_info_required: {
-    label: "Additional Info Required",
-    color: "text-orange-400",
-    bg: "bg-orange-500/10",
-    border: "border-orange-500/30",
-    icon: <AlertTriangle className="w-4 h-4 text-orange-400" />,
-  },
-  incomplete: {
-    label: "Incomplete",
-    color: "text-gray-400",
-    bg: "bg-gray-500/10",
-    border: "border-gray-500/30",
-    icon: <Clock className="w-4 h-4 text-gray-400" />,
-  },
-  rejected: {
-    label: "Rejected",
-    color: "text-rose-400",
-    bg: "bg-rose-500/10",
-    border: "border-rose-500/30",
-    icon: <XCircle className="w-4 h-4 text-rose-400" />,
-  },
-  expired: {
-    label: "Expired",
-    color: "text-purple-400",
-    bg: "bg-purple-500/10",
-    border: "border-purple-500/30",
-    icon: <AlertTriangle className="w-4 h-4 text-purple-400" />,
-  },
-  suspended: {
-    label: "Suspended",
-    color: "text-red-500",
-    bg: "bg-red-500/10",
-    border: "border-red-500/30",
-    icon: <ShieldAlert className="w-4 h-4 text-red-500" />,
-  },
-};
-
-const SCOPE_CONFIG = {
-  kyb: { label: "Company Registry (KYB)", icon: <Building2 className="w-4 h-4 text-[#d4956b]" /> },
-  representative_kyc: { label: "Representative (KYC)", icon: <UserCheck className="w-4 h-4 text-sky-400" /> },
-  cargo_title: { label: "Cargo Supply Title", icon: <FileText className="w-4 h-4 text-yellow-400" /> },
-  sanctions_pep: { label: "Sanctions & PEP Screening", icon: <ShieldCheck className="w-4 h-4 text-purple-400" /> },
-};
-
 export default function CompliancePortalPage() {
+  const params = useParams();
+  const locale = (params?.locale as string) || "en";
+  const t = getSubpageTranslations(locale);
+
+  const STATUS_CONFIG: Record<
+    VerificationRecord["status"],
+    { label: string; color: string; bg: string; border: string; icon: React.ReactNode }
+  > = {
+    approved: {
+      label: t.compliance.approved,
+      color: "text-emerald-400",
+      bg: "bg-emerald-500/10",
+      border: "border-emerald-500/30",
+      icon: <CheckCircle2 className="w-4 h-4 text-emerald-400" />,
+    },
+    pending_review: {
+      label: t.compliance.pendingReview,
+      color: "text-amber-400",
+      bg: "bg-amber-500/10",
+      border: "border-amber-500/30",
+      icon: <Clock className="w-4 h-4 text-amber-400" />,
+    },
+    additional_info_required: {
+      label: t.compliance.additionalInfo,
+      color: "text-orange-400",
+      bg: "bg-orange-500/10",
+      border: "border-orange-500/30",
+      icon: <AlertTriangle className="w-4 h-4 text-orange-400" />,
+    },
+    incomplete: {
+      label: t.compliance.incomplete,
+      color: "text-gray-400",
+      bg: "bg-gray-500/10",
+      border: "border-gray-500/30",
+      icon: <Clock className="w-4 h-4 text-gray-400" />,
+    },
+    rejected: {
+      label: t.compliance.rejected,
+      color: "text-rose-400",
+      bg: "bg-rose-500/10",
+      border: "border-rose-500/30",
+      icon: <XCircle className="w-4 h-4 text-rose-400" />,
+    },
+    expired: {
+      label: t.compliance.expired,
+      color: "text-purple-400",
+      bg: "bg-purple-500/10",
+      border: "border-purple-500/30",
+      icon: <AlertTriangle className="w-4 h-4 text-purple-400" />,
+    },
+    suspended: {
+      label: t.compliance.suspended,
+      color: "text-red-500",
+      bg: "bg-red-500/10",
+      border: "border-red-500/30",
+      icon: <ShieldAlert className="w-4 h-4 text-red-500" />,
+    },
+  };
+
+  const SCOPE_CONFIG = {
+    kyb: { label: t.compliance.kybScope, icon: <Building2 className="w-4 h-4 text-[#d4956b]" /> },
+    representative_kyc: { label: t.compliance.kycScope, icon: <UserCheck className="w-4 h-4 text-sky-400" /> },
+    cargo_title: { label: t.compliance.cargoScope, icon: <FileText className="w-4 h-4 text-yellow-400" /> },
+    sanctions_pep: { label: t.compliance.sanctionsScope, icon: <ShieldCheck className="w-4 h-4 text-purple-400" /> },
+  };
+
   const [records, setRecords] = useState<VerificationRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterScope, setFilterScope] = useState<string>("all");
@@ -169,22 +170,21 @@ export default function CompliancePortalPage() {
                 className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
               >
                 <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-180" />
-                Return to Home
+                {t.common.backHome}
               </Link>
               <span className="text-gray-600">/</span>
-              <span className="text-xs text-[#d4956b] font-medium">Compliance & Verification</span>
+              <span className="text-xs text-[#d4956b] font-medium">{t.compliance.breadcrumb}</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#b87333]/20 to-[#0e1017] border border-[#b87333]/30 flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-[#d4956b]" />
               </div>
               <h1 className="text-2xl font-bold tracking-tight text-white font-mono">
-                KYC / KYB & Sanctions Compliance Portal
+                {t.compliance.title}
               </h1>
             </div>
             <p className="text-xs text-gray-400 max-w-2xl">
-              Multi-stage verification and screening registry for international commodity market participants.
-              Sanctions screening against OFAC, EU, UN, and UK consolidated lists with immutable audit trails.
+              {t.compliance.subtitle}
             </p>
           </div>
 
@@ -194,11 +194,11 @@ export default function CompliancePortalPage() {
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0e1017] border border-[#23273b] hover:border-[#b87333]/50 text-xs text-gray-300 hover:text-white transition-all"
             >
               <RefreshCw className={cn("w-3.5 h-3.5", loading && "animate-spin")} />
-              <span>Sync Records</span>
+              <span>{t.compliance.lastUpdated}</span>
             </button>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0e1017] border border-emerald-500/30 text-xs font-mono text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>OWASP ASVS L2 / Sanctions Live</span>
+              <span>{t.common.verifiedBrokerage}</span>
             </div>
           </div>
         </div>
@@ -244,20 +244,20 @@ export default function CompliancePortalPage() {
         {/* Filters and Search Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#0e1017] border border-[#1f2233] p-4 rounded-xl">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-500 absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search entity, jurisdiction, tax ID..."
+              placeholder={t.catalog.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#141724] border border-[#23273b] rounded-lg pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#b87333]"
+              className="w-full bg-[#141724] border border-[#23273b] rounded-lg pl-9 pr-4 rtl:pr-9 rtl:pl-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#b87333]"
             />
           </div>
 
           <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
             {/* Scope Filter */}
             <div className="flex items-center gap-1 bg-[#141724] border border-[#23273b] p-1 rounded-lg text-xs">
-              <span className="px-2 text-gray-500 text-[11px]">Scope:</span>
+              <span className="px-2 text-gray-500 text-[11px]">{t.compliance.scope}:</span>
               <button
                 onClick={() => setFilterScope("all")}
                 className={cn(
@@ -265,7 +265,7 @@ export default function CompliancePortalPage() {
                   filterScope === "all" ? "bg-[#b87333] text-white font-medium" : "text-gray-400 hover:text-white"
                 )}
               >
-                All
+                {t.compliance.allScopes}
               </button>
               {Object.entries(SCOPE_CONFIG).map(([key, val]) => (
                 <button
@@ -289,15 +289,15 @@ export default function CompliancePortalPage() {
           <div className="lg:col-span-8 bg-[#0c0e17] border border-[#1f2233] rounded-2xl overflow-hidden shadow-xl">
             <div className="px-5 py-4 border-b border-[#1f2233] flex items-center justify-between bg-[#0e1017]">
               <span className="text-sm font-semibold text-white">
-                Entities & Compliance Files ({filteredRecords.length})
+                {t.compliance.badge} ({filteredRecords.length})
               </span>
-              <span className="text-xs text-gray-500 font-mono">Reference Currency: USD</span>
+              <span className="text-xs text-gray-500 font-mono">{t.common.usdReference}</span>
             </div>
 
             <div className="divide-y divide-[#181b29] overflow-x-auto">
               {filteredRecords.length === 0 ? (
                 <div className="p-8 text-center text-xs text-gray-500">
-                  No verification records found matching current filters.
+                  {t.catalog.noResults}
                 </div>
               ) : (
                 filteredRecords.map((r) => {
@@ -311,7 +311,7 @@ export default function CompliancePortalPage() {
                       onClick={() => setSelectedRecord(r)}
                       className={cn(
                         "p-4 cursor-pointer transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#131625]",
-                        isSelected ? "bg-[#171a2c] border-l-4 border-[#b87333]" : ""
+                        isSelected ? "bg-[#171a2c] border-l-4 rtl:border-l-0 rtl:border-r-4 border-[#b87333]" : ""
                       )}
                     >
                       <div className="space-y-1.5 flex-1">
@@ -336,7 +336,6 @@ export default function CompliancePortalPage() {
                       </div>
 
                       <div className="flex items-center gap-3">
-                        {/* Sanctions Tag */}
                         <div
                           className={cn(
                             "px-2 py-0.5 rounded text-[11px] font-mono border",
@@ -345,10 +344,9 @@ export default function CompliancePortalPage() {
                               : "bg-rose-500/10 border-rose-500/20 text-rose-400"
                           )}
                         >
-                          Sanctions: {r.sanctionsScore === 0 ? "CLEAR (0%)" : `FLAGGED (${r.sanctionsScore}%)`}
+                          {r.sanctionsScore === 0 ? "CLEAR (0%)" : `FLAGGED (${r.sanctionsScore}%)`}
                         </div>
 
-                        {/* Status Badge */}
                         <div
                           className={cn(
                             "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border",
@@ -375,7 +373,7 @@ export default function CompliancePortalPage() {
                 <div className="border-b border-[#1f2233] pb-4 space-y-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-mono uppercase text-[#d4956b] font-semibold">
-                      Compliance Inspection
+                      {t.compliance.viewDetails}
                     </span>
                     <span className="text-[10px] font-mono text-gray-500">ID: {selectedRecord.id}</span>
                   </div>
@@ -383,36 +381,28 @@ export default function CompliancePortalPage() {
                   <p className="text-xs text-gray-400">{selectedRecord.jurisdiction}</p>
                 </div>
 
-                {/* Scope & Details */}
                 <div className="space-y-3 text-xs">
                   <div>
-                    <span className="text-gray-500 block text-[11px]">Corporate Registry # / Tax ID</span>
+                    <span className="text-gray-500 block text-[11px]">{t.compliance.company}</span>
                     <span className="text-gray-200 font-mono">
                       {selectedRecord.registrationNumber} / {selectedRecord.taxNumber}
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-[11px]">Ultimate Beneficial Ownership (UBO)</span>
+                    <span className="text-gray-500 block text-[11px]">UBO</span>
                     <span className="text-gray-200 font-medium">{selectedRecord.uboName}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-[11px]">Compliance Reviewer & Screening Score</span>
-                    <span className="text-gray-300 font-mono">
-                      {selectedRecord.reviewerId} (Risk Score: {selectedRecord.sanctionsScore}%)
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500 block text-[11px]">Current Status & Reason</span>
+                    <span className="text-gray-500 block text-[11px]">{t.compliance.status}</span>
                     <p className="text-gray-300 bg-[#141724] p-2.5 rounded-lg border border-[#23273b] mt-1 text-[11px] leading-relaxed">
-                      {selectedRecord.decisionReason || "No decision notes entered."}
+                      {selectedRecord.decisionReason || t.compliance.approved}
                     </p>
                   </div>
                 </div>
 
-                {/* Submitted Evidence Documents */}
                 <div className="space-y-2 border-t border-[#1f2233] pt-4">
                   <span className="text-xs font-semibold text-gray-300 block">
-                    Verified Documents on File:
+                    {t.compliance.cargoScope}:
                   </span>
                   <div className="space-y-1.5">
                     {selectedRecord.documentsSubmitted.map((doc, idx) => (
@@ -433,11 +423,11 @@ export default function CompliancePortalPage() {
                 {/* Compliance Officer Actions */}
                 <div className="border-t border-[#1f2233] pt-4 space-y-3">
                   <span className="text-xs font-semibold text-gray-300 block">
-                    Compliance Officer Decision:
+                    {t.compliance.actions}:
                   </span>
                   <textarea
                     rows={2}
-                    placeholder="Enter compliance decision rationale or required documents..."
+                    placeholder={t.compliance.additionalInfo}
                     value={actionNotes}
                     onChange={(e) => setActionNotes(e.target.value)}
                     className="w-full bg-[#141724] border border-[#23273b] rounded-lg p-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#b87333]"
@@ -451,7 +441,7 @@ export default function CompliancePortalPage() {
                       className="py-2 px-3 rounded-lg bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 text-xs font-semibold hover:bg-emerald-600/30 transition-all flex items-center justify-center gap-1.5"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
-                      Approve KYB
+                      {t.compliance.approved}
                     </button>
                     <button
                       type="button"
@@ -460,7 +450,7 @@ export default function CompliancePortalPage() {
                       className="py-2 px-3 rounded-lg bg-orange-600/20 border border-orange-500/40 text-orange-400 text-xs font-semibold hover:bg-orange-600/30 transition-all flex items-center justify-center gap-1.5"
                     >
                       <AlertTriangle className="w-3.5 h-3.5" />
-                      Request Info
+                      {t.compliance.additionalInfo}
                     </button>
                     <button
                       type="button"
@@ -469,7 +459,7 @@ export default function CompliancePortalPage() {
                       className="py-2 px-3 rounded-lg bg-purple-600/20 border border-purple-500/40 text-purple-300 text-xs font-semibold hover:bg-purple-600/30 transition-all flex items-center justify-center gap-1.5"
                     >
                       <Clock className="w-3.5 h-3.5" />
-                      Suspend
+                      {t.compliance.suspended}
                     </button>
                     <button
                       type="button"
@@ -478,7 +468,7 @@ export default function CompliancePortalPage() {
                       className="py-2 px-3 rounded-lg bg-rose-600/20 border border-rose-500/40 text-rose-400 text-xs font-semibold hover:bg-rose-600/30 transition-all flex items-center justify-center gap-1.5"
                     >
                       <XCircle className="w-3.5 h-3.5" />
-                      Reject / PEP
+                      {t.compliance.rejected}
                     </button>
                   </div>
                 </div>
@@ -486,7 +476,7 @@ export default function CompliancePortalPage() {
             ) : (
               <div className="bg-[#0e1017] border border-[#1f2233] rounded-2xl p-8 text-center text-xs text-gray-500 space-y-3">
                 <ShieldCheck className="w-10 h-10 text-gray-600 mx-auto" />
-                <p>Select an organization record from the table to inspect corporate documents, UBO charts, and update verification status.</p>
+                <p>{t.compliance.viewDetails}</p>
               </div>
             )}
           </div>

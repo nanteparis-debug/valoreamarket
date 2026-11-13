@@ -2,18 +2,13 @@
 
 import React from "react";
 import {
-  ShieldAlert,
-  FileLock2,
-  Users2,
-  Video,
-  KeyRound,
   FileBadge2,
   Lock,
-  EyeOff,
+  KeyRound,
+  Video,
   Stamp,
-  ArrowRight,
+  EyeOff,
 } from "lucide-react";
-import { Link } from "@/i18n/routing";
 
 interface FeaturesSectionProps {
   translations: {
@@ -25,6 +20,24 @@ interface FeaturesSectionProps {
     security: { title: string; description: string };
     documents: { title: string; description: string };
     commissions: { title: string; description: string };
+    eyebrow?: string;
+    step1Badge?: string;
+    step1Title?: string;
+    step1Desc?: string;
+    step2Badge?: string;
+    step2Title?: string;
+    step2Desc?: string;
+    step3Badge?: string;
+    step3Title?: string;
+    step3Desc?: string;
+    passkeyBadge?: string;
+    passkeySub?: string;
+    dealRoomsBadge?: string;
+    dealRoomsSub?: string;
+    watermarkSample?: string;
+    ownerConsent?: string;
+    antiCopy?: string;
+    originalEncrypted?: string;
   };
 }
 
@@ -34,7 +47,7 @@ export function FeaturesSection({ translations }: FeaturesSectionProps) {
       <div className="text-center max-w-3xl mx-auto mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#23273b] text-xs font-mono text-[#d4956b] mb-4">
           <Lock className="w-3.5 h-3.5" />
-          <span>OWASP ASVS & Enterprise Grade</span>
+          <span>{translations.eyebrow || "OWASP ASVS & Enterprise Grade"}</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
           {translations.title}
@@ -62,19 +75,37 @@ export function FeaturesSection({ translations }: FeaturesSectionProps) {
             {/* Verification Steps Pills */}
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="p-3.5 rounded-xl bg-[#10121d] border border-[#23273b]">
-                <div className="text-[10px] font-mono text-[#d4956b] uppercase">Step 01</div>
-                <div className="text-sm font-semibold text-white mt-1">KYC Representative</div>
-                <div className="text-xs text-gray-500 mt-0.5">Biometric & Legal ID</div>
+                <div className="text-[10px] font-mono text-[#d4956b] uppercase">
+                  {translations.step1Badge || "Step 01"}
+                </div>
+                <div className="text-sm font-semibold text-white mt-1">
+                  {translations.step1Title || "KYC Representative"}
+                </div>
+                <div className="text-xs text-gray-500 mt-0.5">
+                  {translations.step1Desc || "Biometric & Legal ID"}
+                </div>
               </div>
               <div className="p-3.5 rounded-xl bg-[#10121d] border border-[#23273b]">
-                <div className="text-[10px] font-mono text-[#d4956b] uppercase">Step 02</div>
-                <div className="text-sm font-semibold text-white mt-1">KYB Company</div>
-                <div className="text-xs text-gray-500 mt-0.5">Registry & UBO Check</div>
+                <div className="text-[10px] font-mono text-[#d4956b] uppercase">
+                  {translations.step2Badge || "Step 02"}
+                </div>
+                <div className="text-sm font-semibold text-white mt-1">
+                  {translations.step2Title || "KYB Company"}
+                </div>
+                <div className="text-xs text-gray-500 mt-0.5">
+                  {translations.step2Desc || "Registry & UBO Check"}
+                </div>
               </div>
               <div className="p-3.5 rounded-xl bg-[#10121d] border border-[#23273b]">
-                <div className="text-[10px] font-mono text-[#d4956b] uppercase">Step 03</div>
-                <div className="text-sm font-semibold text-white mt-1">Cargo Right Check</div>
-                <div className="text-xs text-gray-500 mt-0.5">Proof of Supply & Sanctions</div>
+                <div className="text-[10px] font-mono text-[#d4956b] uppercase">
+                  {translations.step3Badge || "Step 03"}
+                </div>
+                <div className="text-sm font-semibold text-white mt-1">
+                  {translations.step3Title || "Cargo Right Check"}
+                </div>
+                <div className="text-xs text-gray-500 mt-0.5">
+                  {translations.step3Desc || "Proof of Supply & Sanctions"}
+                </div>
               </div>
             </div>
           </div>
@@ -94,8 +125,8 @@ export function FeaturesSection({ translations }: FeaturesSectionProps) {
             </p>
           </div>
           <div className="mt-6 pt-4 border-t border-[#1a1d2e] flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span>WebAuthn FIDO2</span>
-            <span className="text-emerald-400">Phishing Resistant</span>
+            <span>{translations.passkeyBadge || "WebAuthn FIDO2"}</span>
+            <span className="text-emerald-400">{translations.passkeySub || "Phishing Resistant"}</span>
           </div>
         </div>
 
@@ -113,8 +144,8 @@ export function FeaturesSection({ translations }: FeaturesSectionProps) {
             </p>
           </div>
           <div className="mt-6 pt-4 border-t border-[#1a1d2e] flex items-center justify-between text-xs text-gray-400 font-mono">
-            <span>E2EE Audio / Video</span>
-            <span className="text-purple-400">Broker Supervised</span>
+            <span>{translations.dealRoomsBadge || "E2EE Audio / Video"}</span>
+            <span className="text-purple-400">{translations.dealRoomsSub || "Broker Supervised"}</span>
           </div>
         </div>
 
@@ -137,19 +168,19 @@ export function FeaturesSection({ translations }: FeaturesSectionProps) {
                 <div className="flex items-center gap-2">
                   <EyeOff className="w-4 h-4 text-[#d4956b]" />
                   <span className="font-mono text-gray-300">
-                    Viewer: [BUYER-ALPHA-89] • Session: [2026-11-13] • Redacted
+                    {translations.watermarkSample || "Viewer: [BUYER-ALPHA-89] • Session: [2026-11-13] • Redacted"}
                   </span>
                 </div>
                 <span className="px-2.5 py-1 rounded bg-[#b87333]/20 text-[#d4956b] font-mono text-[11px] self-start sm:self-auto">
-                  Owner Consent Required
+                  {translations.ownerConsent || "Owner Consent Required"}
                 </span>
               </div>
             </div>
           </div>
 
           <div className="mt-6 pt-4 border-t border-[#1a1d2e] flex flex-wrap items-center justify-between gap-2 text-xs text-gray-400">
-            <span>Anti-copy & Print Disabled</span>
-            <span className="font-mono text-gray-300">Original Stays Encrypted</span>
+            <span>{translations.antiCopy || "Anti-copy & Print Disabled"}</span>
+            <span className="font-mono text-gray-300">{translations.originalEncrypted || "Original Stays Encrypted"}</span>
           </div>
         </div>
       </div>

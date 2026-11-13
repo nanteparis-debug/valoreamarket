@@ -2,19 +2,17 @@
 
 import React, { useState, useTransition } from "react";
 import { useRouter } from "@/i18n/routing";
-import { Navbar } from "@/components/landing/navbar";
-import { AnimatedFooter } from "@/components/landing/animated-footer";
-import { COMMODITY_SECTORS, INCOTERMS } from "@/lib/constants";
+import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import {
-  FileText,
-  ShieldCheck,
+  COMMODITY_SECTORS,
+  INCOTERMS,
+  getSectorTitle,
+  getCommodityItemName,
+} from "@/lib/constants";
+import {
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
-  DollarSign,
-  Calendar,
-  Anchor,
-  Layers,
   Sparkles,
   Info,
 } from "lucide-react";
@@ -28,11 +26,13 @@ export default function NewDealPage({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  // Async unwrapped locale
   const [locale, setLocale] = useState("en");
   React.useEffect(() => {
     params.then((p) => setLocale(p.locale));
   }, [params]);
+
+  const t = getSubpageTranslations(locale);
+  const isAr = locale === "ar";
 
   // Form State
   const [side, setSide] = useState<"buy" | "sell">("buy");
@@ -48,12 +48,11 @@ export default function NewDealPage({
   const [deliveryDateRange, setDeliveryDateRange] = useState("Dec 15 - Dec 30, 2026");
 
   // Material-specific specs
-  const [spec1, setSpec1] = useState("38.5°"); // e.g. API
-  const [spec2, setSpec2] = useState("0.85%"); // e.g. Sulfur
+  const [spec1, setSpec1] = useState("38.5°");
+  const [spec2, setSpec2] = useState("0.85%");
   const [spec3, setSpec3] = useState("Euro 5 / 6 Compliant");
 
   const [submitted, setSubmitted] = useState(false);
-  const [createdDealId, setCreatedDealId] = useState("");
 
   const currentSector =
     COMMODITY_SECTORS.find((s) => s.id === sectorId) || COMMODITY_SECTORS[0];
@@ -88,7 +87,6 @@ export default function NewDealPage({
 
         const data = await res.json();
         if (data.success && data.deal) {
-          setCreatedDealId(data.deal.id);
           setSubmitted(true);
         }
       } catch (err) {
@@ -106,13 +104,13 @@ export default function NewDealPage({
           className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-4 h-4 rtl:rotate-180" />
-          <span>Back to Home</span>
+          <span>{t.common.backHome}</span>
         </button>
 
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#b87333] animate-pulse" />
           <span className="text-xs font-mono text-gray-300">
-            GVCE Secure Deal Creation Wizard
+            {t.common.verifiedBrokerage}
           </span>
         </div>
       </header>
@@ -125,33 +123,27 @@ export default function NewDealPage({
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Deal Successfully Registered!
+              {isAr ? "تم تسجيل الصفقة بنجاح!" : "Deal Successfully Registered!"}
             </h2>
             <p className="mt-3 text-sm text-gray-400 max-w-lg">
-              Your {side === "buy" ? "Buy Request" : "Supply Offer"} for{" "}
-              <strong className="text-white">{commodityName}</strong> has been logged into the GVCE Clearing engine. A GVCE Broker Lead will initiate party matching and launch your supervised deal room.
+              {isAr
+                ? "تم تسجيل طلبك في نظام المقاصة الخاص بـ GVCE. سيبدأ وسيط معتمد عملية المطابقة وفتح غرفة الصفقة المخصصة."
+                : "Your request has been logged into the GVCE clearing engine. A verified broker will initiate matching."}
             </p>
-
-            <div className="mt-6 p-4 rounded-xl bg-[#141726] border border-[#23273b] text-xs font-mono text-[#d4956b]">
-              Deal Reference: GVCE-2026-REG-{Math.floor(1000 + Math.random() * 9000)}
-            </div>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => router.push(`/deals/deal-en590-rotterdam/room`)}
                 className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-sm shadow-lg shadow-[#b87333]/20 flex items-center gap-2"
               >
-                <span>Enter Live Deal Room</span>
+                <span>{isAr ? "الدخول إلى غرفة الصفقة" : "Enter Live Deal Room"}</span>
                 <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </button>
               <button
-                onClick={() => {
-                  setSubmitted(false);
-                  setCreatedDealId("");
-                }}
+                onClick={() => setSubmitted(false)}
                 className="px-6 py-3 rounded-xl bg-[#141724] border border-[#23273b] text-gray-300 hover:text-white text-sm"
               >
-                Submit Another Deal
+                {isAr ? "تسجيل صفقة أخرى" : "Submit Another Deal"}
               </button>
             </div>
           </div>
@@ -163,20 +155,20 @@ export default function NewDealPage({
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#23273b] text-xs font-mono text-[#d4956b] mb-3">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Supervised B2B Matching</span>
+                <span>{t.common.verifiedBrokerage}</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                New Commodity Deal Registration
+                {isAr ? "تسجيل صفقة سلعية جديدة" : "New Commodity Deal Registration"}
               </h1>
               <p className="text-xs sm:text-sm text-gray-400 mt-1">
-                Prices and settlements are benchmarked in USD. Real-time matching is supervised by GVCE brokers under strict NCNDA confidentiality.
+                {t.common.usdReference}
               </p>
             </div>
 
             {/* Step 1: Side (Buy vs Sell) */}
             <div className="space-y-3">
               <label className="text-xs font-bold uppercase tracking-wider text-gray-300">
-                1. Transaction Type
+                1. {isAr ? "نوع العملية" : "Transaction Type"}
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
@@ -189,7 +181,7 @@ export default function NewDealPage({
                       : "bg-[#0e1018] border-[#23273b] text-gray-400 hover:text-white"
                   )}
                 >
-                  <span>Buy Request (Buyer)</span>
+                  <span>{t.catalog.buyRequest}</span>
                 </button>
                 <button
                   type="button"
@@ -201,7 +193,7 @@ export default function NewDealPage({
                       : "bg-[#0e1018] border-[#23273b] text-gray-400 hover:text-white"
                   )}
                 >
-                  <span>Supply Offer (Supplier)</span>
+                  <span>{t.catalog.supplyOffer}</span>
                 </button>
               </div>
             </div>
@@ -209,11 +201,11 @@ export default function NewDealPage({
             {/* Step 2: Sector & Material */}
             <div className="space-y-4">
               <label className="text-xs font-bold uppercase tracking-wider text-gray-300">
-                2. Commodity Sector & Material
+                2. {t.catalog.title}
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Sector</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "القطاع" : "Sector"}</span>
                   <select
                     value={sectorId}
                     onChange={(e) => {
@@ -227,14 +219,14 @@ export default function NewDealPage({
                   >
                     {COMMODITY_SECTORS.map((s) => (
                       <option key={s.id} value={s.id}>
-                        {s.slug.replace(/-/g, " ").toUpperCase()}
+                        {getSectorTitle(s.titleKey, locale)}
                       </option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Commodity Product</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "السلعة" : "Commodity Product"}</span>
                   <select
                     value={commodityName}
                     onChange={(e) => setCommodityName(e.target.value)}
@@ -242,7 +234,7 @@ export default function NewDealPage({
                   >
                     {currentSector.items.map((item, idx) => (
                       <option key={idx} value={item.name}>
-                        {item.name}
+                        {getCommodityItemName(item.name, locale)}
                       </option>
                     ))}
                   </select>
@@ -253,43 +245,43 @@ export default function NewDealPage({
               <div className="p-4 rounded-2xl bg-[#0f121d] border border-[#23273b] space-y-3">
                 <div className="flex items-center gap-2 text-xs font-semibold text-[#d4956b]">
                   <Info className="w-4 h-4" />
-                  <span>Technical Specifications Required for {commodityName}</span>
+                  <span>{t.catalog.benchmarkSpecs}</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
                     <span className="text-[11px] text-gray-400 block mb-1">
-                      {sectorId.includes("crude") ? "API Gravity (°)" : sectorId.includes("urea") ? "Nitrogen Content %" : "Primary Purity / Grade"}
+                      {isAr ? "المعيار الرئيسي" : "Primary Spec"}
                     </span>
                     <input
                       type="text"
                       value={spec1}
                       onChange={(e) => setSpec1(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder="e.g. 38.5° or 46% N"
+                      placeholder="e.g. 38.5° / 46% N"
                     />
                   </div>
                   <div>
                     <span className="text-[11px] text-gray-400 block mb-1">
-                      {sectorId.includes("crude") || sectorId.includes("refined") ? "Sulfur Content (PPM or %)" : sectorId.includes("urea") ? "Biuret % Max" : "Secondary Impurity"}
+                      {isAr ? "نسبة الكبريت / الشوائب" : "Sulfur / Impurities"}
                     </span>
                     <input
                       type="text"
                       value={spec2}
                       onChange={(e) => setSpec2(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder="e.g. 10 PPM or 1.0% Max"
+                      placeholder="e.g. 10 PPM"
                     />
                   </div>
                   <div>
                     <span className="text-[11px] text-gray-400 block mb-1">
-                      Inspection Standard
+                      {t.catalog.sgsInspected}
                     </span>
                     <input
                       type="text"
                       value={spec3}
                       onChange={(e) => setSpec3(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder="e.g. SGS / Saybolt at Loading"
+                      placeholder="e.g. SGS / Saybolt"
                     />
                   </div>
                 </div>
@@ -299,12 +291,12 @@ export default function NewDealPage({
             {/* Step 3: Quantity, Pricing & Incoterms */}
             <div className="space-y-4">
               <label className="text-xs font-bold uppercase tracking-wider text-gray-300">
-                3. Quantity, Pricing (USD) & Logistics
+                3. {isAr ? "الكمية، السعر واللوجستيات" : "Quantity, Pricing & Logistics"}
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Quantity</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "الكمية" : "Quantity"}</span>
                   <input
                     type="number"
                     min="1"
@@ -315,30 +307,30 @@ export default function NewDealPage({
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Unit</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "الوحدة" : "Unit"}</span>
                   <select
                     value={unit}
                     onChange={(e) => setUnit(e.target.value)}
                     className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
                   >
-                    <option value="Metric Tons">Metric Tons (MT)</option>
-                    <option value="Barrels">Barrels (BBL)</option>
+                    <option value="Metric Tons">{isAr ? "طن متري" : "Metric Tons (MT)"}</option>
+                    <option value="Barrels">{isAr ? "برميل" : "Barrels (BBL)"}</option>
                     <option value="MMBTU">MMBTU</option>
-                    <option value="Kilograms">Kilograms (Kg)</option>
+                    <option value="Kilograms">{isAr ? "كيلوغرام" : "Kilograms (Kg)"}</option>
                   </select>
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Target Price (USD per unit)</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "السعر للوحدة (USD)" : "Target Price (USD)"}</span>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm">$</span>
+                    <span className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm">$</span>
                     <input
                       type="number"
                       step="0.01"
                       min="1"
                       value={pricePerUnit}
                       onChange={(e) => setPricePerUnit(Number(e.target.value))}
-                      className="w-full bg-[#121422] border border-[#23273b] rounded-xl pl-8 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333] font-mono"
+                      className="w-full bg-[#121422] border border-[#23273b] rounded-xl pl-8 pr-4 rtl:pr-8 rtl:pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333] font-mono"
                     />
                   </div>
                 </div>
@@ -347,19 +339,19 @@ export default function NewDealPage({
               {/* Total Contract Estimated Value Banner */}
               <div className="p-4 rounded-2xl bg-[#121420] border border-[#b87333]/30 flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs text-gray-400">Total Benchmark Contract Value:</span>
+                  <span className="text-xs text-gray-400">{isAr ? "إجمالي القيمة التقديرية:" : "Total Contract Value:"}</span>
                   <div className="text-2xl font-bold font-mono text-[#d4956b]">
                     {formatCurrency(totalContractValue, "USD", locale)}
                   </div>
                 </div>
                 <div className="text-xs text-gray-400 font-mono">
-                  <span>GVCE Brokerage Fee: 1.25% at settlement</span>
+                  <span>{t.common.usdReference}</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Incoterm</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{t.catalog.incoterms}</span>
                   <select
                     value={incoterm}
                     onChange={(e) => setIncoterm(e.target.value)}
@@ -374,18 +366,18 @@ export default function NewDealPage({
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Named Port / Terminal</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "ميناء / محطة التسليم" : "Named Port / Terminal"}</span>
                   <input
                     type="text"
                     value={deliveryPort}
                     onChange={(e) => setDeliveryPort(e.target.value)}
-                    placeholder="e.g. Rotterdam, Houston, Jubail"
+                    placeholder="e.g. Rotterdam, Jubail"
                     className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
                   />
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">Delivery Laycan / Window</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "فترة التسليم" : "Delivery Window"}</span>
                   <input
                     type="text"
                     value={deliveryDateRange}
@@ -400,7 +392,7 @@ export default function NewDealPage({
             {/* Submit Action */}
             <div className="pt-4 border-t border-[#1f2233] flex items-center justify-between">
               <span className="text-xs text-gray-500 font-mono">
-                Encrypted & Subject to Non-Circumvention
+                {t.common.verifiedBrokerage}
               </span>
 
               <button
@@ -408,7 +400,7 @@ export default function NewDealPage({
                 disabled={isPending}
                 className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-sm shadow-xl shadow-[#b87333]/20 flex items-center gap-2 transition-all disabled:opacity-50"
               >
-                <span>{isPending ? "Registering Deal..." : "Submit to Broker Clearing"}</span>
+                <span>{isPending ? t.common.loading : (side === "buy" ? t.catalog.buyRequest : t.catalog.supplyOffer)}</span>
                 <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </button>
             </div>
@@ -417,7 +409,7 @@ export default function NewDealPage({
       </main>
 
       <footer className="py-6 border-t border-[#1f2233] text-center text-xs text-gray-500 font-mono">
-        GVCE Supervised Commodity Execution Engine • OWASP ASVS Verified
+        GVCE Supervised Commodity Execution Engine • {t.common.verifiedBrokerage}
       </footer>
     </div>
   );

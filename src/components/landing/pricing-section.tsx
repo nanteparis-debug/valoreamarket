@@ -18,6 +18,11 @@ interface PricingSectionProps {
     contactSales: string;
     registerFree?: string;
     getStarted?: string;
+    usdHeader?: string;
+    note?: string;
+    savePercent?: string;
+    recommended?: string;
+    usdCurrency?: string;
     starter: { name: string; description: string; features: string[] };
     professional: { name: string; description: string; features: string[] };
     enterprise: { name: string; description: string; features: string[] };
@@ -66,7 +71,7 @@ export function PricingSection({ translations }: PricingSectionProps) {
     <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-14">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#23273b] text-xs font-mono text-[#d4956b] mb-4">
-          <span>USD Denominated • Company Level</span>
+          <span>{translations.usdHeader || "USD Denominated • Company Level"}</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
           {translations.title}
@@ -99,7 +104,7 @@ export function PricingSection({ translations }: PricingSectionProps) {
           >
             <span>{translations.annually}</span>
             <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] text-white font-mono uppercase">
-              Save 20%
+              {translations.savePercent || "Save 20%"}
             </span>
           </button>
         </div>
@@ -123,7 +128,7 @@ export function PricingSection({ translations }: PricingSectionProps) {
             >
               {plan.isPopular && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-[#b87333] to-[#c9a961] text-white text-[11px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-md">
-                  <Sparkles className="w-3 h-3" /> Recommended
+                  <Sparkles className="w-3 h-3" /> {translations.recommended || "Recommended"}
                 </div>
               )}
 
@@ -135,7 +140,7 @@ export function PricingSection({ translations }: PricingSectionProps) {
 
                 {/* Price Display in USD */}
                 <div className="mt-6 flex items-baseline gap-1 font-mono">
-                  <span className="text-sm font-semibold text-[#d4956b]">USD</span>
+                  <span className="text-sm font-semibold text-[#d4956b]">{translations.usdCurrency || "USD"}</span>
                   <span className="text-4xl font-extrabold text-white">
                     ${price}
                   </span>
@@ -174,7 +179,7 @@ export function PricingSection({ translations }: PricingSectionProps) {
                   <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                 </Link>
                 <p className="text-[10px] text-gray-500 text-center mt-2.5">
-                  Subscription billed in USD • Brokerage commissions separate
+                  {translations.note || "Subscription billed in USD • Brokerage commissions separate"}
                 </p>
               </div>
             </div>

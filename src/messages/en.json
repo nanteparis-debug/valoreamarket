@@ -13,7 +13,15 @@
     "signIn": "Sign In",
     "getStarted": "Get Started",
     "dashboard": "Dashboard",
-    "language": "Language"
+    "language": "Language",
+    "brokerDesk": "Broker Desk",
+    "compliance": "Compliance",
+    "security": "Security",
+    "dealRooms": "Deal Rooms",
+    "billing": "Subscriptions & Invoicing",
+    "verifiedBadge": "Verified",
+    "siteSubtitle": "Global Verified Commodities Exchange",
+    "referenceCurrency": "Reference"
   },
   "hero": {
     "badge": "Trusted by companies in 50+ countries",
@@ -26,7 +34,13 @@
       "deals": "Deals Completed",
       "companies": "Verified Companies",
       "volume": "Trade Volume"
-    }
+    },
+    "subhead": "B2B Commodities Brokerage",
+    "asvsBadge": "OWASP ASVS Verified",
+    "pillarKyc": "KYC & KYB Multi-Stage Verification",
+    "pillarDealRooms": "Encrypted WebRTC Deal Rooms",
+    "pillarDocs": "Watermarked Redacted Documents",
+    "pillarLangs": "8 Languages & USD Pricing"
   },
   "sectors": {
     "title": "Commodity Sectors",
@@ -40,7 +54,16 @@
     "sugar": "Sugar",
     "viewAll": "View All Products",
     "buyRequest": "Buy Request",
-    "supplyOffer": "Supply Offer"
+    "supplyOffer": "Supply Offer",
+    "badge": "7 Verified Commodity Sectors",
+    "catalogCode": "Catalog Code:",
+    "usdDenominated": "USD Denominated",
+    "delivery": "Delivery: FOB / CIF / CFR",
+    "verifiedSpecs": "Verified Specs",
+    "benchmarkSpecs": "Benchmark Specs:",
+    "coaInspection": "COA & SGS Inspection Ready",
+    "usdPerTon": "USD / Metric Ton",
+    "supportedIncoterms": "Supported Incoterms:"
   },
   "howItWorks": {
     "title": "How It Works",
@@ -60,7 +83,8 @@
     "step4": {
       "title": "Agree & Trade",
       "description": "Sign agreements, finalize terms, and proceed to settlement through your banking channels."
-    }
+    },
+    "phaseOf": "Phase {num} of 04"
   },
   "features": {
     "title": "Why GVCE",
@@ -88,7 +112,25 @@
     "commissions": {
       "title": "Transparent Commissions",
       "description": "Clear commission structure tied to deal milestones with full audit trail and invoicing."
-    }
+    },
+    "eyebrow": "OWASP ASVS & Enterprise Grade",
+    "step1Badge": "Step 01",
+    "step1Title": "KYC Representative",
+    "step1Desc": "Biometric & Legal ID",
+    "step2Badge": "Step 02",
+    "step2Title": "KYB Company",
+    "step2Desc": "Registry & UBO Check",
+    "step3Badge": "Step 03",
+    "step3Title": "Cargo Right Check",
+    "step3Desc": "Proof of Supply & Sanctions",
+    "passkeyBadge": "WebAuthn FIDO2",
+    "passkeySub": "Phishing Resistant",
+    "dealRoomsBadge": "E2EE Audio / Video",
+    "dealRoomsSub": "Broker Supervised",
+    "watermarkSample": "Viewer: [BUYER-ALPHA-89] • Session: [2026-11-13] • Redacted",
+    "ownerConsent": "Owner Consent Required",
+    "antiCopy": "Anti-copy & Print Disabled",
+    "originalEncrypted": "Original Stays Encrypted"
   },
   "pricing": {
     "title": "Subscription Plans",
@@ -137,7 +179,12 @@
         "Centralized billing",
         "Dedicated account manager"
       ]
-    }
+    },
+    "usdHeader": "USD Denominated • Company Level",
+    "note": "Subscription billed in USD • Brokerage commissions separate",
+    "savePercent": "Save 20%",
+    "recommended": "Recommended",
+    "usdCurrency": "USD"
   },
   "footer": {
     "description": "Trusted international brokerage connecting verified buyers and suppliers of commodities worldwide.",
@@ -153,7 +200,17 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved."
+    "rights": "© {year} GVCE. All rights reserved.",
+    "platformCatalog": "Commodities Catalog",
+    "platformBroker": "Broker Command Center",
+    "platformCompliance": "KYC/KYB Verification",
+    "platformBilling": "Subscriptions & Invoicing",
+    "platformSecurity": "Passkeys & Active Sessions",
+    "legalNcnda": "NCNDA & Non-Circumvention",
+    "legalBrokerage": "Brokerage & Cargo Settlement",
+    "badgeUsd": "USD Benchmark Settlement",
+    "badgeBanks": "Independent Banking Channels",
+    "badgeVerified": "Verified International Brokerage"
   },
   "auth": {
     "signIn": "Sign In",
@@ -315,5 +372,30 @@
     "noResults": "No results found",
     "showMore": "Show More",
     "showLess": "Show Less"
+  },
+  "dealRoomPreview": {
+    "badge": "Interactive Deal Room Experience",
+    "title": "Supervised Anonymous Deal Room",
+    "subtitle": "Complete confidentiality with zero contact leaks. LiveKit E2EE video, watermarked document inspection, and broker arbitration.",
+    "roomReference": "ROOM",
+    "e2eeActive": "E2EE ACTIVE",
+    "dealSummary": "50,000 MT Diesel EN 590 10PPM • CIF Rotterdam • USD 740/MT",
+    "buyerAlias": "Buyer-Alpha-24",
+    "supplierAlias": "Supplier-Nordic-77",
+    "brokerLead": "Broker Lead (GVCE)",
+    "tabChat": "Encrypted Chat",
+    "tabDocuments": "Watermarked Documents",
+    "tabAgreements": "Agreements & Milestones",
+    "sampleMessage1": "We require confirmed delivery port CIF Rotterdam between Dec 10 and Dec 20. Can you guarantee SGS testing at loading?",
+    "sampleMessage2": "Yes, SGS inspection at loading port is fully accepted. We have uploaded the redacted Certificate of Analysis to the Documents tab.",
+    "leakNotice": "Simulated encrypted session - all messages checked for contact information.",
+    "enterRoomBtn": "Enter Live Deal Room",
+    "doc1Title": "Certificate of Analysis (COA) - Refinery Batch #441",
+    "doc1Type": "Quality & Compliance Certificate",
+    "doc2Title": "SGS Independent Load Port Inspection Report",
+    "doc2Type": "Certified Inspection Report",
+    "previewBtn": "Watermarked Preview",
+    "agreementTitle": "Diesel EN590 Sale & Purchase Agreement & Commission Schedule",
+    "agreementTerms": "Supplier: Supplier-Nordic-77 | Buyer: Buyer-Alpha-24 | Quantity: 50,000 MT | Price: USD 740/MT CIF Rotterdam | Settlement: 100% LC at sight via banking channels | Brokerage Fee: 1.25% in USD."
   }
 }

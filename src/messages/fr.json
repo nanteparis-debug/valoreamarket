@@ -13,7 +13,15 @@
     "signIn": "Connexion",
     "getStarted": "Commencer",
     "dashboard": "Tableau de bord",
-    "language": "Langue"
+    "language": "Langue",
+    "brokerDesk": "Bureau de courtage",
+    "compliance": "Conformité",
+    "security": "Sécurité",
+    "dealRooms": "Salles de négociation",
+    "billing": "Abonnements et facturation",
+    "verifiedBadge": "Vérifié",
+    "siteSubtitle": "Bourse mondiale des matières premières vérifiées",
+    "referenceCurrency": "Devise de référence"
   },
   "hero": {
     "badge": "Approuvé par des entreprises dans plus de 50 pays",
@@ -26,7 +34,13 @@
       "deals": "Transactions Complétées",
       "companies": "Entreprises Vérifiées",
       "volume": "Volume d'Échanges"
-    }
+    },
+    "subhead": "Courtage de matières premières B2B",
+    "asvsBadge": "Certifié OWASP ASVS",
+    "pillarKyc": "Vérification en plusieurs étapes KYC/KYB",
+    "pillarDealRooms": "Salles de négociation chiffrées WebRTC",
+    "pillarDocs": "Documents filigranés et caviardés",
+    "pillarLangs": "8 langues et tarification en USD"
   },
   "sectors": {
     "title": "Secteurs de Matières Premières",
@@ -40,7 +54,16 @@
     "sugar": "Sucre",
     "viewAll": "Voir Tous les Produits",
     "buyRequest": "Demande d'Achat",
-    "supplyOffer": "Offre de Fourniture"
+    "supplyOffer": "Offre de Fourniture",
+    "badge": "7 secteurs de matières premières vérifiés",
+    "catalogCode": "Code catalogue :",
+    "usdDenominated": "Libellé en USD",
+    "delivery": "Livraison : FOB / CIF / CFR",
+    "verifiedSpecs": "Spécifications vérifiées",
+    "benchmarkSpecs": "Spécifications de référence :",
+    "coaInspection": "Certificat d'analyse & inspection SGS prêts",
+    "usdPerTon": "USD / Tonne métrique",
+    "supportedIncoterms": "Incoterms supportés :"
   },
   "howItWorks": {
     "title": "Comment ça Marche",
@@ -60,7 +83,8 @@
     "step4": {
       "title": "Accord et Commerce",
       "description": "Signez les accords, finalisez les conditions et procédez au règlement via vos canaux bancaires."
-    }
+    },
+    "phaseOf": "Phase {num} sur 04"
   },
   "features": {
     "title": "Pourquoi GVCE",
@@ -88,7 +112,25 @@
     "commissions": {
       "title": "Commissions Transparentes",
       "description": "Structure de commissions claire liée aux étapes de la transaction avec piste d'audit complète et facturation."
-    }
+    },
+    "eyebrow": "Normes bancaires et d'entreprise",
+    "step1Badge": "Étape 01",
+    "step1Title": "Représentant KYC",
+    "step1Desc": "Identité biométrique et légale",
+    "step2Badge": "Étape 02",
+    "step2Title": "Entreprise KYB",
+    "step2Desc": "Registre et vérification des bénéficiaires effectifs",
+    "step3Badge": "Étape 03",
+    "step3Title": "Droits sur la cargaison",
+    "step3Desc": "Preuve d'approvisionnement et sanctions",
+    "passkeyBadge": "Clés FIDO2 WebAuthn",
+    "passkeySub": "Résistant au phishing",
+    "dealRoomsBadge": "Audio / Vidéo chiffré E2EE",
+    "dealRoomsSub": "Sous supervision d'un courtier",
+    "watermarkSample": "Visualisation sécurisée : [ACHETEUR-ALPHA-89] • Session : [2026-11-13]",
+    "ownerConsent": "Consentement du propriétaire requis",
+    "antiCopy": "Anti-copie et impression désactivée",
+    "originalEncrypted": "L'original reste chiffré"
   },
   "pricing": {
     "title": "Plans d'Abonnement",
@@ -137,7 +179,12 @@
         "Facturation centralisée",
         "Gestionnaire de compte dédié"
       ]
-    }
+    },
+    "usdHeader": "Libellé en USD • Niveau Entreprise",
+    "note": "Abonnement facturé en USD • Commissions de courtage distinctes",
+    "savePercent": "Économisez 20%",
+    "recommended": "Recommandé",
+    "usdCurrency": "USD"
   },
   "footer": {
     "description": "Plateforme de courtage international fiable reliant acheteurs et fournisseurs vérifiés de matières premières dans le monde entier.",
@@ -153,7 +200,17 @@
     "careers": "Carrières",
     "aboutUs": "À Propos",
     "blog": "Blog",
-    "rights": "© {year} GVCE. Tous droits réservés."
+    "rights": "© {year} GVCE. Tous droits réservés.",
+    "platformCatalog": "Catalogue de matières premières",
+    "platformBroker": "Centre de commande de courtage",
+    "platformCompliance": "Vérification KYC/KYB",
+    "platformBilling": "Abonnements et factures",
+    "platformSecurity": "Clés d'accès et sessions",
+    "legalNcnda": "Accord de non-contournement (NCNDA)",
+    "legalBrokerage": "Courtage et règlement de fret",
+    "badgeUsd": "Règlement de référence en USD",
+    "badgeBanks": "Canaux bancaires indépendants",
+    "badgeVerified": "Courtage international vérifié"
   },
   "auth": {
     "signIn": "Connexion",
@@ -315,5 +372,30 @@
     "noResults": "Aucun résultat trouvé",
     "showMore": "Voir plus",
     "showLess": "Voir moins"
+  },
+  "dealRoomPreview": {
+    "badge": "Expérience interactive de salle de négociation",
+    "title": "Salle de négociation anonyme supervisée",
+    "subtitle": "Confidentialité totale sans fuite de contact. Vidéo E2EE, inspection avec filigrane et supervision.",
+    "roomReference": "SALLE",
+    "e2eeActive": "CHIFFREMENT E2EE ACTIF",
+    "dealSummary": "50 000 TM Diesel EN 590 10PPM • CIF Rotterdam • USD 740/TM",
+    "buyerAlias": "Acheteur-Alpha-24",
+    "supplierAlias": "Fournisseur-Nordic-77",
+    "brokerLead": "Courtier superviseur (GVCE)",
+    "tabChat": "Chat chiffré",
+    "tabDocuments": "Documents filigranés",
+    "tabAgreements": "Accords et commissions",
+    "sampleMessage1": "Nous demandons une livraison CIF Rotterdam entre le 10 et le 20 décembre. Pouvez-vous garantir une inspection SGS au chargement ?",
+    "sampleMessage2": "Oui, l'inspection SGS au port de chargement est pleinement acceptée. Le certificat d'analyse caviardé est dans l'onglet Documents.",
+    "leakNotice": "Session chiffrée - tous les messages sont filtrés pour empêcher les fuites de coordonnées.",
+    "enterRoomBtn": "Accéder à la salle en direct",
+    "doc1Title": "Certificat d'analyse (COA) - Lot de raffinerie #441",
+    "doc1Type": "Certificat de qualité et conformité",
+    "doc2Title": "Rapport d'inspection indépendant SGS au chargement",
+    "doc2Type": "Rapport d'inspection certifié",
+    "previewBtn": "Aperçu filigrané",
+    "agreementTitle": "Contrat de vente Diesel EN590 & Barème de courtage",
+    "agreementTerms": "Vendeur : Fournisseur-Nordic-77 | Acheteur : Acheteur-Alpha-24 | Quantité : 50 000 TM | Prix : 740 USD/TM CIF Rotterdam | Règlement : LC 100% à vue via banques commerciales | Commission : 1,25% USD."
   }
 }

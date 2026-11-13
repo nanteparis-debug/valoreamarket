@@ -11,6 +11,7 @@ interface HowItWorksProps {
     step2: { title: string; description: string };
     step3: { title: string; description: string };
     step4: { title: string; description: string };
+    phaseOf?: string;
   };
 }
 
@@ -77,7 +78,9 @@ export function HowItWorks({ translations }: HowItWorksProps) {
             </div>
 
             <div className="mt-6 pt-4 border-t border-[#1a1d2e] flex items-center gap-2 text-[11px] font-mono text-gray-500 uppercase">
-              <span>Phase {step.num} of 04</span>
+              <span>
+                {(translations.phaseOf || "Phase {num} of 04").replace("{num}", step.num)}
+              </span>
             </div>
           </div>
         ))}

@@ -20,6 +20,7 @@ export default async function HomePage({
   const tSectors = await getTranslations({ locale, namespace: "sectors" });
   const tHowItWorks = await getTranslations({ locale, namespace: "howItWorks" });
   const tFeatures = await getTranslations({ locale, namespace: "features" });
+  const tDealRoom = await getTranslations({ locale, namespace: "dealRoomPreview" });
   const tPricing = await getTranslations({ locale, namespace: "pricing" });
   const tFooter = await getTranslations({ locale, namespace: "footer" });
 
@@ -36,6 +37,14 @@ export default async function HomePage({
           signIn: tNav("signIn"),
           getStarted: tNav("getStarted"),
           language: tNav("language"),
+          brokerDesk: tNav("brokerDesk"),
+          compliance: tNav("compliance"),
+          security: tNav("security"),
+          dealRooms: tNav("dealRooms"),
+          billing: tNav("billing"),
+          verifiedBadge: tNav("verifiedBadge"),
+          siteSubtitle: tNav("siteSubtitle"),
+          referenceCurrency: tNav("referenceCurrency"),
         }}
       />
 
@@ -55,6 +64,12 @@ export default async function HomePage({
               companies: tHero("stats.companies"),
               volume: tHero("stats.volume"),
             },
+            subhead: tHero("subhead"),
+            asvsBadge: tHero("asvsBadge"),
+            pillarKyc: tHero("pillarKyc"),
+            pillarDealRooms: tHero("pillarDealRooms"),
+            pillarDocs: tHero("pillarDocs"),
+            pillarLangs: tHero("pillarLangs"),
           }}
         />
 
@@ -66,6 +81,15 @@ export default async function HomePage({
             viewAll: tSectors("viewAll"),
             buyRequest: tSectors("buyRequest"),
             supplyOffer: tSectors("supplyOffer"),
+            badge: tSectors("badge"),
+            catalogCode: tSectors("catalogCode"),
+            usdDenominated: tSectors("usdDenominated"),
+            delivery: tSectors("delivery"),
+            verifiedSpecs: tSectors("verifiedSpecs"),
+            benchmarkSpecs: tSectors("benchmarkSpecs"),
+            coaInspection: tSectors("coaInspection"),
+            usdPerTon: tSectors("usdPerTon"),
+            supportedIncoterms: tSectors("supportedIncoterms"),
             sectors: {
               crudeOil: tSectors("crudeOil"),
               refinedPetroleum: tSectors("refinedPetroleum"),
@@ -83,6 +107,7 @@ export default async function HomePage({
           translations={{
             title: tHowItWorks("title"),
             subtitle: tHowItWorks("subtitle"),
+            phaseOf: tHowItWorks("phaseOf"),
             step1: {
               title: tHowItWorks("step1.title"),
               description: tHowItWorks("step1.description"),
@@ -103,7 +128,33 @@ export default async function HomePage({
         />
 
         {/* 4. Supervised Anonymous Deal Room Interactive Simulator */}
-        <DealRoomPreview />
+        <DealRoomPreview
+          translations={{
+            badge: tDealRoom("badge"),
+            title: tDealRoom("title"),
+            subtitle: tDealRoom("subtitle"),
+            roomReference: tDealRoom("roomReference"),
+            e2eeActive: tDealRoom("e2eeActive"),
+            dealSummary: tDealRoom("dealSummary"),
+            buyerAlias: tDealRoom("buyerAlias"),
+            supplierAlias: tDealRoom("supplierAlias"),
+            brokerLead: tDealRoom("brokerLead"),
+            tabChat: tDealRoom("tabChat"),
+            tabDocuments: tDealRoom("tabDocuments"),
+            tabAgreements: tDealRoom("tabAgreements"),
+            sampleMessage1: tDealRoom("sampleMessage1"),
+            sampleMessage2: tDealRoom("sampleMessage2"),
+            leakNotice: tDealRoom("leakNotice"),
+            enterRoomBtn: tDealRoom("enterRoomBtn"),
+            doc1Title: tDealRoom("doc1Title"),
+            doc1Type: tDealRoom("doc1Type"),
+            doc2Title: tDealRoom("doc2Title"),
+            doc2Type: tDealRoom("doc2Type"),
+            previewBtn: tDealRoom("previewBtn"),
+            agreementTitle: tDealRoom("agreementTitle"),
+            agreementTerms: tDealRoom("agreementTerms"),
+          }}
+        />
 
         {/* 5. Enterprise Verification & Security Features */}
         <FeaturesSection
@@ -134,6 +185,24 @@ export default async function HomePage({
               title: tFeatures("commissions.title"),
               description: tFeatures("commissions.description"),
             },
+            eyebrow: tFeatures("eyebrow"),
+            step1Badge: tFeatures("step1Badge"),
+            step1Title: tFeatures("step1Title"),
+            step1Desc: tFeatures("step1Desc"),
+            step2Badge: tFeatures("step2Badge"),
+            step2Title: tFeatures("step2Title"),
+            step2Desc: tFeatures("step2Desc"),
+            step3Badge: tFeatures("step3Badge"),
+            step3Title: tFeatures("step3Title"),
+            step3Desc: tFeatures("step3Desc"),
+            passkeyBadge: tFeatures("passkeyBadge"),
+            passkeySub: tFeatures("passkeySub"),
+            dealRoomsBadge: tFeatures("dealRoomsBadge"),
+            dealRoomsSub: tFeatures("dealRoomsSub"),
+            watermarkSample: tFeatures("watermarkSample"),
+            ownerConsent: tFeatures("ownerConsent"),
+            antiCopy: tFeatures("antiCopy"),
+            originalEncrypted: tFeatures("originalEncrypted"),
           }}
         />
 
@@ -151,6 +220,11 @@ export default async function HomePage({
             contactSales: tPricing("contactSales"),
             registerFree: tPricing("registerFree"),
             getStarted: tPricing("getStarted"),
+            usdHeader: tPricing("usdHeader"),
+            note: tPricing("note"),
+            savePercent: tPricing("savePercent"),
+            recommended: tPricing("recommended"),
+            usdCurrency: tPricing("usdCurrency"),
             starter: {
               name: tPricing("starter.name"),
               description: tPricing("starter.description"),
@@ -205,6 +279,17 @@ export default async function HomePage({
           contactUs: tFooter("contactUs"),
           aboutUs: tFooter("aboutUs"),
           rights: tFooter("rights"),
+          platformCatalog: tFooter("platformCatalog"),
+          platformBroker: tFooter("platformBroker"),
+          platformCompliance: tFooter("platformCompliance"),
+          platformBilling: tFooter("platformBilling"),
+          platformSecurity: tFooter("platformSecurity"),
+          legalNcnda: tFooter("legalNcnda"),
+          legalBrokerage: tFooter("legalBrokerage"),
+          badgeUsd: tFooter("badgeUsd"),
+          badgeBanks: tFooter("badgeBanks"),
+          badgeVerified: tFooter("badgeVerified"),
+          languagesTitle: tNav("language"),
         }}
       />
     </div>

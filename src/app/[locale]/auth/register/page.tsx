@@ -2,30 +2,26 @@
 
 import React, { useState } from "react";
 import { useRouter } from "@/i18n/routing";
+import { useParams } from "next/navigation";
+import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import {
-  Building2,
   FileBadge2,
-  ShieldCheck,
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
-  Upload,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
-export default function RegisterPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default function RegisterPage() {
   const router = useRouter();
-  const [step, setStep] = useState(1);
+  const params = useParams();
+  const locale = (params?.locale as string) || "en";
+  const t = getSubpageTranslations(locale);
+
   const [companyName, setCompanyName] = useState("");
   const [regNumber, setRegNumber] = useState("");
   const [country, setCountry] = useState("FR");
   const [repName, setRepName] = useState("");
   const [repEmail, setRepEmail] = useState("");
-  const [role, setRole] = useState("buyer");
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,7 +37,7 @@ export default function RegisterPage({
           className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5 rtl:rotate-180" />
-          <span>Back to Home</span>
+          <span>{t.auth.backHome}</span>
         </button>
 
         {submitted ? (
@@ -50,20 +46,20 @@ export default function RegisterPage({
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <h2 className="text-2xl font-bold text-white">
-              Verification File Submitted
+              {t.auth.registerTitle}
             </h2>
             <p className="text-xs sm:text-sm text-gray-400 max-w-md mx-auto">
-              Your KYB & KYC application for <strong className="text-white">{companyName}</strong> has been forwarded to the GVCE Compliance & Sanctions Officer for review.
+              {t.contact.successDesc}
             </p>
             <div className="p-3 rounded-xl bg-[#141724] border border-[#23273b] text-xs font-mono text-[#d4956b] inline-block">
-              Review Status: PENDING_REVIEW (Est. 4-12 Hours)
+              KYC/KYB: PENDING_REVIEW
             </div>
             <div className="pt-4">
               <button
                 onClick={() => router.push("/deals/deal-en590-rotterdam/room")}
                 className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] text-white text-xs font-semibold"
               >
-                Access Demo Deal Room
+                {t.catalog.title}
               </button>
             </div>
           </div>
@@ -72,37 +68,37 @@ export default function RegisterPage({
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#23273b] text-xs font-mono text-[#d4956b] mb-2">
                 <FileBadge2 className="w-3.5 h-3.5" />
-                <span>KYB & KYC Multi-Stage Verification</span>
+                <span>{t.auth.registerBadge}</span>
               </div>
               <h1 className="text-2xl font-bold text-white">
-                Register Verified Enterprise
+                {t.auth.registerTitle}
               </h1>
               <p className="text-xs text-gray-400 mt-1">
-                Enter your legal company credentials to qualify for international brokerage deal rooms.
+                {t.auth.registerSubtitle}
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Company Legal Name</label>
+                <label className="text-xs text-gray-400 block mb-1">{t.auth.companyLabel}</label>
                 <input
                   type="text"
                   required
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  placeholder="e.g. TotalEnergies Trading SA"
+                  placeholder="TotalEnergies Trading SA"
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Commercial Registration Number</label>
+                <label className="text-xs text-gray-400 block mb-1">Commercial Registration (CR)</label>
                 <input
                   type="text"
                   required
                   value={regNumber}
                   onChange={(e) => setRegNumber(e.target.value)}
-                  placeholder="e.g. RCS Paris 542 051 180"
+                  placeholder="RCS 542 051 180"
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 />
               </div>
@@ -110,84 +106,72 @@ export default function RegisterPage({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Country of Registration</label>
+                <label className="text-xs text-gray-400 block mb-1">{t.auth.countryLabel}</label>
                 <select
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 >
-                  <option value="FR">France (FR)</option>
-                  <option value="SA">Saudi Arabia (SA)</option>
+                  <option value="CH">Switzerland (CH)</option>
                   <option value="AE">United Arab Emirates (AE)</option>
+                  <option value="SA">Saudi Arabia (SA)</option>
+                  <option value="FR">France (FR)</option>
+                  <option value="GB">United Kingdom (GB)</option>
+                  <option value="SG">Singapore (SG)</option>
                   <option value="US">United States (US)</option>
-                  <option value="DE">Germany (DE)</option>
-                  <option value="MA">Morocco (MA)</option>
-                  <option value="JP">Japan (JP)</option>
-                  <option value="CN">China (CN)</option>
-                  <option value="BR">Brazil (BR)</option>
                 </select>
               </div>
 
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Primary Role</label>
-                <select
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
-                >
-                  <option value="buyer">Qualified Buyer</option>
-                  <option value="supplier">Certified Producer / Supplier</option>
-                  <option value="both">Both (Integrated Trader)</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="text-xs text-gray-400 block mb-1">Authorized Representative Full Name</label>
+                <label className="text-xs text-gray-400 block mb-1">{t.auth.fullNameLabel}</label>
                 <input
                   type="text"
                   required
                   value={repName}
                   onChange={(e) => setRepName(e.target.value)}
-                  placeholder="e.g. Jean-Luc Dubois"
-                  className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs text-gray-400 block mb-1">Representative Corporate Email</label>
-                <input
-                  type="email"
-                  required
-                  value={repEmail}
-                  onChange={(e) => setRepEmail(e.target.value)}
-                  placeholder="jl.dubois@totalenergies.com"
+                  placeholder="Legal Officer"
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 />
               </div>
             </div>
 
-            {/* Document Upload Simulation */}
-            <div className="p-4 rounded-2xl bg-[#0f111a] border border-[#23273b] space-y-2">
-              <span className="text-xs text-gray-300 font-semibold block">
-                Commercial Registry Certificate & Power of Attorney
-              </span>
-              <div className="border border-dashed border-[#2f354d] hover:border-[#b87333] rounded-xl p-4 text-center cursor-pointer transition-colors">
-                <Upload className="w-5 h-5 text-gray-400 mx-auto mb-1" />
-                <span className="text-xs text-gray-400">
-                  Click or drag official PDF certificate (Max 25 MB)
-                </span>
-              </div>
+            <div>
+              <label className="text-xs text-gray-400 block mb-1">{t.auth.emailLabel}</label>
+              <input
+                type="email"
+                required
+                value={repEmail}
+                onChange={(e) => setRepEmail(e.target.value)}
+                placeholder={t.auth.emailPlaceholder}
+                className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
+              />
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-[#121422] border border-[#23273b] text-xs text-gray-400">
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input type="checkbox" required className="mt-0.5 rounded text-[#b87333]" />
+                <span>{t.auth.agreeTerms}</span>
+              </label>
             </div>
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white text-xs font-semibold shadow-lg shadow-[#b87333]/20 flex items-center justify-center gap-2 transition-all"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-xs shadow-lg shadow-[#b87333]/20 transition-all flex items-center justify-center gap-2"
             >
-              <span>Submit for Compliance Verification</span>
+              <span>{t.auth.registerBtn}</span>
               <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </button>
+
+            <div className="text-center text-xs text-gray-400 pt-2">
+              <span>{t.auth.alreadyAccount} </span>
+              <button
+                type="button"
+                onClick={() => router.push("/auth/signin")}
+                className="text-[#d4956b] hover:underline font-semibold"
+              >
+                {t.auth.signInLink}
+              </button>
+            </div>
           </form>
         )}
       </div>

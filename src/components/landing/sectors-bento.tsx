@@ -13,10 +13,7 @@ import {
   Package,
   ArrowRight,
   Filter,
-  CheckCircle2,
-  FileText,
   FileCheck2,
-  Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -28,6 +25,15 @@ interface SectorsBentoProps {
     buyRequest: string;
     supplyOffer: string;
     sectors: Record<string, string>;
+    badge?: string;
+    catalogCode?: string;
+    usdDenominated?: string;
+    delivery?: string;
+    verifiedSpecs?: string;
+    benchmarkSpecs?: string;
+    coaInspection?: string;
+    usdPerTon?: string;
+    supportedIncoterms?: string;
   };
 }
 
@@ -56,7 +62,7 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
       <div className="text-center max-w-3xl mx-auto mb-16">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#23273b] text-xs font-mono text-[#d4956b] mb-4">
           <Filter className="w-3.5 h-3.5" />
-          <span>7 Verified Commodity Sectors</span>
+          <span>{translations.badge || "7 Verified Commodity Sectors"}</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
           {translations.title}
@@ -66,9 +72,9 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
         </p>
       </div>
 
-      {/* Sector Pill Tabs */}
-      <div className="w-full overflow-x-auto pb-4 mb-10 no-scrollbar">
-        <div className="flex items-center gap-2 min-w-max mx-auto px-4 sm:px-6">
+      {/* Sector Pill Tabs - Fully RTL-safe and never cuts off the first or last pill */}
+      <div className="w-full overflow-x-auto pb-4 mb-10 no-scrollbar" dir="inherit">
+        <div className="inline-flex items-center gap-2 min-w-full px-4 sm:px-6 justify-start lg:justify-center">
           {COMMODITY_SECTORS.map((sector) => {
             const isActive = sector.id === activeSectorId;
             const sectorName =
@@ -79,7 +85,7 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
                 key={sector.id}
                 onClick={() => setActiveSectorId(sector.id)}
                 className={cn(
-                  "flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all border",
+                  "flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all border shrink-0",
                   isActive
                     ? "bg-[#181a27] border-[#b87333] text-white shadow-lg shadow-[#b87333]/15"
                     : "bg-[#0d0f17] border-[#23273b] text-gray-400 hover:text-white hover:border-[#383d5a]"
@@ -115,7 +121,7 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
                   {translations.sectors[activeSector.titleKey] || activeSector.slug}
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-400 mt-1 font-mono">
-                  Catalog Code: <span className="text-[#d4956b]">{activeSector.slug}</span> • USD Denominated • Delivery: FOB / CIF / CFR
+                  {translations.catalogCode || "Catalog Code:"} <span className="text-[#d4956b]">{activeSector.slug}</span> • {translations.usdDenominated || "USD Denominated"} • {translations.delivery || "Delivery: FOB / CIF / CFR"}
                 </p>
               </div>
             </div>
@@ -153,20 +159,22 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
                     {item.name}
                   </h4>
                   <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
-                    Verified Specs
+                    {translations.verifiedSpecs || "Verified Specs"}
                   </span>
                 </div>
                 <p className="mt-2 text-xs sm:text-sm text-gray-400 font-mono">
-                  <span className="text-gray-500">Benchmark Specs:</span> {item.specs}
+                  <span className="text-gray-500">{translations.benchmarkSpecs || "Benchmark Specs:"}</span> {item.specs}
                 </p>
               </div>
 
               <div className="mt-5 pt-4 border-t border-[#1a1d2e] flex items-center justify-between text-xs text-gray-400">
                 <span className="flex items-center gap-1.5">
                   <FileCheck2 className="w-3.5 h-3.5 text-[#d4956b]" />
-                  COA & SGS Inspection Ready
+                  {translations.coaInspection || "COA & SGS Inspection Ready"}
                 </span>
-                <span className="font-mono text-gray-300">USD / Metric Ton</span>
+                <span className="font-mono text-gray-300">
+                  {translations.usdPerTon || "USD / Metric Ton"}
+                </span>
               </div>
             </div>
           ))}
@@ -175,7 +183,9 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
         {/* Incoterms & Inspection Footnote */}
         <div className="mt-8 pt-6 border-t border-[#1f2233] flex flex-wrap items-center justify-between gap-4 text-xs text-gray-400">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-gray-300">Supported Incoterms:</span>
+            <span className="font-semibold text-gray-300">
+              {translations.supportedIncoterms || "Supported Incoterms:"}
+            </span>
             <div className="flex flex-wrap gap-1">
               {["FOB", "CIF", "CFR", "DAP", "CPT", "FCA"].map((term) => (
                 <span

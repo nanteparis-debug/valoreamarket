@@ -13,7 +13,15 @@
     "signIn": "Iniciar Sesión",
     "getStarted": "Comenzar",
     "dashboard": "Panel",
-    "language": "Idioma"
+    "language": "Idioma",
+    "brokerDesk": "Mesa de Corretaje",
+    "compliance": "Cumplimiento",
+    "security": "Seguridad",
+    "dealRooms": "Salas de Negociación",
+    "billing": "Suscripciones y Facturación",
+    "verifiedBadge": "Verificado",
+    "siteSubtitle": "Bolsa Global de Materias Primas Verificadas",
+    "referenceCurrency": "Referencia"
   },
   "hero": {
     "badge": "Confiado por empresas en más de 50 países",
@@ -26,7 +34,13 @@
       "deals": "Deals Completed",
       "companies": "Verified Companies",
       "volume": "Trade Volume"
-    }
+    },
+    "subhead": "Corretaje de Materias Primas B2B",
+    "asvsBadge": "Verificado OWASP ASVS",
+    "pillarKyc": "Verificación en Múltiples Fases KYC/KYB",
+    "pillarDealRooms": "Salas de Negociación Cifradas WebRTC",
+    "pillarDocs": "Documentos con Marca de Agua y Redactados",
+    "pillarLangs": "8 Idiomas y Precios en USD"
   },
   "sectors": {
     "title": "Sectores de Materias Primas",
@@ -40,7 +54,16 @@
     "sugar": "Azúcar",
     "viewAll": "View All Products",
     "buyRequest": "Buy Request",
-    "supplyOffer": "Supply Offer"
+    "supplyOffer": "Supply Offer",
+    "badge": "7 sectores de materias primas verificados",
+    "catalogCode": "Código de catálogo:",
+    "usdDenominated": "Denominado en USD",
+    "delivery": "Entrega: FOB / CIF / CFR",
+    "verifiedSpecs": "Especificaciones verificadas",
+    "benchmarkSpecs": "Especificaciones de referencia:",
+    "coaInspection": "COA e inspección SGS listos",
+    "usdPerTon": "USD / Tonelada métrica",
+    "supportedIncoterms": "Incoterms admitidos:"
   },
   "howItWorks": {
     "title": "How It Works",
@@ -60,7 +83,8 @@
     "step4": {
       "title": "Agree & Trade",
       "description": "Sign agreements, finalize terms, and proceed to settlement through your banking channels."
-    }
+    },
+    "phaseOf": "Fase {num} de 04"
   },
   "features": {
     "title": "Why GVCE",
@@ -88,7 +112,25 @@
     "commissions": {
       "title": "Transparent Commissions",
       "description": "Clear commission structure tied to deal milestones with full audit trail and invoicing."
-    }
+    },
+    "eyebrow": "Estándares Bancarios y Empresariales",
+    "step1Badge": "Paso 01",
+    "step1Title": "Representante KYC",
+    "step1Desc": "Identidad Biométrica y Legal",
+    "step2Badge": "Paso 02",
+    "step2Title": "Empresa KYB",
+    "step2Desc": "Registro y Titularidad Real (UBO)",
+    "step3Badge": "Paso 03",
+    "step3Title": "Derechos de Carga",
+    "step3Desc": "Prueba de Suministro y Sanciones",
+    "passkeyBadge": "Passkeys FIDO2 WebAuthn",
+    "passkeySub": "Resistente a Phishing",
+    "dealRoomsBadge": "Audio/Video Cifrado E2EE",
+    "dealRoomsSub": "Supervisado por Corredor",
+    "watermarkSample": "Visualización Segura: [COMPRADOR-ALPHA-89] • Sesión: [2026-11-13]",
+    "ownerConsent": "Consentimiento del Propietario Requerido",
+    "antiCopy": "Anti-copia e Impresión Deshabilitada",
+    "originalEncrypted": "El Original Permanece Cifrado"
   },
   "pricing": {
     "title": "Subscription Plans",
@@ -137,7 +179,12 @@
       ]
     },
     "registerFree": "Registro Gratis",
-    "getStarted": "Comenzar"
+    "getStarted": "Comenzar",
+    "usdHeader": "Denominado en USD • Nivel Corporativo",
+    "note": "Suscripción facturada en USD • Comisiones de corretaje separadas",
+    "savePercent": "Ahorre 20%",
+    "recommended": "Recomendado",
+    "usdCurrency": "USD"
   },
   "footer": {
     "description": "Trusted international brokerage connecting verified buyers and suppliers of commodities worldwide.",
@@ -153,7 +200,17 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved."
+    "rights": "© {year} GVCE. All rights reserved.",
+    "platformCatalog": "Catálogo de Materias Primas",
+    "platformBroker": "Centro de Mando del Corredor",
+    "platformCompliance": "Verificación KYC/KYB",
+    "platformBilling": "Suscripciones y Facturación",
+    "platformSecurity": "Passkeys y Sesiones Activas",
+    "legalNcnda": "Acuerdo de No Elusión (NCNDA)",
+    "legalBrokerage": "Corretaje y Liquidación de Carga",
+    "badgeUsd": "Liquidación de Referencia en USD",
+    "badgeBanks": "Canales Bancarios Independientes",
+    "badgeVerified": "Corretaje Internacional Verificado"
   },
   "auth": {
     "signIn": "Sign In",
@@ -315,5 +372,30 @@
     "noResults": "No results found",
     "showMore": "Show More",
     "showLess": "Show Less"
+  },
+  "dealRoomPreview": {
+    "badge": "Experiencia Interactiva de Sala de Trato",
+    "title": "Sala de Negociación Anónima Supervisada",
+    "subtitle": "Confidencialidad total sin filtración de contactos. Video E2EE, inspección con marca de agua y arbitraje.",
+    "roomReference": "SALA",
+    "e2eeActive": "CIFRADO E2EE ACTIVO",
+    "dealSummary": "50.000 TM Diésel EN 590 10PPM • CIF Rotterdam • USD 740/TM",
+    "buyerAlias": "Comprador-Alpha-24",
+    "supplierAlias": "Proveedor-Nordic-77",
+    "brokerLead": "Corredor Principal (GVCE)",
+    "tabChat": "Chat Cifrado",
+    "tabDocuments": "Documentos Protegidos",
+    "tabAgreements": "Acuerdos y Comisiones",
+    "sampleMessage1": "¿Garantizan inspección SGS en puerto de carga para entrega CIF Rotterdam del 10 al 20 de diciembre?",
+    "sampleMessage2": "Sí, inspección SGS aceptada totalmente. Certificado de análisis subido a la pestaña de Documentos.",
+    "leakNotice": "Sesión cifrada: los mensajes son filtrados para impedir la filtración de datos de contacto.",
+    "enterRoomBtn": "Entrar a la Sala en Vivo",
+    "doc1Title": "Certificado de Análisis (COA) - Lote #441",
+    "doc1Type": "Certificado de Calidad",
+    "doc2Title": "Informe de Inspección Independiente SGS",
+    "doc2Type": "Informe Certificado",
+    "previewBtn": "Vista con Marca de Agua",
+    "agreementTitle": "Contrato de Compraventa Diésel EN590 y Esquema de Comisión",
+    "agreementTerms": "Proveedor: Proveedor-Nordic-77 | Comprador: Comprador-Alpha-24 | Cantidad: 50.000 TM | Precio: 740 USD/TM CIF Rotterdam | Liquidación: LC 100% a la vista bancaria | Comisión: 1,25% USD."
   }
 }

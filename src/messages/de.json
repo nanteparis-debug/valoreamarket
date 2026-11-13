@@ -13,7 +13,15 @@
     "signIn": "Anmelden",
     "getStarted": "Loslegen",
     "dashboard": "Dashboard",
-    "language": "Sprache"
+    "language": "Sprache",
+    "brokerDesk": "Broker-Desk",
+    "compliance": "Compliance",
+    "security": "Sicherheit",
+    "dealRooms": "Handelsräume",
+    "billing": "Abonnements & Rechnungen",
+    "verifiedBadge": "Verifiziert",
+    "siteSubtitle": "Globale Verifizierte Rohstoffbörse",
+    "referenceCurrency": "Referenzwährung"
   },
   "hero": {
     "badge": "Vertraut von Unternehmen in über 50 Ländern",
@@ -26,7 +34,13 @@
       "deals": "Deals Completed",
       "companies": "Verified Companies",
       "volume": "Trade Volume"
-    }
+    },
+    "subhead": "B2B-Vermittlung von physischen Rohstoffen",
+    "asvsBadge": "OWASP ASVS Zertifiziert",
+    "pillarKyc": "Mehrstufige KYC/KYB-Prüfung",
+    "pillarDealRooms": "Verschlüsselte WebRTC-Handelsräume",
+    "pillarDocs": "Wasserzeichengeschützte Dokumente",
+    "pillarLangs": "8 Sprachen & USD-Referenzpreise"
   },
   "sectors": {
     "title": "Rohstoffsektoren",
@@ -40,7 +54,16 @@
     "sugar": "Zucker",
     "viewAll": "View All Products",
     "buyRequest": "Buy Request",
-    "supplyOffer": "Supply Offer"
+    "supplyOffer": "Supply Offer",
+    "badge": "7 verifizierte Rohstoffsektoren",
+    "catalogCode": "Katalogcode:",
+    "usdDenominated": "In USD denominiert",
+    "delivery": "Lieferung: FOB / CIF / CFR",
+    "verifiedSpecs": "Geprüfte Spezifikationen",
+    "benchmarkSpecs": "Benchmark-Spezifikationen:",
+    "coaInspection": "COA & SGS-Inspektion bereit",
+    "usdPerTon": "USD / Metrische Tonne",
+    "supportedIncoterms": "Unterstützte Incoterms:"
   },
   "howItWorks": {
     "title": "How It Works",
@@ -60,7 +83,8 @@
     "step4": {
       "title": "Agree & Trade",
       "description": "Sign agreements, finalize terms, and proceed to settlement through your banking channels."
-    }
+    },
+    "phaseOf": "Phase {num} von 04"
   },
   "features": {
     "title": "Why GVCE",
@@ -88,7 +112,25 @@
     "commissions": {
       "title": "Transparent Commissions",
       "description": "Clear commission structure tied to deal milestones with full audit trail and invoicing."
-    }
+    },
+    "eyebrow": "Banken- und Unternehmensstandards",
+    "step1Badge": "Schritt 01",
+    "step1Title": "KYC-Vertreter",
+    "step1Desc": "Biometrische & rechtliche Identifikation",
+    "step2Badge": "Schritt 02",
+    "step2Title": "KYB-Unternehmen",
+    "step2Desc": "Handelsregister & UBO-Eigentümerprüfung",
+    "step3Badge": "Schritt 03",
+    "step3Title": "Ladungsberechtigung",
+    "step3Desc": "Liefernachweis & Sanktionsüberprüfung",
+    "passkeyBadge": "FIDO2 WebAuthn Passkeys",
+    "passkeySub": "Phishing-resistent",
+    "dealRoomsBadge": "E2EE Audio- & Videoübertragung",
+    "dealRoomsSub": "Broker-überwacht",
+    "watermarkSample": "Sichere Ansicht: [KÄUFER-ALPHA-89] • Sitzung: [2026-11-13]",
+    "ownerConsent": "Zustimmung des Eigentümers erforderlich",
+    "antiCopy": "Kopier- und Druckschutz aktiv",
+    "originalEncrypted": "Originale bleiben verschlüsselt"
   },
   "pricing": {
     "title": "Subscription Plans",
@@ -137,7 +179,12 @@
       ]
     },
     "registerFree": "Kostenlos registrieren",
-    "getStarted": "Jetzt starten"
+    "getStarted": "Jetzt starten",
+    "usdHeader": "In USD denominiert • Unternehmensebene",
+    "note": "Abonnement in USD abgerechnet • Vermittlungsprovisionen separat",
+    "savePercent": "20% sparen",
+    "recommended": "Empfohlen",
+    "usdCurrency": "USD"
   },
   "footer": {
     "description": "Trusted international brokerage connecting verified buyers and suppliers of commodities worldwide.",
@@ -153,7 +200,17 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved."
+    "rights": "© {year} GVCE. All rights reserved.",
+    "platformCatalog": "Rohstoffkatalog",
+    "platformBroker": "Broker-Leitstelle",
+    "platformCompliance": "KYC/KYB-Prüfung",
+    "platformBilling": "Abonnements & Rechnungen",
+    "platformSecurity": "Passkeys & Aktive Sitzungen",
+    "legalNcnda": "Umgehungsschutzvertrag (NCNDA)",
+    "legalBrokerage": "Brokerage & Nicht-treuhänderische Frachtabrechnung",
+    "badgeUsd": "USD-Referenzabrechnung",
+    "badgeBanks": "Unabhängige Bankkanäle",
+    "badgeVerified": "Verifizierte internationale Vermittlung"
   },
   "auth": {
     "signIn": "Sign In",
@@ -315,5 +372,30 @@
     "noResults": "No results found",
     "showMore": "Show More",
     "showLess": "Show Less"
+  },
+  "dealRoomPreview": {
+    "badge": "Interaktive Handelsraum-Vorschau",
+    "title": "Überwachter anonymer Handelsraum",
+    "subtitle": "Vollständige Vertraulichkeit ohne Kontaktdaten-Lecks. E2EE-Video, wasserzeichengeschützte Dokumente und Broker-Schlichtung.",
+    "roomReference": "RAUM",
+    "e2eeActive": "E2EE AKTIV",
+    "dealSummary": "50.000 MT Diesel EN 590 10PPM • CIF Rotterdam • USD 740/MT",
+    "buyerAlias": "Käufer-Alpha-24",
+    "supplierAlias": "Lieferant-Nordic-77",
+    "brokerLead": "Leitender Broker (GVCE)",
+    "tabChat": "Verschlüsselter Chat",
+    "tabDocuments": "Geschützte Dokumente",
+    "tabAgreements": "Verträge & Meilensteine",
+    "sampleMessage1": "Lieferung CIF Rotterdam zwischen 10. und 20. Dezember gefordert. Garantieren Sie eine SGS-Prüfung im Verladehafen?",
+    "sampleMessage2": "Ja, SGS-Inspektion im Ladehafen ist bestätigt. Das geschwärzte Analysezertifikat liegt im Dokumentenbereich vor.",
+    "leakNotice": "Verschlüsselte Sitzung — automatische Filterung gegen das unbefugte Teilen von Kontaktdaten.",
+    "enterRoomBtn": "Handelsraum betreten",
+    "doc1Title": "Analysezertifikat (COA) - Raffineriecharge #441",
+    "doc1Type": "Qualitäts- & Konformitätszertifikat",
+    "doc2Title": "Unabhängiger SGS-Inspektionsbericht Ladehafen",
+    "doc2Type": "Zertifizierter Inspektionsbericht",
+    "previewBtn": "Vorschau mit Wasserzeichen",
+    "agreementTitle": "Diesel EN590 Kaufvertrag und Provisionsvereinbarung",
+    "agreementTerms": "Lieferant: Lieferant-Nordic-77 | Käufer: Käufer-Alpha-24 | Menge: 50.000 MT | Preis: USD 740/MT CIF Rotterdam | Abrechnung: 100% L/C Sichtakkreditiv via Geschäftsbanken | Brokerprovision: 1,25% USD."
   }
 }

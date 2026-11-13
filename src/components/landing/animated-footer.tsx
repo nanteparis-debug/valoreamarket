@@ -3,7 +3,7 @@
 import React from "react";
 import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LANGUAGES } from "@/lib/constants";
-import { ShieldCheck, Globe, Lock, ArrowUpRight } from "lucide-react";
+import { ShieldCheck, Globe } from "lucide-react";
 
 interface AnimatedFooterProps {
   currentLocale: string;
@@ -20,6 +20,17 @@ interface AnimatedFooterProps {
     contactUs: string;
     aboutUs: string;
     rights: string;
+    platformCatalog?: string;
+    platformBroker?: string;
+    platformCompliance?: string;
+    platformBilling?: string;
+    platformSecurity?: string;
+    legalNcnda?: string;
+    legalBrokerage?: string;
+    badgeUsd?: string;
+    badgeBanks?: string;
+    badgeVerified?: string;
+    languagesTitle?: string;
   };
 }
 
@@ -78,27 +89,27 @@ export function AnimatedFooter({
             <ul className="space-y-2">
               <li>
                 <Link href="/catalog" className="hover:text-white transition-colors">
-                  Commodities Catalog
+                  {translations.platformCatalog || "Commodities Catalog"}
                 </Link>
               </li>
               <li>
                 <Link href="/broker" className="hover:text-white transition-colors">
-                  Broker Command Center
+                  {translations.platformBroker || "Broker Command Center"}
                 </Link>
               </li>
               <li>
                 <Link href="/compliance" className="hover:text-white transition-colors">
-                  KYC/KYB Verification
+                  {translations.platformCompliance || "KYC/KYB Verification"}
                 </Link>
               </li>
               <li>
                 <Link href="/billing" className="hover:text-white transition-colors">
-                  Subscriptions & Invoicing
+                  {translations.platformBilling || "Subscriptions & Invoicing"}
                 </Link>
               </li>
               <li>
                 <Link href="/settings/security" className="hover:text-white transition-colors">
-                  Passkeys & Active Sessions
+                  {translations.platformSecurity || "Passkeys & Active Sessions"}
                 </Link>
               </li>
             </ul>
@@ -112,12 +123,12 @@ export function AnimatedFooter({
             <ul className="space-y-2">
               <li>
                 <Link href="/legal/ncnda" className="hover:text-white transition-colors">
-                  NCNDA & Non-Circumvention
+                  {translations.legalNcnda || "NCNDA & Non-Circumvention"}
                 </Link>
               </li>
               <li>
                 <Link href="/legal/brokerage" className="hover:text-white transition-colors">
-                  Brokerage & Commissions
+                  {translations.legalBrokerage || "Brokerage & Commissions"}
                 </Link>
               </li>
               <li>
@@ -137,7 +148,7 @@ export function AnimatedFooter({
           <div className="space-y-3">
             <h4 className="text-white font-semibold text-xs tracking-wider uppercase flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5 text-[#d4956b]" />
-              <span>Languages</span>
+              <span>{translations.languagesTitle || "Languages"}</span>
             </h4>
             <div className="grid grid-cols-2 gap-1 text-[11px]">
               {SUPPORTED_LANGUAGES.map((lang) => (
@@ -162,11 +173,11 @@ export function AnimatedFooter({
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
           <p>{translations.rights.replace("{year}", new Date().getFullYear().toString())}</p>
           <div className="flex items-center gap-4 text-[11px]">
-            <span>USD Benchmark Settlement</span>
+            <span>{translations.badgeUsd || "USD Benchmark Settlement"}</span>
             <span>•</span>
-            <span>Independent Banking Channels</span>
+            <span>{translations.badgeBanks || "Independent Banking Channels"}</span>
             <span>•</span>
-            <span className="text-[#d4956b]">Verified International Brokerage</span>
+            <span className="text-[#d4956b]">{translations.badgeVerified || "Verified International Brokerage"}</span>
           </div>
         </div>
       </div>
