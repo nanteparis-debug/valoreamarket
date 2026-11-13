@@ -36,7 +36,7 @@ interface AuroraHeroProps {
 
 export function AuroraHero({ translations }: AuroraHeroProps) {
   return (
-    <section className="relative min-h-[92vh] flex flex-col justify-center items-center overflow-hidden pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+    <section className="relative min-h-[78vh] flex flex-col justify-center items-center overflow-hidden pt-20 pb-8 px-4 sm:px-6 lg:px-8">
       {/* Background Aurora Mesh with GPU Acceleration */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Deep Navy/Copper ambient gradient blobs */}
@@ -62,25 +62,21 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
           }}
         />
 
-        {/* Subtle Grid Lines Overlay (Dark & Light optimized) */}
+        {/* Subtle Grid Lines Overlay */}
         <div
-          className="absolute inset-0 opacity-[0.07] dark:block hidden"
+          className="absolute inset-0 opacity-[0.06] dark:block hidden"
           style={{
             backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
           }}
         />
         <div
-          className="absolute inset-0 opacity-[0.05] block dark:hidden"
+          className="absolute inset-0 opacity-[0.04] block dark:hidden"
           style={{
             backgroundImage: `linear-gradient(to right, #0f172a 1px, transparent 1px), linear-gradient(to bottom, #0f172a 1px, transparent 1px)`,
             backgroundSize: "60px 60px",
           }}
         />
-
-        {/* Bottom Fade Mask */}
-        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#07080c] via-[#07080c]/80 to-transparent dark:block hidden" />
-        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#f8fafc] via-[#f8fafc]/90 to-transparent block dark:hidden" />
       </div>
 
       {/* Main Hero Content */}
@@ -150,9 +146,9 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
         </div>
 
         {/* Live Stats Strip */}
-        <div className="mt-16 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="mt-12 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
-            <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono">
+            <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono" dir="ltr">
               50+
             </span>
             <span className="text-xs text-gray-400 mt-1">
@@ -160,7 +156,7 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
             </span>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
-            <span className="text-2xl sm:text-3xl font-extrabold text-[#d4956b] font-mono">
+            <span className="text-2xl sm:text-3xl font-extrabold text-[#d4956b] font-mono" dir="ltr">
               $14.8B+
             </span>
             <span className="text-xs text-gray-400 mt-1">
@@ -168,7 +164,7 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
             </span>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
-            <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono">
+            <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono" dir="ltr">
               1,240+
             </span>
             <span className="text-xs text-gray-400 mt-1">
@@ -176,13 +172,16 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
             </span>
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
-            <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono">
+            <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono" dir="ltr">
               3,800+
             </span>
             <span className="text-xs text-gray-400 mt-1">
               {translations.stats.deals}
             </span>
           </div>
+          <p className="text-[10px] text-gray-400 font-mono text-center w-full col-span-2 md:col-span-4 mt-2">
+            تقديرات شبكة التداول ونشاط المقاصة التجريبي • Institutional Trading Network & Simulation Estimates
+          </p>
         </div>
       </div>
     </section>

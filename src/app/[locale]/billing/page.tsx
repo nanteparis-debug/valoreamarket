@@ -307,9 +307,18 @@ export default function BillingPortalPage() {
                       <p className="text-xs text-gray-400 mt-1 min-h-[32px]">{plan.description}</p>
                     </div>
 
-                    <div className="flex items-baseline gap-1 font-mono">
-                      <span className="text-3xl font-bold text-white">${price}</span>
-                      <span className="text-xs text-gray-500">USD</span>
+                    <div className="flex flex-col">
+                      <div className="flex items-baseline gap-1 font-mono">
+                        <span className="text-3xl font-bold text-white">${price}</span>
+                        <span className="text-xs text-gray-500">
+                          {billingCycle === "monthly" ? "USD / mo" : "USD / mo (equiv.)"}
+                        </span>
+                      </div>
+                      {billingCycle === "annually" && plan.priceAnnual > 0 && (
+                        <div className="text-[11px] text-[#d4956b] font-mono mt-1">
+                          ${(plan.priceAnnual * 12).toLocaleString()} USD {locale === "ar" ? "يُدفع سنوياً" : "billed annually"}
+                        </div>
+                      )}
                     </div>
 
                     <div className="text-xs text-gray-400 flex items-center gap-2 border-t border-[#181b29] pt-3">
@@ -343,6 +352,23 @@ export default function BillingPortalPage() {
                 </div>
               );
             })}
+          </div>
+        </div>
+
+        {/* Institutional Payment Gateway & Wire Notice */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#0e1017] border border-[#23273b] flex items-start gap-3.5 text-xs text-gray-300">
+          <CreditCard className="w-5 h-5 text-[#d4956b] shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <span className="font-bold text-white block">
+              {locale === "ar"
+                ? "قنوات السداد المصرفي المؤسسي المعتمدة (B2B Wire Clearing)"
+                : "Approved Institutional Payment Channels (B2B Wire Clearing)"}
+            </span>
+            <p className="text-gray-400 leading-relaxed text-[11px]">
+              {locale === "ar"
+                ? "تتم تسوية اشتراكات المنصة وعمولات الوساطة حصرياً عبر التحويلات المصرفية المباشرة (SWIFT / SEPA / Fedwire) إلى حساب VALOREA MARKET International AG المعتمد في جنيف، سويسرا. بوابة الدفع ببطاقات الائتمان الاستهلاكية غير مفعلة للحفاظ على معايير الامتثال المؤسسي ومكافحة غسيل الأموال."
+                : "Platform subscriptions and brokerage fees are settled exclusively via institutional wire transfer (SWIFT / SEPA / Fedwire) to VALOREA MARKET International AG in Geneva, Switzerland. Direct consumer card gateway is disabled in compliance with institutional trade mandates."}
+            </p>
           </div>
         </div>
 

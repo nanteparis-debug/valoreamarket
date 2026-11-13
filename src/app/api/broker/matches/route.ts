@@ -1,10 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gvceStore } from "@/lib/store";
+import { verifyServerSession } from "@/lib/auth-server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const authResult = verifyServerSession(req, {
+      allowedRoles: ["broker", "compliance_officer", "platform_admin"],
+      allowDemoFallback: true, // Allows client viewing with demo tag
+    });
+
+    if ("errorResponse" in authResult) {
+      return authResult.errorResponse;
+    }
+
     const matches = gvceStore.getBrokerMatches();
-    return NextResponse.json({ success: true, matches });
+    return NextResponse.json({
+      success: true,
+      matches,
+      actor: {
+        role: authResult.user.role,
+        orgId: authResult.user.orgId,
+      },
+    });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to fetch broker matches" },
@@ -15,6 +32,15 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    // Only certified brokers and platform admins can approve or reject matches
+    const authResult = verifyServerSession(req, {
+      allowedRoles: ["broker", "platform_admin"],
+    });
+
+    if ("errorResponse" in authResult) {
+      return authResult.errorResponse;
+    }
+
     const body = await req.json();
     const { matchId, action } = body;
 

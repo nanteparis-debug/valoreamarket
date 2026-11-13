@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gvceStore } from "@/lib/store";
+import { verifyServerSession } from "@/lib/auth-server";
 
 export async function GET(
   req: NextRequest,
@@ -17,12 +18,40 @@ export async function GET(
     return NextResponse.json({ error: "Document not found" }, { status: 404 });
   }
 
-  const requestingOrgId = req.headers.get("x-organization-id") || req.nextUrl.searchParams.get("orgId");
+  // 1. Session verification & deal room participation check
+  const authResult = verifyServerSession(req, {
+    allowDemoFallback: true, // Allows client viewing with demo tag
+  });
+
+  if ("errorResponse" in authResult) {
+    return authResult.errorResponse;
+  }
+
+  const { user } = authResult;
+  const isParticipant =
+    user.role === "broker" ||
+    user.role === "compliance_officer" ||
+    user.role === "platform_admin" ||
+    deal.participants.some((p) => p.orgId === user.orgId);
+
+  if (!isParticipant) {
+    return NextResponse.json(
+      {
+        error: "FORBIDDEN_DEAL_ACCESS_DENIED",
+        message: "Your organization is not a verified participant in this private deal room.",
+      },
+      { status: 403 }
+    );
+  }
+
   const isOriginalRequested = req.nextUrl.searchParams.get("original") === "true";
 
-  // Security Rule: Original download REQUIRES explicit owner authorization for that organization
+  // 2. Original Download Gating: Requires explicit document owner authorization
   if (isOriginalRequested) {
-    if (!doc.isOriginalAuthorized || (doc.authorizedForOrgId && doc.authorizedForOrgId !== requestingOrgId)) {
+    const isOwner = doc.ownerOrgId === user.orgId;
+    const isExplicitlyAuthorized = doc.isOriginalAuthorized && doc.authorizedForOrgId === user.orgId;
+
+    if (!isOwner && !isExplicitlyAuthorized) {
       return NextResponse.json(
         {
           error: "FORBIDDEN_ORIGINAL_DOWNLOAD_UNAUTHORIZED",
@@ -40,7 +69,7 @@ export async function GET(
   doc.downloadCount += 1;
   deal.auditLog.push({
     action: isOriginalRequested ? "ORIGINAL_DOWNLOADED" : "REDACTED_PREVIEW_FETCHED",
-    actor: requestingOrgId || "Anonymous",
+    actor: `${user.name} (${user.orgName})`,
     timestamp: new Date().toISOString(),
   });
 
@@ -53,6 +82,10 @@ export async function GET(
       downloadToken: `tok_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 9)}`,
       expiresInSeconds: 300,
       downloadCount: doc.downloadCount,
+      requester: {
+        orgId: user.orgId,
+        role: user.role,
+      },
     },
   });
 }

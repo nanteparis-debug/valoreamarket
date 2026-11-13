@@ -2,8 +2,13 @@
 
 import React, { useState } from "react";
 import { Link } from "@/i18n/routing";
-import { Check, Sparkles, ArrowRight } from "lucide-react";
+import { Check, Sparkles, ArrowRight, ShieldCheck, Landmark, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  PLATFORM_PRICING_PLANS,
+  BROKERAGE_COMMISSION_POLICY,
+  SALES_CONTACT_EMAIL,
+} from "@/lib/pricing-data";
 
 interface PricingSectionProps {
   translations: {
@@ -36,34 +41,34 @@ export function PricingSection({ translations }: PricingSectionProps) {
 
   const plans = [
     {
-      id: "starter",
+      ...PLATFORM_PRICING_PLANS[0],
       name: translations.starter.name,
       description: translations.starter.description,
-      priceMonthly: 0,
-      priceAnnually: 0,
       features: translations.starter.features,
       isPopular: false,
+      isExternal: false,
       cta: translations.registerFree || "Register Free",
+      href: "/auth/register",
     },
     {
-      id: "professional",
+      ...PLATFORM_PRICING_PLANS[1],
       name: translations.professional.name,
       description: translations.professional.description,
-      priceMonthly: 499,
-      priceAnnually: 399,
       features: translations.professional.features,
       isPopular: true,
+      isExternal: false,
       cta: translations.getStarted || "Get Started",
+      href: "/auth/register",
     },
     {
-      id: "enterprise",
+      ...PLATFORM_PRICING_PLANS[2],
       name: translations.enterprise.name,
       description: translations.enterprise.description,
-      priceMonthly: 1999,
-      priceAnnually: 1599,
       features: translations.enterprise.features,
       isPopular: false,
       cta: translations.contactSales,
+      href: `mailto:${SALES_CONTACT_EMAIL}?subject=VALOREA%20MARKET%20Enterprise%20Commodity%20Desk%20Inquiry`,
+      isExternal: true,
     },
   ];
 
@@ -71,7 +76,8 @@ export function PricingSection({ translations }: PricingSectionProps) {
     <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-14">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#23273b] text-xs font-mono text-[#d4956b] mb-4">
-          <span>{translations.usdHeader || "USD Denominated • Company Level"}</span>
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>{translations.usdHeader || "USD Denominated • Corporate Membership & Non-Custodial Brokerage"}</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
           {translations.title}
@@ -113,8 +119,10 @@ export function PricingSection({ translations }: PricingSectionProps) {
       {/* Pricing Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
         {plans.map((plan) => {
-          const price =
-            billingCycle === "monthly" ? plan.priceMonthly : plan.priceAnnually;
+          const displayPrice =
+            billingCycle === "monthly"
+              ? plan.priceMonthly
+              : plan.priceAnnuallyMonthlyEquivalent;
 
           return (
             <div
@@ -133,22 +141,52 @@ export function PricingSection({ translations }: PricingSectionProps) {
               )}
 
               <div>
-                <h3 className="text-xl font-bold text-white">{plan.name}</h3>
-                <p className="text-xs text-gray-400 mt-1 min-h-[32px]">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-bold text-white">{plan.name}</h3>
+                  <span className="text-[11px] font-mono text-gray-400 px-2 py-0.5 rounded bg-[#161824] border border-[#23273b]">
+                    {plan.seats} {plan.seats === 1 ? "Seat" : "Seats"}
+                  </span>
+                </div>
+
+                <p className="text-xs text-gray-400 mt-2 min-h-[32px]">
                   {plan.description}
                 </p>
 
                 {/* Price Display in USD */}
-                <div className="mt-6 flex items-baseline gap-1 font-mono">
-                  <span className="text-sm font-semibold text-[#d4956b]">{translations.usdCurrency || "USD"}</span>
-                  <span className="text-4xl font-extrabold text-white">
-                    ${price}
-                  </span>
-                  <span className="text-xs text-gray-400">
-                    {billingCycle === "monthly"
-                      ? translations.perMonth
-                      : translations.perYear}
-                  </span>
+                <div className="mt-6 flex flex-col">
+                  <div className="flex items-baseline gap-1 font-mono">
+                    <span className="text-sm font-semibold text-[#d4956b]">
+                      {translations.usdCurrency || "USD"}
+                    </span>
+                    <span className="text-4xl font-extrabold text-white">
+                      ${displayPrice}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {translations.perMonth}
+                    </span>
+                  </div>
+
+                  {/* Full Annual Amount Due (Required by Specification) */}
+                  {billingCycle === "annually" && plan.annualBilledTotal > 0 && (
+                    <div className="mt-1.5 text-xs text-[#d4956b] font-mono flex items-center gap-1.5">
+                      <span>
+                        ${plan.annualBilledTotal.toLocaleString()} billed annually
+                      </span>
+                      <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
+                        Save ${plan.annualSavingsUsd.toLocaleString()}/yr
+                      </span>
+                    </div>
+                  )}
+                  {billingCycle === "monthly" && plan.priceMonthly > 0 && (
+                    <div className="mt-1.5 text-xs text-gray-500 font-mono">
+                      Billed monthly • Cancel anytime
+                    </div>
+                  )}
+                  {plan.priceMonthly === 0 && (
+                    <div className="mt-1.5 text-xs text-emerald-400 font-mono">
+                      Free for verified market participants
+                    </div>
+                  )}
                 </div>
 
                 {/* Feature List */}
@@ -166,25 +204,64 @@ export function PricingSection({ translations }: PricingSectionProps) {
 
               {/* Plan Action CTA */}
               <div className="mt-10 pt-6 border-t border-[#1f2233]">
-                <Link
-                  href="/auth/register"
-                  className={cn(
-                    "w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all",
-                    plan.isPopular
-                      ? "bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
-                      : "bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b]"
-                  )}
-                >
-                  <span>{plan.cta}</span>
-                  <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-                </Link>
+                {plan.isExternal ? (
+                  <a
+                    href={plan.href}
+                    className="w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b] transition-all"
+                  >
+                    <Mail className="w-4 h-4 text-[#d4956b]" />
+                    <span>{plan.cta}</span>
+                  </a>
+                ) : (
+                  <Link
+                    href={plan.href}
+                    className={cn(
+                      "w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all",
+                      plan.isPopular
+                        ? "bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
+                        : "bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b]"
+                    )}
+                  >
+                    <span>{plan.cta}</span>
+                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                  </Link>
+                )}
                 <p className="text-[10px] text-gray-500 text-center mt-2.5">
-                  {translations.note || "Subscription billed in USD • Brokerage commissions separate"}
+                  {translations.note || "Platform subscription fees billed in USD • Brokerage commissions separate"}
                 </p>
               </div>
             </div>
           );
         })}
+      </div>
+
+      {/* Independent Brokerage Commission & Non-Custodial Cargo Settlement Policy Banner */}
+      <div className="mt-12 p-6 sm:p-8 rounded-3xl bg-[#0c0e17] border border-[#23273b] shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="space-y-2 text-start max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#b87333]/40 text-xs font-mono text-[#d4956b]">
+            <Landmark className="w-3.5 h-3.5" />
+            <span>Independent Transaction Brokerage Rate: {BROKERAGE_COMMISSION_POLICY.rateRangeDisplay}</span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white">
+            {BROKERAGE_COMMISSION_POLICY.settlementNoticeTitle}
+          </h3>
+          <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+            {BROKERAGE_COMMISSION_POLICY.settlementNoticeDescription}
+          </p>
+          <div className="text-[11px] text-gray-500 font-mono pt-1">
+            Governed by {BROKERAGE_COMMISSION_POLICY.governingModel} • Liquidated circumvention damages: {BROKERAGE_COMMISSION_POLICY.liquidatedDamages} • {BROKERAGE_COMMISSION_POLICY.arbitrationJurisdiction}
+          </div>
+        </div>
+
+        <div className="shrink-0">
+          <Link
+            href="/legal/brokerage"
+            className="px-6 py-3 rounded-xl bg-[#141724] hover:bg-[#1c2133] border border-[#23273b] text-gray-200 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all"
+          >
+            <span>Read Brokerage Policy</span>
+            <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
+          </Link>
+        </div>
       </div>
     </section>
   );

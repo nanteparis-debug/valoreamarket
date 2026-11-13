@@ -1,10 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gvceStore } from "@/lib/store";
+import { verifyServerSession } from "@/lib/auth-server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const authResult = verifyServerSession(req, {
+      allowDemoFallback: true,
+    });
+
+    if ("errorResponse" in authResult) {
+      return authResult.errorResponse;
+    }
+
     const sessions = gvceStore.getActiveSessions();
-    return NextResponse.json({ success: true, sessions });
+    return NextResponse.json({
+      success: true,
+      sessions,
+      actor: {
+        userId: authResult.user.id,
+        role: authResult.user.role,
+      },
+    });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to fetch active sessions" },
@@ -15,6 +31,14 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    const authResult = verifyServerSession(req, {
+      allowDemoFallback: true,
+    });
+
+    if ("errorResponse" in authResult) {
+      return authResult.errorResponse;
+    }
+
     const body = await req.json();
     const { action, sessionId } = body;
 

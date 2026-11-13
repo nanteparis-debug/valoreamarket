@@ -8,9 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: [
           "/",
           "/*/catalog",
-          "/*/broker",
-          "/*/compliance",
-          "/*/billing",
           "/*/about",
           "/*/contact",
           "/*/faq",
@@ -18,15 +15,17 @@ export default function robots(): MetadataRoute.Robots {
           "/*/auth/*",
         ],
         disallow: [
-          "/*/deals/*/room",
-          "/*/deals/new",
-          "/*/settings/*",
+          "/*/broker*",
+          "/*/compliance*",
+          "/*/billing*",
+          "/*/deals*",
+          "/*/settings*",
           "/api/*",
           "/_next/*",
         ],
       },
     ],
-    sitemap: "https://gvce.exchange/sitemap.xml",
-    host: "https://gvce.exchange",
+    sitemap: "https://valoreamarket.vercel.app/sitemap.xml",
+    host: "https://valoreamarket.vercel.app",
   };
 }

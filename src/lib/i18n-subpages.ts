@@ -386,7 +386,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         },
         {
           title: "4. حظر الالتفاف وحماية الوساطة (ICC 769)",
-          content: "يلتزم جميع الأعضاء باتفاقية منع الالتفاف وعدم الإفشاء الصادرة عن غرفة التجارة الدولية (ICC 769). أي تجاوز للمنصة أو تواصل مباشر مع أطراف تم التعريف بها عبر المنصة يُعد خرقاً جوهرياً يُلزم الطرف المخالف بتعويضات تعادل كامل عمولة الوساطة المتوقعة."
+          content: "يلتزم جميع الأعضاء بنموذج اتفاقية منع الالتفاف وعدم الإفشاء القياسي الصادر عن غرفة التجارة الدولية (ICC 769). أي تجاوز للمنصة أو تعاقد مباشر خارج إشراف الوسيط المعتمد مع أطراف تم التعريف بها عبر المنصة يُعد خرقاً جوهرياً يُلزم الطرف المخالف بدفع تعويضات اتفاقية تعادل ثلاثة أضعاف (3x) عمولة الوساطة الإجمالية المتوقعة، بالإضافة إلى مصاريف التحكيم وأتعاب المحاماة."
         },
         {
           title: "5. القانون الواجب التطبيق والتحكيم الدولي",
@@ -472,7 +472,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         },
         {
           title: "2. هيكل عمولات الوساطة القياسي",
-          content: "تتقاضى VALOREA MARKET عمولة وساطة قياسية تتراوح بين 1.00% و 1.50% من القيمة الإجمالية للشحنة، مقوّمة بالدولار الأمريكي، مقابل خدمات المطابقة الذكية والتدقيق الرقابي وإشراف غرف الصفقات.",
+          content: "تتقاضى VALOREA MARKET عمولة وساطة مؤسسية تتراوح بين 0.50% و 1.50% بحسب حجم الصفقة وتكرار الشحنات، مقوّمة بالدولار الأمريكي، مقابل خدمات المطابقة الذكية والتدقيق الرقابي وإشراف غرف الصفقات.",
           list: [
             "تُحسب العمولات قياسياً بالدولار الأمريكي بغض النظر عن عملة العقد المحلية.",
             "يتم تحديد الطرف الملتزم بالدفع (المشتري، المورد، أو مناصفة) في اتفاقية الوساطة المبرمة لكل صفقة."
@@ -764,8 +764,8 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
           content: "Access to deal rooms, order matching, and document exchange is contingent upon maintaining an active 'Approved' status in the VALOREA MARKET Compliance Registry. Any entity subject to international sanctions (including OFAC, EU, UN, or UK sanctions regimes) or failing to submit verifiable Ultimate Beneficial Ownership (UBO) records shall be suspended immediately."
         },
         {
-          title: "4. Anti-Circumvention and Non-Disclosure",
-          content: "All registered entities are bound by the ICC 769 Non-Circumvention, Non-Disclosure & Working Agreement incorporated herein. Bypassing the platform or directly contacting matched counterparties outside supervised VALOREA MARKET channels constitutes a material breach entitling VALOREA MARKET to liquidated damages equal to the full anticipated brokerage commission."
+          title: "4. Anti-Circumvention and Non-Disclosure (ICC 769)",
+          content: "All registered entities are bound by the ICC 769 Non-Circumvention, Non-Disclosure & Working Agreement incorporated herein. Bypassing the platform or directly contracting with matched counterparties outside supervised VALOREA MARKET channels constitutes a material breach entitling VALOREA MARKET to liquidated damages equal to three times (3x) the total anticipated brokerage commission of the transaction, plus all arbitration and legal fees incurred in enforcement."
         },
         {
           title: "5. Governing Law and Arbitration",
@@ -851,7 +851,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         },
         {
           title: "2. Brokerage Commission Structure",
-          content: "VALOREA MARKET earns a standardized brokerage fee (ordinarily 1.00% to 1.50% of total cargo contract value, benchmarked in USD) for its match discovery, compliance due diligence, deal room hosting, and intermediary supervision services.",
+          content: "VALOREA MARKET earns an institutional brokerage fee (0.50% to 1.50% of total cargo contract value, benchmarked in USD, based on contract volume and annual cadence) for its match discovery, compliance due diligence, deal room hosting, and intermediary supervision services.",
           list: [
             "Fees are denominated in USD regardless of the contract's local billing currency.",
             "Obligor allocation (Buyer, Supplier, or 50/50 split) is formally codified in the bilateral Trade Agreement."

@@ -105,29 +105,33 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
             >
               {translations.commodities}
             </Link>
-            <Link
-              href="/broker"
+            <a
+              href="/#how-it-works"
               className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
             >
-              {translations.brokerDesk || "Broker Desk"}
-            </Link>
-            <Link
-              href="/compliance"
-              className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
-            >
-              {translations.compliance || "Compliance"}
-            </Link>
-            <Link
-              href="/billing"
+              {translations.howItWorks || "How It Works"}
+            </a>
+            <a
+              href="/#pricing"
               className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
             >
               {translations.pricing}
-            </Link>
+            </a>
             <Link
-              href="/settings/security"
+              href="/legal/brokerage"
               className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
             >
-              {translations.security || "Security"}
+              {currentLocale === "ar" ? "سياسة الوساطة" : "Brokerage Policy"}
+            </Link>
+
+            {/* Role-Gated Operational Desk Gateway */}
+            <div className="h-4 w-[1px] bg-[#23273b] mx-1" />
+            <Link
+              href="/broker"
+              className="px-3 py-1 text-xs font-semibold text-[#d4956b] hover:text-white hover:bg-[#b87333]/20 rounded-full transition-all flex items-center gap-1"
+            >
+              <Lock className="w-3 h-3 text-[#d4956b]" />
+              <span>{currentLocale === "ar" ? "مكتب العمليات" : "Desk Portal"}</span>
             </Link>
           </nav>
 
@@ -247,41 +251,68 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
             >
               {translations.commodities}
             </Link>
-            <Link
-              href="/deals/deal-en590-rotterdam/room"
+            <a
+              href="/#how-it-works"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              {translations.dealRooms || "Deal Rooms"}
-            </Link>
-            <Link
-              href="/broker"
+              {translations.howItWorks || "How It Works"}
+            </a>
+            <a
+              href="/#pricing"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              {translations.brokerDesk || "Broker Command Center"}
-            </Link>
+              {translations.pricing}
+            </a>
             <Link
-              href="/compliance"
+              href="/legal/brokerage"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
             >
-              {translations.compliance || "Compliance & Verification"}
+              {currentLocale === "ar" ? "سياسة الوساطة والتسوية" : "Brokerage Policy"}
             </Link>
-            <Link
-              href="/billing"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
-            >
-              {translations.billing || translations.pricing}
-            </Link>
-            <Link
-              href="/settings/security"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824]"
-            >
-              {translations.security || "Security & Active Sessions"}
-            </Link>
+
+            {/* Role-Gated Operations Sub-section */}
+            <div className="pt-2 mt-2 border-t border-[#1f2233]">
+              <span className="text-[10px] uppercase font-mono text-[#d4956b] px-3 font-semibold block mb-1">
+                {currentLocale === "ar" ? "بوابات التشغيل والوساطة (أعضاء)" : "Operations & Broker Desk"}
+              </span>
+              <div className="grid grid-cols-2 gap-1">
+                <Link
+                  href="/broker"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-1.5 rounded-lg text-xs text-gray-300 hover:bg-[#161824] flex items-center gap-1.5"
+                >
+                  <Lock className="w-3 h-3 text-[#d4956b]" />
+                  <span>{translations.brokerDesk || "Broker"}</span>
+                </Link>
+                <Link
+                  href="/compliance"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-1.5 rounded-lg text-xs text-gray-300 hover:bg-[#161824] flex items-center gap-1.5"
+                >
+                  <Lock className="w-3 h-3 text-[#d4956b]" />
+                  <span>{translations.compliance || "Compliance"}</span>
+                </Link>
+                <Link
+                  href="/billing"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-1.5 rounded-lg text-xs text-gray-300 hover:bg-[#161824] flex items-center gap-1.5"
+                >
+                  <Lock className="w-3 h-3 text-[#d4956b]" />
+                  <span>{translations.billing || "Billing"}</span>
+                </Link>
+                <Link
+                  href="/settings/security"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-1.5 rounded-lg text-xs text-gray-300 hover:bg-[#161824] flex items-center gap-1.5"
+                >
+                  <Lock className="w-3 h-3 text-[#d4956b]" />
+                  <span>{translations.security || "Security"}</span>
+                </Link>
+              </div>
+            </div>
           </nav>
 
           {/* Theme Switcher in Mobile */}

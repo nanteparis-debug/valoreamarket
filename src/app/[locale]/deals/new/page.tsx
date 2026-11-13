@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect, Suspense } from "react";
 import { useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import {
   COMMODITY_SECTORS,
@@ -15,89 +16,213 @@ import {
   CheckCircle2,
   Sparkles,
   Info,
+  ShieldCheck,
+  Building2,
+  FileCheck2,
 } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 
-export default function NewDealPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+// Sector-specific specification schema definitions
+const SECTOR_SPEC_CONFIG: Record<
+  string,
+  {
+    spec1: { labelAr: string; labelEn: string; placeholderAr: string; placeholderEn: string };
+    spec2: { labelAr: string; labelEn: string; placeholderAr: string; placeholderEn: string };
+    spec3: { labelAr: string; labelEn: string; placeholderAr: string; placeholderEn: string };
+  }
+> = {
+  crude_oil_condensates: {
+    spec1: { labelAr: "كثافة API (درجة)", labelEn: "API Gravity (°)", placeholderAr: "مثال: 38.5° API (خفيف حلو)", placeholderEn: "e.g. 38.5° API" },
+    spec2: { labelAr: "نسبة الكبريت (% بالوزن)", labelEn: "Sulfur Content (% wt)", placeholderAr: "مثال: 0.45% S كحد أقصى", placeholderEn: "e.g. 0.45% Max S" },
+    spec3: { labelAr: "الرواسب والمياه (BS&W / TAN)", labelEn: "Water & Sediment (BS&W)", placeholderAr: "مثال: أقل من 0.5% BS&W", placeholderEn: "e.g. < 0.5% BS&W" },
+  },
+  refined_petroleum: {
+    spec1: { labelAr: "مؤشر السيتان / الأوكتان", labelEn: "Cetane / Octane Rating", placeholderAr: "مثال: 51 Cetane Index", placeholderEn: "e.g. 51 Cetane / RON 95" },
+    spec2: { labelAr: "محتوى الكبريت (PPM)", labelEn: "Sulfur Content (PPM)", placeholderAr: "مثال: 10 PPM كحد أقصى (Euro 5/6)", placeholderEn: "e.g. 10 PPM Max (Euro 5/6)" },
+    spec3: { labelAr: "نقطة الوميض وتدفق البرودة", labelEn: "Flash Point / Cold Filter", placeholderAr: "مثال: أدنى 55°C / CFPP -10°C", placeholderEn: "e.g. Min 55°C / CFPP -10°C" },
+  },
+  natural_gas_ngls: {
+    spec1: { labelAr: "نسبة الميثان (% C1)", labelEn: "Methane Content (% C1)", placeholderAr: "مثال: 95.0% ميثان أدنى", placeholderEn: "e.g. 95%+ Methane" },
+    spec2: { labelAr: "القيمة الحرارية الإجمالية (GCV)", labelEn: "Gross Calorific Value", placeholderAr: "مثال: 1050 BTU/scf", placeholderEn: "e.g. 1050 BTU/scf" },
+    spec3: { labelAr: "نسبة النيتروجين والشوائب", labelEn: "Nitrogen & Inert Gases", placeholderAr: "مثال: N2 أقل من 1.0%", placeholderEn: "e.g. Max 1.0% N2" },
+  },
+  petrochemicals: {
+    spec1: { labelAr: "درجة النقاوة (% نقاء)", labelEn: "Chemical Purity (% wt)", placeholderAr: "مثال: 99.85% نقاوة كيميائية", placeholderEn: "e.g. 99.85% Min" },
+    spec2: { labelAr: "مؤشر تدفق الذوبان (MFI)", labelEn: "Melt Flow Index (MFI)", placeholderAr: "مثال: 0.05 - 20 g/10min", placeholderEn: "e.g. MFI 0.05-20" },
+    spec3: { labelAr: "معيار الجودة واللون", labelEn: "Color & Testing Standard", placeholderAr: "مثال: ASTM D1152 / Pt-Co 10 Max", placeholderEn: "e.g. ASTM D1152 / Pt-Co 10" },
+  },
+  sulfur_fertilizers: {
+    spec1: { labelAr: "محتوى النيتروجين / الكبريت", labelEn: "Nitrogen / Sulfur (% Min)", placeholderAr: "مثال: 46.0% N لليوريا / 99.5% للكبريت", placeholderEn: "e.g. 46.0% N / 99.5% S" },
+    spec2: { labelAr: "نسبة البيوريت والشوائب", labelEn: "Biuret / Impurities (% Max)", placeholderAr: "مثال: أقصى 1.0% بيوريت", placeholderEn: "e.g. Max 1.0% Biuret" },
+    spec3: { labelAr: "الرطوبة وحجم الحبيبات", labelEn: "Moisture & Granulometry", placeholderAr: "مثال: رطوبة 0.5% / حبيبات 2-4 مم (90%)", placeholderEn: "e.g. 2-4 mm 90% Min" },
+  },
+  metals_industrial: {
+    spec1: { labelAr: "درجة النقاوة ومعيار LME", labelEn: "Purity Grade (LME Standard)", placeholderAr: "مثال: 99.9935% Cu / SHG 99.995% Zn", placeholderEn: "e.g. 99.9935% Cu / 99.995% Zn" },
+    spec2: { labelAr: "الشكل والأبعاد الفيزيائية", labelEn: "Form & Physical Dimensions", placeholderAr: "مثال: كاثودات / بليت بثق 6063 / بليت صلب", placeholderEn: "e.g. Cathodes / 6063 Billets" },
+    spec3: { labelAr: "جهة المعاينة المستقلة", labelEn: "Independent Inspection Agency", placeholderAr: "مثال: شهادة SGS أو Alex Stewart معتمدة", placeholderEn: "e.g. SGS / Alex Stewart Certified" },
+  },
+  sugar: {
+    spec1: { labelAr: "تصنيف اللون (ICUMSA)", labelEn: "ICUMSA Color Rating", placeholderAr: "مثال: ICUMSA 45 (مكرر) أو VHP 600-1200", placeholderEn: "e.g. ICUMSA 45 / VHP 600-1200" },
+    spec2: { labelAr: "درجة الاستقطاب (% Pol)", labelEn: "Polarization (°Z / % Pol)", placeholderAr: "مثال: 99.80° أدنى للسكر المكرر", placeholderEn: "e.g. Min 99.80° S" },
+    spec3: { labelAr: "نسبة الرطوبة والرماد", labelEn: "Moisture & Ash Content", placeholderAr: "مثال: أقصى 0.04% رطوبة ورماد", placeholderEn: "e.g. Max 0.04% Moisture" },
+  },
+};
 
-  const [locale, setLocale] = useState("en");
-  React.useEffect(() => {
-    params.then((p) => setLocale(p.locale));
-  }, [params]);
+function NewDealForm({ locale }: { locale: string }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   const t = getSubpageTranslations(locale);
   const isAr = locale === "ar";
 
+  // Read URL query parameters (?side=sell&sector=crude_oil_condensates&commodity=...)
+  const sideParam = searchParams.get("side");
+  const sectorParam = searchParams.get("sector");
+  const commodityParam = searchParams.get("commodity") || searchParams.get("item");
+
+  // Determine initial side from URL
+  const initialSide: "buy" | "sell" = sideParam === "sell" ? "sell" : "buy";
+
+  // Determine initial sector from URL (supports ID or slug)
+  const matchedSector =
+    COMMODITY_SECTORS.find(
+      (s) => s.id === sectorParam || s.slug === sectorParam
+    ) || COMMODITY_SECTORS[0];
+
+  // Determine initial commodity from URL
+  const initialCommodity =
+    (commodityParam &&
+      matchedSector.items.find(
+        (item) =>
+          item.name.toLowerCase() === commodityParam.toLowerCase() ||
+          item.name.toLowerCase().includes(commodityParam.toLowerCase())
+      )?.name) ||
+    matchedSector.items[0].name;
+
   // Form State
-  const [side, setSide] = useState<"buy" | "sell">("buy");
-  const [sectorId, setSectorId] = useState(COMMODITY_SECTORS[0].id);
-  const [commodityName, setCommodityName] = useState(
-    COMMODITY_SECTORS[0].items[0].name
-  );
-  const [quantity, setQuantity] = useState<number>(25000);
+  const [side, setSide] = useState<"buy" | "sell">(initialSide);
+  const [sectorId, setSectorId] = useState(matchedSector.id);
+  const [commodityName, setCommodityName] = useState(initialCommodity);
+  const [quantity, setQuantity] = useState<number | "">("");
   const [unit, setUnit] = useState("Metric Tons");
-  const [pricePerUnit, setPricePerUnit] = useState<number>(740);
+  const [pricePerUnit, setPricePerUnit] = useState<number | "">("");
   const [incoterm, setIncoterm] = useState("CIF");
-  const [deliveryPort, setDeliveryPort] = useState("Rotterdam Port");
-  const [deliveryDateRange, setDeliveryDateRange] = useState("Dec 15 - Dec 30, 2026");
+  const [deliveryPort, setDeliveryPort] = useState("");
+  const [deliveryDateRange, setDeliveryDateRange] = useState("");
 
-  // Material-specific specs
-  const [spec1, setSpec1] = useState("38.5°");
-  const [spec2, setSpec2] = useState("0.85%");
-  const [spec3, setSpec3] = useState("Euro 5 / 6 Compliant");
+  // Material-specific specs (clean, dynamic)
+  const [spec1, setSpec1] = useState("");
+  const [spec2, setSpec2] = useState("");
+  const [spec3, setSpec3] = useState("");
 
+  // Session idempotency key
+  const [idempotencyKey] = useState(() => `mut_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`);
   const [submitted, setSubmitted] = useState(false);
+  const [createdDealRef, setCreatedDealRef] = useState<string>("");
+  const [calculatedCommission, setCalculatedCommission] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  // Sync state if URL query params change dynamically
+  useEffect(() => {
+    if (sideParam === "sell" || sideParam === "buy") {
+      setSide(sideParam);
+    }
+    if (sectorParam) {
+      const found = COMMODITY_SECTORS.find((s) => s.id === sectorParam || s.slug === sectorParam);
+      if (found) {
+        setSectorId(found.id);
+        if (commodityParam) {
+          const matchItem = found.items.find(
+            (i) => i.name.toLowerCase() === commodityParam.toLowerCase() || i.name.toLowerCase().includes(commodityParam.toLowerCase())
+          );
+          if (matchItem) setCommodityName(matchItem.name);
+          else setCommodityName(found.items[0].name);
+        } else {
+          setCommodityName(found.items[0].name);
+        }
+      }
+    }
+  }, [sideParam, sectorParam, commodityParam]);
 
   const currentSector =
     COMMODITY_SECTORS.find((s) => s.id === sectorId) || COMMODITY_SECTORS[0];
 
-  const totalContractValue = (quantity || 0) * (pricePerUnit || 0);
+  const currentSpecConfig =
+    SECTOR_SPEC_CONFIG[sectorId] || SECTOR_SPEC_CONFIG.crude_oil_condensates;
+
+  const currentCommodityItem =
+    currentSector.items.find((item) => item.name === commodityName) ||
+    currentSector.items[0];
+
+  const numericQuantity = typeof quantity === "number" ? quantity : 0;
+  const numericPrice = typeof pricePerUnit === "number" ? pricePerUnit : 0;
+  const totalContractValue = numericQuantity * numericPrice;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
+
+    if (!numericQuantity || numericQuantity <= 0) {
+      setErrorMessage(isAr ? "يرجى تحديد كمية صالحة أكبر من الصفر" : "Please provide a valid quantity greater than zero");
+      return;
+    }
+    if (!numericPrice || numericPrice <= 0) {
+      setErrorMessage(isAr ? "يرجى تحديد سعر وحدة صالح أكبر من الصفر" : "Please provide a valid unit price greater than zero");
+      return;
+    }
+    if (!deliveryPort.trim()) {
+      setErrorMessage(isAr ? "يرجى تحديد ميناء أو محطة التسليم المعتمدة" : "Please specify the designated delivery port or terminal");
+      return;
+    }
+    if (!deliveryDateRange.trim()) {
+      setErrorMessage(isAr ? "يرجى تحديد نافذة أو فترة التسليم التعاقدية" : "Please provide a valid contractual delivery window");
+      return;
+    }
+
     startTransition(async () => {
       try {
         const res = await fetch("/api/deals", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
+            idempotencyKey,
             sector: sectorId,
             commodityName,
             side,
-            quantity: Number(quantity),
+            quantity: numericQuantity,
             unit,
-            pricePerUnit: Number(pricePerUnit),
+            pricePerUnit: numericPrice,
             currency: "USD",
             incoterm,
-            deliveryPort,
-            deliveryDateRange,
+            deliveryPort: deliveryPort.trim(),
+            deliveryDateRange: deliveryDateRange.trim(),
             specs: {
-              "Primary Specification": spec1,
-              "Secondary Benchmark": spec2,
-              "Quality Grade": spec3,
+              [currentSpecConfig.spec1.labelEn]: spec1 || currentCommodityItem.specs.split(",")[0] || "Standard Grade",
+              [currentSpecConfig.spec2.labelEn]: spec2 || currentCommodityItem.specs.split(",")[1] || "Standard Tolerance",
+              [currentSpecConfig.spec3.labelEn]: spec3 || "SGS / Independent Inspection Certified",
             },
           }),
         });
 
         const data = await res.json();
         if (data.success && data.deal) {
+          setCreatedDealRef(data.deal.referenceNumber || "VALOREA-2026-REG");
+          setCalculatedCommission(data.estimatedCommissionUsd || totalContractValue * 0.0125);
           setSubmitted(true);
+        } else {
+          setErrorMessage(data.error || (isAr ? "فشل تسجيل العملية" : "Submission failed"));
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Submission failed", err);
+        setErrorMessage(err.message || (isAr ? "حدث خطأ في الاتصال بالخادم" : "Network or server error"));
       }
     });
   };
 
   return (
     <div className="min-h-screen bg-[#07080c] text-[#f8fafc] flex flex-col justify-between">
-      {/* Top Simple Header */}
+      {/* Top Header */}
       <header className="border-b border-[#1f2233] bg-[#0c0e17]/80 backdrop-blur-md py-4 px-4 sm:px-8 flex items-center justify-between">
         <button
           onClick={() => router.push("/")}
@@ -116,34 +241,64 @@ export default function NewDealPage({
       </header>
 
       {/* Main Wizard Form Container */}
-      <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-12">
+      <main className="max-w-4xl mx-auto w-full px-4 sm:px-6 py-10">
         {submitted ? (
           <div className="p-8 sm:p-12 rounded-3xl bg-[#0e101a] border border-[#23273b] shadow-2xl text-center flex flex-col items-center">
             <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              {isAr ? "تم تسجيل الصفقة بنجاح!" : "Deal Successfully Registered!"}
+              {side === "sell"
+                ? (isAr ? "تم تسجيل عرض التوريد بنجاح!" : "Supply Offer Successfully Registered!")
+                : (isAr ? "تم تسجيل طلب الشراء بنجاح!" : "Purchase Request Successfully Registered!")}
             </h2>
-            <p className="mt-3 text-sm text-gray-400 max-w-lg">
+            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#141724] border border-[#b87333]/40 text-xs font-mono text-[#d4956b]">
+              <span>{isAr ? "رقم القيد المرجعي:" : "Clearing Ref:"}</span>
+              <strong className="text-white">{createdDealRef}</strong>
+            </div>
+
+            <p className="mt-4 text-sm text-gray-300 max-w-lg">
               {isAr
-                ? "تم تسجيل طلبك في نظام المقاصة الخاص بـ VALOREA MARKET. سيبدأ وسيط معتمد عملية المطابقة وفتح غرفة الصفقة المخصصة."
-                : "Your request has been logged into the VALOREA MARKET clearing engine. A verified broker will initiate matching."}
+                ? "تم تسجيل عرضك في محرك المقاصة المركزي لـ VALOREA MARKET. سيبدأ الوسيط المعتمد فوراً مراجعة شروط التسليم ومطابقة الشركاء المؤهلين."
+                : "Your order is recorded in the VALOREA MARKET clearing engine. A verified broker will match qualified counterparties."}
             </p>
+
+            {/* Estimated Settlement & Commission Details */}
+            <div className="mt-6 w-full max-w-md p-4 rounded-2xl bg-[#121420] border border-[#23273b] text-xs space-y-2 text-start">
+              <div className="flex justify-between items-center text-gray-400">
+                <span>{isAr ? "إجمالي القيمة التعاقدية التقديرية:" : "Total Contract Value:"}</span>
+                <span className="font-mono font-bold text-white">{formatCurrency(totalContractValue, "USD", locale)}</span>
+              </div>
+              <div className="flex justify-between items-center text-gray-400">
+                <span>{isAr ? "عمولة الوساطة غير الإيداعية (1.25%):" : "Brokerage Success Fee (1.25%):"}</span>
+                <span className="font-mono text-[#d4956b]">{formatCurrency(calculatedCommission, "USD", locale)}</span>
+              </div>
+              <div className="pt-2 border-t border-[#1f2233] text-[11px] text-gray-500">
+                {isAr
+                  ? "تسوية قيمة الشحنة تتم مباشرة بين البنوك عبر اعتماد مستندي (DLC / SBLC). تُفوتر عمولة الوساطة بشكل مستقل عند إتمام الشحن."
+                  : "Cargo settlement is strictly bank-to-bank via documentary LC. Brokerage fee is invoiced independently upon bill of lading issuance."}
+              </div>
+            </div>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <button
                 onClick={() => router.push(`/deals/deal-en590-rotterdam/room`)}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-sm shadow-lg shadow-[#b87333]/20 flex items-center gap-2"
+                className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-sm shadow-lg shadow-[#b87333]/20 flex items-center justify-center gap-2"
               >
-                <span>{isAr ? "الدخول إلى غرفة الصفقة" : "Enter Live Deal Room"}</span>
+                <span>{isAr ? "معاينة غرفة الصفقة التوضيحية" : "Enter Interactive Deal Room"}</span>
                 <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </button>
               <button
-                onClick={() => setSubmitted(false)}
+                onClick={() => {
+                  setSubmitted(false);
+                  setQuantity("");
+                  setPricePerUnit("");
+                  setDeliveryPort("");
+                  setDeliveryDateRange("");
+                }}
                 className="px-6 py-3 rounded-xl bg-[#141724] border border-[#23273b] text-gray-300 hover:text-white text-sm"
               >
-                {isAr ? "تسجيل صفقة أخرى" : "Submit Another Deal"}
+                {isAr ? "تسجيل عملية أخرى" : "Submit Another Deal"}
               </button>
             </div>
           </div>
@@ -158,12 +313,21 @@ export default function NewDealPage({
                 <span>{t.common.verifiedBrokerage}</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                {isAr ? "تسجيل صفقة سلعية جديدة" : "New Commodity Deal Registration"}
+                {side === "sell"
+                  ? (isAr ? "تسجيل عرض توريد سلعي معتمد" : "Register Verified Supply Offer")
+                  : (isAr ? "تسجيل طلب شراء سلعي معتمد" : "Register Verified Buy Request")}
               </h1>
               <p className="text-xs sm:text-sm text-gray-400 mt-1">
-                {t.common.usdReference}
+                {t.common.usdReference} • {isAr ? "وساطة غير إيداعية وتسوية مصرفية مباشرة" : "Non-custodial cargo clearing & peer-to-peer settlement"}
               </p>
             </div>
+
+            {errorMessage && (
+              <div className="p-3.5 rounded-xl bg-red-950/40 border border-red-500/40 text-red-300 text-xs flex items-center gap-2">
+                <Info className="w-4 h-4 shrink-0 text-red-400" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
 
             {/* Step 1: Side (Buy vs Sell) */}
             <div className="space-y-3">
@@ -181,6 +345,7 @@ export default function NewDealPage({
                       : "bg-[#0e1018] border-[#23273b] text-gray-400 hover:text-white"
                   )}
                 >
+                  <Building2 className="w-4 h-4 text-[#d4956b]" />
                   <span>{t.catalog.buyRequest}</span>
                 </button>
                 <button
@@ -193,6 +358,7 @@ export default function NewDealPage({
                       : "bg-[#0e1018] border-[#23273b] text-gray-400 hover:text-white"
                   )}
                 >
+                  <FileCheck2 className="w-4 h-4 text-emerald-400" />
                   <span>{t.catalog.supplyOffer}</span>
                 </button>
               </div>
@@ -205,28 +371,32 @@ export default function NewDealPage({
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "القطاع" : "Sector"}</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "القطاع (7 قطاعات دولية)" : "Commodity Sector"}</span>
                   <select
                     value={sectorId}
                     onChange={(e) => {
-                      setSectorId(e.target.value);
-                      const sec = COMMODITY_SECTORS.find((s) => s.id === e.target.value);
+                      const newSecId = e.target.value;
+                      setSectorId(newSecId);
+                      const sec = COMMODITY_SECTORS.find((s) => s.id === newSecId);
                       if (sec && sec.items.length > 0) {
                         setCommodityName(sec.items[0].name);
                       }
+                      setSpec1("");
+                      setSpec2("");
+                      setSpec3("");
                     }}
                     className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
                   >
                     {COMMODITY_SECTORS.map((s) => (
                       <option key={s.id} value={s.id}>
-                        {getSectorTitle(s.titleKey, locale)}
+                        {getSectorTitle(s.titleKey, locale)} ({s.materialsCount} {isAr ? "درجة" : "grades"})
                       </option>
                     ))}
                   </select>
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "السلعة" : "Commodity Product"}</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "السلعة القياسية المعتمدة" : "Standard Commodity Product"}</span>
                   <select
                     value={commodityName}
                     onChange={(e) => setCommodityName(e.target.value)}
@@ -241,47 +411,59 @@ export default function NewDealPage({
                 </div>
               </div>
 
-              {/* Dynamic Material Specifications */}
-              <div className="p-4 rounded-2xl bg-[#0f121d] border border-[#23273b] space-y-3">
+              {/* Reference Benchmark Specs Display */}
+              <div className="p-3 rounded-xl bg-[#10121d] border border-[#1f2233] text-xs text-gray-300 flex items-center justify-between flex-wrap gap-2">
+                <span className="text-gray-400">{t.catalog.benchmarkSpecs}</span>
+                <span className="font-mono text-[#d4956b] font-medium" dir="ltr">
+                  {currentCommodityItem.specs}
+                </span>
+              </div>
+
+              {/* Dynamic Sector Specifications Inputs */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#0f121d] border border-[#23273b] space-y-3">
                 <div className="flex items-center gap-2 text-xs font-semibold text-[#d4956b]">
                   <Info className="w-4 h-4" />
-                  <span>{t.catalog.benchmarkSpecs}</span>
+                  <span>
+                    {isAr
+                      ? `المواصفات الفنية الخاصة بقطاع ${getSectorTitle(currentSector.titleKey, locale)}`
+                      : `Technical Specifications for ${getSectorTitle(currentSector.titleKey, locale)}`}
+                  </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
                     <span className="text-[11px] text-gray-400 block mb-1">
-                      {isAr ? "المعيار الرئيسي" : "Primary Spec"}
+                      {isAr ? currentSpecConfig.spec1.labelAr : currentSpecConfig.spec1.labelEn}
                     </span>
                     <input
                       type="text"
                       value={spec1}
                       onChange={(e) => setSpec1(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder={isAr ? "مثال: 38.5° أو 46% نيتروجين" : "e.g. 38.5° / 46% N"}
+                      placeholder={isAr ? currentSpecConfig.spec1.placeholderAr : currentSpecConfig.spec1.placeholderEn}
                     />
                   </div>
                   <div>
                     <span className="text-[11px] text-gray-400 block mb-1">
-                      {isAr ? "نسبة الكبريت / الشوائب" : "Sulfur / Impurities"}
+                      {isAr ? currentSpecConfig.spec2.labelAr : currentSpecConfig.spec2.labelEn}
                     </span>
                     <input
                       type="text"
                       value={spec2}
                       onChange={(e) => setSpec2(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder={isAr ? "مثال: 10 PPM أو 0.5%" : "e.g. 10 PPM"}
+                      placeholder={isAr ? currentSpecConfig.spec2.placeholderAr : currentSpecConfig.spec2.placeholderEn}
                     />
                   </div>
                   <div>
                     <span className="text-[11px] text-gray-400 block mb-1">
-                      {t.catalog.sgsInspected}
+                      {isAr ? currentSpecConfig.spec3.labelAr : currentSpecConfig.spec3.labelEn}
                     </span>
                     <input
                       type="text"
                       value={spec3}
                       onChange={(e) => setSpec3(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder={isAr ? "مثال: فحص SGS أو Saybolt معتمد" : "e.g. SGS / Saybolt"}
+                      placeholder={isAr ? currentSpecConfig.spec3.placeholderAr : currentSpecConfig.spec3.placeholderEn}
                     />
                   </div>
                 </div>
@@ -291,45 +473,49 @@ export default function NewDealPage({
             {/* Step 3: Quantity, Pricing & Incoterms */}
             <div className="space-y-4">
               <label className="text-xs font-bold uppercase tracking-wider text-gray-300">
-                3. {isAr ? "الكمية، السعر واللوجستيات" : "Quantity, Pricing & Logistics"}
+                3. {isAr ? "الكمية، السعر والشروط اللوجستية" : "Quantity, Target Price & Logistics"}
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "الكمية" : "Quantity"}</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "الكمية المطلوبة / المعروضة *" : "Quantity *"}</span>
                   <input
                     type="number"
                     min="1"
+                    required
                     value={quantity}
-                    onChange={(e) => setQuantity(Number(e.target.value))}
-                    className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
+                    onChange={(e) => setQuantity(e.target.value === "" ? "" : Number(e.target.value))}
+                    placeholder={isAr ? "مثال: 25000" : "e.g. 25000"}
+                    className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333] font-mono"
                   />
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "الوحدة" : "Unit"}</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "الوحدة القياسية" : "Standard Unit"}</span>
                   <select
                     value={unit}
                     onChange={(e) => setUnit(e.target.value)}
                     className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
                   >
-                    <option value="Metric Tons">{isAr ? "طن متري" : "Metric Tons (MT)"}</option>
-                    <option value="Barrels">{isAr ? "برميل" : "Barrels (BBL)"}</option>
-                    <option value="MMBTU">MMBTU</option>
-                    <option value="Kilograms">{isAr ? "كيلوغرام" : "Kilograms (Kg)"}</option>
+                    <option value="Metric Tons">{isAr ? "طن متري (MT)" : "Metric Tons (MT)"}</option>
+                    <option value="Barrels">{isAr ? "برميل (BBL)" : "Barrels (BBL)"}</option>
+                    <option value="MMBTU">MMBTU (مليون وحدة حرارية)</option>
+                    <option value="Kilograms">{isAr ? "كيلوغرام (Kg)" : "Kilograms (Kg)"}</option>
                   </select>
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "السعر للوحدة (USD)" : "Target Price (USD)"}</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "السعر للوحدة (USD) *" : "Target Price (USD) *"}</span>
                   <div className="relative">
                     <span className="absolute left-3 rtl:left-auto rtl:right-3 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm">$</span>
                     <input
                       type="number"
                       step="0.01"
-                      min="1"
+                      min="0.01"
+                      required
                       value={pricePerUnit}
-                      onChange={(e) => setPricePerUnit(Number(e.target.value))}
+                      onChange={(e) => setPricePerUnit(e.target.value === "" ? "" : Number(e.target.value))}
+                      placeholder={isAr ? "مثال: 740" : "e.g. 740"}
                       className="w-full bg-[#121422] border border-[#23273b] rounded-xl pl-8 pr-4 rtl:pr-8 rtl:pl-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333] font-mono"
                     />
                   </div>
@@ -339,13 +525,17 @@ export default function NewDealPage({
               {/* Total Contract Estimated Value Banner */}
               <div className="p-4 rounded-2xl bg-[#121420] border border-[#b87333]/30 flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs text-gray-400">{isAr ? "إجمالي القيمة التقديرية:" : "Total Contract Value:"}</span>
-                  <div className="text-2xl font-bold font-mono text-[#d4956b]">
+                  <span className="text-xs text-gray-400">{isAr ? "إجمالي القيمة التقديرية المحتسبة:" : "Calculated Total Contract Value:"}</span>
+                  <div className="text-2xl font-bold font-mono text-[#d4956b]" dir="ltr">
                     {formatCurrency(totalContractValue, "USD", locale)}
                   </div>
                 </div>
-                <div className="text-xs text-gray-400 font-mono">
-                  <span>{t.common.usdReference}</span>
+                <div className="text-xs text-gray-400 font-mono text-end">
+                  <div>{t.common.usdReference}</div>
+                  <div className="text-[11px] text-[#c9a961] mt-0.5">
+                    {isAr ? "عمولة الوساطة المقدرة (1.25%): " : "Est. Brokerage Fee (1.25%): "}
+                    <span dir="ltr">{formatCurrency(totalContractValue * 0.0125, "USD", locale)}</span>
+                  </div>
                 </div>
               </div>
 
@@ -355,7 +545,7 @@ export default function NewDealPage({
                   <select
                     value={incoterm}
                     onChange={(e) => setIncoterm(e.target.value)}
-                    className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
+                    className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333] font-mono"
                   >
                     {INCOTERMS.map((term) => (
                       <option key={term} value={term}>
@@ -366,20 +556,22 @@ export default function NewDealPage({
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "ميناء / محطة التسليم" : "Named Port / Terminal"}</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "ميناء / محطة التسليم المعتمدة *" : "Named Port / Terminal *"}</span>
                   <input
                     type="text"
+                    required
                     value={deliveryPort}
                     onChange={(e) => setDeliveryPort(e.target.value)}
-                    placeholder={isAr ? "مثال: ميناء روتردام، الجبيل، الفجيرة" : "e.g. Rotterdam, Jubail"}
+                    placeholder={isAr ? "مثال: ميناء روتردام، الجبيل، الفجيرة" : "e.g. Rotterdam Port, Jubail, Fujairah"}
                     className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
                   />
                 </div>
 
                 <div>
-                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "فترة التسليم" : "Delivery Window"}</span>
+                  <span className="text-xs text-gray-400 mb-1.5 block">{isAr ? "نافذة / فترة التسليم *" : "Delivery Window *"}</span>
                   <input
                     type="text"
+                    required
                     value={deliveryDateRange}
                     onChange={(e) => setDeliveryDateRange(e.target.value)}
                     placeholder={isAr ? "مثال: 10 - 25 ديسمبر 2026" : "e.g. Dec 10 - Dec 25, 2026"}
@@ -390,17 +582,24 @@ export default function NewDealPage({
             </div>
 
             {/* Submit Action */}
-            <div className="pt-4 border-t border-[#1f2233] flex items-center justify-between">
-              <span className="text-xs text-gray-500 font-mono">
-                {t.common.verifiedBrokerage}
-              </span>
+            <div className="pt-4 border-t border-[#1f2233] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2 text-xs text-gray-400">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <span>{t.common.verifiedBrokerage} • {isAr ? "حماية NCNDA وتدقيق SGS" : "NCNDA Protected & SGS Verified"}</span>
+              </div>
 
               <button
                 type="submit"
                 disabled={isPending}
-                className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-sm shadow-xl shadow-[#b87333]/20 flex items-center gap-2 transition-all disabled:opacity-50"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-sm shadow-xl shadow-[#b87333]/20 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
               >
-                <span>{isPending ? t.common.loading : (side === "buy" ? t.catalog.buyRequest : t.catalog.supplyOffer)}</span>
+                <span>
+                  {isPending
+                    ? t.common.loading
+                    : side === "sell"
+                    ? (isAr ? "إرسال عرض توريد معتمد" : "Submit Verified Supply Offer")
+                    : (isAr ? "إرسال طلب شراء معتمد" : "Submit Verified Purchase Request")}
+                </span>
                 <ArrowRight className="w-4 h-4 rtl:rotate-180" />
               </button>
             </div>
@@ -412,5 +611,29 @@ export default function NewDealPage({
         {isAr ? "محرك المقاصة وتنفيذ الصفقات — فالوريا ماركت VALOREA MARKET" : "VALOREA MARKET Supervised Commodity Execution Engine"} • {t.common.verifiedBrokerage}
       </footer>
     </div>
+  );
+}
+
+export default function NewDealPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const [locale, setLocale] = useState("en");
+
+  useEffect(() => {
+    params.then((p) => setLocale(p.locale));
+  }, [params]);
+
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#07080c] flex items-center justify-center text-gray-400 text-sm">
+          Loading VALOREA MARKET Deal Desk...
+        </div>
+      }
+    >
+      <NewDealForm locale={locale} />
+    </Suspense>
   );
 }

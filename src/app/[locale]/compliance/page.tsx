@@ -297,7 +297,9 @@ export default function CompliancePortalPage() {
             <div className="divide-y divide-[#181b29] overflow-x-auto">
               {filteredRecords.length === 0 ? (
                 <div className="p-8 text-center text-xs text-gray-500">
-                  {t.catalog.noResults}
+                  {locale === "ar"
+                    ? "لم يتم العثور على سجلات تدقيق أو امتثال تطابق معايير البحث والفلترة المحددة."
+                    : "No compliance, verification, or sanctions audit records match the current filters."}
                 </div>
               ) : (
                 filteredRecords.map((r) => {

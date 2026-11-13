@@ -110,12 +110,15 @@ export function DealRoomPreview({ translations }: DealRoomPreviewProps) {
           <div className="flex items-center gap-3">
             <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="text-sm font-bold text-white font-mono">
                   {t.roomReference}
                 </h3>
+                <span className="px-2.5 py-0.5 rounded-full bg-[#b87333]/20 text-[#d4956b] border border-[#b87333]/40 text-[10px] font-mono font-semibold">
+                  معاينة توضيحية تفاعلية • Interactive Demo Preview
+                </span>
                 <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-mono">
-                  {t.e2eeActive}
+                  TLS 1.3 & Anti-Leak Active
                 </span>
               </div>
               <p className="text-xs text-gray-400 mt-0.5">
@@ -229,51 +232,63 @@ export function DealRoomPreview({ translations }: DealRoomPreviewProps) {
           )}
 
           {activeTab === "documents" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl bg-[#10131f] border border-[#23273b] relative overflow-hidden">
-                <div className="absolute inset-0 watermark-overlay opacity-25" />
-                <div className="relative z-10">
+            <div className="space-y-3">
+              <div className="p-2.5 rounded-xl bg-[#121420] border border-[#23273b] text-xs text-gray-400 flex items-center justify-between">
+                <span>نموذج محاكاة وثائق الشحن (وثائق تدقيق تجريبية لا تحتوي على أسرار تجارية حقيقية)</span>
+                <span className="font-mono text-[#d4956b] text-[11px]">DEMO_REDACTED_PREVIEW</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-[#10131f] border border-[#23273b] relative overflow-hidden">
+                  <div className="absolute inset-0 watermark-overlay opacity-25" />
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <span className="text-[10px] px-2 py-0.5 rounded bg-[#b87333]/20 text-[#d4956b] font-mono mb-1.5 inline-block">
+                          وثيقة معاينة توضيحية
+                        </span>
+                        <h4 className="text-sm font-semibold text-white">
+                          {t.doc1Title}
+                        </h4>
+                        <p className="text-xs text-gray-400 mt-1 font-mono">
+                          {t.doc1Type}
+                        </p>
+                      </div>
+                      <span className="px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 text-[10px] font-mono">
+                        Watermarked
+                      </span>
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-[#1a1e30] flex items-center justify-between text-xs">
+                      <span className="text-gray-400 font-mono">{t.buyerAlias}</span>
+                      <button className="px-3 py-1 rounded-lg bg-[#181d2e] hover:bg-[#20273e] text-white font-medium border border-[#2b334d]">
+                        {t.previewBtn}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-[#10131f] border border-[#23273b]">
                   <div className="flex items-start justify-between">
                     <div>
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#b87333]/20 text-[#d4956b] font-mono mb-1.5 inline-block">
+                        وثيقة معاينة توضيحية
+                      </span>
                       <h4 className="text-sm font-semibold text-white">
-                        {t.doc1Title}
+                        {t.doc2Title}
                       </h4>
                       <p className="text-xs text-gray-400 mt-1 font-mono">
-                        {t.doc1Type}
+                        {t.doc2Type}
                       </p>
                     </div>
-                    <span className="px-2 py-0.5 rounded bg-sky-500/10 text-sky-400 text-[10px] font-mono">
-                      {t.e2eeActive}
+                    <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-mono">
+                      SGS Verified
                     </span>
                   </div>
                   <div className="mt-4 pt-3 border-t border-[#1a1e30] flex items-center justify-between text-xs">
-                    <span className="text-gray-400 font-mono">{t.buyerAlias}</span>
+                    <span className="text-gray-400 font-mono">{t.supplierAlias}</span>
                     <button className="px-3 py-1 rounded-lg bg-[#181d2e] hover:bg-[#20273e] text-white font-medium border border-[#2b334d]">
                       {t.previewBtn}
                     </button>
                   </div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-[#10131f] border border-[#23273b]">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className="text-sm font-semibold text-white">
-                      {t.doc2Title}
-                    </h4>
-                    <p className="text-xs text-gray-400 mt-1 font-mono">
-                      {t.doc2Type}
-                    </p>
-                  </div>
-                  <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-mono">
-                    SGS
-                  </span>
-                </div>
-                <div className="mt-4 pt-3 border-t border-[#1a1e30] flex items-center justify-between text-xs">
-                  <span className="text-gray-500">{t.supplierAlias}</span>
-                  <button className="px-3 py-1 rounded-lg bg-[#b87333]/20 hover:bg-[#b87333]/30 text-[#d4956b] border border-[#b87333]/40 font-medium">
-                    {t.previewBtn}
-                  </button>
                 </div>
               </div>
             </div>

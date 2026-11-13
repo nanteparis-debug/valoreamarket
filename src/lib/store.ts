@@ -1,4 +1,4 @@
-import { sanitizeDealMessage, type SanitizeResult } from "./sanitizer";
+import { sanitizeDealMessage, type SanitizeResult } from "./sanitizer.ts";
 
 export interface DealParticipant {
   id: string;
