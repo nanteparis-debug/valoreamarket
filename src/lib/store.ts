@@ -171,7 +171,7 @@ class GVCEDataStore {
       scope: "kyb",
       status: "approved",
       sanctionsScore: 0,
-      reviewerId: "CO-GVCE-Geneva-11",
+      reviewerId: "CO-VALOREA-Geneva-11",
       decisionReason: "Comprehensive KYB verified against Infogreffe and OFAC/EU Sanctions list. Clean beneficial ownership.",
       documentsSubmitted: ["Kbis Excerpt 2026", "Audited Financials FY2025", "Corporate Resolution & Power of Attorney"],
       expiresAt: "2027-11-12T00:00:00Z",
@@ -190,7 +190,7 @@ class GVCEDataStore {
       scope: "cargo_title",
       status: "approved",
       sanctionsScore: 0,
-      reviewerId: "CO-GVCE-Oslo-04",
+      reviewerId: "CO-VALOREA-Oslo-04",
       decisionReason: "Refinery throughput allocation contract and Mongstad terminal storage title verified.",
       documentsSubmitted: ["Mongstad Tank Storage Receipt #419", "Refinery Allocation Agreement 2026/2027", "SGS Quality Assurance Certificate"],
       expiresAt: "2027-10-30T00:00:00Z",
@@ -209,7 +209,7 @@ class GVCEDataStore {
       scope: "representative_kyc",
       status: "approved",
       sanctionsScore: 0,
-      reviewerId: "CO-GVCE-Dubai-09",
+      reviewerId: "CO-VALOREA-Dubai-09",
       decisionReason: "Passports, biometric identity confirmation, and commercial chamber authorization fully verified.",
       documentsSubmitted: ["Saudi Commercial Register CR", "Chamber of Commerce Signature Card", "Authorized Officer Passport Copy"],
       expiresAt: "2027-08-15T00:00:00Z",
@@ -228,7 +228,7 @@ class GVCEDataStore {
       scope: "kyb",
       status: "pending_review",
       sanctionsScore: 4,
-      reviewerId: "CO-GVCE-SaoPaulo-02",
+      reviewerId: "CO-VALOREA-SaoPaulo-02",
       decisionReason: "Under compliance screening: awaiting supplementary bank comfort letter and updated articles of association.",
       documentsSubmitted: ["CNPJ Registration Certificate", "Articles of Incorporation (Contrato Social)"],
       expiresAt: "2027-03-01T00:00:00Z",
@@ -247,7 +247,7 @@ class GVCEDataStore {
       scope: "sanctions_pep",
       status: "additional_info_required",
       sanctionsScore: 28,
-      reviewerId: "CO-GVCE-London-07",
+      reviewerId: "CO-VALOREA-London-07",
       decisionReason: "PEP screening flagged indirect ownership link. Ultimate Beneficial Ownership (UBO) declaration required before approval.",
       documentsSubmitted: ["Trade License Copy", "Intermediary Corporate Chart"],
       expiresAt: "2026-12-31T00:00:00Z",
@@ -258,7 +258,7 @@ class GVCEDataStore {
   private seedDefaultMatches() {
     this.matches.set("match-en590-rotterdam", {
       id: "match-en590-rotterdam",
-      reference: "GVCE-MATCH-2026-EN590-01",
+      reference: "VALOREA-MATCH-2026-EN590-01",
       buyRequestId: "deal-en590-rotterdam",
       supplyOfferId: "offer-nordic-en590",
       buyerOrg: "TotalEnergies Trading SA",
@@ -284,13 +284,13 @@ class GVCEDataStore {
       status: "room_opened",
       dealRoomId: "deal-en590-rotterdam",
       estimatedCommissionUsd: 462500, // 1.25% of $37,000,000
-      brokerLead: "Broker-GVCE-Lead",
+      brokerLead: "Broker-VALOREA-Lead",
       createdAt: "2026-11-12T10:00:00Z",
     });
 
     this.matches.set("match-urea-santos", {
       id: "match-urea-santos",
-      reference: "GVCE-MATCH-2026-UREA-02",
+      reference: "VALOREA-MATCH-2026-UREA-02",
       buyRequestId: "deal-urea-latam-buy",
       supplyOfferId: "deal-urea-santos",
       buyerOrg: "AgroFertil Importadora do Brasil Ltda",
@@ -315,13 +315,13 @@ class GVCEDataStore {
       complianceStatusSupplier: "approved",
       status: "proposed",
       estimatedCommissionUsd: 144375, // 1.5% of $9,625,000
-      brokerLead: "Broker-GVCE-Agro",
+      brokerLead: "Broker-VALOREA-Agro",
       createdAt: "2026-11-13T09:30:00Z",
     });
 
     this.matches.set("match-copper-cathode", {
       id: "match-copper-cathode",
-      reference: "GVCE-MATCH-2026-CU-03",
+      reference: "VALOREA-MATCH-2026-CU-03",
       buyRequestId: "req-copper-shanghai",
       supplyOfferId: "offer-copper-chile",
       buyerOrg: "China Minmetals East Corp",
@@ -345,7 +345,7 @@ class GVCEDataStore {
       complianceStatusSupplier: "approved",
       status: "broker_approved",
       estimatedCommissionUsd: 465000, // 1.0% of $46,500,000
-      brokerLead: "Broker-GVCE-Metals",
+      brokerLead: "Broker-VALOREA-Metals",
       createdAt: "2026-11-13T11:15:00Z",
     });
   }
@@ -353,7 +353,7 @@ class GVCEDataStore {
   private seedDefaultInvoices() {
     this.invoices.set("inv-sub-089", {
       id: "inv-sub-089",
-      invoiceNumber: "GVCE-INV-2026-SUB-089",
+      invoiceNumber: "VALOREA-INV-2026-SUB-089",
       type: "subscription",
       orgId: "org-norway-refining",
       orgName: "Nordic Refining & Trading AS",
@@ -364,12 +364,12 @@ class GVCEDataStore {
       status: "paid",
       issueDate: "2026-11-10T00:00:00Z",
       dueDate: "2026-11-15T00:00:00Z",
-      pdfUrl: "/invoices/GVCE-INV-2026-SUB-089.pdf",
+      pdfUrl: "/invoices/VALOREA-INV-2026-SUB-089.pdf",
     });
 
     this.invoices.set("inv-sub-076", {
       id: "inv-sub-076",
-      invoiceNumber: "GVCE-INV-2026-SUB-076",
+      invoiceNumber: "VALOREA-INV-2026-SUB-076",
       type: "subscription",
       orgId: "org-norway-refining",
       orgName: "Nordic Refining & Trading AS",
@@ -380,22 +380,22 @@ class GVCEDataStore {
       status: "paid",
       issueDate: "2026-10-10T00:00:00Z",
       dueDate: "2026-10-15T00:00:00Z",
-      pdfUrl: "/invoices/GVCE-INV-2026-SUB-076.pdf",
+      pdfUrl: "/invoices/VALOREA-INV-2026-SUB-076.pdf",
     });
 
     this.invoices.set("inv-com-042", {
       id: "inv-com-042",
-      invoiceNumber: "GVCE-INV-2026-COM-042",
+      invoiceNumber: "VALOREA-INV-2026-COM-042",
       type: "commission",
       orgId: "org-norway-refining",
       orgName: "Nordic Refining & Trading AS",
       amount: 231250.00, // 50% share of $462,500 brokerage
       currency: "USD",
-      dealReference: "GVCE-2026-EN590-410",
+      dealReference: "VALOREA-2026-EN590-410",
       status: "due",
       issueDate: "2026-11-13T12:00:00Z",
       dueDate: "2026-11-28T12:00:00Z",
-      pdfUrl: "/invoices/GVCE-INV-2026-COM-042.pdf",
+      pdfUrl: "/invoices/VALOREA-INV-2026-COM-042.pdf",
     });
   }
 
@@ -447,7 +447,7 @@ class GVCEDataStore {
     // Deal 1: Energy - Diesel EN 590
     this.deals.set("deal-en590-rotterdam", {
       id: "deal-en590-rotterdam",
-      referenceNumber: "GVCE-2026-EN590-410",
+      referenceNumber: "VALOREA-2026-EN590-410",
       sector: "refined_petroleum",
       commodityName: "Ultra-Low Sulfur Diesel (EN 590 10 PPM)",
       side: "buy",
@@ -465,7 +465,7 @@ class GVCEDataStore {
         "Density at 15°C": "0.820 - 0.845 kg/l",
       },
       status: "negotiating",
-      brokerLead: "Broker-GVCE-Lead",
+      brokerLead: "Broker-VALOREA-Lead",
       commissionRate: 1.25,
       commissionDueEvent: "Commercial Invoice & LC 100% at Sight Confirmation",
       participants: [
@@ -487,9 +487,9 @@ class GVCEDataStore {
         },
         {
           id: "p-broker-1",
-          alias: "Broker-GVCE-Lead",
+          alias: "Broker-VALOREA-Lead",
           role: "broker",
-          orgId: "org-gvce-clearing",
+          orgId: "org-valorea-clearing",
           orgCountry: "AE",
           isVerified: true,
         },
@@ -539,7 +539,7 @@ class GVCEDataStore {
         },
       ],
       auditLog: [
-        { action: "DEAL_MATCHED", actor: "Broker-GVCE-Lead", timestamp: "2026-11-13T10:00:00Z" },
+        { action: "DEAL_MATCHED", actor: "Broker-VALOREA-Lead", timestamp: "2026-11-13T10:00:00Z" },
         { action: "ROOM_INITIALIZED", actor: "System", timestamp: "2026-11-13T10:05:00Z" },
         { action: "NCNDA_EXECUTED", actor: "Buyer-Alpha-24 & Supplier-Nordic-77", timestamp: "2026-11-13T11:30:00Z" },
       ],
@@ -548,7 +548,7 @@ class GVCEDataStore {
     // Deal 2: Fertilizer - Granular Urea 46% N
     this.deals.set("deal-urea-santos", {
       id: "deal-urea-santos",
-      referenceNumber: "GVCE-2026-UREA-902",
+      referenceNumber: "VALOREA-2026-UREA-902",
       sector: "sulfur_fertilizers",
       commodityName: "Granular Urea 46% Nitrogen (Agriculture Grade)",
       side: "sell",
@@ -566,7 +566,7 @@ class GVCEDataStore {
         "Granulometry (2-4 mm)": "Min 90%",
       },
       status: "matched",
-      brokerLead: "Broker-GVCE-Agro",
+      brokerLead: "Broker-VALOREA-Agro",
       commissionRate: 1.5,
       commissionDueEvent: "Bill of Lading issuance and Port Clearance",
       participants: [
@@ -603,7 +603,7 @@ class GVCEDataStore {
       ],
       auditLog: [
         { action: "SUPPLY_OFFER_REGISTERED", actor: "Supplier-Gulf-45", timestamp: "2026-11-13T08:00:00Z" },
-        { action: "BUY_OFFER_MATCHED", actor: "Broker-GVCE-Agro", timestamp: "2026-11-13T12:00:00Z" },
+        { action: "BUY_OFFER_MATCHED", actor: "Broker-VALOREA-Agro", timestamp: "2026-11-13T12:00:00Z" },
       ],
     });
   }
@@ -620,7 +620,7 @@ class GVCEDataStore {
     const id = `deal-${Date.now().toString(36)}`;
     const newDeal: DealItem = {
       id,
-      referenceNumber: `GVCE-2026-${deal.sector?.toUpperCase().slice(0, 4) || "COMM"}-${Math.floor(100 + Math.random() * 900)}`,
+      referenceNumber: `VALOREA-2026-${deal.sector?.toUpperCase().slice(0, 4) || "COMM"}-${Math.floor(100 + Math.random() * 900)}`,
       sector: deal.sector || "crude_oil_condensates",
       commodityName: deal.commodityName || "Custom Commodity",
       side: deal.side || "buy",
@@ -633,7 +633,7 @@ class GVCEDataStore {
       deliveryDateRange: deal.deliveryDateRange || "30 Days from Contract",
       specs: deal.specs || {},
       status: "open",
-      brokerLead: "Broker-GVCE-Lead",
+      brokerLead: "Broker-VALOREA-Lead",
       commissionRate: 1.25,
       commissionDueEvent: "LC Confirmation at Banking Channel",
       participants: deal.participants || [],
@@ -811,3 +811,4 @@ class GVCEDataStore {
 }
 
 export const gvceStore = new GVCEDataStore();
+export const valoreaStore = gvceStore;

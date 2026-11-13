@@ -52,7 +52,7 @@ export default function RegisterPage() {
               {t.contact.successDesc}
             </p>
             <div className="p-3 rounded-xl bg-[#141724] border border-[#23273b] text-xs font-mono text-[#d4956b] inline-block">
-              KYC/KYB: PENDING_REVIEW
+              {locale === "ar" ? "حالة التدقيق: قيد المراجعة (KYB/KYC)" : "KYC/KYB: PENDING_REVIEW"}
             </div>
             <div className="pt-4">
               <button
@@ -86,19 +86,21 @@ export default function RegisterPage() {
                   required
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
-                  placeholder="TotalEnergies Trading SA"
+                  placeholder={locale === "ar" ? "مثال: شركة الطاقة الوطنية" : "TotalEnergies Trading SA"}
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-gray-400 block mb-1">Commercial Registration (CR)</label>
+                <label className="text-xs text-gray-400 block mb-1">
+                  {locale === "ar" ? "رقم السجل التجاري (CR / Registration #)" : "Commercial Registration (CR)"}
+                </label>
                 <input
                   type="text"
                   required
                   value={regNumber}
                   onChange={(e) => setRegNumber(e.target.value)}
-                  placeholder="RCS 542 051 180"
+                  placeholder={locale === "ar" ? "مثال: 1010045231 أو RCS 542 051" : "RCS 542 051 180"}
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 />
               </div>
@@ -112,13 +114,13 @@ export default function RegisterPage() {
                   onChange={(e) => setCountry(e.target.value)}
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 >
-                  <option value="CH">Switzerland (CH)</option>
-                  <option value="AE">United Arab Emirates (AE)</option>
-                  <option value="SA">Saudi Arabia (SA)</option>
-                  <option value="FR">France (FR)</option>
-                  <option value="GB">United Kingdom (GB)</option>
-                  <option value="SG">Singapore (SG)</option>
-                  <option value="US">United States (US)</option>
+                  <option value="CH">{locale === "ar" ? "سويسرا (CH)" : "Switzerland (CH)"}</option>
+                  <option value="AE">{locale === "ar" ? "الإمارات العربية المتحدة (AE)" : "United Arab Emirates (AE)"}</option>
+                  <option value="SA">{locale === "ar" ? "المملكة العربية السعودية (SA)" : "Saudi Arabia (SA)"}</option>
+                  <option value="FR">{locale === "ar" ? "فرنسا (FR)" : "France (FR)"}</option>
+                  <option value="GB">{locale === "ar" ? "المملكة المتحدة (GB)" : "United Kingdom (GB)"}</option>
+                  <option value="SG">{locale === "ar" ? "سنغافورة (SG)" : "Singapore (SG)"}</option>
+                  <option value="US">{locale === "ar" ? "الولايات المتحدة (US)" : "United States (US)"}</option>
                 </select>
               </div>
 
@@ -129,7 +131,7 @@ export default function RegisterPage() {
                   required
                   value={repName}
                   onChange={(e) => setRepName(e.target.value)}
-                  placeholder="Legal Officer"
+                  placeholder={locale === "ar" ? "الممثل القانوني / المفوض بالتوقيع" : "Legal Officer"}
                   className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333]"
                 />
               </div>

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "GVCE — Global Verified Commodities Exchange",
+    "title": "VALOREA MARKET — Global Verified Commodities Exchange",
     "description": "Trusted international brokerage platform connecting verified buyers and suppliers of commodities worldwide."
   },
   "nav": {
@@ -87,7 +87,7 @@
     "phaseOf": "Phase {num} of 04"
   },
   "features": {
-    "title": "Why GVCE",
+    "title": "Why VALOREA MARKET",
     "subtitle": "Built for the demands of international commodity trading",
     "verification": {
       "title": "Multi-Stage Verification",
@@ -200,7 +200,7 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved.",
+    "rights": "© {year} VALOREA MARKET. All rights reserved.",
     "platformCatalog": "Commodities Catalog",
     "platformBroker": "Broker Command Center",
     "platformCompliance": "KYC/KYB Verification",
@@ -382,7 +382,7 @@
     "dealSummary": "50,000 MT Diesel EN 590 10PPM • CIF Rotterdam • USD 740/MT",
     "buyerAlias": "Buyer-Alpha-24",
     "supplierAlias": "Supplier-Nordic-77",
-    "brokerLead": "Broker Lead (GVCE)",
+    "brokerLead": "Broker Lead (VALOREA MARKET)",
     "tabChat": "Encrypted Chat",
     "tabDocuments": "Watermarked Documents",
     "tabAgreements": "Agreements & Milestones",

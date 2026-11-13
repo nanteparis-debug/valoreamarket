@@ -344,7 +344,9 @@ export default function CompliancePortalPage() {
                               : "bg-rose-500/10 border-rose-500/20 text-rose-400"
                           )}
                         >
-                          {r.sanctionsScore === 0 ? "CLEAR (0%)" : `FLAGGED (${r.sanctionsScore}%)`}
+                          {r.sanctionsScore === 0
+                            ? (locale === "ar" ? "سليم (0%)" : "CLEAR (0%)")
+                            : (locale === "ar" ? `مُسجل (${r.sanctionsScore}%)` : `FLAGGED (${r.sanctionsScore}%)`)}
                         </div>
 
                         <div
@@ -389,7 +391,9 @@ export default function CompliancePortalPage() {
                     </span>
                   </div>
                   <div>
-                    <span className="text-gray-500 block text-[11px]">UBO</span>
+                    <span className="text-gray-500 block text-[11px]">
+                      {locale === "ar" ? "المالك المستفيد النهائي (UBO)" : "UBO"}
+                    </span>
                     <span className="text-gray-200 font-medium">{selectedRecord.uboName}</span>
                   </div>
                   <div>
@@ -414,7 +418,9 @@ export default function CompliancePortalPage() {
                           <FileText className="w-3.5 h-3.5 text-[#d4956b]" />
                           <span className="truncate">{doc}</span>
                         </div>
-                        <span className="text-[10px] text-emerald-400 font-mono">AUTHENTICATED</span>
+                        <span className="text-[10px] text-emerald-400 font-mono">
+                          {locale === "ar" ? "مُعتمد وموثق" : "AUTHENTICATED"}
+                        </span>
                       </div>
                     ))}
                   </div>

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "GVCE — 全球认证大宗商品交易所",
+    "title": "VALOREA MARKET — 全球认证大宗商品交易所",
     "description": "连接全球认证买家和供应商的可信国际经纪平台。"
   },
   "nav": {
@@ -87,7 +87,7 @@
     "phaseOf": "第 {num} 阶段（共 4 阶段）"
   },
   "features": {
-    "title": "Why GVCE",
+    "title": "Why VALOREA MARKET",
     "subtitle": "Built for the demands of international commodity trading",
     "verification": {
       "title": "Multi-Stage Verification",
@@ -200,7 +200,7 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved.",
+    "rights": "© {year} VALOREA MARKET. All rights reserved.",
     "platformCatalog": "大宗商品分类目录",
     "platformBroker": "经纪人指挥中心",
     "platformCompliance": "KYC/KYB 合规核验",
@@ -382,7 +382,7 @@
     "dealSummary": "50,000 公吨 超低硫柴油 EN 590 10PPM • CIF 鹿特丹 • 740 美元/公吨",
     "buyerAlias": "买方-Alpha-24",
     "supplierAlias": "供应商-Nordic-77",
-    "brokerLead": "GVCE 主持经纪人",
+    "brokerLead": "VALOREA MARKET 主持经纪人",
     "tabChat": "加密洽谈",
     "tabDocuments": "水印技术文件",
     "tabAgreements": "协议与履约节点",

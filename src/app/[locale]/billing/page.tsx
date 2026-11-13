@@ -177,8 +177,8 @@ export default function BillingPortalPage() {
               </span>
               <p className="text-gray-400 leading-relaxed max-w-3xl">
                 {locale === "ar"
-                  ? "تغطي فواتير GVCE اشتراكات المنصة وعمولات الوساطة المتفق عليها فقط. وتتم تسوية قيمة شحنات السلع الفعلية (اعتمادات مستندية أو تحويلات بنكية) مباشرة بين البنوك المعتمدة للمشتري والمورد."
-                  : "GVCE invoices solely cover platform subscription memberships and agreed brokerage commissions. Physical commodity settlement is executed directly between authorized banking institutions."}
+                  ? "تغطي فواتير VALOREA MARKET اشتراكات المنصة وعمولات الوساطة المتفق عليها فقط. وتتم تسوية قيمة شحنات السلع الفعلية (اعتمادات مستندية أو تحويلات بنكية) مباشرة بين البنوك المعتمدة للمشتري والمورد."
+                  : "VALOREA MARKET invoices solely cover platform subscription memberships and agreed brokerage commissions. Physical commodity settlement is executed directly between authorized banking institutions."}
               </p>
             </div>
           </div>
@@ -362,10 +362,10 @@ export default function BillingPortalPage() {
             <table className="w-full text-xs text-left rtl:text-right">
               <thead className="bg-[#121422] text-gray-400 uppercase tracking-wider text-[11px] border-b border-[#1f2233]">
                 <tr>
-                  <th className="p-3.5">#</th>
-                  <th className="p-3.5">{t.billing.currentPlan}</th>
-                  <th className="p-3.5">USD</th>
-                  <th className="p-3.5">{t.billing.downloadPdf}</th>
+                  <th className="p-3.5">{locale === "ar" ? "رقم الفاتورة" : "#"}</th>
+                  <th className="p-3.5">{locale === "ar" ? "الفئة والغرض" : t.billing.currentPlan}</th>
+                  <th className="p-3.5">{locale === "ar" ? "المبلغ (دولار)" : "USD"}</th>
+                  <th className="p-3.5">{locale === "ar" ? "الإجراء" : t.billing.downloadPdf}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#181b29] text-gray-300">
@@ -375,10 +375,10 @@ export default function BillingPortalPage() {
                       {inv.invoiceNumber}
                     </td>
                     <td className="p-3.5 text-gray-300">
-                      {inv.type === "subscription" ? t.billing.title : t.common.verifiedBrokerage}
+                      {inv.type === "subscription" ? (locale === "ar" ? "اشتراك المنصة" : t.billing.title) : (locale === "ar" ? "عمولة وساطة الصفقات" : t.common.verifiedBrokerage)}
                     </td>
                     <td className="p-3.5 font-mono font-bold text-white">
-                      ${inv.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })} USD
+                      ${inv.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })} {locale === "ar" ? "دولار" : "USD"}
                     </td>
                     <td className="p-3.5">
                       <button
@@ -387,7 +387,7 @@ export default function BillingPortalPage() {
                         className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#141724] border border-[#23273b] hover:border-[#b87333]/50 text-xs text-gray-300 hover:text-white transition-all"
                       >
                         <Download className="w-3.5 h-3.5" />
-                        <span>PDF</span>
+                        <span>{locale === "ar" ? "تحميل PDF" : "PDF"}</span>
                       </button>
                     </td>
                   </tr>

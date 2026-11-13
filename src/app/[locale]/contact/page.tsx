@@ -85,11 +85,11 @@ export default function ContactPage() {
               <div className="border-t border-[#1f2233] pt-4 space-y-2 text-xs">
                 <div className="flex items-center gap-2 text-gray-300">
                   <Mail className="w-3.5 h-3.5 text-[#d4956b]" />
-                  <span>desk@gvce.exchange</span>
+                  <span>desk@valorea.exchange</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-300">
                   <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
-                  <span>compliance@gvce.exchange</span>
+                  <span>compliance@valorea.exchange</span>
                 </div>
               </div>
             </div>
@@ -98,7 +98,7 @@ export default function ContactPage() {
             <div className="bg-[#0e1017] border border-[#23273b] p-5 rounded-2xl space-y-2 text-xs">
               <div className="flex items-center gap-2 text-white font-semibold">
                 <Lock className="w-4 h-4 text-emerald-400" />
-                <span>PGP E2EE Fingerprint</span>
+                <span>{locale === "ar" ? "بصمة تشفير PGP E2EE المعتمدة" : "PGP E2EE Fingerprint"}</span>
               </div>
               <div className="p-2.5 rounded-lg bg-[#141724] border border-[#23273b] font-mono text-[10px] text-gray-300 break-all select-all">
                 4F8B 9201 CC34 8109 EF22 1765 B9A0 4431 89FE 204C

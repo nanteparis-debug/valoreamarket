@@ -251,7 +251,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       breadcrumb: "عن المنصة",
       badge: "البنية التحتية المؤسسية لوساطة السلع",
       title: "ربط أسواق السلع العالمية بالثقة والشفافية",
-      subtitle: "GVCE هي منصة وساطة مؤسسية دولية صُممت لحل فجوات الثقة في التجارة المادية العابرة للحدود عبر التدقيق الصارم والوساطة غير الإيداعية.",
+      subtitle: "VALOREA MARKET هي منصة وساطة مؤسسية دولية صُممت لحل فجوات الثقة في التجارة المادية العابرة للحدود عبر التدقيق الصارم والوساطة غير الإيداعية.",
       pillar1Title: "تسوية غير إيداعية (Non-Custodial)",
       pillar1Desc: "لا تحتفظ المنصة بأموال تسوية البضائع المادية إطلاقاً. تتم التسوية مباشرة بين الحسابات المصرفية المعتمدة للمشتري والمورد عبر الاعتمادات المستندية DLC و SBLC.",
       pillar2Title: "تحقق متعدد المراحل (KYC/KYB)",
@@ -267,12 +267,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         { name: "هيوستن، الولايات المتحدة", role: "مكتب الأمريكتين", desc: "شارع لويزيانا، هيوستن تكساس. عقود WTI والغاز والمواد الصناعية." }
       ],
       governanceTitle: "الحوكمة والامتثال القانوني",
-      governanceDesc: "تلتزم GVCE بأعلى المعايير التنظيمية السويسرية والدولية بما يضمن بيئة تداول نظيفة وخالية من المخاطر للشركات الكبرى."
+      governanceDesc: "تلتزم VALOREA MARKET بأعلى المعايير التنظيمية السويسرية والدولية بما يضمن بيئة تداول نظيفة وخالية من المخاطر للشركات الكبرى."
     },
     contact: {
       breadcrumb: "اتصل بنا",
       badge: "دعم مستمر 24/7 لغرف الصفقات والامتثال",
-      title: "التواصل مع المكاتب المؤسسية لـ GVCE",
+      title: "التواصل مع المكاتب المؤسسية لـ VALOREA MARKET",
       subtitle: "تواصل مع وسطائنا التجاريين ومسؤولي الامتثال القانوني. تتوفر قنوات اتصال مشفرة لهيكلة الصفقات ذات الحساسية العالية.",
       formTitle: "إرسال استفسار تجاري أو طلب انضمام",
       nameLabel: "الاسم الكامل للممثل",
@@ -291,16 +291,16 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       desksTitle: "المكاتب التجارية المعتمدة",
       desksSubtitle: "قنوات الاتصال المباشرة بالمكاتب الإقليمية",
       desks: [
-        { name: "مكتب جنيف (المقر الرئيسي)", role: "الامتثال والحوكمة", email: "geneva.desk@gvce.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
-        { name: "مكتب دبي (الشرق الأوسط)", role: "وساطة الطاقة والوقود", email: "dubai.desk@gvce.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
-        { name: "مكتب سنغافورة (آسيا)", role: "المعادن والغاز الطبيعي", email: "singapore.desk@gvce.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
-        { name: "مكتب هيوستن (الأمريكتان)", role: "النفط الخام والمكثفات", email: "houston.desk@gvce.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
+        { name: "مكتب جنيف (المقر الرئيسي)", role: "الامتثال والحوكمة", email: "geneva.desk@valorea.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
+        { name: "مكتب دبي (الشرق الأوسط)", role: "وساطة الطاقة والوقود", email: "dubai.desk@valorea.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
+        { name: "مكتب سنغافورة (آسيا)", role: "المعادن والغاز الطبيعي", email: "singapore.desk@valorea.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
+        { name: "مكتب هيوستن (الأمريكتان)", role: "النفط الخام والمكثفات", email: "houston.desk@valorea.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
       ]
     },
     faq: {
       breadcrumb: "الأسئلة الشائعة",
       badge: "دليل الامتثال وآليات التداول",
-      title: "الأسئلة الشائعة حول منصة GVCE",
+      title: "الأسئلة الشائعة حول منصة VALOREA MARKET",
       subtitle: "إجابات شاملة ومفصلة حول آليات الوساطة، والتحقق المؤسسي، وتسوية البضائع، وحماية الوثائق.",
       searchPlaceholder: "ابحث في الأسئلة الشائعة...",
       allCategories: "جميع الأقسام",
@@ -326,8 +326,8 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
           category: "التسوية والقنوات المصرفية",
           questions: [
             {
-              q: "هل تحتفظ GVCE بأموال تسوية الشحنات؟",
-              a: "كلا، إطلاقاً. GVCE منصة وساطة غير إيداعية (Non-Custodial). تتم تسوية مبالغ الشحنات مباشرة بين البنوك التجارية للمشتري والمورد باستخدام الاعتمادات المستندية (DLC / SBLC) أو التحويل المباشر (TT)."
+              q: "هل تحتفظ VALOREA MARKET بأموال تسوية الشحنات؟",
+              a: "كلا، إطلاقاً. VALOREA MARKET منصة وساطة غير إيداعية (Non-Custodial). تتم تسوية مبالغ الشحنات مباشرة بين البنوك التجارية للمشتري والمورد باستخدام الاعتمادات المستندية (DLC / SBLC) أو التحويل المباشر (TT)."
             },
             {
               q: "لماذا يُعتمد الدولار الأمريكي كعملة مرجعية للتسعير؟",
@@ -369,16 +369,16 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
     terms: {
       breadcrumb: "شروط الخدمة",
       badge: "عقد مؤسسي ملزم للتجارة بين الشركات (B2B)",
-      title: "شروط خدمة منصة GVCE",
+      title: "شروط خدمة منصة VALOREA MARKET",
       effectiveDate: "تاريخ السريان: 13 نوفمبر 2026 • الاختصاص القضائي: جنيف، سويسرا",
       sections: [
         {
           title: "1. طبيعة المنصة ونطاق عملها",
-          content: "تدير GVCE International AG (المشار إليها بـ 'GVCE') منصة وساطة إلكترونية مؤسسية متخصصة وغير إيداعية تربط بين الكيانات المعتمدة (المشترين والموردين) لمعاملات السلع المادية. تعمل GVCE كوسيط ومُشرف مستقل على الصفقات."
+          content: "تدير VALOREA MARKET International AG (المشار إليها بـ 'VALOREA MARKET') منصة وساطة إلكترونية مؤسسية متخصصة وغير إيداعية تربط بين الكيانات المعتمدة (المشترين والموردين) لمعاملات السلع المادية. تعمل VALOREA MARKET كوسيط ومُشرف مستقل على الصفقات."
         },
         {
           title: "2. سياسة عدم الإيداع وتسوية البضائع المادية",
-          content: "لا تستلم GVCE ولا تحتفظ ولا تحوّل أموال الشراء الخاصة بالسلع المادية. تتم تسوية جميع المدفوعات الناتجة عن عقود السلع مباشرة بين الحسابات المصرفية المعتمدة للمشتري والمورد من خلال الاعتمادات المستندية القابلة للتحقق (DLC / SBLC) أو الضمانات المصرفية."
+          content: "لا تستلم VALOREA MARKET ولا تحتفظ ولا تحوّل أموال الشراء الخاصة بالسلع المادية. تتم تسوية جميع المدفوعات الناتجة عن عقود السلع مباشرة بين الحسابات المصرفية المعتمدة للمشتري والمورد من خلال الاعتمادات المستندية القابلة للتحقق (DLC / SBLC) أو الضمانات المصرفية."
         },
         {
           title: "3. متطلبات التحقق وقوائم العقوبات",
@@ -398,11 +398,11 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       breadcrumb: "سياسة الخصوصية",
       badge: "مطابقة تامة للائحة الأوروبية GDPR وقانون حماية البيانات السويسري FADP",
       title: "سياسة الخصوصية وحماية البيانات التجارية",
-      effectiveDate: "تاريخ السريان: 13 نوفمبر 2026 • المسؤول عن البيانات: GVCE International AG، جنيف",
+      effectiveDate: "تاريخ السريان: 13 نوفمبر 2026 • المسؤول عن البيانات: VALOREA MARKET International AG، جنيف",
       sections: [
         {
           title: "1. نظرة عامة والالتزام بالحماية",
-          content: "تلتزم GVCE International AG بحماية البيانات التجارية والشخصية وفقاً للائحة العامة لحماية البيانات في الاتحاد الأوروبي (GDPR) والقانون الاتحادي السويسري المراجع لحماية البيانات (FADP)."
+          content: "تلتزم VALOREA MARKET International AG بحماية البيانات التجارية والشخصية وفقاً للائحة العامة لحماية البيانات في الاتحاد الأوروبي (GDPR) والقانون الاتحادي السويسري المراجع لحماية البيانات (FADP)."
         },
         {
           title: "2. فئات البيانات التي تتم معالجتها",
@@ -431,12 +431,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       title: "سياسة ملفات الارتباط وتخزين الجلسات",
       updatedDate: "آخر تحديث: 13 نوفمبر 2026",
       section1Title: "1. مبدأ الشفافية والضرورة التقنية",
-      section1Content: "تحترم GVCE الخصوصية المؤسسية. نستخدم حصرياً ملفات الارتباط الضرورية لتشغيل جلسات المستخدم المشفرة وحفظ اللغة المختارة، ولا نستخدم أي أدوات تتبع سلوكية أو إعلانية تابعة لجهات خارجية.",
+      section1Content: "تحترم VALOREA MARKET الخصوصية المؤسسية. نستخدم حصرياً ملفات الارتباط الضرورية لتشغيل جلسات المستخدم المشفرة وحفظ اللغة المختارة، ولا نستخدم أي أدوات تتبع سلوكية أو إعلانية تابعة لجهات خارجية.",
       section2Title: "2. ملفات الارتباط المستخدمة في المنصة",
       tableHeaders: { name: "اسم الملف", purpose: "الغرض الوظيفي", duration: "مدة الصلاحية", category: "التصنيف" },
       tableRows: [
         { name: "NEXT_LOCALE", purpose: "حفظ اللغة المفضلة للمستخدم (8 لغات مدعومة)", duration: "سنة واحدة", category: "ضروري للغاية" },
-        { name: "gvce_session_token", purpose: "رمز جلسة المصادقة المشفر JWT ومفاتيح Passkey", duration: "24 ساعة / انتهاء الجلسة", category: "ضروري للغاية" }
+        { name: "valorea_session_token", purpose: "رمز جلسة المصادقة المشفر JWT ومفاتيح Passkey", duration: "24 ساعة / انتهاء الجلسة", category: "ضروري للغاية" }
       ]
     },
     ncnda: {
@@ -447,7 +447,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. تعهدات منع الالتفاف وحماية التعامل",
-          content: "يتعهد أطراف الصفقة بعدم الالتفاف أو تجاوز منصة GVCE أو الأطراف المشاركة، بشكل مباشر أو غير مباشر، في أي صفقات أو مصادر أو علاقات توريد تم التعرف عليها عبر المنصة. يسري هذا الالتزام لمدة خمس (5) سنوات كاملة من تاريخ التعارف الأولي."
+          content: "يتعهد أطراف الصفقة بعدم الالتفاف أو تجاوز منصة VALOREA MARKET أو الأطراف المشاركة، بشكل مباشر أو غير مباشر، في أي صفقات أو مصادر أو علاقات توريد تم التعرف عليها عبر المنصة. يسري هذا الالتزام لمدة خمس (5) سنوات كاملة من تاريخ التعارف الأولي."
         },
         {
           title: "2. سرية المواصفات والأسعار والمستندات الفنية",
@@ -455,7 +455,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         },
         {
           title: "3. التعويضات الاتفاقية وإنفاذ الحقوق",
-          content: "في حال حدوث التفاف متعمد أو تعاقد مباشر خارج المنصة بين أطراف تم التعريف بينهم عبر GVCE، يلتزم الطرف المخالف بدفع تعويض اتفاقي يعادل ثلاثة أضعاف (3x) عمولة الوساطة الإجمالية المتوقعة، بالإضافة إلى مصاريف التحكيم وأتعاب المحاماة."
+          content: "في حال حدوث التفاف متعمد أو تعاقد مباشر خارج المنصة بين أطراف تم التعريف بينهم عبر VALOREA MARKET، يلتزم الطرف المخالف بدفع تعويض اتفاقي يعادل ثلاثة أضعاف (3x) عمولة الوساطة الإجمالية المتوقعة، بالإضافة إلى مصاريف التحكيم وأتعاب المحاماة."
         }
       ]
     },
@@ -467,12 +467,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. تسوية الشحنات المادية غير الإيداعية",
-          notice: "تنبيه هام: GVCE وسيط تقني وتنظيمي ولا يستقبل أو يحتفظ بأموال شراء البضائع المادية إطلاقاً.",
+          notice: "تنبيه هام: VALOREA MARKET وسيط تقني وتنظيمي ولا يستقبل أو يحتفظ بأموال شراء البضائع المادية إطلاقاً.",
           content: "تتم تسوية الشحنات المادية (النفط، الوقود، الأسمدة، المعادن، السكر) حصرياً بين الحسابات المصرفية المعتمدة للمشتري والمورد من خلال اعتمادات مستندية معززة وغير قابلة للإلغاء (DLC / SBLC) أو ضمانات مصرفية مطابقة لأعراف UCP 600."
         },
         {
           title: "2. هيكل عمولات الوساطة القياسي",
-          content: "تتقاضى GVCE عمولة وساطة قياسية تتراوح بين 1.00% و 1.50% من القيمة الإجمالية للشحنة، مقوّمة بالدولار الأمريكي، مقابل خدمات المطابقة الذكية والتدقيق الرقابي وإشراف غرف الصفقات.",
+          content: "تتقاضى VALOREA MARKET عمولة وساطة قياسية تتراوح بين 1.00% و 1.50% من القيمة الإجمالية للشحنة، مقوّمة بالدولار الأمريكي، مقابل خدمات المطابقة الذكية والتدقيق الرقابي وإشراف غرف الصفقات.",
           list: [
             "تُحسب العمولات قياسياً بالدولار الأمريكي بغض النظر عن عملة العقد المحلية.",
             "يتم تحديد الطرف الملتزم بالدفع (المشتري، المورد، أو مناصفة) في اتفاقية الوساطة المبرمة لكل صفقة."
@@ -486,7 +486,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
     },
     catalog: {
       backHome: "العودة للرئيسية",
-      topBanner: "كتالوج السلع الدولية المعتمدة من GVCE (7 قطاعات)",
+      topBanner: "كتالوج السلع الدولية المعتمدة من VALOREA MARKET (7 قطاعات)",
       badge: "المواصفات القياسية للتجارة الدولية",
       title: "كتالوج السلع والمواصفات القياسية",
       subtitle: "استكشف الدرجات الموحدة، ومعايير الجودة، وشروط التسليم الدولية عبر 7 قطاعات رئيسية.",
@@ -502,15 +502,15 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       supplyOffer: "تقديم عرض توريد",
       noResults: "لم يتم العثور على سلع تطابق بحثك",
       resetFilters: "إعادة ضبط الفلاتر",
-      footerText: "بورصة السلع العالمية GVCE • التسعير المرجعي بالدولار الأمريكي"
+      footerText: "بورصة السلع العالمية VALOREA MARKET • التسعير المرجعي بالدولار الأمريكي"
     },
     auth: {
       backHome: "العودة للرئيسية",
       signInBadge: "بوابة الشركات المعتمدة",
-      signInTitle: "تسجيل الدخول إلى GVCE",
+      signInTitle: "تسجيل الدخول إلى VALOREA MARKET",
       signInSubtitle: "الوصول المشفر لغرف الصفقات ولوحة تحكم الوساطة والامتثال",
       registerBadge: "تسجيل حساب مؤسسي جديد",
-      registerTitle: "إنشاء حساب شركة في GVCE",
+      registerTitle: "إنشاء حساب شركة في VALOREA MARKET",
       registerSubtitle: "ابدأ عملية التحقق المؤسسي والتداول في أسواق السلع المادية",
       emailLabel: "البريد الإلكتروني للعمل",
       emailPlaceholder: "name@company.com",
@@ -539,7 +539,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
     broker: {
       breadcrumb: "إدارة الوساطة",
       badge: "إشراف الوسيط نشط",
-      title: "مركز قيادة الوسيط GVCE",
+      title: "مركز قيادة الوسيط VALOREA MARKET",
       subtitle: "المطابقة الذكية لصفقات السلع، الإشراف على المفاوضات، قفل الامتثال، وإدارة العمولات.",
       refresh: "تحديث الصفقات",
       pendingProp: "عروض التداول قيد المراجعة",
@@ -630,9 +630,9 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       breadcrumb: "About Us",
       badge: "Institutional Commodities Infrastructure",
       title: "Bridging Global Commodity Markets with Verified Trust",
-      subtitle: "GVCE (Global Verified Commodities Exchange) is an international institutional brokerage platform designed to resolve trust deficits in cross-border physical trading through rigorous verification and non-custodial execution.",
+      subtitle: "VALOREA MARKET (Global Verified Commodities Exchange) is an international institutional brokerage platform designed to resolve trust deficits in cross-border physical trading through rigorous verification and non-custodial execution.",
       pillar1Title: "Non-Custodial Settlement",
-      pillar1Desc: "GVCE never holds physical cargo funds. Settlement takes place strictly through verified commercial banking channels (LC, SBLC, TT) between principals.",
+      pillar1Desc: "VALOREA MARKET never holds physical cargo funds. Settlement takes place strictly through verified commercial banking channels (LC, SBLC, TT) between principals.",
       pillar2Title: "Multi-Stage Verification",
       pillar2Desc: "Every entity undergoes KYB registry authentication, representative KYC, and real-time screening against OFAC, EU, UN, and UK sanctions lists.",
       pillar3Title: "Cryptographic Deal Rooms",
@@ -646,12 +646,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         { name: "Houston, USA", role: "Americas Operations", desc: "1000 Louisiana St, Houston, TX. WTI Contracts, Natural Gas & Petrochemicals." }
       ],
       governanceTitle: "Governance & Swiss Regulatory Adherence",
-      governanceDesc: "GVCE operates under Swiss commercial law and international trade guidelines, maintaining institutional risk isolation for multinational corporations."
+      governanceDesc: "VALOREA MARKET operates under Swiss commercial law and international trade guidelines, maintaining institutional risk isolation for multinational corporations."
     },
     contact: {
       breadcrumb: "Contact Us",
       badge: "24/7 Global Trading & Compliance Support",
-      title: "Contact GVCE Institutional Desks",
+      title: "Contact VALOREA MARKET Institutional Desks",
       subtitle: "Reach out to our global trade intermediaries, legal counsel, or compliance officers. Encrypted channels are available for high-confidentiality deal structuring.",
       formTitle: "Submit Trade Inquiry or Onboarding Request",
       nameLabel: "Representative Full Name",
@@ -670,10 +670,10 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       desksTitle: "Accredited Global Desks",
       desksSubtitle: "Direct communication channels to regional hubs",
       desks: [
-        { name: "Geneva Headquarters", role: "Compliance & Governance", email: "geneva.desk@gvce.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
-        { name: "Dubai Regional Desk", role: "Crude & Refined Fuels", email: "dubai.desk@gvce.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
-        { name: "Singapore Regional Desk", role: "Metals & Natural Gas", email: "singapore.desk@gvce.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
-        { name: "Houston Regional Desk", role: "Crude & Condensates", email: "houston.desk@gvce.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
+        { name: "Geneva Headquarters", role: "Compliance & Governance", email: "geneva.desk@valorea.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
+        { name: "Dubai Regional Desk", role: "Crude & Refined Fuels", email: "dubai.desk@valorea.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
+        { name: "Singapore Regional Desk", role: "Metals & Natural Gas", email: "singapore.desk@valorea.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
+        { name: "Houston Regional Desk", role: "Crude & Condensates", email: "houston.desk@valorea.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
       ]
     },
     faq: {
@@ -688,12 +688,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
           category: "Verification & Compliance (KYC/KYB)",
           questions: [
             {
-              q: "What verification is required to participate in GVCE?",
+              q: "What verification is required to participate in VALOREA MARKET?",
               a: "Participation requires a 3-tier verification: (1) Corporate entity KYB verification validating registration and Ultimate Beneficial Ownership (UBO); (2) Authorized representative KYC validating identity and Power of Attorney; and (3) Automated continuous sanctions screening against OFAC, EU, UN, and UK consolidated lists."
             },
             {
-              q: "How does GVCE verify cargo title for suppliers?",
-              a: "Suppliers must submit verifiable documentation of supply rights, such as refinery allocation contracts, terminal tank storage receipts (TSR), or bills of lading. These are verified by GVCE compliance officers prior to deal room activation."
+              q: "How does VALOREA MARKET verify cargo title for suppliers?",
+              a: "Suppliers must submit verifiable documentation of supply rights, such as refinery allocation contracts, terminal tank storage receipts (TSR), or bills of lading. These are verified by VALOREA MARKET compliance officers prior to deal room activation."
             },
             {
               q: "What happens if a company's compliance status is 'Pending' or 'Suspended'?",
@@ -705,12 +705,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
           category: "Settlement & Banking Channels",
           questions: [
             {
-              q: "Does GVCE hold or escrow physical cargo funds?",
-              a: "No. GVCE is strictly a non-custodial brokerage platform. The settlement of cargo value takes place directly between the buyer's bank and the seller's bank using conventional commercial instruments like Documentary Letters of Credit (LC), Standby Letters of Credit (SBLC), or Telegraphic Transfers (TT)."
+              q: "Does VALOREA MARKET hold or escrow physical cargo funds?",
+              a: "No. VALOREA MARKET is strictly a non-custodial brokerage platform. The settlement of cargo value takes place directly between the buyer's bank and the seller's bank using conventional commercial instruments like Documentary Letters of Credit (LC), Standby Letters of Credit (SBLC), or Telegraphic Transfers (TT)."
             },
             {
               q: "Why is the US Dollar (USD) used as the platform reference currency?",
-              a: "International physical commodities (petroleum, metals, fertilizers, sugar) are benchmarked globally in US Dollars. While parties may express contracts in EUR, AED, or other currencies, GVCE displays USD equivalents to ensure transparent, normalized comparisons across international offers."
+              a: "International physical commodities (petroleum, metals, fertilizers, sugar) are benchmarked globally in US Dollars. While parties may express contracts in EUR, AED, or other currencies, VALOREA MARKET displays USD equivalents to ensure transparent, normalized comparisons across international offers."
             }
           ]
         },
@@ -736,7 +736,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
             },
             {
               q: "When does the brokerage commission mature?",
-              a: "Brokerage fees mature upon verified contractual milestones (e.g. Letter of Credit operative confirmation, SGS inspection release, or Bill of Lading issuance). GVCE issues a formal Swiss VAT-compliant tax invoice payable within 15 banking days."
+              a: "Brokerage fees mature upon verified contractual milestones (e.g. Letter of Credit operative confirmation, SGS inspection release, or Bill of Lading issuance). VALOREA MARKET issues a formal Swiss VAT-compliant tax invoice payable within 15 banking days."
             }
           ]
         }
@@ -753,19 +753,19 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. Platform Nature & Scope",
-          content: "GVCE International AG (hereinafter 'GVCE') operates a specialized, non-custodial electronic trade brokerage platform connecting verified corporate entities ('Buyers' and 'Suppliers') for transactions in physical commodities. GVCE acts solely as an independent transaction broker and supervisor."
+          content: "VALOREA MARKET International AG (hereinafter 'VALOREA MARKET') operates a specialized, non-custodial electronic trade brokerage platform connecting verified corporate entities ('Buyers' and 'Suppliers') for transactions in physical commodities. VALOREA MARKET acts solely as an independent transaction broker and supervisor."
         },
         {
           title: "2. Non-Custodial Policy & Settlement of Cargo",
-          content: "GVCE does not hold, clear, or transmit funds for the purchase price of physical commodities. All payments for commodities shall be settled directly between the commercial banking institutions of the Buyer and Supplier through Documentary Letters of Credit (LC), Standby Letters of Credit (SBLC), or Telegraphic Transfer (TT) as agreed between the trading principals."
+          content: "VALOREA MARKET does not hold, clear, or transmit funds for the purchase price of physical commodities. All payments for commodities shall be settled directly between the commercial banking institutions of the Buyer and Supplier through Documentary Letters of Credit (LC), Standby Letters of Credit (SBLC), or Telegraphic Transfer (TT) as agreed between the trading principals."
         },
         {
           title: "3. Verification & Compliance Requirements",
-          content: "Access to deal rooms, order matching, and document exchange is contingent upon maintaining an active 'Approved' status in the GVCE Compliance Registry. Any entity subject to international sanctions (including OFAC, EU, UN, or UK sanctions regimes) or failing to submit verifiable Ultimate Beneficial Ownership (UBO) records shall be suspended immediately."
+          content: "Access to deal rooms, order matching, and document exchange is contingent upon maintaining an active 'Approved' status in the VALOREA MARKET Compliance Registry. Any entity subject to international sanctions (including OFAC, EU, UN, or UK sanctions regimes) or failing to submit verifiable Ultimate Beneficial Ownership (UBO) records shall be suspended immediately."
         },
         {
           title: "4. Anti-Circumvention and Non-Disclosure",
-          content: "All registered entities are bound by the ICC 769 Non-Circumvention, Non-Disclosure & Working Agreement incorporated herein. Bypassing the platform or directly contacting matched counterparties outside supervised GVCE channels constitutes a material breach entitling GVCE to liquidated damages equal to the full anticipated brokerage commission."
+          content: "All registered entities are bound by the ICC 769 Non-Circumvention, Non-Disclosure & Working Agreement incorporated herein. Bypassing the platform or directly contacting matched counterparties outside supervised VALOREA MARKET channels constitutes a material breach entitling VALOREA MARKET to liquidated damages equal to the full anticipated brokerage commission."
         },
         {
           title: "5. Governing Law and Arbitration",
@@ -777,11 +777,11 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       breadcrumb: "Privacy Policy",
       badge: "GDPR & Swiss FADP Compliant",
       title: "Privacy & Data Protection Policy",
-      effectiveDate: "Effective Date: November 13, 2026 • Data Controller: GVCE International AG, Geneva",
+      effectiveDate: "Effective Date: November 13, 2026 • Data Controller: VALOREA MARKET International AG, Geneva",
       sections: [
         {
           title: "1. Overview & Commitment",
-          content: "GVCE International AG is dedicated to safeguarding commercial and personal data. We comply with the European Union General Data Protection Regulation (GDPR) and the revised Swiss Federal Act on Data Protection (FADP)."
+          content: "VALOREA MARKET International AG is dedicated to safeguarding commercial and personal data. We comply with the European Union General Data Protection Regulation (GDPR) and the revised Swiss Federal Act on Data Protection (FADP)."
         },
         {
           title: "2. Categories of Information Processed",
@@ -796,7 +796,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         },
         {
           title: "3. Cryptographic Document Protection",
-          content: "All confidential trade documents uploaded to GVCE are encrypted at rest with AES-256-GCM. Unredacted original files are never exposed to counterparties without explicit, revocable authorization granted directly by the document owner organization."
+          content: "All confidential trade documents uploaded to VALOREA MARKET are encrypted at rest with AES-256-GCM. Unredacted original files are never exposed to counterparties without explicit, revocable authorization granted directly by the document owner organization."
         },
         {
           title: "4. Data Retention & International Transfers",
@@ -810,12 +810,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       title: "Cookie & Session Storage Policy",
       updatedDate: "Last Updated: November 13, 2026",
       section1Title: "1. Our Cookie Philosophy",
-      section1Content: "GVCE respects institutional privacy. We exclusively deploy strictly necessary functional cookies required to maintain your authentication state and language preference. We do not use third-party behavioral advertising cookies or marketing tracking pixels.",
+      section1Content: "VALOREA MARKET respects institutional privacy. We exclusively deploy strictly necessary functional cookies required to maintain your authentication state and language preference. We do not use third-party behavioral advertising cookies or marketing tracking pixels.",
       section2Title: "2. Cookies Deployed",
       tableHeaders: { name: "Cookie Name", purpose: "Purpose", duration: "Duration", category: "Category" },
       tableRows: [
         { name: "NEXT_LOCALE", purpose: "Stores preferred UI language (8 supported)", duration: "1 Year", category: "Strictly Necessary" },
-        { name: "gvce_session_token", purpose: "Encrypted JWT user authentication session and Passkey state", duration: "Session / 24 Hours", category: "Strictly Necessary" }
+        { name: "valorea_session_token", purpose: "Encrypted JWT user authentication session and Passkey state", duration: "Session / 24 Hours", category: "Strictly Necessary" }
       ]
     },
     ncnda: {
@@ -826,15 +826,15 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. Non-Circumvention Covenants",
-          content: "The signing parties agree not to circumvent, avoid, bypass, or obviate each other or GVCE, directly or indirectly, with respect to transactions, sources, clients, suppliers, or intermediaries introduced through the GVCE platform. This obligation shall remain valid for a period of five (5) years from the date of initial introduction."
+          content: "The signing parties agree not to circumvent, avoid, bypass, or obviate each other or VALOREA MARKET, directly or indirectly, with respect to transactions, sources, clients, suppliers, or intermediaries introduced through the VALOREA MARKET platform. This obligation shall remain valid for a period of five (5) years from the date of initial introduction."
         },
         {
           title: "2. Strict Confidentiality of Commercial Specs",
-          content: "All proprietary technical documents, laboratory assays, refinery allocation letters, and commercial pricing structures exchanged in GVCE deal rooms shall be held in strict confidence. Parties shall not duplicate, publish, or reveal such information to third parties without prior written consent."
+          content: "All proprietary technical documents, laboratory assays, refinery allocation letters, and commercial pricing structures exchanged in VALOREA MARKET deal rooms shall be held in strict confidence. Parties shall not duplicate, publish, or reveal such information to third parties without prior written consent."
         },
         {
           title: "3. Liquidated Damages & Enforcement",
-          content: "In the event of an intentional circumvention or unauthorized direct contracting between counterparties introduced by GVCE, the violating entity agrees to pay liquidated damages equal to three times (3x) the total anticipated brokerage commission of the transaction, plus all legal fees incurred in enforcement."
+          content: "In the event of an intentional circumvention or unauthorized direct contracting between counterparties introduced by VALOREA MARKET, the violating entity agrees to pay liquidated damages equal to three times (3x) the total anticipated brokerage commission of the transaction, plus all legal fees incurred in enforcement."
         }
       ]
     },
@@ -846,12 +846,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. Non-Custodial Physical Cargo Settlement",
-          notice: "Important: GVCE is an intermediary technology broker and does not receive, custody, or disburse the principal purchase funds for physical commodity deliveries.",
+          notice: "Important: VALOREA MARKET is an intermediary technology broker and does not receive, custody, or disburse the principal purchase funds for physical commodity deliveries.",
           content: "The settlement of physical cargo (crude oil cargoes, refined fuel parcels, metric tons of fertilizers, metals, or sugar) must be completed directly between the authorized commercial banking accounts of the Buyer and Supplier. Acceptable instruments include Irrevocable Documentary Letters of Credit (DLC), Standby Letters of Credit (SBLC), or Bank Guarantees."
         },
         {
           title: "2. Brokerage Commission Structure",
-          content: "GVCE earns a standardized brokerage fee (ordinarily 1.00% to 1.50% of total cargo contract value, benchmarked in USD) for its match discovery, compliance due diligence, deal room hosting, and intermediary supervision services.",
+          content: "VALOREA MARKET earns a standardized brokerage fee (ordinarily 1.00% to 1.50% of total cargo contract value, benchmarked in USD) for its match discovery, compliance due diligence, deal room hosting, and intermediary supervision services.",
           list: [
             "Fees are denominated in USD regardless of the contract's local billing currency.",
             "Obligor allocation (Buyer, Supplier, or 50/50 split) is formally codified in the bilateral Trade Agreement."
@@ -859,13 +859,13 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         },
         {
           title: "3. Milestone Invoicing & Payment Terms",
-          content: "Brokerage fees mature upon verified contractual milestones (e.g. Letter of Credit operative confirmation, SGS inspection release, or Bill of Lading issuance). GVCE issues a formal Swiss VAT-compliant tax invoice payable within fifteen (15) banking days."
+          content: "Brokerage fees mature upon verified contractual milestones (e.g. Letter of Credit operative confirmation, SGS inspection release, or Bill of Lading issuance). VALOREA MARKET issues a formal Swiss VAT-compliant tax invoice payable within fifteen (15) banking days."
         }
       ]
     },
     catalog: {
       backHome: "Back to Home",
-      topBanner: "GVCE Global Verified Commodity Catalog (7 Sectors)",
+      topBanner: "VALOREA MARKET Global Verified Commodity Catalog (7 Sectors)",
       badge: "International Trade Specifications",
       title: "Commodity Catalog & Specifications",
       subtitle: "Explore standardized grades, delivery parameters, and inspection requirements across global commodities.",
@@ -881,15 +881,15 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       supplyOffer: "Supply Offer",
       noResults: "No commodities matched your search query",
       resetFilters: "Reset filters",
-      footerText: "GVCE International Commodities Catalog • Benchmark Reference USD"
+      footerText: "VALOREA MARKET International Commodities Catalog • Benchmark Reference USD"
     },
     auth: {
       backHome: "Back to Home",
       signInBadge: "Verified Corporate Portal",
-      signInTitle: "Sign in to GVCE",
+      signInTitle: "Sign in to VALOREA MARKET",
       signInSubtitle: "Encrypted access to deal rooms, brokerage command, and compliance",
       registerBadge: "Enterprise Registration",
-      registerTitle: "Register Your Corporation on GVCE",
+      registerTitle: "Register Your Corporation on VALOREA MARKET",
       registerSubtitle: "Begin entity verification and trade physical global commodities",
       emailLabel: "Enterprise Email Address",
       emailPlaceholder: "name@company.com",
@@ -918,7 +918,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
     broker: {
       breadcrumb: "Broker Management",
       badge: "Broker Supervision Active",
-      title: "GVCE Broker Command Center",
+      title: "VALOREA MARKET Broker Command Center",
       subtitle: "Algorithmic commodity trade matching, supervised negotiation oversight, compliance lock verification, and fee ledger management.",
       refresh: "Refresh Matches",
       pendingProp: "Active Trade Proposals",
@@ -1009,9 +1009,9 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       breadcrumb: "À propos de nous",
       badge: "Infrastructure Institutionnelle de Courtage de Matières Premières",
       title: "Connecter les Marchés Mondiaux avec Confiance et Rigueur",
-      subtitle: "GVCE est une plateforme internationale de courtage institutionnel conçue pour combler les déficits de confiance dans le négoce physique transfrontalier.",
+      subtitle: "VALOREA MARKET est une plateforme internationale de courtage institutionnel conçue pour combler les déficits de confiance dans le négoce physique transfrontalier.",
       pillar1Title: "Règlement Non-Dépositaire (Non-Custodial)",
-      pillar1Desc: "GVCE ne détient jamais les fonds de cargaison physique. Les paiements s'effectuent directement entre banques commerciales par Lettre de Crédit (DLC / SBLC).",
+      pillar1Desc: "VALOREA MARKET ne détient jamais les fonds de cargaison physique. Les paiements s'effectuent directement entre banques commerciales par Lettre de Crédit (DLC / SBLC).",
       pillar2Title: "Vérification Multistade (KYC/KYB)",
       pillar2Desc: "Chaque entité fait l'objet d'une authentification du registre commercial, du représentant légal et du bénéficiaire effectif (UBO), avec filtrage des sanctions (OFAC, UE, ONU, UK).",
       pillar3Title: "Salles de Négociation E2EE",
@@ -1025,12 +1025,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
         { name: "Houston, États-Unis", role: "Opérations Amériques", desc: "1000 Louisiana St, Houston, TX. Contrats WTI, gaz naturel et pétrochimie." }
       ],
       governanceTitle: "Gouvernance et Conformité Suisse",
-      governanceDesc: "GVCE applique strictement le droit commercial suisse et les standards internationaux de conformité bancaire."
+      governanceDesc: "VALOREA MARKET applique strictement le droit commercial suisse et les standards internationaux de conformité bancaire."
     },
     contact: {
       breadcrumb: "Contact",
       badge: "Support International 24/7 Négoce & Conformité",
-      title: "Contacter les Desks Institutionnels GVCE",
+      title: "Contacter les Desks Institutionnels VALOREA MARKET",
       subtitle: "Prenez contact avec nos courtiers et juristes d'affaires. Canaux chiffrés disponibles pour la structuration d'opérations hautement confidentielles.",
       formTitle: "Soumettre une Demande de Négoce ou d'Agrément",
       nameLabel: "Nom Complet du Représentant",
@@ -1049,10 +1049,10 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       desksTitle: "Bureaux de Courtage Agréés",
       desksSubtitle: "Canaux de communication directs",
       desks: [
-        { name: "Siège de Genève", role: "Conformité & Gouvernance", email: "geneva.desk@gvce.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
-        { name: "Desk Régional Dubaï", role: "Pétrole Brut & Carburants", email: "dubai.desk@gvce.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
-        { name: "Desk Régional Singapour", role: "Métaux & Gaz Naturel", email: "singapore.desk@gvce.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
-        { name: "Desk Régional Houston", role: "Brut & Condensats", email: "houston.desk@gvce.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
+        { name: "Siège de Genève", role: "Conformité & Gouvernance", email: "geneva.desk@valorea.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
+        { name: "Desk Régional Dubaï", role: "Pétrole Brut & Carburants", email: "dubai.desk@valorea.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
+        { name: "Desk Régional Singapour", role: "Métaux & Gaz Naturel", email: "singapore.desk@valorea.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
+        { name: "Desk Régional Houston", role: "Brut & Condensats", email: "houston.desk@valorea.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
       ]
     },
     faq: {
@@ -1067,11 +1067,11 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
           category: "Agrément & Conformité (KYC/KYB)",
           questions: [
             {
-              q: "Quelles sont les vérifications exigées pour participer à GVCE ?",
+              q: "Quelles sont les vérifications exigées pour participer à VALOREA MARKET ?",
               a: "La participation requiert une triple vérification : (1) Contrôle KYB de l'entité juridique et du registre des bénéficiaires effectifs (UBO) ; (2) Contrôle KYC du représentant légal et pouvoir d'engagement ; (3) Filtrage automatisé continu contre les listes de sanctions (OFAC, UE, ONU, UK)."
             },
             {
-              q: "Comment GVCE vérifie-t-elle les droits sur la cargaison des fournisseurs ?",
+              q: "Comment VALOREA MARKET vérifie-t-elle les droits sur la cargaison des fournisseurs ?",
               a: "Les fournisseurs doivent soumettre des justificatifs vérifiables tels que contrats d'allocation de raffinerie, reçus de stockage en réservoir terminal (TSR) ou connaissements maritimes vérifiés par nos officiers de conformité."
             },
             {
@@ -1084,12 +1084,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
           category: "Règlement & Canaux Bancaires",
           questions: [
             {
-              q: "GVCE détient-elle les fonds des cargaisons physiques ?",
-              a: "Non, en aucun cas. GVCE est strictement non-dépositaire. Le règlement financier s'effectue directement entre la banque de l'acheteur et celle du fournisseur via Lettre de Crédit Documentaire (DLC / SBLC) ou virement bancaire (TT)."
+              q: "VALOREA MARKET détient-elle les fonds des cargaisons physiques ?",
+              a: "Non, en aucun cas. VALOREA MARKET est strictement non-dépositaire. Le règlement financier s'effectue directement entre la banque de l'acheteur et celle du fournisseur via Lettre de Crédit Documentaire (DLC / SBLC) ou virement bancaire (TT)."
             },
             {
               q: "Pourquoi le dollar américain (USD) sert-il de devise de référence ?",
-              a: "Les matières premières physiques internationales sont cotées et négociées mondialement en USD. GVCE affiche les équivalents en USD pour assurer une comparabilité parfaite et transparente des offres."
+              a: "Les matières premières physiques internationales sont cotées et négociées mondialement en USD. VALOREA MARKET affiche les équivalents en USD pour assurer une comparabilité parfaite et transparente des offres."
             }
           ]
         },
@@ -1132,11 +1132,11 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. Nature et Portée de la Plateforme",
-          content: "GVCE International AG exploite une plateforme électronique spécialisée de courtage commercial non-dépositaire reliant des entités vérifiées pour le négoce physique de matières premières."
+          content: "VALOREA MARKET International AG exploite une plateforme électronique spécialisée de courtage commercial non-dépositaire reliant des entités vérifiées pour le négoce physique de matières premières."
         },
         {
           title: "2. Politique Non-Dépositaire et Règlement de Cargaison",
-          content: "GVCE ne perçoit ni ne séquestre le prix d'achat des matières premières physiques. Tout paiement est réglé directement de banque à banque via Lettre de Crédit Documentaire (DLC) ou Garantie Bancaire (SBLC)."
+          content: "VALOREA MARKET ne perçoit ni ne séquestre le prix d'achat des matières premières physiques. Tout paiement est réglé directement de banque à banque via Lettre de Crédit Documentaire (DLC) ou Garantie Bancaire (SBLC)."
         },
         {
           title: "3. Agrément et Régimes de Sanctions",
@@ -1156,11 +1156,11 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       breadcrumb: "Politique de Confidentialité",
       badge: "Conforme RGPD et LPD Suisse révisée",
       title: "Politique de Confidentialité et Protection des Données",
-      effectiveDate: "Date d'effet : 13 novembre 2026 • Responsable du traitement : GVCE International AG, Genève",
+      effectiveDate: "Date d'effet : 13 novembre 2026 • Responsable du traitement : VALOREA MARKET International AG, Genève",
       sections: [
         {
           title: "1. Engagement de Confidentialité",
-          content: "GVCE International AG applique strictement les exigences du Règlement Général sur la Protection des Données de l'Union Européenne (RGPD) et de la Loi fédérale suisse sur la protection des données (LPD)."
+          content: "VALOREA MARKET International AG applique strictement les exigences du Règlement Général sur la Protection des Données de l'Union Européenne (RGPD) et de la Loi fédérale suisse sur la protection des données (LPD)."
         },
         {
           title: "2. Catégories de Données Traitées",
@@ -1189,12 +1189,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       title: "Politique relative aux Cookies et Sessions",
       updatedDate: "Dernière mise à jour : 13 novembre 2026",
       section1Title: "1. Principe de Sobriété Numérique",
-      section1Content: "GVCE déploie exclusivement les cookies techniques strictement indispensables au maintien de votre session chiffrée et de votre langue d'interface.",
+      section1Content: "VALOREA MARKET déploie exclusivement les cookies techniques strictement indispensables au maintien de votre session chiffrée et de votre langue d'interface.",
       section2Title: "2. Cookies Déployés",
       tableHeaders: { name: "Nom du Cookie", purpose: "Finalité", duration: "Durée", category: "Catégorie" },
       tableRows: [
         { name: "NEXT_LOCALE", purpose: "Mémorisation de la langue d'interface (8 langues)", duration: "1 an", category: "Strictement Nécessaire" },
-        { name: "gvce_session_token", purpose: "Jeton de session utilisateur chiffré JWT et statut Passkey", duration: "24 heures / Session", category: "Strictement Nécessaire" }
+        { name: "valorea_session_token", purpose: "Jeton de session utilisateur chiffré JWT et statut Passkey", duration: "24 heures / Session", category: "Strictement Nécessaire" }
       ]
     },
     ncnda: {
@@ -1205,7 +1205,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. Engagements de Non-Contournement",
-          content: "Les parties s'interdisent formellement de contourner directement ou indirectement GVCE ou les partenaires présentés. Cet engagement demeure valide pour une durée de cinq (5) ans à compter de la première mise en relation."
+          content: "Les parties s'interdisent formellement de contourner directement ou indirectement VALOREA MARKET ou les partenaires présentés. Cet engagement demeure valide pour une durée de cinq (5) ans à compter de la première mise en relation."
         },
         {
           title: "2. Confidentialité Stricte des Spécifications",
@@ -1225,12 +1225,12 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       sections: [
         {
           title: "1. Règlement Non-Dépositaire des Cargaisons",
-          notice: "Rappel crucial : GVCE n'encaisse ni ne détient les fonds d'achat des marchandises physiques.",
+          notice: "Rappel crucial : VALOREA MARKET n'encaisse ni ne détient les fonds d'achat des marchandises physiques.",
           content: "Le règlement des cargaisons (pétrole brut, carburants, engrais, métaux, sucre) s'effectue exclusivement de banque à banque par Lettre de Crédit Documentaire Irrévocable (DLC) ou Garantie Bancaire (SBLC)."
         },
         {
           title: "2. Structure de Commission de Courtage",
-          content: "GVCE perçoit une commission de courtage usuelle de 1,00 % à 1,50 % de la valeur contractuelle totale de la cargaison, libellée en USD.",
+          content: "VALOREA MARKET perçoit une commission de courtage usuelle de 1,00 % à 1,50 % de la valeur contractuelle totale de la cargaison, libellée en USD.",
           list: [
             "Les honoraires sont décomptés en USD quelle que soit la devise de facturation locale.",
             "La répartition du débiteur (acheteur, vendeur ou partagé) est formalisée dans l'accord de courtage bilatéral."
@@ -1244,7 +1244,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
     },
     catalog: {
       backHome: "Retour à l'accueil",
-      topBanner: "Catalogue GVCE des Matières Premières Internationales (7 Secteurs)",
+      topBanner: "Catalogue VALOREA MARKET des Matières Premières Internationales (7 Secteurs)",
       badge: "Spécifications du Commerce International",
       title: "Catalogue des Matières Premières & Spécifications",
       subtitle: "Consultez les grades standardisés, paramètres de livraison et exigences de contrôle pour 7 secteurs clés.",
@@ -1260,15 +1260,15 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       supplyOffer: "Offre d'Approvisionnement",
       noResults: "Aucune matière première ne correspond à votre recherche",
       resetFilters: "Réinitialiser les filtres",
-      footerText: "Catalogue des Matières Premières GVCE • Référence de cotation en USD"
+      footerText: "Catalogue des Matières Premières VALOREA MARKET • Référence de cotation en USD"
     },
     auth: {
       backHome: "Retour à l'accueil",
       signInBadge: "Portail Entreprise Vérifié",
-      signInTitle: "Connexion à GVCE",
+      signInTitle: "Connexion à VALOREA MARKET",
       signInSubtitle: "Accès chiffré aux deal rooms, au desk de courtage et à la conformité",
       registerBadge: "Inscription Entreprise",
-      registerTitle: "Enregistrer votre Entreprise sur GVCE",
+      registerTitle: "Enregistrer votre Entreprise sur VALOREA MARKET",
       registerSubtitle: "Démarrez l'agrément institutionnel pour négocier sur les marchés physiques",
       emailLabel: "Adresse E-mail Professionnelle",
       emailPlaceholder: "nom@entreprise.com",
@@ -1297,7 +1297,7 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
     broker: {
       breadcrumb: "Gestion du Courtage",
       badge: "Supervision du Courtage Active",
-      title: "Centre de Commande du Courtier GVCE",
+      title: "Centre de Commande du Courtier VALOREA MARKET",
       subtitle: "Appariement algorithmique des offres, supervision des négociations, verrouillage de conformité et gestion des commissions.",
       refresh: "Actualiser les Affaires",
       pendingProp: "Propositions en Attente",

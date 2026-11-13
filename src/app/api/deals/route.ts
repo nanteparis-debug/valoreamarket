@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: "Deal successfully registered with GVCE Brokerage Clearing",
+        message: "Deal successfully registered with VALOREA MARKET Brokerage Clearing",
         deal: newDeal,
       },
       { status: 201 }

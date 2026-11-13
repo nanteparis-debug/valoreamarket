@@ -135,9 +135,9 @@ export default function CatalogPage() {
           </div>
         </div>
 
-        {/* Sector Quick Filters */}
-        <div className="w-full overflow-x-auto pb-2 no-scrollbar" dir="inherit">
-          <div className="inline-flex items-center gap-2 min-w-full px-4 sm:px-6 justify-start lg:justify-center">
+        {/* Sector Quick Filters - RTL-safe with horizontal scrolling and no clipping */}
+        <div className="w-full overflow-x-auto pb-4 mb-2 no-scrollbar scroll-smooth" dir="inherit">
+          <div className="flex items-center gap-2 w-max min-w-full px-6 sm:px-10 justify-start xl:justify-center">
             <button
               onClick={() => setSelectedSector("all")}
               className={cn(

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "GVCE — グローバル認証コモディティ取引所",
+    "title": "VALOREA MARKET — グローバル認証コモディティ取引所",
     "description": "世界中の認証済みバイヤーとサプライヤーを結ぶ信頼の国際ブローカープラットフォーム。"
   },
   "nav": {
@@ -87,7 +87,7 @@
     "phaseOf": "フェーズ {num} / 04"
   },
   "features": {
-    "title": "Why GVCE",
+    "title": "Why VALOREA MARKET",
     "subtitle": "Built for the demands of international commodity trading",
     "verification": {
       "title": "Multi-Stage Verification",
@@ -200,7 +200,7 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved.",
+    "rights": "© {year} VALOREA MARKET. All rights reserved.",
     "platformCatalog": "取扱コモディティ一覧",
     "platformBroker": "ブローカー指揮センター",
     "platformCompliance": "KYC/KYB コンプライアンス",
@@ -382,7 +382,7 @@
     "dealSummary": "50,000 MT ディーゼル EN 590 10PPM • CIF ロッテルダム • 740 USD/MT",
     "buyerAlias": "買い手-Alpha-24",
     "supplierAlias": "供給者-Nordic-77",
-    "brokerLead": "GVCE 主任ブローカー",
+    "brokerLead": "VALOREA MARKET 主任ブローカー",
     "tabChat": "暗号化チャット",
     "tabDocuments": "透かし文書一覧",
     "tabAgreements": "合意書とマイルストーン",

@@ -62,7 +62,7 @@ export function AnimatedFooter({
                 </div>
               </div>
               <span className="text-xl font-bold tracking-wider text-white font-mono">
-                GVCE
+                VALOREA MARKET
               </span>
             </div>
             <p className="text-gray-400 max-w-sm text-xs leading-relaxed">

@@ -108,7 +108,7 @@ export default function SignInPage() {
 
         <div className="flex items-center gap-3 text-xs text-gray-500">
           <div className="flex-1 h-[1px] bg-[#1f2233]" />
-          <span className="font-mono text-[10px]">GVCE SECURE AUTH</span>
+          <span className="font-mono text-[10px]">{locale === "ar" ? "توثيق آمن VALOREA MARKET" : "VALOREA MARKET SECURE AUTH"}</span>
           <div className="flex-1 h-[1px] bg-[#1f2233]" />
         </div>
 
@@ -144,7 +144,7 @@ export default function SignInPage() {
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 OWASP ASVS L2 / FIDO2
               </span>
-              <span className="text-emerald-400 font-bold">Encrypted</span>
+              <span className="text-emerald-400 font-bold">{locale === "ar" ? "مشفر" : "Encrypted"}</span>
             </div>
 
             <button

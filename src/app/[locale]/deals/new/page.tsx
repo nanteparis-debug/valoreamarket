@@ -127,8 +127,8 @@ export default function NewDealPage({
             </h2>
             <p className="mt-3 text-sm text-gray-400 max-w-lg">
               {isAr
-                ? "تم تسجيل طلبك في نظام المقاصة الخاص بـ GVCE. سيبدأ وسيط معتمد عملية المطابقة وفتح غرفة الصفقة المخصصة."
-                : "Your request has been logged into the GVCE clearing engine. A verified broker will initiate matching."}
+                ? "تم تسجيل طلبك في نظام المقاصة الخاص بـ VALOREA MARKET. سيبدأ وسيط معتمد عملية المطابقة وفتح غرفة الصفقة المخصصة."
+                : "Your request has been logged into the VALOREA MARKET clearing engine. A verified broker will initiate matching."}
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
@@ -257,7 +257,7 @@ export default function NewDealPage({
                       value={spec1}
                       onChange={(e) => setSpec1(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder="e.g. 38.5° / 46% N"
+                      placeholder={isAr ? "مثال: 38.5° أو 46% نيتروجين" : "e.g. 38.5° / 46% N"}
                     />
                   </div>
                   <div>
@@ -269,7 +269,7 @@ export default function NewDealPage({
                       value={spec2}
                       onChange={(e) => setSpec2(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder="e.g. 10 PPM"
+                      placeholder={isAr ? "مثال: 10 PPM أو 0.5%" : "e.g. 10 PPM"}
                     />
                   </div>
                   <div>
@@ -281,7 +281,7 @@ export default function NewDealPage({
                       value={spec3}
                       onChange={(e) => setSpec3(e.target.value)}
                       className="w-full bg-[#141726] border border-[#23273b] rounded-lg px-3 py-1.5 text-xs text-white"
-                      placeholder="e.g. SGS / Saybolt"
+                      placeholder={isAr ? "مثال: فحص SGS أو Saybolt معتمد" : "e.g. SGS / Saybolt"}
                     />
                   </div>
                 </div>
@@ -371,7 +371,7 @@ export default function NewDealPage({
                     type="text"
                     value={deliveryPort}
                     onChange={(e) => setDeliveryPort(e.target.value)}
-                    placeholder="e.g. Rotterdam, Jubail"
+                    placeholder={isAr ? "مثال: ميناء روتردام، الجبيل، الفجيرة" : "e.g. Rotterdam, Jubail"}
                     className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
                   />
                 </div>
@@ -382,7 +382,7 @@ export default function NewDealPage({
                     type="text"
                     value={deliveryDateRange}
                     onChange={(e) => setDeliveryDateRange(e.target.value)}
-                    placeholder="e.g. Dec 10 - Dec 25, 2026"
+                    placeholder={isAr ? "مثال: 10 - 25 ديسمبر 2026" : "e.g. Dec 10 - Dec 25, 2026"}
                     className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#b87333]"
                   />
                 </div>
@@ -409,7 +409,7 @@ export default function NewDealPage({
       </main>
 
       <footer className="py-6 border-t border-[#1f2233] text-center text-xs text-gray-500 font-mono">
-        GVCE Supervised Commodity Execution Engine • {t.common.verifiedBrokerage}
+        {isAr ? "محرك المقاصة وتنفيذ الصفقات — فالوريا ماركت VALOREA MARKET" : "VALOREA MARKET Supervised Commodity Execution Engine"} • {t.common.verifiedBrokerage}
       </footer>
     </div>
   );

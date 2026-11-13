@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "GVCE — Глобальная биржа верифицированных сырьевых товаров",
+    "title": "VALOREA MARKET — Глобальная биржа верифицированных сырьевых товаров",
     "description": "Международная брокерская платформа для верифицированных покупателей и поставщиков."
   },
   "nav": {
@@ -87,7 +87,7 @@
     "phaseOf": "Этап {num} из 04"
   },
   "features": {
-    "title": "Why GVCE",
+    "title": "Why VALOREA MARKET",
     "subtitle": "Built for the demands of international commodity trading",
     "verification": {
       "title": "Multi-Stage Verification",
@@ -200,7 +200,7 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved.",
+    "rights": "© {year} VALOREA MARKET. All rights reserved.",
     "platformCatalog": "Каталог сырьевых товаров",
     "platformBroker": "Командный центр брокера",
     "platformCompliance": "Проверка KYC/KYB",
@@ -382,7 +382,7 @@
     "dealSummary": "50 000 т Дизель EN 590 10PPM • CIF Роттердам • USD 740/т",
     "buyerAlias": "Покупатель-Alpha-24",
     "supplierAlias": "Поставщик-Nordic-77",
-    "brokerLead": "Ведущий брокер (GVCE)",
+    "brokerLead": "Ведущий брокер (VALOREA MARKET)",
     "tabChat": "Зашифрованный чат",
     "tabDocuments": "Защищенные документы",
     "tabAgreements": "Договоры и этапы",

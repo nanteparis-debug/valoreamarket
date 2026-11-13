@@ -11,15 +11,15 @@ export function JsonLd({ locale }: JsonLdProps) {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": `${baseUrl}/#organization`,
-    name: "GVCE — Global Verified Commodities Exchange",
-    alternateName: ["GVCE", "Global Verified Commodities Exchange"],
+    name: "VALOREA MARKET — Global Verified Commodities Exchange",
+    alternateName: ["VALOREA MARKET", "Valorea Market", "فالوريا ماركت"],
     url: baseUrl,
-    logo: `${baseUrl}/images/gvce-logo.png`,
+    logo: `${baseUrl}/images/valorea-logo.png`,
     description:
       "Premier international B2B commodities brokerage platform connecting verified buyers and suppliers across energy, fertilizers, metals, and agricultural goods.",
     sameAs: [
-      "https://www.linkedin.com/company/gvce-exchange",
-      "https://twitter.com/gvce_exchange",
+      "https://www.linkedin.com/company/valorea-market",
+      "https://twitter.com/valorea_market",
     ],
     address: {
       "@type": "PostalAddress",
@@ -33,14 +33,14 @@ export function JsonLd({ locale }: JsonLdProps) {
         "@type": "ContactPoint",
         telephone: "+41-22-819-9000",
         contactType: "Trading Desk & Brokerage",
-        email: "desk@gvce.exchange",
+        email: "desk@valorea.exchange",
         availableLanguage: ["English", "Arabic", "French", "German", "Spanish", "Chinese", "Japanese", "Russian"],
       },
       {
         "@type": "ContactPoint",
         telephone: "+41-22-819-9001",
         contactType: "Compliance & KYC",
-        email: "compliance@gvce.exchange",
+        email: "compliance@valorea.exchange",
       },
     ],
   };
@@ -50,7 +50,7 @@ export function JsonLd({ locale }: JsonLdProps) {
     "@type": "WebSite",
     "@id": `${baseUrl}/#website`,
     url: baseUrl,
-    name: "GVCE",
+    name: "VALOREA MARKET",
     publisher: {
       "@id": `${baseUrl}/#organization`,
     },
@@ -66,7 +66,7 @@ export function JsonLd({ locale }: JsonLdProps) {
     "@context": "https://schema.org",
     "@type": "FinancialService",
     "@id": `${baseUrl}/#brokerage`,
-    name: "GVCE Supervised Commodity Brokerage",
+    name: "VALOREA MARKET Supervised Commodity Brokerage",
     provider: {
       "@id": `${baseUrl}/#organization`,
     },

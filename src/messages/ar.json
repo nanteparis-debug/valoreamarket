@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "GVCE — بورصة السلع العالمية الموثّقة",
+    "title": "VALOREA MARKET — بورصة السلع العالمية الموثّقة",
     "description": "منصة وساطة دولية موثوقة تربط بين المشترين والموردين المعتمدين للسلع حول العالم."
   },
   "nav": {
@@ -87,7 +87,7 @@
     "phaseOf": "المرحلة {num} من 04"
   },
   "features": {
-    "title": "لماذا GVCE",
+    "title": "لماذا VALOREA MARKET",
     "subtitle": "مصمّمة لمتطلبات تجارة السلع الدولية",
     "verification": {
       "title": "تحقق متعدد المراحل",
@@ -200,7 +200,7 @@
     "careers": "وظائف",
     "aboutUs": "عن المنصة",
     "blog": "المدوّنة",
-    "rights": "© {year} GVCE. جميع الحقوق محفوظة.",
+    "rights": "© {year} VALOREA MARKET. جميع الحقوق محفوظة.",
     "platformCatalog": "كتالوج السلع",
     "platformBroker": "مركز قيادة الوسيط",
     "platformCompliance": "التحقق والامتثال (KYC/KYB)",
@@ -382,7 +382,7 @@
     "dealSummary": "50,000 طن متري ديزل EN 590 10PPM • ميناء روتردام CIF • 740 دولار/طن",
     "buyerAlias": "مشتري-ألفا-24",
     "supplierAlias": "مورد-نورديك-77",
-    "brokerLead": "الوسيط المعتمد (GVCE)",
+    "brokerLead": "الوسيط المعتمد (VALOREA MARKET)",
     "tabChat": "الدردشة المشفرة",
     "tabDocuments": "الوثائق والشهادات",
     "tabAgreements": "الاتفاقيات والعمولات",

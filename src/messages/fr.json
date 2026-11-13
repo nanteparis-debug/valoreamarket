@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "GVCE — Bourse Mondiale des Matières Premières Vérifiées",
+    "title": "VALOREA MARKET — Bourse Mondiale des Matières Premières Vérifiées",
     "description": "Plateforme de courtage international fiable reliant acheteurs et fournisseurs vérifiés de matières premières dans le monde entier."
   },
   "nav": {
@@ -87,7 +87,7 @@
     "phaseOf": "Phase {num} sur 04"
   },
   "features": {
-    "title": "Pourquoi GVCE",
+    "title": "Pourquoi VALOREA MARKET",
     "subtitle": "Conçue pour les exigences du commerce international de matières premières",
     "verification": {
       "title": "Vérification Multi-étapes",
@@ -200,7 +200,7 @@
     "careers": "Carrières",
     "aboutUs": "À Propos",
     "blog": "Blog",
-    "rights": "© {year} GVCE. Tous droits réservés.",
+    "rights": "© {year} VALOREA MARKET. Tous droits réservés.",
     "platformCatalog": "Catalogue de matières premières",
     "platformBroker": "Centre de commande de courtage",
     "platformCompliance": "Vérification KYC/KYB",
@@ -382,7 +382,7 @@
     "dealSummary": "50 000 TM Diesel EN 590 10PPM • CIF Rotterdam • USD 740/TM",
     "buyerAlias": "Acheteur-Alpha-24",
     "supplierAlias": "Fournisseur-Nordic-77",
-    "brokerLead": "Courtier superviseur (GVCE)",
+    "brokerLead": "Courtier superviseur (VALOREA MARKET)",
     "tabChat": "Chat chiffré",
     "tabDocuments": "Documents filigranés",
     "tabAgreements": "Accords et commissions",

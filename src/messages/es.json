@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "GVCE — Bolsa Global de Productos Básicos Verificados",
+    "title": "VALOREA MARKET — Bolsa Global de Productos Básicos Verificados",
     "description": "Plataforma de corretaje internacional que conecta compradores y proveedores verificados."
   },
   "nav": {
@@ -87,7 +87,7 @@
     "phaseOf": "Fase {num} de 04"
   },
   "features": {
-    "title": "Why GVCE",
+    "title": "Why VALOREA MARKET",
     "subtitle": "Built for the demands of international commodity trading",
     "verification": {
       "title": "Multi-Stage Verification",
@@ -200,7 +200,7 @@
     "careers": "Careers",
     "aboutUs": "About Us",
     "blog": "Blog",
-    "rights": "© {year} GVCE. All rights reserved.",
+    "rights": "© {year} VALOREA MARKET. All rights reserved.",
     "platformCatalog": "Catálogo de Materias Primas",
     "platformBroker": "Centro de Mando del Corredor",
     "platformCompliance": "Verificación KYC/KYB",
@@ -382,7 +382,7 @@
     "dealSummary": "50.000 TM Diésel EN 590 10PPM • CIF Rotterdam • USD 740/TM",
     "buyerAlias": "Comprador-Alpha-24",
     "supplierAlias": "Proveedor-Nordic-77",
-    "brokerLead": "Corredor Principal (GVCE)",
+    "brokerLead": "Corredor Principal (VALOREA MARKET)",
     "tabChat": "Chat Cifrado",
     "tabDocuments": "Documentos Protegidos",
     "tabAgreements": "Acuerdos y Comisiones",

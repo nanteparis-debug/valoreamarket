@@ -51,14 +51,14 @@ export function DealRoomPreview({ translations }: DealRoomPreviewProps) {
     subtitle:
       translations?.subtitle ||
       "Complete confidentiality with zero contact leaks. LiveKit E2EE video, watermarked document inspection, and broker arbitration.",
-    roomReference: translations?.roomReference || "ROOM #GVCE-2026-EN590-410",
+    roomReference: translations?.roomReference || "ROOM #VALOREA-2026-EN590-410",
     e2eeActive: translations?.e2eeActive || "E2EE ACTIVE",
     dealSummary:
       translations?.dealSummary ||
       "50,000 MT Diesel EN 590 10PPM • CIF Rotterdam • USD 740/MT",
     buyerAlias: translations?.buyerAlias || "Buyer-Alpha-24",
     supplierAlias: translations?.supplierAlias || "Supplier-Nordic-77",
-    brokerLead: translations?.brokerLead || "Broker Lead (GVCE)",
+    brokerLead: translations?.brokerLead || "Broker Lead (VALOREA MARKET)",
     tabChat: translations?.tabChat || "Encrypted Chat",
     tabDocuments: translations?.tabDocuments || "Watermarked Documents",
     tabAgreements: translations?.tabAgreements || "Agreements & Commission",
@@ -222,7 +222,7 @@ export function DealRoomPreview({ translations }: DealRoomPreviewProps) {
               <div className="flex items-center gap-2 p-2.5 rounded-xl bg-[#121420] border border-[#b87333]/30 text-xs text-gray-300">
                 <ShieldAlert className="w-4 h-4 text-[#d4956b] shrink-0" />
                 <span>
-                  <strong className="text-white">GVCE:</strong> {t.leakNotice}
+                  <strong className="text-white">VALOREA MARKET:</strong> {t.leakNotice}
                 </span>
               </div>
             </div>
@@ -298,7 +298,7 @@ export function DealRoomPreview({ translations }: DealRoomPreviewProps) {
               <div className="p-4 rounded-2xl bg-[#10131f] border border-[#23273b] flex items-center justify-between">
                 <div>
                   <h4 className="text-sm font-semibold text-white">
-                    GVCE — {t.tabAgreements}
+                    VALOREA MARKET — {t.tabAgreements}
                   </h4>
                   <p className="text-xs text-gray-400 mt-0.5">
                     {t.agreementTerms}

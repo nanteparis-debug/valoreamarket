@@ -18,12 +18,18 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(BASE_URL),
     title: {
-      default: "GVCE — Global Verified Commodities Exchange",
-      template: "%s | GVCE",
+      default:
+        locale === "ar"
+          ? "VALOREA MARKET — البورصة العالمية المعتمدة للسلع"
+          : "VALOREA MARKET — Global Verified Commodities Exchange",
+      template: "%s | VALOREA MARKET",
     },
     description:
-      "Premier international B2B commodities brokerage platform connecting verified buyers and suppliers across energy, fertilizers, petrochemicals, metals, and agricultural goods.",
+      locale === "ar"
+        ? "منصة الوساطة المؤسسية الدولية الرائدة لتداول السلع المادية وربط المشترين والموردين المعتمدين في قطاعات الطاقة والأسمدة والبتروكيماويات والمعادن."
+        : "Premier international B2B commodities brokerage platform connecting verified buyers and suppliers across energy, fertilizers, petrochemicals, metals, and agricultural goods.",
     keywords: [
+      "VALOREA MARKET",
       "Commodities Exchange",
       "B2B Commodity Brokerage",
       "Crude Oil Trading",
@@ -37,11 +43,12 @@ export async function generateMetadata({
       "بورصة السلع العالمية",
       "وساطة النفط والغاز",
       "تداول الأسمدة والمعادن",
+      "فالوريا ماركت",
     ],
-    authors: [{ name: "GVCE Clearing & Governance Desk" }],
-    creator: "GVCE Global Verified Commodities Exchange",
-    publisher: "GVCE International AG",
-    applicationName: "GVCE Platform",
+    authors: [{ name: "VALOREA MARKET Clearing & Governance Desk" }],
+    creator: "VALOREA MARKET",
+    publisher: "VALOREA MARKET International AG",
+    applicationName: "VALOREA MARKET",
     category: "Finance & Commodities Trading",
     classification: "Institutional B2B Commodity Brokerage",
     alternates: {
@@ -62,25 +69,35 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "ar" ? "ar_AE" : locale === "fr" ? "fr_CH" : "en_US",
       url: `${BASE_URL}/${locale}`,
-      siteName: "GVCE — Global Verified Commodities Exchange",
-      title: "GVCE — Global Verified Commodities Exchange",
+      siteName: "VALOREA MARKET",
+      title:
+        locale === "ar"
+          ? "VALOREA MARKET — البورصة العالمية المعتمدة للسلع"
+          : "VALOREA MARKET — Global Verified Commodities Exchange",
       description:
-        "Secure international B2B commodities brokerage connecting verified buyers and suppliers with audited compliance and supervised deal rooms.",
+        locale === "ar"
+          ? "منصة وساطة دولية آمنة للسلع المادية تربط بين المشترين والموردين المعتمدين بغرف صفقات مشفرة وتدقيق مصرفي."
+          : "Secure international B2B commodities brokerage connecting verified buyers and suppliers with audited compliance and supervised deal rooms.",
       images: [
         {
           url: `${BASE_URL}/og-preview.png`,
           width: 1200,
           height: 630,
-          alt: "GVCE Global Verified Commodities Exchange",
+          alt: "VALOREA MARKET Global Verified Commodities Exchange",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "GVCE — Global Verified Commodities Exchange",
+      title:
+        locale === "ar"
+          ? "VALOREA MARKET — البورصة العالمية المعتمدة للسلع"
+          : "VALOREA MARKET — Global Verified Commodities Exchange",
       description:
-        "Institutional B2B commodity brokerage platform connecting verified trading entities across 7 primary physical sectors.",
-      creator: "@gvce_exchange",
+        locale === "ar"
+          ? "منصة وساطة دولية آمنة للسلع المادية بين الشركات عبر 7 قطاعات رئيسية."
+          : "Institutional B2B commodity brokerage platform connecting verified trading entities across 7 primary physical sectors.",
+      creator: "@valorea_market",
       images: [`${BASE_URL}/og-preview.png`],
     },
     robots: {

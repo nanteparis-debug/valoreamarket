@@ -182,14 +182,16 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               <h1 className="text-sm font-bold text-white font-mono">
-                {isAr ? "غرفة الصفقة: GVCE-2026-EN590-410" : "DEAL ROOM: GVCE-2026-EN590-410"}
+                {isAr ? "غرفة الصفقة: VALOREA-2026-EN590-410" : "DEAL ROOM: VALOREA-2026-EN590-410"}
               </h1>
               <span className="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[10px] font-mono">
-                LIVEKIT E2EE
+                {isAr ? "مشفر LiveKit E2EE" : "LIVEKIT E2EE"}
               </span>
             </div>
             <p className="text-xs text-gray-400 mt-0.5">
-              50,000 MT Diesel EN 590 (10 PPM) • CIF Rotterdam • USD $740.00 / MT
+              {isAr
+                ? "50,000 طن متري ديزل EN 590 (10 PPM) • سيف روتردام CIF • 740.00$ دولار / طن"
+                : "50,000 MT Diesel EN 590 (10 PPM) • CIF Rotterdam • USD $740.00 / MT"}
             </p>
           </div>
         </div>
@@ -199,16 +201,18 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#121420] border border-[#23273b] text-xs">
             <span className="w-2 h-2 rounded-full bg-sky-400" />
             <span className="text-gray-300 font-medium">
-              {isAr ? "أنت (Buyer-Alpha-24)" : "You (Buyer-Alpha-24)"}
+              {isAr ? "أنت (المشتري-ألفا-24)" : "You (Buyer-Alpha-24)"}
             </span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#121420] border border-[#23273b] text-xs">
             <span className="w-2 h-2 rounded-full bg-[#d4956b]" />
-            <span className="text-gray-300 font-medium">Supplier-Nordic-77</span>
+            <span className="text-gray-300 font-medium">
+              {isAr ? "المورد (مورد-نورديك-77)" : "Supplier-Nordic-77"}
+            </span>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#b87333]/20 border border-[#b87333]/40 text-xs text-[#d4956b] font-semibold">
             <UserCheck className="w-3.5 h-3.5" />
-            <span>{isAr ? "الوسيط المعتمد" : "Broker Lead"}</span>
+            <span>{isAr ? "الوسيط المعتمد (VALOREA)" : "Broker Lead"}</span>
           </div>
         </div>
       </header>
@@ -310,7 +314,9 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                     {m.contactViolation && (
                       <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] font-mono">
                         <AlertTriangle className="w-3 h-3" />
-                        {isAr ? "تم حجب معلومات الاتصال بواسطة محرك الحماية" : "Contact Information Redacted by GVCE Engine"}
+                        {isAr
+                          ? "تم حجب معلومات الاتصال بواسطة محرك الحماية - VALOREA MARKET"
+                          : "Contact Information Redacted by VALOREA MARKET Engine"}
                       </div>
                     )}
                   </div>
@@ -364,7 +370,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
               </div>
               <div className="flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-semibold">
-                  E2EE ACTIVE
+                  {isAr ? "التشفير نشط" : "E2EE ACTIVE"}
                 </span>
               </div>
             </div>
@@ -377,7 +383,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                     BA
                   </div>
                   <span className="text-xs font-semibold text-white">
-                    {isAr ? "Buyer-Alpha-24 (أنت)" : "Buyer-Alpha-24 (You)"}
+                    {isAr ? "المشتري (مشتري-ألفا-24) • أنت" : "Buyer-Alpha-24 (You)"}
                   </span>
                   <p className="text-[10px] text-gray-500 font-mono">
                     {videoEnabled ? (isAr ? "الكاميرا تعمل" : "Camera Active") : (isAr ? "الكاميرا مغلقة" : "Camera Muted")}
@@ -390,9 +396,11 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                   <div className="w-16 h-16 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl font-bold mx-auto mb-2">
                     SN
                   </div>
-                  <span className="text-xs font-semibold text-white">Supplier-Nordic-77</span>
+                  <span className="text-xs font-semibold text-white">
+                    {isAr ? "المورد (مورد-نورديك-77)" : "Supplier-Nordic-77"}
+                  </span>
                   <p className="text-[10px] text-gray-500 font-mono">
-                    {isAr ? "مورد معتمد" : "Verified Refiner"}
+                    {isAr ? "مورد مكرر معتمد" : "Verified Refiner"}
                   </p>
                 </div>
               </div>
@@ -510,7 +518,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                         {isAr ? "عارض الوثائق المحمي" : "PROTECTED VIEWER"}
                       </h3>
                       <p className="text-[11px] text-gray-400 font-mono">
-                        BUYER-ALPHA-24 • GVCE WATERMARK
+                        {isAr ? "المشتري-ألفا-24 • علامة مائية رقمية - VALOREA MARKET" : "BUYER-ALPHA-24 • VALOREA MARKET WATERMARK"}
                       </p>
                     </div>
                     <button
@@ -526,11 +534,23 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                       --- {isAr ? "ملخص فحص SGS الرسمي (منقح)" : "OFFICIAL S.G.S. INSPECTION SUMMARY (REDACTED)"} ---
                     </div>
                     <p className="text-gray-300">
-                      COMMODITY: DIESEL EN 590 10 PPM
-                      <br />
-                      DENSITY AT 15°C: 0.835 KG/L
-                      <br />
-                      SULFUR CONTENT: 8.2 PPM
+                      {isAr ? (
+                        <>
+                          السلعة: ديزل EN 590 10 PPM
+                          <br />
+                          الكثافة عند 15°م: 0.835 كجم/لتر
+                          <br />
+                          نسبة الكبريت: 8.2 جزء في المليون (PPM)
+                        </>
+                      ) : (
+                        <>
+                          COMMODITY: DIESEL EN 590 10 PPM
+                          <br />
+                          DENSITY AT 15°C: 0.835 KG/L
+                          <br />
+                          SULFUR CONTENT: 8.2 PPM
+                        </>
+                      )}
                     </p>
                   </div>
                 </div>
@@ -549,7 +569,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
                     {isAr ? "اتفاقية عدم الإفشاء وعدم الالتفاف والوساطة (NCNDA)" : "Non-Circumvention, Non-Disclosure & Brokerage Agreement (NCNDA)"}
                   </h4>
                   <p className="text-xs text-gray-400 mt-0.5">
-                    ICC 765 Rules • 24 Months
+                    {isAr ? "قواعد غرفة التجارة الدولية ICC 765 • مدة 24 شهراً" : "ICC 765 Rules • 24 Months"}
                   </p>
                 </div>
                 <span className="flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-semibold">
@@ -563,15 +583,17 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
               <div className="flex items-center justify-between border-b border-[#1f2233] pb-3">
                 <div>
                   <h4 className="text-sm font-bold text-white">
-                    {isAr ? "عمولة وساطة منصة GVCE" : "GVCE Platform Brokerage Commission"}
+                    {isAr ? "عمولة وساطة منصة VALOREA MARKET" : "VALOREA MARKET Platform Brokerage Commission"}
                   </h4>
                   <p className="text-xs text-gray-400 mt-0.5 font-mono">
-                    Total: $37,000,000.00 USD (50,000 MT @ $740/MT)
+                    {isAr
+                      ? "الإجمالي: 37,000,000.00$ دولار (50,000 طن @ 740$/طن)"
+                      : "Total: $37,000,000.00 USD (50,000 MT @ $740/MT)"}
                   </p>
                 </div>
                 <div className="text-right">
                   <span className="text-lg font-bold font-mono text-[#d4956b]">
-                    $462,500.00 USD
+                    {isAr ? "462,500.00$ دولار أمريكي" : "$462,500.00 USD"}
                   </span>
                   <span className="block text-[10px] text-gray-500">1.25%</span>
                 </div>
@@ -582,7 +604,7 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
       </main>
 
       <footer className="py-4 border-t border-[#1f2233] text-center text-xs text-gray-500 font-mono">
-        GVCE Supervised Deal Room • {t.common.verifiedBrokerage}
+        {isAr ? "غرفة الصفقات المشرفة — فالوريا ماركت VALOREA MARKET" : "VALOREA MARKET Supervised Deal Room"} • {t.common.verifiedBrokerage}
       </footer>
     </div>
   );

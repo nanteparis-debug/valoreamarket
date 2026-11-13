@@ -72,9 +72,9 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
         </p>
       </div>
 
-      {/* Sector Pill Tabs - Fully RTL-safe and never cuts off the first or last pill */}
-      <div className="w-full overflow-x-auto pb-4 mb-10 no-scrollbar" dir="inherit">
-        <div className="inline-flex items-center gap-2 min-w-full px-4 sm:px-6 justify-start lg:justify-center">
+      {/* Sector Pill Tabs - Fully RTL-safe, never cuts off the first or last pill on any screen */}
+      <div className="w-full overflow-x-auto pb-4 mb-10 no-scrollbar scroll-smooth" dir="inherit">
+        <div className="flex items-center gap-2 w-max min-w-full px-6 sm:px-10 justify-start xl:justify-center">
           {COMMODITY_SECTORS.map((sector) => {
             const isActive = sector.id === activeSectorId;
             const sectorName =

@@ -250,7 +250,11 @@ export default function BrokerCommandCenterPage() {
                               : "bg-amber-500/10 text-amber-400 border border-amber-500/30"
                           )}
                         >
-                          {m.status.replace("_", " ")}
+                          {m.status === "room_opened"
+                            ? (locale === "ar" ? "الغرفة مفتوحة" : "Room Opened")
+                            : m.status === "broker_approved"
+                            ? (locale === "ar" ? "معتمد من الوسيط" : "Broker Approved")
+                            : (locale === "ar" ? "مقترح" : "Proposed")}
                         </span>
                       </div>
                     </div>
@@ -270,7 +274,7 @@ export default function BrokerCommandCenterPage() {
 
                     <div className="flex items-center justify-between text-xs pt-1 border-t border-[#181b29] text-gray-400">
                       <span>
-                        {m.quantity.toLocaleString()} {m.unit} • {m.incoterm} {m.deliveryPort}
+                        {m.quantity.toLocaleString()} {locale === "ar" && m.unit === "MT" ? "طن متري" : m.unit} • {m.incoterm} {locale === "ar" && m.deliveryPort === "Rotterdam" ? "ميناء روتردام" : locale === "ar" && m.deliveryPort === "Santos" ? "ميناء سانتوس" : m.deliveryPort}
                       </span>
                       <div className="flex items-center gap-1.5 font-mono text-[#c9a961]">
                         <span>{t.broker.commission}:</span>
@@ -326,8 +330,14 @@ export default function BrokerCommandCenterPage() {
                           : t.broker.complianceLockSubtitle}
                       </span>
                       <span className="text-[11px] opacity-80">
-                        {t.broker.buyer}: {selectedMatch.complianceStatusBuyer.toUpperCase()} • {t.broker.supplier}:{" "}
-                        {selectedMatch.complianceStatusSupplier.toUpperCase()}
+                        {t.broker.buyer}:{" "}
+                        {selectedMatch.complianceStatusBuyer === "approved"
+                          ? (locale === "ar" ? "معتمد ومطابق" : "APPROVED")
+                          : (locale === "ar" ? "قيد التدقيق" : selectedMatch.complianceStatusBuyer.toUpperCase())}{" "}
+                        • {t.broker.supplier}:{" "}
+                        {selectedMatch.complianceStatusSupplier === "approved"
+                          ? (locale === "ar" ? "معتمد ومطابق" : "APPROVED")
+                          : (locale === "ar" ? "قيد التدقيق" : selectedMatch.complianceStatusSupplier.toUpperCase())}
                       </span>
                     </div>
                   </div>
@@ -346,23 +356,46 @@ export default function BrokerCommandCenterPage() {
                   </span>
                   <div className="border border-[#1f2233] rounded-xl overflow-hidden text-xs">
                     <div className="grid grid-cols-12 bg-[#121422] p-2 text-gray-400 font-medium border-b border-[#1f2233]">
-                      <div className="col-span-4">{t.broker.commodity}</div>
-                      <div className="col-span-4">{t.broker.buyer}</div>
-                      <div className="col-span-4">{t.broker.supplier}</div>
+                      <div className="col-span-4">{locale === "ar" ? "المعيار الفني" : t.broker.commodity}</div>
+                      <div className="col-span-4">{locale === "ar" ? "طلب المشتري" : t.broker.buyer}</div>
+                      <div className="col-span-4">{locale === "ar" ? "عرض المورد" : t.broker.supplier}</div>
                     </div>
-                    {selectedMatch.specsDiff.map((d, idx) => (
-                      <div
-                        key={idx}
-                        className="grid grid-cols-12 p-2.5 border-b border-[#181b29] last:border-b-0 hover:bg-[#141724]"
-                      >
-                        <div className="col-span-4 font-medium text-gray-300">{d.spec}</div>
-                        <div className="col-span-4 text-gray-400">{d.buyerReq}</div>
-                        <div className="col-span-4 text-[#d4956b] flex items-center justify-between">
-                          <span>{d.supplierVal}</span>
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 ml-1" />
+                    {selectedMatch.specsDiff.map((d, idx) => {
+                      const specTranslated =
+                        locale === "ar"
+                          ? d.spec === "Sulfur Content"
+                            ? "نسبة الكبريت"
+                            : d.spec === "Density @ 15C"
+                            ? "الكثافة عند 15°م"
+                            : d.spec === "Flash Point"
+                            ? "درجة الوميض"
+                            : d.spec === "Nitrogen (N)"
+                            ? "نسبة النيتروجين (N)"
+                            : d.spec === "Moisture"
+                            ? "نسبة الرطوبة"
+                            : d.spec === "Biuret"
+                            ? "محتوى البيوريت"
+                            : d.spec === "Cu Purity"
+                            ? "نقاء النحاس"
+                            : d.spec === "Oxygen"
+                            ? "محتوى الأكسجين"
+                            : d.spec
+                          : d.spec;
+
+                      return (
+                        <div
+                          key={idx}
+                          className="grid grid-cols-12 p-2.5 border-b border-[#181b29] last:border-b-0 hover:bg-[#141724]"
+                        >
+                          <div className="col-span-4 font-medium text-gray-300">{specTranslated}</div>
+                          <div className="col-span-4 text-gray-400">{d.buyerReq}</div>
+                          <div className="col-span-4 text-[#d4956b] flex items-center justify-between">
+                            <span>{d.supplierVal}</span>
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 ml-1" />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 

@@ -85,7 +85,7 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold tracking-wider text-white font-mono flex items-center gap-1.5">
-                GVCE
+                VALOREA MARKET
                 <span className="text-[10px] uppercase px-1.5 py-0.5 rounded bg-[#b87333]/20 text-[#d4956b] border border-[#b87333]/30 font-sans font-semibold">
                   {translations.verifiedBadge || "Verified"}
                 </span>

@@ -129,7 +129,7 @@ export default function SecuritySettingsPage() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0e1017] border border-emerald-500/30 text-xs font-mono text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>OWASP ASVS Certified</span>
+              <span>{locale === "ar" ? "معتمد أمنياً OWASP ASVS" : "OWASP ASVS Certified"}</span>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function SecuritySettingsPage() {
                   <h3 className="text-sm font-bold text-white">{t.security.passkeyTitle}</h3>
                 </div>
                 <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  FIDO2
+                  {locale === "ar" ? "معيار FIDO2" : "FIDO2"}
                 </span>
               </div>
 
@@ -171,22 +171,30 @@ export default function SecuritySettingsPage() {
                     <div className="flex items-center gap-2.5">
                       <Laptop className="w-4 h-4 text-[#d4956b]" />
                       <div>
-                        <span className="font-semibold text-white block">Touch ID Hardware</span>
+                        <span className="font-semibold text-white block">
+                          {locale === "ar" ? "بصمة الإصبع للأجهزة (Touch ID)" : "Touch ID Hardware"}
+                        </span>
                         <span className="text-[10px] text-gray-500">2026-11-13</span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-emerald-400 font-mono">PRIMARY</span>
+                    <span className="text-[10px] text-emerald-400 font-mono">
+                      {locale === "ar" ? "رئيسي" : "PRIMARY"}
+                    </span>
                   </div>
 
                   <div className="p-3 rounded-xl bg-[#141724] border border-[#23273b] flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2.5">
                       <KeyRound className="w-4 h-4 text-sky-400" />
                       <div>
-                        <span className="font-semibold text-white block">YubiKey NFC</span>
+                        <span className="font-semibold text-white block">
+                          {locale === "ar" ? "مفتاح الأمان الفيزيائي (YubiKey NFC)" : "YubiKey NFC"}
+                        </span>
                         <span className="text-[10px] text-gray-500">2026-10-14</span>
                       </div>
                     </div>
-                    <span className="text-[10px] text-gray-400 font-mono">BACKUP</span>
+                    <span className="text-[10px] text-gray-400 font-mono">
+                      {locale === "ar" ? "احتياطي" : "BACKUP"}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -206,7 +214,9 @@ export default function SecuritySettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5">
                   <Lock className="w-5 h-5 text-[#d4956b]" />
-                  <h3 className="text-sm font-bold text-white">MFA</h3>
+                  <h3 className="text-sm font-bold text-white">
+                    {locale === "ar" ? "المصادقة الثنائية (MFA)" : "MFA"}
+                  </h3>
                 </div>
                 <button
                   type="button"
@@ -307,7 +317,7 @@ export default function SecuritySettingsPage() {
                         className="self-end sm:self-center px-3 py-1.5 rounded-lg bg-rose-600/10 border border-rose-500/30 text-rose-400 hover:bg-rose-600/20 text-xs font-semibold transition-all flex items-center gap-1.5"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
-                        <span>{t.broker.reject}</span>
+                        <span>{locale === "ar" ? "إنهاء الجلسة" : "Revoke"}</span>
                       </button>
                     )}
                   </div>
