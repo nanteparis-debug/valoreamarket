@@ -13,6 +13,7 @@ import {
   Lock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 interface NavbarProps {
   currentLocale: string;
@@ -132,6 +133,9 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
 
           {/* Right Action Bar */}
           <div className="hidden lg:flex items-center gap-3">
+            {/* Theme Toggle Button */}
+            <ThemeToggle locale={currentLocale} />
+
             {/* Currency Indicator */}
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#121420] border border-[#23273b] text-xs font-mono text-gray-300">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -211,6 +215,7 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle locale={currentLocale} />
             <button
               type="button"
               onClick={() => setLangDropdownOpen(!langDropdownOpen)}
@@ -278,6 +283,14 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               {translations.security || "Security & Active Sessions"}
             </Link>
           </nav>
+
+          {/* Theme Switcher in Mobile */}
+          <div className="pt-2 border-t border-[#1f2233] flex items-center justify-between">
+            <span className="text-xs text-gray-400 font-semibold">
+              {currentLocale === "ar" ? "المظهر" : "Theme"}
+            </span>
+            <ThemeToggle locale={currentLocale} showLabel />
+          </div>
 
           {/* Languages in Mobile */}
           <div className="pt-2 border-t border-[#1f2233]">

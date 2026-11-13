@@ -4,6 +4,8 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { JsonLd } from "@/components/seo/json-ld";
+import { ThemeProvider } from "@/components/theme-provider";
+import { FloatingThemeToggle } from "@/components/floating-theme-toggle";
 import "../globals.css";
 
 const BASE_URL = "https://gvce.exchange";
@@ -143,14 +145,30 @@ export default async function LocaleLayout({
   const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={dir} className="dark">
+    <html lang={locale} dir={dir} className="dark" suppressHydrationWarning>
       <head>
         <JsonLd locale={locale} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const stored = localStorage.getItem('valorea_theme');
+                const cookieMatch = document.cookie.match(/valorea_theme=([^;]+)/);
+                const theme = stored || (cookieMatch ? cookieMatch[1] : 'dark');
+                document.documentElement.classList.remove('dark', 'light');
+                document.documentElement.classList.add(theme);
+              } catch (e) {}
+            `,
+          }}
+        />
       </head>
-      <body className="bg-[#07080c] text-[#f8fafc] antialiased min-h-screen selection:bg-[#b87333] selection:text-white">
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+      <body className="bg-[#07080c] text-[#f8fafc] antialiased min-h-screen selection:bg-[#b87333] selection:text-white transition-colors duration-300">
+        <ThemeProvider>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+            <FloatingThemeToggle locale={locale} />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

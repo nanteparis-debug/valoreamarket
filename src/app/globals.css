@@ -145,3 +145,216 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--gvce-copper);
 }
+
+/* ========================================================
+   LIGHT MODE PALETTE TRANSFORMATION
+   Institutional Luxury Commodity Brokerage Light Theme
+   ======================================================== */
+
+html.light {
+  color-scheme: light;
+  --gvce-bg-primary: #f8fafc;
+  --gvce-bg-secondary: #ffffff;
+  --gvce-bg-tertiary: #f1f5f9;
+  --gvce-surface: #ffffff;
+  --gvce-border: #e2e8f0;
+  --gvce-border-hover: #cbd5e1;
+  --gvce-text-primary: #0f172a;
+  --gvce-text-secondary: #334155;
+  --gvce-text-muted: #64748b;
+}
+
+html.light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Light Mode Background Overrides */
+html.light [class*="bg-[#050609]"],
+html.light [class*="bg-[#07080c]"],
+html.light [class*="bg-[#08090e]"],
+html.light [class*="bg-[#090a10]"],
+html.light [class*="bg-[#0a0c13]"],
+html.light [class*="bg-[#0c0e15]"] {
+  background-color: #f8fafc !important;
+}
+
+html.light [class*="bg-[#0c0e17]"],
+html.light [class*="bg-[#0d0f17]"],
+html.light [class*="bg-[#0e1017]"],
+html.light [class*="bg-[#0e1018]"],
+html.light [class*="bg-[#0e101a]"],
+html.light [class*="bg-[#0e111a]"] {
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light [class*="bg-[#0f1118]"],
+html.light [class*="bg-[#0f111a]"],
+html.light [class*="bg-[#0f121d]"],
+html.light [class*="bg-[#10121d]"],
+html.light [class*="bg-[#10131f]"],
+html.light [class*="bg-[#121420]"],
+html.light [class*="bg-[#121422]"],
+html.light [class*="bg-[#121522]"],
+html.light [class*="bg-[#121524]"],
+html.light [class*="bg-[#131625]"] {
+  background-color: #f1f5f9 !important;
+}
+
+html.light [class*="bg-[#141724]"],
+html.light [class*="bg-[#141726]"],
+html.light [class*="bg-[#141829]"],
+html.light [class*="bg-[#161824]"],
+html.light [class*="bg-[#161826]"],
+html.light [class*="bg-[#161929]"],
+html.light [class*="bg-[#161a29]"],
+html.light [class*="bg-[#17141f]"],
+html.light [class*="bg-[#171a2c]"],
+html.light [class*="bg-[#181a27]"],
+html.light [class*="bg-[#181d2e]"] {
+  background-color: #e2e8f0 !important;
+}
+
+/* Light Mode Borders */
+html.light [class*="border-[#161824]"],
+html.light [class*="border-[#181b29]"],
+html.light [class*="border-[#1a1d2e]"],
+html.light [class*="border-[#1a1e30]"],
+html.light [class*="border-[#1f2233]"],
+html.light [class*="border-[#23273b]"],
+html.light [class*="border-[#262a40]"],
+html.light [class*="border-[#2b334d]"],
+html.light [class*="border-[#2d324d]"],
+html.light [class*="border-[#2d3450]"],
+html.light [class*="border-[#332420]"],
+html.light [class*="border-[#383d5a]"],
+html.light [class*="border-[#3d2a1d]"] {
+  border-color: #e2e8f0 !important;
+}
+
+html.light [class*="divide-[#181b29]"] > :not([hidden]) ~ :not([hidden]),
+html.light [class*="divide-[#1f2233]"] > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+/* Light Mode Text Hierarchy */
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-gray-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-gray-300 {
+  color: #334155 !important;
+}
+
+html.light .text-gray-400 {
+  color: #64748b !important;
+}
+
+html.light .text-gray-500 {
+  color: #64748b !important;
+}
+
+/* Preserve White Text for Colored Action Buttons, Badges & Solid Dark Accents */
+html.light [class*="from-[#b87333]"],
+html.light [class*="from-[#b87333]"] *,
+html.light [class*="bg-[#b87333]"],
+html.light [class*="bg-[#b87333]"] *,
+html.light [class*="bg-emerald-600"],
+html.light [class*="bg-emerald-600"] *,
+html.light [class*="bg-emerald-500"],
+html.light [class*="bg-emerald-500"] *,
+html.light [class*="bg-rose-600"],
+html.light [class*="bg-rose-600"] *,
+html.light [class*="bg-rose-500"],
+html.light [class*="bg-rose-500"] *,
+html.light [class*="bg-blue-600"],
+html.light [class*="bg-blue-600"] *,
+html.light button[class*="from-"],
+html.light button[class*="from-"] *,
+html.light a[class*="from-"],
+html.light a[class*="from-"] * {
+  color: #ffffff !important;
+}
+
+/* Light Mode Hover States */
+html.light [class*="hover:text-white"]:hover {
+  color: #0f172a !important;
+}
+html.light [class*="hover:bg-[#161824]"]:hover,
+html.light [class*="hover:bg-[#0f1118]"]:hover,
+html.light [class*="hover:bg-[#141724]"]:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Enhanced Copper Accent Contrast in Light Mode */
+html.light .text-\[\#d4956b\] {
+  color: #b87333 !important;
+}
+
+/* Light Mode Inputs, Selects & Textareas */
+html.light input:not([type="checkbox"]):not([type="radio"]),
+html.light select,
+html.light textarea {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Light Mode Headers, Footers and Glass Panels */
+html.light header {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light header nav {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light footer {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .glass-panel-elevated {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(184, 115, 51, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light .copper-gradient-text {
+  background: linear-gradient(135deg, #0f172a 0%, #b87333 55%, #8b5a2b 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* Custom Scrollbars in Light Mode */
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #b87333;
+}
+
