@@ -1,0 +1,319 @@
+{
+  "metadata": {
+    "title": "GVCE — Bourse Mondiale des Matières Premières Vérifiées",
+    "description": "Plateforme de courtage international fiable reliant acheteurs et fournisseurs vérifiés de matières premières dans le monde entier."
+  },
+  "nav": {
+    "home": "Accueil",
+    "commodities": "Matières Premières",
+    "howItWorks": "Comment ça marche",
+    "pricing": "Tarifs",
+    "about": "À propos",
+    "contact": "Contact",
+    "signIn": "Connexion",
+    "getStarted": "Commencer",
+    "dashboard": "Tableau de bord",
+    "language": "Langue"
+  },
+  "hero": {
+    "badge": "Approuvé par des entreprises dans plus de 50 pays",
+    "title": "Bourse Mondiale des Matières Premières Vérifiées",
+    "subtitle": "Courtage international sécurisé reliant acheteurs et fournisseurs vérifiés. Du pétrole brut aux métaux rares — négociez en toute confiance.",
+    "cta": "Commencer à Trader",
+    "secondaryCta": "Explorer les Matières Premières",
+    "stats": {
+      "countries": "Pays",
+      "deals": "Transactions Complétées",
+      "companies": "Entreprises Vérifiées",
+      "volume": "Volume d'Échanges"
+    }
+  },
+  "sectors": {
+    "title": "Secteurs de Matières Premières",
+    "subtitle": "Parcourez notre catalogue complet couvrant sept secteurs majeurs de matières premières",
+    "crudeOil": "Pétrole Brut et Condensats",
+    "refinedPetroleum": "Produits Pétroliers Raffinés",
+    "naturalGas": "Gaz Naturel et LGN",
+    "petrochemicals": "Pétrochimie",
+    "sulfurFertilizers": "Soufre et Engrais",
+    "metalsIndustrial": "Métaux et Matériaux Industriels",
+    "sugar": "Sucre",
+    "viewAll": "Voir Tous les Produits",
+    "buyRequest": "Demande d'Achat",
+    "supplyOffer": "Offre de Fourniture"
+  },
+  "howItWorks": {
+    "title": "Comment ça Marche",
+    "subtitle": "Quatre étapes simples pour un commerce de matières premières sécurisé et vérifié",
+    "step1": {
+      "title": "Inscrivez-vous et Vérifiez",
+      "description": "Créez le profil de votre entreprise et complétez la vérification KYC/KYB pour accéder à la plateforme."
+    },
+    "step2": {
+      "title": "Soumettez votre Demande",
+      "description": "Publiez une demande d'achat ou une offre de fourniture avec les spécifications complètes, la quantité et les conditions de livraison."
+    },
+    "step3": {
+      "title": "Correspondance et Négociation",
+      "description": "Nos courtiers rapprochent les parties compatibles dans des salles de négociation privées avec partage de documents et visioconférences."
+    },
+    "step4": {
+      "title": "Accord et Commerce",
+      "description": "Signez les accords, finalisez les conditions et procédez au règlement via vos canaux bancaires."
+    }
+  },
+  "features": {
+    "title": "Pourquoi GVCE",
+    "subtitle": "Conçue pour les exigences du commerce international de matières premières",
+    "verification": {
+      "title": "Vérification Multi-étapes",
+      "description": "Vérification KYC, KYB et spécifique aux transactions avec contrôle de conformité et authentification des documents."
+    },
+    "dealRooms": {
+      "title": "Salles de Négociation Privées",
+      "description": "Visioconférences chiffrées de bout en bout, partage sécurisé de documents avec filigranes et chat anonyme."
+    },
+    "multiLanguage": {
+      "title": "8 Langues",
+      "description": "Support complet en arabe, français, anglais, espagnol, chinois, japonais, allemand et russe."
+    },
+    "security": {
+      "title": "Sécurité Entreprise",
+      "description": "Authentification par clés d'accès, MFA, stockage chiffré, pistes d'audit et conformité OWASP ASVS."
+    },
+    "documents": {
+      "title": "Protection des Documents",
+      "description": "Aperçus en filigrane, copies expurgées, accès contrôlé par le propriétaire et suivi des téléchargements."
+    },
+    "commissions": {
+      "title": "Commissions Transparentes",
+      "description": "Structure de commissions claire liée aux étapes de la transaction avec piste d'audit complète et facturation."
+    }
+  },
+  "pricing": {
+    "title": "Plans d'Abonnement",
+    "subtitle": "Choisissez le plan qui correspond à vos besoins",
+    "monthly": "Mensuel",
+    "annually": "Annuel",
+    "save": "Économisez {percent}%",
+    "perMonth": "/mois",
+    "perYear": "/an",
+    "currentPlan": "Plan Actuel",
+    "upgrade": "Passer au Supérieur",
+    "downgrade": "Rétrograder",
+    "contactSales": "Contacter les Ventes",
+    "registerFree": "Inscription Gratuite",
+    "getStarted": "Commencer",
+    "starter": {
+      "name": "Démarrage",
+      "description": "Commencez avec l'accès de base",
+      "features": [
+        "Enregistrement d'entreprise",
+        "Consultation du catalogue public",
+        "Soumission des documents de vérification",
+        "Support par e-mail"
+      ]
+    },
+    "professional": {
+      "name": "Professionnel",
+      "description": "Accès complet aux fonctionnalités de trading",
+      "features": [
+        "Demandes d'achat et offres de fourniture",
+        "Mise en relation par courtier",
+        "Salles de négociation privées",
+        "Visioconférences",
+        "Partage de documents",
+        "Support prioritaire"
+      ]
+    },
+    "enterprise": {
+      "name": "Entreprise",
+      "description": "Pour les grandes organisations commerciales",
+      "features": [
+        "Tout du plan Professionnel",
+        "Sièges supplémentaires pour l'équipe",
+        "Rôles et permissions internes",
+        "Limites de transactions plus élevées",
+        "Facturation centralisée",
+        "Gestionnaire de compte dédié"
+      ]
+    }
+  },
+  "footer": {
+    "description": "Plateforme de courtage international fiable reliant acheteurs et fournisseurs vérifiés de matières premières dans le monde entier.",
+    "platform": "Plateforme",
+    "company": "Entreprise",
+    "legal": "Juridique",
+    "support": "Support",
+    "termsOfService": "Conditions d'Utilisation",
+    "privacyPolicy": "Politique de Confidentialité",
+    "cookiePolicy": "Politique des Cookies",
+    "helpCenter": "Centre d'Aide",
+    "contactUs": "Contactez-nous",
+    "careers": "Carrières",
+    "aboutUs": "À Propos",
+    "blog": "Blog",
+    "rights": "© {year} GVCE. Tous droits réservés."
+  },
+  "auth": {
+    "signIn": "Connexion",
+    "signUp": "Inscription",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
+    "createAccount": "Créer un compte",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "noAccount": "Pas encore de compte ?",
+    "orContinueWith": "Ou continuer avec",
+    "passkey": "Se connecter avec une clé d'accès",
+    "mfaTitle": "Authentification à deux facteurs",
+    "mfaDescription": "Entrez le code de vérification de votre application d'authentification",
+    "verifyCode": "Vérifier le code",
+    "rememberDevice": "Se souvenir de cet appareil",
+    "companyName": "Nom de l'entreprise",
+    "country": "Pays",
+    "fullName": "Nom complet",
+    "phone": "Numéro de téléphone",
+    "agreeTerms": "J'accepte les Conditions d'Utilisation et la Politique de Confidentialité",
+    "verifyEmail": "Vérifiez votre e-mail",
+    "verifyEmailDescription": "Nous avons envoyé un code de vérification à {email}",
+    "resendCode": "Renvoyer le code",
+    "accountRecovery": "Récupération de compte",
+    "securityAlert": "Alerte de sécurité",
+    "newLoginDetected": "Une nouvelle connexion a été détectée depuis {device} à {location}",
+    "activeSessions": "Sessions actives",
+    "endSession": "Terminer la session",
+    "endAllSessions": "Terminer toutes les autres sessions"
+  },
+  "deal": {
+    "newBuyRequest": "Nouvelle demande d'achat",
+    "newSupplyOffer": "Nouvelle offre de fourniture",
+    "material": "Matière",
+    "grade": "Grade",
+    "quantity": "Quantité",
+    "unit": "Unité",
+    "price": "Prix",
+    "currency": "Devise",
+    "usdEquivalent": "Équivalent USD",
+    "exchangeRate": "Taux de change",
+    "exchangeRateDate": "Date du taux",
+    "exchangeRateSource": "Source du taux",
+    "pricingBasis": "Base de tarification",
+    "incoterm": "Incoterm",
+    "incotermPlace": "Lieu désigné",
+    "origin": "Origine",
+    "destination": "Destination",
+    "deliveryPort": "Port de livraison",
+    "deliveryDate": "Date de livraison",
+    "from": "Du",
+    "to": "Au",
+    "transportMode": "Mode de transport",
+    "specifications": "Spécifications",
+    "notes": "Notes supplémentaires",
+    "submit": "Soumettre",
+    "saveDraft": "Enregistrer le brouillon",
+    "status": {
+      "draft": "Brouillon",
+      "open": "Ouvert",
+      "matched": "Apparié",
+      "negotiating": "En négociation",
+      "agreed": "Convenu",
+      "completed": "Terminé",
+      "canceled": "Annulé",
+      "expired": "Expiré"
+    }
+  },
+  "dealRoom": {
+    "title": "Salle de Négociation",
+    "chat": "Discussion",
+    "meetings": "Réunions",
+    "documents": "Documents",
+    "offers": "Offres",
+    "agreements": "Accords",
+    "scheduleMeeting": "Planifier une réunion",
+    "joinMeeting": "Rejoindre la réunion",
+    "leaveMeeting": "Quitter la réunion",
+    "waitingRoom": "Salle d'attente",
+    "requestDocument": "Demander un document",
+    "uploadDocument": "Téléverser un document",
+    "previewDocument": "Aperçu du document",
+    "requestDownload": "Demander le téléchargement",
+    "approveAccess": "Approuver l'accès",
+    "denyAccess": "Refuser l'accès",
+    "revokeAccess": "Révoquer l'accès",
+    "watermarkNotice": "Cet aperçu contient un filigrane. La capture d'écran en dehors de l'application reste possible.",
+    "confidentialityNotice": "L'activation de la caméra et du microphone partagera votre audio/vidéo avec les participants de la transaction.",
+    "anonymousAlias": "Vous apparaissez sous le nom {alias} dans cette salle de négociation.",
+    "contactDetected": "Informations de contact détectées. Les messages contenant des coordonnées seront examinés avant livraison.",
+    "e2eeActive": "Le chiffrement de bout en bout est actif",
+    "e2eeInactive": "Le chiffrement de bout en bout n'est pas disponible pour cette session"
+  },
+  "verification": {
+    "title": "Vérification",
+    "kyc": "Vérification d'Identité (KYC)",
+    "kyb": "Vérification d'Entreprise (KYB)",
+    "dealVerification": "Vérification de Transaction",
+    "status": {
+      "incomplete": "Incomplet",
+      "pendingReview": "En cours d'examen",
+      "additionalInfoRequired": "Informations supplémentaires requises",
+      "approved": "Approuvé",
+      "rejected": "Rejeté",
+      "expired": "Expiré",
+      "suspended": "Suspendu"
+    },
+    "uploadId": "Téléverser un document d'identité",
+    "uploadRegistration": "Téléverser l'immatriculation de l'entreprise",
+    "uploadLicense": "Téléverser la licence / le permis",
+    "verificationScope": "Portée de la vérification",
+    "verifiedUntil": "Vérifié jusqu'au",
+    "reVerificationRequired": "Re-vérification requise"
+  },
+  "document": {
+    "types": {
+      "certificate_of_origin": "Certificat d'Origine",
+      "bill_of_lading": "Connaissement",
+      "commercial_invoice": "Facture Commerciale",
+      "packing_list": "Liste de Colisage",
+      "quality_certificate": "Certificat de Qualité",
+      "sgs_inspection": "Rapport d'Inspection SGS",
+      "letter_of_credit": "Lettre de Crédit",
+      "insurance_certificate": "Certificat d'Assurance",
+      "export_license": "Licence d'Exportation",
+      "import_permit": "Permis d'Importation",
+      "company_registration": "Extrait Kbis / Immatriculation",
+      "power_of_attorney": "Procuration",
+      "beneficial_ownership": "Déclaration de Bénéficiaire Effectif"
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "retry": "Réessayer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "close": "Fermer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "back": "Retour",
+    "yes": "Oui",
+    "no": "Non",
+    "all": "Tout",
+    "none": "Aucun",
+    "required": "Obligatoire",
+    "optional": "Facultatif",
+    "comingSoon": "Bientôt disponible",
+    "noResults": "Aucun résultat trouvé",
+    "showMore": "Voir plus",
+    "showLess": "Voir moins"
+  }
+}

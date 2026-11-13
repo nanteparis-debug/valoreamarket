@@ -1,0 +1,319 @@
+{
+  "metadata": {
+    "title": "GVCE — Глобальная биржа верифицированных сырьевых товаров",
+    "description": "Международная брокерская платформа для верифицированных покупателей и поставщиков."
+  },
+  "nav": {
+    "home": "Главная",
+    "commodities": "Товары",
+    "howItWorks": "Как это работает",
+    "pricing": "Тарифы",
+    "about": "О платформе",
+    "contact": "Контакты",
+    "signIn": "Войти",
+    "getStarted": "Начать",
+    "dashboard": "Панель",
+    "language": "Язык"
+  },
+  "hero": {
+    "badge": "Нам доверяют компании из 50+ стран",
+    "title": "Глобальная биржа верифицированных товаров",
+    "subtitle": "Безопасное международное брокерство между верифицированными сторонами. От нефти до редких металлов.",
+    "cta": "Начать торговлю",
+    "secondaryCta": "Каталог товаров",
+    "stats": {
+      "countries": "Countries",
+      "deals": "Deals Completed",
+      "companies": "Verified Companies",
+      "volume": "Trade Volume"
+    }
+  },
+  "sectors": {
+    "title": "Секторы сырьевых товаров",
+    "subtitle": "Ознакомьтесь с каталогом, охватывающим семь ключевых отраслей",
+    "crudeOil": "Сырая нефть и газовый конденсат",
+    "refinedPetroleum": "Нефтепродукты",
+    "naturalGas": "Природный газ и ШФЛУ",
+    "petrochemicals": "Нефтехимия",
+    "sulfurFertilizers": "Сера и удобрения",
+    "metalsIndustrial": "Металлы и промышленное сырье",
+    "sugar": "Сахар",
+    "viewAll": "View All Products",
+    "buyRequest": "Buy Request",
+    "supplyOffer": "Supply Offer"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Four simple steps to secure, verified commodity trading",
+    "step1": {
+      "title": "Register & Verify",
+      "description": "Create your company profile and complete KYC/KYB verification to access the platform."
+    },
+    "step2": {
+      "title": "Submit Request",
+      "description": "Post a buy request or supply offer with full specifications, quantity, and delivery terms."
+    },
+    "step3": {
+      "title": "Match & Negotiate",
+      "description": "Our brokers match compatible parties in private deal rooms with document sharing and video meetings."
+    },
+    "step4": {
+      "title": "Agree & Trade",
+      "description": "Sign agreements, finalize terms, and proceed to settlement through your banking channels."
+    }
+  },
+  "features": {
+    "title": "Why GVCE",
+    "subtitle": "Built for the demands of international commodity trading",
+    "verification": {
+      "title": "Multi-Stage Verification",
+      "description": "KYC, KYB, and deal-specific verification with compliance screening and document authentication."
+    },
+    "dealRooms": {
+      "title": "Private Deal Rooms",
+      "description": "End-to-end encrypted video meetings, secure document sharing with watermarks, and anonymous chat."
+    },
+    "multiLanguage": {
+      "title": "8 Languages",
+      "description": "Full platform support in Arabic, French, English, Spanish, Chinese, Japanese, German, and Russian."
+    },
+    "security": {
+      "title": "Enterprise Security",
+      "description": "Passkey authentication, MFA, encrypted storage, audit trails, and OWASP ASVS compliance."
+    },
+    "documents": {
+      "title": "Document Protection",
+      "description": "Watermarked previews, redacted copies, owner-controlled access, and download tracking."
+    },
+    "commissions": {
+      "title": "Transparent Commissions",
+      "description": "Clear commission structure tied to deal milestones with full audit trail and invoicing."
+    }
+  },
+  "pricing": {
+    "title": "Subscription Plans",
+    "subtitle": "Choose the plan that fits your business needs",
+    "monthly": "Monthly",
+    "annually": "Annually",
+    "save": "Save {percent}%",
+    "perMonth": "/month",
+    "perYear": "/year",
+    "currentPlan": "Current Plan",
+    "upgrade": "Upgrade",
+    "downgrade": "Downgrade",
+    "contactSales": "Contact Sales",
+    "starter": {
+      "name": "Starter",
+      "description": "Get started with basic access",
+      "features": [
+        "Company registration",
+        "Browse public catalog",
+        "Submit verification documents",
+        "Email support"
+      ]
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Full access to trading features",
+      "features": [
+        "Buy requests & supply offers",
+        "Broker matching",
+        "Private deal rooms",
+        "Video meetings",
+        "Document sharing",
+        "Priority support"
+      ]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "For large trading organizations",
+      "features": [
+        "Everything in Professional",
+        "Additional team seats",
+        "Internal roles & permissions",
+        "Higher deal limits",
+        "Centralized billing",
+        "Dedicated account manager"
+      ]
+    },
+    "registerFree": "Регистрация бесплатно",
+    "getStarted": "Начать работу"
+  },
+  "footer": {
+    "description": "Trusted international brokerage connecting verified buyers and suppliers of commodities worldwide.",
+    "platform": "Platform",
+    "company": "Company",
+    "legal": "Legal",
+    "support": "Support",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy",
+    "helpCenter": "Help Center",
+    "contactUs": "Contact Us",
+    "careers": "Careers",
+    "aboutUs": "About Us",
+    "blog": "Blog",
+    "rights": "© {year} GVCE. All rights reserved."
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "forgotPassword": "Forgot Password?",
+    "resetPassword": "Reset Password",
+    "createAccount": "Create Account",
+    "alreadyHaveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "orContinueWith": "Or continue with",
+    "passkey": "Sign in with Passkey",
+    "mfaTitle": "Two-Factor Authentication",
+    "mfaDescription": "Enter the verification code from your authenticator app",
+    "verifyCode": "Verify Code",
+    "rememberDevice": "Remember this device",
+    "companyName": "Company Name",
+    "country": "Country",
+    "fullName": "Full Name",
+    "phone": "Phone Number",
+    "agreeTerms": "I agree to the Terms of Service and Privacy Policy",
+    "verifyEmail": "Verify Your Email",
+    "verifyEmailDescription": "We've sent a verification code to {email}",
+    "resendCode": "Resend Code",
+    "accountRecovery": "Account Recovery",
+    "securityAlert": "Security Alert",
+    "newLoginDetected": "A new login was detected from {device} in {location}",
+    "activeSessions": "Active Sessions",
+    "endSession": "End Session",
+    "endAllSessions": "End All Other Sessions"
+  },
+  "deal": {
+    "newBuyRequest": "New Buy Request",
+    "newSupplyOffer": "New Supply Offer",
+    "material": "Material",
+    "grade": "Grade",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "price": "Price",
+    "currency": "Currency",
+    "usdEquivalent": "USD Equivalent",
+    "exchangeRate": "Exchange Rate",
+    "exchangeRateDate": "Rate Date",
+    "exchangeRateSource": "Rate Source",
+    "pricingBasis": "Pricing Basis",
+    "incoterm": "Incoterm",
+    "incotermPlace": "Named Place",
+    "origin": "Origin",
+    "destination": "Destination",
+    "deliveryPort": "Delivery Port",
+    "deliveryDate": "Delivery Date",
+    "from": "From",
+    "to": "To",
+    "transportMode": "Transport Mode",
+    "specifications": "Specifications",
+    "notes": "Additional Notes",
+    "submit": "Submit",
+    "saveDraft": "Save Draft",
+    "status": {
+      "draft": "Draft",
+      "open": "Open",
+      "matched": "Matched",
+      "negotiating": "Negotiating",
+      "agreed": "Agreed",
+      "completed": "Completed",
+      "canceled": "Canceled",
+      "expired": "Expired"
+    }
+  },
+  "dealRoom": {
+    "title": "Deal Room",
+    "chat": "Chat",
+    "meetings": "Meetings",
+    "documents": "Documents",
+    "offers": "Offers",
+    "agreements": "Agreements",
+    "scheduleMeeting": "Schedule Meeting",
+    "joinMeeting": "Join Meeting",
+    "leaveMeeting": "Leave Meeting",
+    "waitingRoom": "Waiting Room",
+    "requestDocument": "Request Document",
+    "uploadDocument": "Upload Document",
+    "previewDocument": "Preview Document",
+    "requestDownload": "Request Download",
+    "approveAccess": "Approve Access",
+    "denyAccess": "Deny Access",
+    "revokeAccess": "Revoke Access",
+    "watermarkNotice": "This preview contains a watermark. Screen capture remains possible outside the application.",
+    "confidentialityNotice": "Camera and microphone access will share your audio/video with deal participants.",
+    "anonymousAlias": "You appear as {alias} in this deal room.",
+    "contactDetected": "Contact information detected. Messages containing contact details will be reviewed before delivery.",
+    "e2eeActive": "End-to-end encryption is active",
+    "e2eeInactive": "End-to-end encryption is not available for this session"
+  },
+  "verification": {
+    "title": "Verification",
+    "kyc": "Identity Verification (KYC)",
+    "kyb": "Company Verification (KYB)",
+    "dealVerification": "Deal Verification",
+    "status": {
+      "incomplete": "Incomplete",
+      "pendingReview": "Pending Review",
+      "additionalInfoRequired": "Additional Information Required",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "expired": "Expired",
+      "suspended": "Suspended"
+    },
+    "uploadId": "Upload Identity Document",
+    "uploadRegistration": "Upload Company Registration",
+    "uploadLicense": "Upload License / Permit",
+    "verificationScope": "Verification Scope",
+    "verifiedUntil": "Verified Until",
+    "reVerificationRequired": "Re-verification Required"
+  },
+  "document": {
+    "types": {
+      "certificate_of_origin": "Certificate of Origin",
+      "bill_of_lading": "Bill of Lading",
+      "commercial_invoice": "Commercial Invoice",
+      "packing_list": "Packing List",
+      "quality_certificate": "Quality Certificate",
+      "sgs_inspection": "SGS Inspection Report",
+      "letter_of_credit": "Letter of Credit",
+      "insurance_certificate": "Insurance Certificate",
+      "export_license": "Export License",
+      "import_permit": "Import Permit",
+      "company_registration": "Company Registration",
+      "power_of_attorney": "Power of Attorney",
+      "beneficial_ownership": "Beneficial Ownership Declaration"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "next": "Next",
+    "previous": "Previous",
+    "back": "Back",
+    "yes": "Yes",
+    "no": "No",
+    "all": "All",
+    "none": "None",
+    "required": "Required",
+    "optional": "Optional",
+    "comingSoon": "Coming Soon",
+    "noResults": "No results found",
+    "showMore": "Show More",
+    "showLess": "Show Less"
+  }
+}

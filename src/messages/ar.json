@@ -1,0 +1,319 @@
+{
+  "metadata": {
+    "title": "GVCE — بورصة السلع العالمية الموثّقة",
+    "description": "منصة وساطة دولية موثوقة تربط بين المشترين والموردين المعتمدين للسلع حول العالم."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "commodities": "السلع",
+    "howItWorks": "كيف تعمل",
+    "pricing": "الأسعار",
+    "about": "عن المنصة",
+    "contact": "اتصل بنا",
+    "signIn": "تسجيل الدخول",
+    "getStarted": "ابدأ الآن",
+    "dashboard": "لوحة التحكم",
+    "language": "اللغة"
+  },
+  "hero": {
+    "badge": "موثوق بها من شركات في أكثر من 50 دولة",
+    "title": "بورصة السلع العالمية الموثّقة",
+    "subtitle": "وساطة دولية آمنة تربط بين المشترين والموردين المعتمدين. من النفط الخام إلى المعادن النادرة — تداول بثقة.",
+    "cta": "ابدأ التداول اليوم",
+    "secondaryCta": "استعرض السلع",
+    "stats": {
+      "countries": "دولة",
+      "deals": "صفقة مكتملة",
+      "companies": "شركة معتمدة",
+      "volume": "حجم التداول"
+    }
+  },
+  "sectors": {
+    "title": "قطاعات السلع",
+    "subtitle": "استعرض كتالوجنا الشامل الذي يغطي سبعة قطاعات رئيسية للسلع",
+    "crudeOil": "النفط الخام والمكثفات",
+    "refinedPetroleum": "المنتجات النفطية المكررة",
+    "naturalGas": "الغاز الطبيعي وسوائله",
+    "petrochemicals": "البتروكيماويات",
+    "sulfurFertilizers": "الكبريت والأسمدة",
+    "metalsIndustrial": "المعادن والمواد الصناعية",
+    "sugar": "السكر",
+    "viewAll": "عرض جميع المنتجات",
+    "buyRequest": "طلب شراء",
+    "supplyOffer": "عرض توريد"
+  },
+  "howItWorks": {
+    "title": "كيف تعمل المنصة",
+    "subtitle": "أربع خطوات بسيطة لتداول سلع آمن وموثّق",
+    "step1": {
+      "title": "سجّل وتحقّق",
+      "description": "أنشئ ملف شركتك وأكمل التحقق من الهوية والشركة للوصول إلى المنصة."
+    },
+    "step2": {
+      "title": "قدّم طلبك",
+      "description": "أنشر طلب شراء أو عرض توريد مع المواصفات الكاملة والكمية وشروط التسليم."
+    },
+    "step3": {
+      "title": "طابق وتفاوض",
+      "description": "يطابق وسطاؤنا بين الأطراف المناسبة في غرف صفقات خاصة مع مشاركة الوثائق واجتماعات الفيديو."
+    },
+    "step4": {
+      "title": "اتّفق وتداول",
+      "description": "وقّع الاتفاقيات، أنهِ الشروط، وانتقل إلى التسوية عبر قنواتك المصرفية."
+    }
+  },
+  "features": {
+    "title": "لماذا GVCE",
+    "subtitle": "مصمّمة لمتطلبات تجارة السلع الدولية",
+    "verification": {
+      "title": "تحقق متعدد المراحل",
+      "description": "تحقق من الهوية والشركة والصفقة مع فحص الامتثال وتوثيق المستندات."
+    },
+    "dealRooms": {
+      "title": "غرف صفقات خاصة",
+      "description": "اجتماعات فيديو مشفّرة من طرف إلى طرف، ومشاركة وثائق آمنة بعلامات مائية، ودردشة مجهولة الهوية."
+    },
+    "multiLanguage": {
+      "title": "8 لغات",
+      "description": "دعم كامل للمنصة بالعربية والفرنسية والإنجليزية والإسبانية والصينية واليابانية والألمانية والروسية."
+    },
+    "security": {
+      "title": "أمان مؤسسي",
+      "description": "مصادقة بمفاتيح المرور، والتحقق المتعدد، وتخزين مشفّر، وسجلات تدقيق، ومطابقة معايير OWASP ASVS."
+    },
+    "documents": {
+      "title": "حماية الوثائق",
+      "description": "معاينات بعلامات مائية، ونسخ منقحة، ووصول يتحكم فيه المالك، وتتبع التنزيلات."
+    },
+    "commissions": {
+      "title": "عمولات شفافة",
+      "description": "هيكل عمولات واضح مرتبط بمراحل الصفقة مع سجل تدقيق كامل وفوترة."
+    }
+  },
+  "pricing": {
+    "title": "خطط الاشتراك",
+    "subtitle": "اختر الخطة التي تناسب احتياجات عملك",
+    "monthly": "شهري",
+    "annually": "سنوي",
+    "save": "وفّر {percent}%",
+    "perMonth": "/شهرياً",
+    "perYear": "/سنوياً",
+    "currentPlan": "خطتك الحالية",
+    "upgrade": "ترقية",
+    "downgrade": "تخفيض",
+    "contactSales": "تواصل مع المبيعات",
+    "registerFree": "سجّل مجاناً",
+    "getStarted": "ابدأ الآن",
+    "starter": {
+      "name": "البداية",
+      "description": "ابدأ مع الوصول الأساسي",
+      "features": [
+        "تسجيل الشركة",
+        "تصفح الكتالوج العام",
+        "إرسال وثائق التحقق",
+        "دعم بالبريد الإلكتروني"
+      ]
+    },
+    "professional": {
+      "name": "المحترف",
+      "description": "وصول كامل لميزات التداول",
+      "features": [
+        "طلبات شراء وعروض توريد",
+        "مطابقة الوسيط",
+        "غرف صفقات خاصة",
+        "اجتماعات فيديو",
+        "مشاركة الوثائق",
+        "دعم ذو أولوية"
+      ]
+    },
+    "enterprise": {
+      "name": "المؤسسات",
+      "description": "للمؤسسات التجارية الكبرى",
+      "features": [
+        "كل ميزات المحترف",
+        "مقاعد إضافية للفريق",
+        "أدوار وصلاحيات داخلية",
+        "حدود صفقات أعلى",
+        "فوترة مركزية",
+        "مدير حساب مخصص"
+      ]
+    }
+  },
+  "footer": {
+    "description": "منصة وساطة دولية موثوقة تربط بين المشترين والموردين المعتمدين للسلع حول العالم.",
+    "platform": "المنصة",
+    "company": "الشركة",
+    "legal": "قانوني",
+    "support": "الدعم",
+    "termsOfService": "شروط الخدمة",
+    "privacyPolicy": "سياسة الخصوصية",
+    "cookiePolicy": "سياسة ملفات الارتباط",
+    "helpCenter": "مركز المساعدة",
+    "contactUs": "اتصل بنا",
+    "careers": "وظائف",
+    "aboutUs": "عن المنصة",
+    "blog": "المدوّنة",
+    "rights": "© {year} GVCE. جميع الحقوق محفوظة."
+  },
+  "auth": {
+    "signIn": "تسجيل الدخول",
+    "signUp": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "createAccount": "إنشاء حساب",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "noAccount": "ليس لديك حساب؟",
+    "orContinueWith": "أو تابع باستخدام",
+    "passkey": "تسجيل الدخول بمفتاح المرور",
+    "mfaTitle": "التحقق بخطوتين",
+    "mfaDescription": "أدخل رمز التحقق من تطبيق المصادقة",
+    "verifyCode": "تحقق من الرمز",
+    "rememberDevice": "تذكّر هذا الجهاز",
+    "companyName": "اسم الشركة",
+    "country": "البلد",
+    "fullName": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "agreeTerms": "أوافق على شروط الخدمة وسياسة الخصوصية",
+    "verifyEmail": "تحقق من بريدك الإلكتروني",
+    "verifyEmailDescription": "أرسلنا رمز تحقق إلى {email}",
+    "resendCode": "إعادة إرسال الرمز",
+    "accountRecovery": "استرداد الحساب",
+    "securityAlert": "تنبيه أمني",
+    "newLoginDetected": "تم رصد تسجيل دخول جديد من {device} في {location}",
+    "activeSessions": "الجلسات النشطة",
+    "endSession": "إنهاء الجلسة",
+    "endAllSessions": "إنهاء جميع الجلسات الأخرى"
+  },
+  "deal": {
+    "newBuyRequest": "طلب شراء جديد",
+    "newSupplyOffer": "عرض توريد جديد",
+    "material": "المادة",
+    "grade": "الدرجة",
+    "quantity": "الكمية",
+    "unit": "الوحدة",
+    "price": "السعر",
+    "currency": "العملة",
+    "usdEquivalent": "المقابل بالدولار",
+    "exchangeRate": "سعر الصرف",
+    "exchangeRateDate": "تاريخ السعر",
+    "exchangeRateSource": "مصدر السعر",
+    "pricingBasis": "أساس التسعير",
+    "incoterm": "شرط التسليم",
+    "incotermPlace": "المكان المسمّى",
+    "origin": "المنشأ",
+    "destination": "الوجهة",
+    "deliveryPort": "ميناء التسليم",
+    "deliveryDate": "تاريخ التسليم",
+    "from": "من",
+    "to": "إلى",
+    "transportMode": "طريقة النقل",
+    "specifications": "المواصفات",
+    "notes": "ملاحظات إضافية",
+    "submit": "إرسال",
+    "saveDraft": "حفظ كمسودة",
+    "status": {
+      "draft": "مسودة",
+      "open": "مفتوح",
+      "matched": "متطابق",
+      "negotiating": "قيد التفاوض",
+      "agreed": "متّفق عليه",
+      "completed": "مكتمل",
+      "canceled": "ملغى",
+      "expired": "منتهي"
+    }
+  },
+  "dealRoom": {
+    "title": "غرفة الصفقة",
+    "chat": "المحادثة",
+    "meetings": "الاجتماعات",
+    "documents": "الوثائق",
+    "offers": "العروض",
+    "agreements": "الاتفاقيات",
+    "scheduleMeeting": "جدولة اجتماع",
+    "joinMeeting": "انضم للاجتماع",
+    "leaveMeeting": "غادر الاجتماع",
+    "waitingRoom": "غرفة الانتظار",
+    "requestDocument": "طلب وثيقة",
+    "uploadDocument": "رفع وثيقة",
+    "previewDocument": "معاينة الوثيقة",
+    "requestDownload": "طلب نسخة",
+    "approveAccess": "الموافقة على الوصول",
+    "denyAccess": "رفض الوصول",
+    "revokeAccess": "سحب الوصول",
+    "watermarkNotice": "تحتوي هذه المعاينة على علامة مائية. لا يزال تصوير الشاشة من خارج التطبيق ممكناً.",
+    "confidentialityNotice": "سيؤدي تشغيل الكاميرا والميكروفون إلى مشاركة صوتك ومرئياتك مع المشاركين في الصفقة.",
+    "anonymousAlias": "تظهر باسم {alias} في غرفة الصفقة هذه.",
+    "contactDetected": "تم رصد معلومات اتصال. ستتم مراجعة الرسائل التي تحتوي على بيانات اتصال قبل تسليمها.",
+    "e2eeActive": "التشفير من طرف إلى طرف مفعّل",
+    "e2eeInactive": "التشفير من طرف إلى طرف غير متاح لهذه الجلسة"
+  },
+  "verification": {
+    "title": "التحقق",
+    "kyc": "التحقق من الهوية (KYC)",
+    "kyb": "التحقق من الشركة (KYB)",
+    "dealVerification": "التحقق من الصفقة",
+    "status": {
+      "incomplete": "غير مكتمل",
+      "pendingReview": "قيد المراجعة",
+      "additionalInfoRequired": "معلومات إضافية مطلوبة",
+      "approved": "معتمد",
+      "rejected": "مرفوض",
+      "expired": "منتهي الصلاحية",
+      "suspended": "معلّق"
+    },
+    "uploadId": "رفع وثيقة الهوية",
+    "uploadRegistration": "رفع سجل الشركة",
+    "uploadLicense": "رفع الترخيص / التصريح",
+    "verificationScope": "نطاق التحقق",
+    "verifiedUntil": "صالح حتى",
+    "reVerificationRequired": "إعادة التحقق مطلوبة"
+  },
+  "document": {
+    "types": {
+      "certificate_of_origin": "شهادة المنشأ",
+      "bill_of_lading": "بوليصة الشحن",
+      "commercial_invoice": "الفاتورة التجارية",
+      "packing_list": "قائمة التعبئة",
+      "quality_certificate": "شهادة الجودة",
+      "sgs_inspection": "تقرير فحص SGS",
+      "letter_of_credit": "خطاب الاعتماد",
+      "insurance_certificate": "شهادة التأمين",
+      "export_license": "رخصة التصدير",
+      "import_permit": "تصريح الاستيراد",
+      "company_registration": "سجل الشركة التجاري",
+      "power_of_attorney": "توكيل رسمي",
+      "beneficial_ownership": "إقرار الملكية الفعلية"
+    }
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ",
+    "retry": "إعادة المحاولة",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "view": "عرض",
+    "close": "إغلاق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "next": "التالي",
+    "previous": "السابق",
+    "back": "رجوع",
+    "yes": "نعم",
+    "no": "لا",
+    "all": "الكل",
+    "none": "لا شيء",
+    "required": "مطلوب",
+    "optional": "اختياري",
+    "comingSoon": "قريباً",
+    "noResults": "لم يتم العثور على نتائج",
+    "showMore": "عرض المزيد",
+    "showLess": "عرض أقل"
+  }
+}
