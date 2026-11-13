@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gvceStore } from "@/lib/store";
+import { messageRateLimiter } from "@/lib/rate-limiter";
 
 export async function POST(
   req: NextRequest,
@@ -9,6 +10,19 @@ export async function POST(
     const { id } = await params;
     const body = await req.json();
     const { senderAlias, senderRole, text } = body;
+
+    // Rate Limiting Enforcement
+    const ip = req.headers.get("x-forwarded-for") || "client-local";
+    const rateCheck = messageRateLimiter.check(`${ip}:${senderAlias || "anon"}`);
+    if (!rateCheck.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "RATE_LIMIT_EXCEEDED: Message rate limit exceeded. Please wait before posting.",
+        },
+        { status: 429 }
+      );
+    }
 
     if (!senderAlias || !text) {
       return NextResponse.json(
