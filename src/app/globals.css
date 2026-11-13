@@ -164,6 +164,7 @@ html.light {
   --gvce-text-muted: #64748b;
 }
 
+html.light,
 html.light body {
   background-color: #f8fafc !important;
   color: #0f172a !important;
@@ -238,11 +239,14 @@ html.light [class*="divide-[#1f2233]"] > :not([hidden]) ~ :not([hidden]) {
   border-color: #e2e8f0 !important;
 }
 
-/* Light Mode Text Hierarchy */
-html.light .text-white {
-  color: #0f172a !important;
-}
+/* ========================================================
+   LIGHT MODE TEXT & TYPOGRAPHY HIERARCHY
+   High-contrast, deeply legible dark slate shades
+   ======================================================== */
 
+html.light .text-white,
+html.light .text-\[\#f8fafc\],
+html.light [class*="text-[#f8fafc]"],
 html.light .text-gray-100 {
   color: #0f172a !important;
 }
@@ -256,33 +260,81 @@ html.light .text-gray-300 {
 }
 
 html.light .text-gray-400 {
-  color: #64748b !important;
+  color: #475569 !important;
 }
 
 html.light .text-gray-500 {
   color: #64748b !important;
 }
 
-/* Preserve White Text for Colored Action Buttons, Badges & Solid Dark Accents */
-html.light [class*="from-[#b87333]"],
-html.light [class*="from-[#b87333]"] *,
-html.light [class*="bg-[#b87333]"],
-html.light [class*="bg-[#b87333]"] *,
-html.light [class*="bg-emerald-600"],
-html.light [class*="bg-emerald-600"] *,
-html.light [class*="bg-emerald-500"],
-html.light [class*="bg-emerald-500"] *,
-html.light [class*="bg-rose-600"],
-html.light [class*="bg-rose-600"] *,
-html.light [class*="bg-rose-500"],
-html.light [class*="bg-rose-500"] *,
-html.light [class*="bg-blue-600"],
-html.light [class*="bg-blue-600"] *,
-html.light button[class*="from-"],
-html.light button[class*="from-"] *,
-html.light a[class*="from-"],
-html.light a[class*="from-"] * {
+/* Step numerals & subtle badges */
+html.light .text-\[\#23273b\] {
+  color: #94a3b8 !important;
+}
+
+/* Deep readable accent colors in Light Mode */
+html.light .text-\[\#d4956b\] {
+  color: #b87333 !important;
+}
+
+html.light .text-\[\#c9a961\] {
+  color: #9a7628 !important;
+}
+
+html.light .text-sky-400 {
+  color: #0284c7 !important;
+}
+
+html.light .text-emerald-400 {
+  color: #059669 !important;
+}
+
+html.light .text-purple-400 {
+  color: #7c3aed !important;
+}
+
+html.light .text-yellow-400 {
+  color: #d97706 !important;
+}
+
+/* ========================================================
+   COLORED CTA BUTTONS & BADGES (PRESERVE WHITE TEXT)
+   Targeted strictly to buttons/links/badges to prevent leaks
+   ======================================================== */
+
+html.light button.bg-gradient-to-r,
+html.light button.bg-gradient-to-r span,
+html.light button.bg-gradient-to-r svg,
+html.light a.bg-gradient-to-r,
+html.light a.bg-gradient-to-r span,
+html.light a.bg-gradient-to-r svg,
+html.light button[class*="from-[#b87333]"],
+html.light button[class*="from-[#b87333]"] span,
+html.light button[class*="from-[#b87333]"] svg,
+html.light a[class*="from-[#b87333]"],
+html.light a[class*="from-[#b87333]"] span,
+html.light a[class*="from-[#b87333]"] svg,
+html.light button[class*="bg-[#b87333]"],
+html.light button[class*="bg-[#b87333]"] span,
+html.light button[class*="bg-[#b87333]"] svg,
+html.light a[class*="bg-[#b87333]"],
+html.light a[class*="bg-[#b87333]"] span,
+html.light a[class*="bg-[#b87333]"] svg,
+html.light .bg-emerald-600,
+html.light .bg-emerald-600 span,
+html.light .bg-rose-600,
+html.light .bg-rose-600 span,
+html.light .bg-blue-600,
+html.light .bg-blue-600 span {
   color: #ffffff !important;
+}
+
+/* Active sector pill in sectors bento */
+html.light button[class*="border-[#b87333]"].bg-\[\#181a27\],
+html.light button[class*="border-[#b87333]"] {
+  background-color: #ffffff !important;
+  border-color: #b87333 !important;
+  color: #0f172a !important;
 }
 
 /* Light Mode Hover States */
@@ -293,11 +345,6 @@ html.light [class*="hover:bg-[#161824]"]:hover,
 html.light [class*="hover:bg-[#0f1118]"]:hover,
 html.light [class*="hover:bg-[#141724]"]:hover {
   background-color: #e2e8f0 !important;
-}
-
-/* Enhanced Copper Accent Contrast in Light Mode */
-html.light .text-\[\#d4956b\] {
-  color: #b87333 !important;
 }
 
 /* Light Mode Inputs, Selects & Textareas */
@@ -316,7 +363,7 @@ html.light textarea::placeholder {
 
 /* Light Mode Headers, Footers and Glass Panels */
 html.light header {
-  background-color: rgba(255, 255, 255, 0.92) !important;
+  background-color: rgba(255, 255, 255, 0.94) !important;
   border-color: #e2e8f0 !important;
 }
 
@@ -331,13 +378,13 @@ html.light footer {
 }
 
 html.light .glass-panel {
-  background: rgba(255, 255, 255, 0.88) !important;
+  background: rgba(255, 255, 255, 0.90) !important;
   border-color: #e2e8f0 !important;
 }
 
 html.light .glass-panel-elevated {
   background: rgba(255, 255, 255, 0.98) !important;
-  border-color: rgba(184, 115, 51, 0.3) !important;
+  border-color: rgba(184, 115, 51, 0.35) !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
 }
 

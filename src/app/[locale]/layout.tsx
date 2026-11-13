@@ -162,7 +162,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className="bg-[#07080c] text-[#f8fafc] antialiased min-h-screen selection:bg-[#b87333] selection:text-white transition-colors duration-300">
+      <body className="bg-[#07080c] text-white dark:text-[#f8fafc] antialiased min-h-screen transition-colors duration-300">
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             {children}

@@ -25,7 +25,7 @@ export default async function HomePage({
   const tFooter = await getTranslations({ locale, namespace: "footer" });
 
   return (
-    <div className="relative min-h-screen bg-[#07080c] text-[#f8fafc]">
+    <div className="relative min-h-screen bg-[#07080c]">
       {/* Top Navbar */}
       <Navbar
         currentLocale={locale}
