@@ -133,33 +133,35 @@ export default function CatalogPage() {
         </div>
 
         {/* Sector Quick Filters */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
-          <button
-            onClick={() => setSelectedSector("all")}
-            className={cn(
-              "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border",
-              selectedSector === "all"
-                ? "bg-[#b87333] border-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
-                : "bg-[#0c0e17] border-[#23273b] text-gray-400 hover:text-white"
-            )}
-          >
-            All Sectors ({COMMODITY_SECTORS.reduce((acc, s) => acc + s.items.length, 0)})
-          </button>
-          {COMMODITY_SECTORS.map((s) => (
+        <div className="w-full overflow-x-auto pb-2 no-scrollbar">
+          <div className="flex items-center gap-2 min-w-max px-1">
             <button
-              key={s.id}
-              onClick={() => setSelectedSector(s.id)}
+              onClick={() => setSelectedSector("all")}
               className={cn(
-                "px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all border flex items-center gap-2",
-                selectedSector === s.id
-                  ? "bg-[#181d2e] border-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
+                "px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all border",
+                selectedSector === "all"
+                  ? "bg-[#b87333] border-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
                   : "bg-[#0c0e17] border-[#23273b] text-gray-400 hover:text-white"
               )}
             >
-              {SECTOR_ICONS[s.icon]}
-              <span>{s.slug.replace(/-/g, " ").toUpperCase()}</span>
+              All Sectors ({COMMODITY_SECTORS.reduce((acc, s) => acc + s.items.length, 0)})
             </button>
-          ))}
+            {COMMODITY_SECTORS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setSelectedSector(s.id)}
+                className={cn(
+                  "px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all border flex items-center gap-2",
+                  selectedSector === s.id
+                    ? "bg-[#181d2e] border-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
+                    : "bg-[#0c0e17] border-[#23273b] text-gray-400 hover:text-white"
+                )}
+              >
+                {SECTOR_ICONS[s.icon]}
+                <span>{s.slug.replace(/-/g, " ").toUpperCase()}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Commodity Cards Grid */}

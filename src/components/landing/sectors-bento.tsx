@@ -67,31 +67,33 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
       </div>
 
       {/* Sector Pill Tabs */}
-      <div className="flex items-center justify-start md:justify-center gap-2 overflow-x-auto pb-4 mb-10 no-scrollbar">
-        {COMMODITY_SECTORS.map((sector) => {
-          const isActive = sector.id === activeSectorId;
-          const sectorName =
-            translations.sectors[sector.titleKey] || sector.slug;
+      <div className="w-full overflow-x-auto pb-4 mb-10 no-scrollbar">
+        <div className="flex items-center gap-2 min-w-max mx-auto px-4 sm:px-6">
+          {COMMODITY_SECTORS.map((sector) => {
+            const isActive = sector.id === activeSectorId;
+            const sectorName =
+              translations.sectors[sector.titleKey] || sector.slug;
 
-          return (
-            <button
-              key={sector.id}
-              onClick={() => setActiveSectorId(sector.id)}
-              className={cn(
-                "flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all border",
-                isActive
-                  ? "bg-[#181a27] border-[#b87333] text-white shadow-lg shadow-[#b87333]/15"
-                  : "bg-[#0d0f17] border-[#23273b] text-gray-400 hover:text-white hover:border-[#383d5a]"
-              )}
-            >
-              {SECTOR_ICONS[sector.icon]}
-              <span>{sectorName}</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#121420] text-gray-400 font-mono">
-                {sector.materialsCount}
-              </span>
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={sector.id}
+                onClick={() => setActiveSectorId(sector.id)}
+                className={cn(
+                  "flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all border",
+                  isActive
+                    ? "bg-[#181a27] border-[#b87333] text-white shadow-lg shadow-[#b87333]/15"
+                    : "bg-[#0d0f17] border-[#23273b] text-gray-400 hover:text-white hover:border-[#383d5a]"
+                )}
+              >
+                {SECTOR_ICONS[sector.icon]}
+                <span>{sectorName}</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#121420] text-gray-400 font-mono">
+                  {sector.materialsCount}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Active Sector Showcase Card */}
