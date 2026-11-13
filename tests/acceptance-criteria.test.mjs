@@ -288,3 +288,50 @@ test("Commodity Catalog: 7 Sectors and verified materials coverage", async () =>
   const totalGrades = COMMODITY_SECTORS.reduce((acc, s) => acc + s.materialsCount, 0);
   assert.strictEqual(totalGrades, 116, "Total catalog sub-specifications count must equal 116");
 });
+
+test("Compliance API & RBAC: Rejects unauthenticated requests with 401 and tags simulation under explicit demo", async () => {
+  const { verifyServerSession } = await import("../src/lib/auth-server.ts");
+
+  // 1. Direct unauthenticated request
+  const unauthReq = new Request("http://localhost:3000/api/compliance");
+  const authResult = verifyServerSession(unauthReq, {
+    allowedRoles: ["compliance_officer", "broker", "platform_admin"],
+    allowExplicitDemo: true,
+  });
+  assert.ok("errorResponse" in authResult, "Unauthenticated request without demo must be rejected");
+
+  // 2. Request with explicit demo query param
+  const demoReq = new Request("http://localhost:3000/api/compliance?demo=true");
+  const demoResult = verifyServerSession(demoReq, {
+    allowedRoles: ["compliance_officer", "broker", "platform_admin"],
+    allowExplicitDemo: true,
+  });
+  assert.ok("user" in demoResult, "Explicit demo query param must grant demo persona");
+  assert.strictEqual(demoResult.user.isDemoSimulation, true, "Persona must be tagged as isDemoSimulation");
+});
+
+test("Sector Tabs & Light Mode Contrast Verification", async () => {
+  const fs = await import("fs/promises");
+  const sectorsBento = await fs.readFile("src/components/landing/sectors-bento.tsx", "utf-8");
+  assert.ok(
+    sectorsBento.includes("flex-wrap"),
+    "Sector pill tabs must use flex-wrap to prevent horizontal clipping on desktop"
+  );
+  assert.ok(
+    !sectorsBento.includes("w-max min-w-full px-6 sm:px-10 justify-start xl:justify-center"),
+    "Rigid single-row w-max container must be removed"
+  );
+
+  const globalsCss = await fs.readFile("src/app/globals.css", "utf-8");
+  assert.ok(
+    globalsCss.includes("html.light h1,") &&
+    globalsCss.includes("html.light h2,") &&
+    globalsCss.includes("html.light h3,") &&
+    globalsCss.includes("html.light h4,"),
+    "Globals CSS must enforce dark color for all heading levels in light mode"
+  );
+  assert.ok(
+    globalsCss.includes("html.light input.bg-transparent"),
+    "Simulator transparent inputs must be preserved in light mode"
+  );
+});

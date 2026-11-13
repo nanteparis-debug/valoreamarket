@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect, useTransition } from "react";
 import { useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { ProtectedAccessGate } from "@/components/protected-access-gate";
 import {
   Lock,
   Video,
@@ -29,8 +31,11 @@ interface DealRoomPageProps {
 
 export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [locale, setLocale] = useState("en");
   const [dealId, setDealId] = useState("deal-en590-rotterdam");
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(() => searchParams.get("demo") === "true");
 
   useEffect(() => {
     params.then((p) => {
@@ -38,6 +43,30 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
       setDealId(p.id);
     });
   }, [params]);
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      const explicitDemo = searchParams.get("demo") === "true";
+      if (explicitDemo) {
+        setIsDemoMode(true);
+        setIsAuthorized(false);
+        return;
+      }
+      try {
+        const res = await fetch("/api/auth/session");
+        const data = await res.json();
+        if (data?.user) {
+          setIsAuthorized(true);
+          setIsDemoMode(false);
+        } else {
+          setIsAuthorized(false);
+        }
+      } catch {
+        setIsAuthorized(false);
+      }
+    };
+    checkAccess();
+  }, [searchParams]);
 
   const t = getSubpageTranslations(locale);
   const isAr = locale === "ar";
@@ -168,7 +197,19 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-[#f8fafc] flex flex-col justify-between">
+    <ProtectedAccessGate
+      locale={locale}
+      pageTitleAr="غرفة الصفقات والمفاوضات المجهولة المشفرة"
+      pageTitleEn="Encrypted Anonymous Deal Room & Settlement"
+      requiredRoleAr="أطراف الصفقة المعتمدون (المشتري، المورد، الوسيط)"
+      requiredRoleEn="Authorized Deal Participants (Buyer, Supplier, Broker)"
+      isAuthorized={isAuthorized}
+      isDemoMode={isDemoMode}
+      onEnableDemo={() => {
+        setIsDemoMode(true);
+      }}
+    >
+      <div className="min-h-screen bg-[#07080c] text-[#f8fafc] flex flex-col justify-between">
       {/* Top Header */}
       <header className="border-b border-[#1f2233] bg-[#0c0e17]/90 backdrop-blur-md py-4 px-4 sm:px-8 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -607,5 +648,6 @@ export default function OperationalDealRoomPage({ params }: DealRoomPageProps) {
         {isAr ? "غرفة الصفقات المشرفة — فالوريا ماركت VALOREA MARKET" : "VALOREA MARKET Supervised Deal Room"} • {t.common.verifiedBrokerage}
       </footer>
     </div>
+    </ProtectedAccessGate>
   );
 }

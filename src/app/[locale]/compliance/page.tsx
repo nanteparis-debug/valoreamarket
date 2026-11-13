@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { ProtectedAccessGate } from "@/components/protected-access-gate";
 import {
   ShieldCheck,
   ShieldAlert,
@@ -88,6 +89,7 @@ export default function CompliancePortalPage() {
     sanctions_pep: { label: t.compliance.sanctionsScope, icon: <ShieldCheck className="w-4 h-4 text-purple-400" /> },
   };
 
+  const searchParams = useSearchParams();
   const [records, setRecords] = useState<VerificationRecord[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterScope, setFilterScope] = useState<string>("all");
@@ -96,25 +98,44 @@ export default function CompliancePortalPage() {
   const [selectedRecord, setSelectedRecord] = useState<VerificationRecord | null>(null);
   const [actionNotes, setActionNotes] = useState("");
   const [updating, setUpdating] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(() => searchParams.get("demo") === "true");
 
-  const fetchRecords = async () => {
+  const fetchRecords = async (demo = isDemoMode) => {
     try {
       setLoading(true);
-      const res = await fetch("/api/compliance");
+      const url = demo ? "/api/compliance?demo=true" : "/api/compliance";
+      const res = await fetch(url);
       const data = await res.json();
       if (data.success) {
         setRecords(data.records);
+        if (data.isDemoSimulation) {
+          setIsDemoMode(true);
+          setIsAuthorized(false);
+        } else {
+          setIsAuthorized(true);
+          setIsDemoMode(false);
+        }
+      } else {
+        setIsAuthorized(false);
       }
     } catch (e) {
       console.error(e);
+      setIsAuthorized(false);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchRecords();
-  }, []);
+    const isExplicitDemo = searchParams.get("demo") === "true";
+    if (isExplicitDemo) {
+      setIsDemoMode(true);
+      fetchRecords(true);
+    } else {
+      fetchRecords(false);
+    }
+  }, [searchParams]);
 
   const handleUpdateStatus = async (status: VerificationRecord["status"]) => {
     if (!selectedRecord) return;
@@ -159,7 +180,20 @@ export default function CompliancePortalPage() {
   });
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+    <ProtectedAccessGate
+      locale={locale}
+      pageTitleAr="بوابة الامتثال والتحقق KYC/KYB ومكافحة غسل الأموال"
+      pageTitleEn="Compliance, KYC/KYB & Sanctions Verification Portal"
+      requiredRoleAr="مسؤولو الامتثال والتدقيق القانوني"
+      requiredRoleEn="Compliance Officers & Legal Auditors"
+      isAuthorized={isAuthorized}
+      isDemoMode={isDemoMode}
+      onEnableDemo={() => {
+        setIsDemoMode(true);
+        fetchRecords(true);
+      }}
+    >
+      <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Navigation & Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#1f2233] pb-6">
@@ -190,7 +224,7 @@ export default function CompliancePortalPage() {
 
           <div className="flex items-center gap-3">
             <button
-              onClick={fetchRecords}
+              onClick={() => fetchRecords()}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0e1017] border border-[#23273b] hover:border-[#b87333]/50 text-xs text-gray-300 hover:text-white transition-all"
             >
               <RefreshCw className={cn("w-3.5 h-3.5", loading && "animate-spin")} />
@@ -491,5 +525,6 @@ export default function CompliancePortalPage() {
         </div>
       </div>
     </div>
+    </ProtectedAccessGate>
   );
 }

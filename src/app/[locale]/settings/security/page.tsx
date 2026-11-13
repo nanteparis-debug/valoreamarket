@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { ProtectedAccessGate } from "@/components/protected-access-gate";
 import {
   ShieldCheck,
   KeyRound,
@@ -21,33 +22,55 @@ import type { UserSessionItem } from "@/lib/store";
 
 export default function SecuritySettingsPage() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const locale = (params?.locale as string) || "en";
   const t = getSubpageTranslations(locale);
 
   const [sessions, setSessions] = useState<UserSessionItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(() => searchParams.get("demo") === "true");
   const [revoking, setRevoking] = useState<string | null>(null);
   const [mfaEnabled, setMfaEnabled] = useState(true);
   const [passkeyNotice, setPasskeyNotice] = useState<string | null>(null);
 
-  const fetchSessions = async () => {
+  const fetchSessions = async (demo = isDemoMode) => {
     try {
       setLoading(true);
-      const res = await fetch("/api/settings/security/sessions");
+      const url = demo
+        ? "/api/settings/security/sessions?demo=true"
+        : "/api/settings/security/sessions";
+      const res = await fetch(url);
       const data = await res.json();
       if (data.success) {
         setSessions(data.sessions);
+        if (data.isDemoSimulation) {
+          setIsDemoMode(true);
+          setIsAuthorized(false);
+        } else {
+          setIsAuthorized(true);
+          setIsDemoMode(false);
+        }
+      } else {
+        setIsAuthorized(false);
       }
     } catch (e) {
       console.error(e);
+      setIsAuthorized(false);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchSessions();
-  }, []);
+    const isExplicitDemo = searchParams.get("demo") === "true";
+    if (isExplicitDemo) {
+      setIsDemoMode(true);
+      fetchSessions(true);
+    } else {
+      fetchSessions(false);
+    }
+  }, [searchParams]);
 
   const handleRevokeSession = async (sessionId: string) => {
     setRevoking(sessionId);
@@ -97,8 +120,21 @@ export default function SecuritySettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <ProtectedAccessGate
+      locale={locale}
+      pageTitleAr="إعدادات الأمان وجلسات التداول النشطة"
+      pageTitleEn="Security Settings & Active Trading Sessions"
+      requiredRoleAr="مسؤولو أمان الشركات والوسطاء"
+      requiredRoleEn="Corporate Security Officers & Brokers"
+      isAuthorized={isAuthorized}
+      isDemoMode={isDemoMode}
+      onEnableDemo={() => {
+        setIsDemoMode(true);
+        fetchSessions(true);
+      }}
+    >
+      <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-8">
         {/* Navigation & Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#1f2233] pb-6">
           <div className="space-y-1">
@@ -286,8 +322,13 @@ export default function SecuritySettingsPage() {
                       </div>
 
                       <div className="space-y-1">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <span className="text-sm font-bold text-white">{sess.browser}</span>
+                          {isDemoMode && (
+                            <span className="px-2 py-0.2 rounded text-[10px] font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                              نموذج محاكاة • DEMO
+                            </span>
+                          )}
                           {sess.isCurrent && (
                             <span className="px-2 py-0.2 rounded-full text-[10px] font-bold uppercase bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                               {t.security.currentSession}
@@ -326,7 +367,8 @@ export default function SecuritySettingsPage() {
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </ProtectedAccessGate>
   );
 }

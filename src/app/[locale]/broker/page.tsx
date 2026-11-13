@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Link, useRouter } from "@/i18n/routing";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { ProtectedAccessGate } from "@/components/protected-access-gate";
 import {
   Compass,
   ArrowRight,
@@ -28,33 +29,53 @@ export default function BrokerCommandCenterPage() {
   const locale = (params?.locale as string) || "en";
   const t = getSubpageTranslations(locale);
 
+  const searchParams = useSearchParams();
   const [matches, setMatches] = useState<BrokerMatchItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedMatch, setSelectedMatch] = useState<BrokerMatchItem | null>(null);
   const [approving, setApproving] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(() => searchParams.get("demo") === "true");
 
-  const fetchMatches = async () => {
+  const fetchMatches = async (demo = isDemoMode) => {
     try {
       setLoading(true);
-      const res = await fetch("/api/broker/matches");
+      const url = demo ? "/api/broker/matches?demo=true" : "/api/broker/matches";
+      const res = await fetch(url);
       const data = await res.json();
       if (data.success) {
         setMatches(data.matches);
         if (data.matches.length > 0 && !selectedMatch) {
           setSelectedMatch(data.matches[0]);
         }
+        if (data.isDemoSimulation) {
+          setIsDemoMode(true);
+          setIsAuthorized(false);
+        } else {
+          setIsAuthorized(true);
+          setIsDemoMode(false);
+        }
+      } else {
+        setIsAuthorized(false);
       }
     } catch (e) {
       console.error(e);
+      setIsAuthorized(false);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchMatches();
-  }, []);
+    const isExplicitDemo = searchParams.get("demo") === "true";
+    if (isExplicitDemo) {
+      setIsDemoMode(true);
+      fetchMatches(true);
+    } else {
+      fetchMatches(false);
+    }
+  }, [searchParams]);
 
   const handleApproveMatch = async (matchId: string) => {
     setApproving(true);
@@ -99,7 +120,20 @@ export default function BrokerCommandCenterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+    <ProtectedAccessGate
+      locale={locale}
+      pageTitleAr="مكتب الوسيط المعتمد وغرفة المقاصة"
+      pageTitleEn="Authorized Broker Command Desk"
+      requiredRoleAr="وسطاء المنصة ومديرو المقاصة"
+      requiredRoleEn="Certified Brokers & Clearing Officers"
+      isAuthorized={isAuthorized}
+      isDemoMode={isDemoMode}
+      onEnableDemo={() => {
+        setIsDemoMode(true);
+        fetchMatches(true);
+      }}
+    >
+      <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Navigation & Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#1f2233] pb-6">
@@ -130,7 +164,7 @@ export default function BrokerCommandCenterPage() {
 
           <div className="flex items-center gap-3">
             <button
-              onClick={fetchMatches}
+              onClick={() => fetchMatches()}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#0e1017] border border-[#23273b] hover:border-[#b87333]/50 text-xs text-gray-300 hover:text-white transition-all"
             >
               <RefreshCw className={cn("w-3.5 h-3.5", loading && "animate-spin")} />
@@ -459,5 +493,6 @@ export default function BrokerCommandCenterPage() {
         </div>
       </div>
     </div>
+    </ProtectedAccessGate>
   );
 }

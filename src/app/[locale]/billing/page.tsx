@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Link } from "@/i18n/routing";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { ProtectedAccessGate } from "@/components/protected-access-gate";
 import {
   CreditCard,
   CheckCircle2,
@@ -82,32 +83,52 @@ export default function BillingPortalPage() {
     },
   ];
 
+  const searchParams = useSearchParams();
   const [subscription, setSubscription] = useState<SubscriptionState | null>(null);
   const [invoices, setInvoices] = useState<InvoiceItem[]>([]);
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annually">("monthly");
   const [loading, setLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isDemoMode, setIsDemoMode] = useState(() => searchParams.get("demo") === "true");
   const [updatingPlan, setUpdatingPlan] = useState(false);
   const [downloadModal, setDownloadModal] = useState<string | null>(null);
 
-  const fetchBillingData = async () => {
+  const fetchBillingData = async (demo = isDemoMode) => {
     try {
       setLoading(true);
-      const res = await fetch("/api/billing");
+      const url = demo ? "/api/billing?demo=true" : "/api/billing";
+      const res = await fetch(url);
       const data = await res.json();
       if (data.success) {
         setSubscription(data.subscription);
         setInvoices(data.invoices);
+        if (data.isDemoSimulation) {
+          setIsDemoMode(true);
+          setIsAuthorized(false);
+        } else {
+          setIsAuthorized(true);
+          setIsDemoMode(false);
+        }
+      } else {
+        setIsAuthorized(false);
       }
     } catch (e) {
       console.error(e);
+      setIsAuthorized(false);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchBillingData();
-  }, []);
+    const isExplicitDemo = searchParams.get("demo") === "true";
+    if (isExplicitDemo) {
+      setIsDemoMode(true);
+      fetchBillingData(true);
+    } else {
+      fetchBillingData(false);
+    }
+  }, [searchParams]);
 
   const handlePlanChange = async (planId: "starter" | "professional" | "enterprise") => {
     if (subscription?.plan === planId) return;
@@ -130,8 +151,21 @@ export default function BillingPortalPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <ProtectedAccessGate
+      locale={locale}
+      pageTitleAr="بوابة الفوترة واشتراك الشركة"
+      pageTitleEn="Company Billing & Invoices Portal"
+      requiredRoleAr="مسؤولو الفوترة والحسابات بالشركة"
+      requiredRoleEn="Company Billing & Finance Officers"
+      isAuthorized={isAuthorized}
+      isDemoMode={isDemoMode}
+      onEnableDemo={() => {
+        setIsDemoMode(true);
+        fetchBillingData(true);
+      }}
+    >
+      <div className="min-h-screen bg-[#07080c] text-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto space-y-8">
         {/* Navigation & Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#1f2233] pb-6">
           <div className="space-y-1">
@@ -310,20 +344,28 @@ export default function BillingPortalPage() {
                     <div className="flex flex-col">
                       <div className="flex items-baseline gap-1 font-mono">
                         <span className="text-3xl font-bold text-white">${price}</span>
-                        <span className="text-xs text-gray-500">
-                          {billingCycle === "monthly" ? "USD / mo" : "USD / mo (equiv.)"}
+                        <span className="text-xs text-gray-500 font-sans">
+                          {locale === "ar"
+                            ? (billingCycle === "monthly" ? "دولار / شهر" : "دولار / شهر (مكافئ سنوي)")
+                            : (billingCycle === "monthly" ? "USD / mo" : "USD / mo (equiv.)")}
                         </span>
                       </div>
                       {billingCycle === "annually" && plan.priceAnnual > 0 && (
                         <div className="text-[11px] text-[#d4956b] font-mono mt-1">
-                          ${(plan.priceAnnual * 12).toLocaleString()} USD {locale === "ar" ? "يُدفع سنوياً" : "billed annually"}
+                          {locale === "ar"
+                            ? `$${(plan.priceAnnual * 12).toLocaleString()} دولار يُدفع سنوياً`
+                            : `$${(plan.priceAnnual * 12).toLocaleString()} USD billed annually`}
                         </div>
                       )}
                     </div>
 
                     <div className="text-xs text-gray-400 flex items-center gap-2 border-t border-[#181b29] pt-3">
                       <Users className="w-3.5 h-3.5 text-[#d4956b]" />
-                      <span>{plan.seats} {t.billing.seats}</span>
+                      <span>
+                        {locale === "ar"
+                          ? (plan.seats === 1 ? "مقعد تداول مؤسسي واحد" : `${plan.seats} مقاعد تداول مؤسسية`)
+                          : `${plan.seats} ${plan.seats === 1 ? "Trading Seat" : "Trading Seats"}`}
+                      </span>
                     </div>
 
                     <ul className="space-y-2 text-xs text-gray-300 border-t border-[#181b29] pt-4">
@@ -461,7 +503,8 @@ export default function BillingPortalPage() {
             </div>
           </div>
         )}
+        </div>
       </div>
-    </div>
+    </ProtectedAccessGate>
   );
 }

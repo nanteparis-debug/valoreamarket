@@ -11,6 +11,7 @@ import {
 } from "@/lib/pricing-data";
 
 interface PricingSectionProps {
+  locale?: string;
   translations: {
     title: string;
     subtitle: string;
@@ -34,7 +35,8 @@ interface PricingSectionProps {
   };
 }
 
-export function PricingSection({ translations }: PricingSectionProps) {
+export function PricingSection({ locale = "en", translations }: PricingSectionProps) {
+  const isAr = locale === "ar";
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annually">(
     "annually"
   );
@@ -144,7 +146,9 @@ export function PricingSection({ translations }: PricingSectionProps) {
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-bold text-white">{plan.name}</h3>
                   <span className="text-[11px] font-mono text-gray-400 px-2 py-0.5 rounded bg-[#161824] border border-[#23273b]">
-                    {plan.seats} {plan.seats === 1 ? "Seat" : "Seats"}
+                    {isAr
+                      ? (plan.seats === 1 ? "مقعد تداول واحد" : `${plan.seats} مقاعد تداول`)
+                      : `${plan.seats} ${plan.seats === 1 ? "Seat" : "Seats"}`}
                   </span>
                 </div>
 
@@ -161,30 +165,36 @@ export function PricingSection({ translations }: PricingSectionProps) {
                     <span className="text-4xl font-extrabold text-white">
                       ${displayPrice}
                     </span>
-                    <span className="text-xs text-gray-400">
-                      {translations.perMonth}
+                    <span className="text-xs text-gray-400 font-sans">
+                      {isAr
+                        ? (billingCycle === "monthly" ? "دولار / شهر" : "دولار / شهر (مكافئ سنوي)")
+                        : translations.perMonth}
                     </span>
                   </div>
 
                   {/* Full Annual Amount Due (Required by Specification) */}
                   {billingCycle === "annually" && plan.annualBilledTotal > 0 && (
-                    <div className="mt-1.5 text-xs text-[#d4956b] font-mono flex items-center gap-1.5">
+                    <div className="mt-1.5 text-xs text-[#d4956b] font-mono flex items-center gap-1.5 flex-wrap">
                       <span>
-                        ${plan.annualBilledTotal.toLocaleString()} billed annually
+                        {isAr
+                          ? `$${plan.annualBilledTotal.toLocaleString()} دولار يُدفع سنوياً`
+                          : `$${plan.annualBilledTotal.toLocaleString()} billed annually`}
                       </span>
                       <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded border border-emerald-500/20">
-                        Save ${plan.annualSavingsUsd.toLocaleString()}/yr
+                        {isAr
+                          ? `وفر $${plan.annualSavingsUsd.toLocaleString()} سنوياً`
+                          : `Save $${plan.annualSavingsUsd.toLocaleString()}/yr`}
                       </span>
                     </div>
                   )}
                   {billingCycle === "monthly" && plan.priceMonthly > 0 && (
                     <div className="mt-1.5 text-xs text-gray-500 font-mono">
-                      Billed monthly • Cancel anytime
+                      {isAr ? "اشتراك شهري • إلغاء في أي وقت" : "Billed monthly • Cancel anytime"}
                     </div>
                   )}
                   {plan.priceMonthly === 0 && (
                     <div className="mt-1.5 text-xs text-emerald-400 font-mono">
-                      Free for verified market participants
+                      {isAr ? "مجاني للمشاركين المعتمدين في السوق" : "Free for verified market participants"}
                     </div>
                   )}
                 </div>
@@ -240,16 +250,26 @@ export function PricingSection({ translations }: PricingSectionProps) {
         <div className="space-y-2 text-start max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121420] border border-[#b87333]/40 text-xs font-mono text-[#d4956b]">
             <Landmark className="w-3.5 h-3.5" />
-            <span>Independent Transaction Brokerage Rate: {BROKERAGE_COMMISSION_POLICY.rateRangeDisplay}</span>
+            <span>
+              {isAr
+                ? `عمولة الوساطة المؤسسية المستقلة: ${BROKERAGE_COMMISSION_POLICY.rateRangeDisplay}`
+                : `Independent Transaction Brokerage Rate: ${BROKERAGE_COMMISSION_POLICY.rateRangeDisplay}`}
+            </span>
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-white">
-            {BROKERAGE_COMMISSION_POLICY.settlementNoticeTitle}
+            {isAr
+              ? "تسوية الشحنات المصرفية المباشرة غير الإيداعية"
+              : BROKERAGE_COMMISSION_POLICY.settlementNoticeTitle}
           </h3>
           <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
-            {BROKERAGE_COMMISSION_POLICY.settlementNoticeDescription}
+            {isAr
+              ? "تنبيه هام: VALOREA MARKET وسيط تقني وتنظيمي ولا يستقبل أو يحتفظ بأموال شراء البضائع المادية إطلاقاً. تتم تسوية الشحنات المادية حصرياً بين بنوك المشتري والمورد مباشرة عبر اعتمادات مستندية (DLC / SBLC). تُفوتر المنصة فقط رسوم الوصول وعمولات الوساطة عند إتمام الشحن. النسبة 1.25% هي العمولة القياسية التقديرية للشحنات المفردة بالخطة الاحترافية، وتصل إلى 0.50% للشحنات المؤسسية الكبرى والمتكررة."
+              : BROKERAGE_COMMISSION_POLICY.settlementNoticeDescription + " The 1.25% standard benchmark applies to single Professional shipments, tiered down to 0.50% for recurring high-volume Enterprise contracts."}
           </p>
           <div className="text-[11px] text-gray-500 font-mono pt-1">
-            Governed by {BROKERAGE_COMMISSION_POLICY.governingModel} • Liquidated circumvention damages: {BROKERAGE_COMMISSION_POLICY.liquidatedDamages} • {BROKERAGE_COMMISSION_POLICY.arbitrationJurisdiction}
+            {isAr
+              ? "خاضع لنموذج ICC 769 • تعويضات الالتفاف الاتفاقية: 3 أضعاف العمولة • اختصاص تحكيم جنيف، سويسرا"
+              : `Governed by ${BROKERAGE_COMMISSION_POLICY.governingModel} • Liquidated circumvention damages: ${BROKERAGE_COMMISSION_POLICY.liquidatedDamages} • ${BROKERAGE_COMMISSION_POLICY.arbitrationJurisdiction}`}
           </div>
         </div>
 
@@ -258,7 +278,7 @@ export function PricingSection({ translations }: PricingSectionProps) {
             href="/legal/brokerage"
             className="px-6 py-3 rounded-xl bg-[#141724] hover:bg-[#1c2133] border border-[#23273b] text-gray-200 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all"
           >
-            <span>Read Brokerage Policy</span>
+            <span>{isAr ? "قراءة سياسة الوساطة والتسوية" : "Read Brokerage Policy"}</span>
             <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
           </Link>
         </div>

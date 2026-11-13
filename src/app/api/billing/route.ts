@@ -6,7 +6,7 @@ import { PLATFORM_PRICING_PLANS } from "@/lib/pricing-data";
 export async function GET(req: NextRequest) {
   try {
     const authResult = verifyServerSession(req, {
-      allowDemoFallback: true,
+      allowExplicitDemo: true, // Only allows preview if ?demo=true is explicitly in URL
     });
 
     if ("errorResponse" in authResult) {
@@ -26,6 +26,10 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
+      isDemoSimulation: Boolean(user.isDemoSimulation),
+      simulationNotice: user.isDemoSimulation
+        ? "SAMPLE_DATA_FOR_DEMONSTRATION_ONLY"
+        : undefined,
       subscription,
       invoices,
       availablePlans: PLATFORM_PRICING_PLANS,
@@ -45,7 +49,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const authResult = verifyServerSession(req, {
-      allowDemoFallback: true,
+      allowExplicitDemo: true,
     });
 
     if ("errorResponse" in authResult) {

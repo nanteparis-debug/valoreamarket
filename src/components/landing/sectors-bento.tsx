@@ -72,9 +72,9 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
         </p>
       </div>
 
-      {/* Sector Pill Tabs - Fully RTL-safe, never cuts off the first or last pill on any screen */}
-      <div className="w-full overflow-x-auto pb-4 mb-10 no-scrollbar scroll-smooth" dir="inherit">
-        <div className="flex items-center gap-2 w-max min-w-full px-6 sm:px-10 justify-start xl:justify-center">
+      {/* Sector Pill Tabs - Fully responsive flex-wrap ensuring all 7 tabs (including Metals & Sugar) are 100% visible without horizontal clipping */}
+      <div className="w-full max-w-5xl mx-auto mb-10 px-2 sm:px-4">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
           {COMMODITY_SECTORS.map((sector) => {
             const isActive = sector.id === activeSectorId;
             const sectorName =
@@ -85,9 +85,9 @@ export function SectorsBento({ translations }: SectorsBentoProps) {
                 key={sector.id}
                 onClick={() => setActiveSectorId(sector.id)}
                 className={cn(
-                  "flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium whitespace-nowrap transition-all border shrink-0",
+                  "flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all border",
                   isActive
-                    ? "bg-[#181a27] border-[#b87333] text-white shadow-lg shadow-[#b87333]/15"
+                    ? "bg-[#181a27] border-[#b87333] text-white shadow-lg shadow-[#b87333]/15 font-semibold"
                     : "bg-[#0d0f17] border-[#23273b] text-gray-400 hover:text-white hover:border-[#383d5a]"
                 )}
               >

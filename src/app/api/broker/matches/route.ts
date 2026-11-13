@@ -6,7 +6,7 @@ export async function GET(req: NextRequest) {
   try {
     const authResult = verifyServerSession(req, {
       allowedRoles: ["broker", "compliance_officer", "platform_admin"],
-      allowDemoFallback: true, // Allows client viewing with demo tag
+      allowExplicitDemo: true, // Only allows preview if ?demo=true is explicitly in URL
     });
 
     if ("errorResponse" in authResult) {
@@ -16,6 +16,10 @@ export async function GET(req: NextRequest) {
     const matches = gvceStore.getBrokerMatches();
     return NextResponse.json({
       success: true,
+      isDemoSimulation: Boolean(authResult.user.isDemoSimulation),
+      simulationNotice: authResult.user.isDemoSimulation
+        ? "SAMPLE_DATA_FOR_DEMONSTRATION_ONLY"
+        : undefined,
       matches,
       actor: {
         role: authResult.user.role,

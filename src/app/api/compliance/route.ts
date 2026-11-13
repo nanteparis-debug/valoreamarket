@@ -1,10 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gvceStore, type VerificationRecord } from "@/lib/store";
+import { verifyServerSession } from "@/lib/auth-server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const records = gvceStore.getVerificationRecords();
-    return NextResponse.json({ success: true, records });
+    const authResult = verifyServerSession(req, {
+      allowedRoles: ["compliance_officer", "broker", "platform_admin"],
+      allowExplicitDemo: true,
+    });
+
+    if ("errorResponse" in authResult) {
+      return authResult.errorResponse;
+    }
+
+    const { user } = authResult;
+    const isDemo = user.isDemoSimulation;
+
+    let records = gvceStore.getVerificationRecords();
+    if (isDemo) {
+      records = records.map((r) => ({
+        ...r,
+        orgName: `[نموذج تدقيق افتراضي • DEMO] ${r.orgName}`,
+      }));
+    }
+
+    return NextResponse.json({
+      success: true,
+      records,
+      isDemoSimulation: isDemo,
+    });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: "Failed to fetch verification records" },
@@ -15,6 +39,15 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
+    const authResult = verifyServerSession(req, {
+      allowedRoles: ["compliance_officer", "broker", "platform_admin"],
+      allowExplicitDemo: true,
+    });
+
+    if ("errorResponse" in authResult) {
+      return authResult.errorResponse;
+    }
+
     const body = await req.json();
     const { id, status, decisionReason } = body;
 

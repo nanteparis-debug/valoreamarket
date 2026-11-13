@@ -16,6 +16,7 @@ export interface AuthenticatedUser {
   orgCountry: string;
   isVerified: boolean;
   kybStatus: "approved" | "pending_review" | "incomplete" | "rejected";
+  isDemoSimulation?: boolean;
 }
 
 // Built-in test personas for verification and testing
@@ -106,12 +107,12 @@ export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null
   }
 
   // 3. Check cookies
-  const personaCookie = req.cookies.get("valorea_test_persona")?.value?.toLowerCase();
+  const personaCookie = req.cookies?.get("valorea_test_persona")?.value?.toLowerCase();
   if (personaCookie && TEST_PERSONAS[personaCookie]) {
     return TEST_PERSONAS[personaCookie];
   }
 
-  const sessionToken = req.cookies.get("valorea_session_token")?.value;
+  const sessionToken = req.cookies?.get("valorea_session_token")?.value;
   if (sessionToken) {
     // If a session token is present, resolve to the default trading persona
     return TEST_PERSONAS.buyer;
@@ -122,28 +123,41 @@ export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null
 
 /**
  * Guard for private APIs: Enforces authentication, role checks, and organization tenancy.
+ * Visitors without auth or explicit demo request are strictly rejected with 401/403.
  */
 export function verifyServerSession(
   req: NextRequest,
   options?: {
     allowedRoles?: PlatformRole[];
     requiredOrgId?: string;
-    allowDemoFallback?: boolean;
+    allowExplicitDemo?: boolean;
   }
 ): { user: AuthenticatedUser } | { errorResponse: NextResponse } {
   const user = getAuthenticatedUser(req);
 
   if (!user) {
-    if (options?.allowDemoFallback) {
-      // In demo mode for public viewing, return demo buyer
-      return { user: TEST_PERSONAS.buyer };
+    // Check if the client explicitly requested demo simulation (?demo=true or x-valorea-demo header)
+    const url = req.nextUrl || (req.url ? new URL(req.url, "http://localhost:3000") : null);
+    const isExplicitDemo =
+      url?.searchParams?.get("demo") === "true" ||
+      req.headers?.get("x-valorea-demo") === "true";
+
+    if (options?.allowExplicitDemo && isExplicitDemo) {
+      // In explicit demo mode, return labeled demo buyer persona
+      return {
+        user: {
+          ...TEST_PERSONAS.buyer,
+          isDemoSimulation: true,
+        },
+      };
     }
+
     return {
       errorResponse: createJsonResponse(
         {
           success: false,
           error: "UNAUTHORIZED_ACCESS_REQUIRED",
-          message: "Authentication required to access private institutional records.",
+          message: "Authentication required to access private institutional records. Please sign in.",
           signInUrl: "/auth/signin",
         },
         { status: 401 }

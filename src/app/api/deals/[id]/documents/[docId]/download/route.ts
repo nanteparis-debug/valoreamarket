@@ -20,7 +20,7 @@ export async function GET(
 
   // 1. Session verification & deal room participation check
   const authResult = verifyServerSession(req, {
-    allowDemoFallback: true, // Allows client viewing with demo tag
+    allowExplicitDemo: true, // Allows client viewing with demo tag
   });
 
   if ("errorResponse" in authResult) {

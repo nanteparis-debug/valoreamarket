@@ -5,7 +5,7 @@ import { verifyServerSession } from "@/lib/auth-server";
 export async function GET(req: NextRequest) {
   try {
     const authResult = verifyServerSession(req, {
-      allowDemoFallback: true,
+      allowExplicitDemo: true, // Only allows preview if ?demo=true is explicitly in URL
     });
 
     if ("errorResponse" in authResult) {
@@ -15,6 +15,10 @@ export async function GET(req: NextRequest) {
     const sessions = gvceStore.getActiveSessions();
     return NextResponse.json({
       success: true,
+      isDemoSimulation: Boolean(authResult.user.isDemoSimulation),
+      simulationNotice: authResult.user.isDemoSimulation
+        ? "SAMPLE_DATA_FOR_DEMONSTRATION_ONLY"
+        : undefined,
       sessions,
       actor: {
         userId: authResult.user.id,
@@ -32,7 +36,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const authResult = verifyServerSession(req, {
-      allowDemoFallback: true,
+      allowExplicitDemo: true,
     });
 
     if ("errorResponse" in authResult) {

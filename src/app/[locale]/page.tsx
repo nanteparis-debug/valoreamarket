@@ -208,6 +208,7 @@ export default async function HomePage({
 
         {/* 6. Subscription Plans in USD */}
         <PricingSection
+          locale={locale}
           translations={{
             title: tPricing("title"),
             subtitle: tPricing("subtitle"),
