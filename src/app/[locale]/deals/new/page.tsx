@@ -76,6 +76,7 @@ function NewDealForm({ locale }: { locale: string }) {
 
   const t = getSubpageTranslations(locale);
   const isAr = locale === "ar";
+  const isFr = locale === "fr";
 
   // Read URL query parameters (?side=sell&sector=crude_oil_condensates&commodity=...)
   const sideParam = searchParams.get("side");
@@ -547,46 +548,58 @@ function NewDealForm({ locale }: { locale: string }) {
                   <span>
                     {isAr
                       ? `بيان عمولة الوساطة المؤسسية (نطاق المنصة: ${BROKERAGE_COMMISSION_POLICY.rateRangeDisplay})`
+                      : isFr
+                      ? `Politique de courtage institutionnelle (Fourchette plateforme : ${BROKERAGE_COMMISSION_POLICY.rateRangeDisplay})`
                       : `Institutional Brokerage Policy (Platform Range: ${BROKERAGE_COMMISSION_POLICY.rateRangeDisplay})`}
                   </span>
                 </div>
                 <div className="space-y-1.5 text-gray-400 leading-relaxed text-[11px] sm:text-xs">
                   <p>
                     <strong className="text-gray-200">
-                      {isAr ? "• النسبة المعروضة (1.25%): " : "• Indicative Rate (1.25%): "}
+                      {isAr ? "• النسبة المعروضة (1.25%): " : isFr ? "• Taux indicatif (1,25 %) : " : "• Indicative Rate (1.25%): "}
                     </strong>
                     {isAr
                       ? "نسبة استرشادية أولية للشحنات الفردية القياسية بالخطة الاحترافية، وليست نسبة ملزمة نهائية."
+                      : isFr
+                      ? "Taux de référence indicatif pour les expéditions uniques dans la formule Professionnel ; il ne s'agit pas d'un taux définitif contraignant."
                       : "Indicative benchmark for single shipments under the Professional tier; not a final binding rate."}
                   </p>
                   <p>
                     <strong className="text-gray-200">
-                      {isAr ? "• تحديد النسبة النهائية: " : "• Final Rate Determination: "}
+                      {isAr ? "• تحديد النسبة النهائية: " : isFr ? "• Détermination du taux final : " : "• Final Rate Determination: "}
                     </strong>
                     {isAr
                       ? "تُحدد النسبة النهائية بالاتفاق مع الوسيط المعتمد داخل غرفة الصفقة وفق حجم الشحنة ومستوى المخاطر وتدرج الكميات (حتى 0.50% للعقود الكبرى)."
+                      : isFr
+                      ? "Le pourcentage final est fixé d'un commun accord avec le courtier agréé dans la salle de négociation en fonction du volume contractuel et des paliers (jusqu'à 0,50 % pour les contrats à fort volume)."
                       : "Final percentage is agreed with the supervising broker inside the deal room based on volume and terms (tiered down to 0.50% for high-volume contracts)."}
                   </p>
                   <p>
                     <strong className="text-gray-200">
-                      {isAr ? "• الطرف الملتزم بالسداد: " : "• Obligor Party: "}
+                      {isAr ? "• الطرف الملتزم بالسداد: " : isFr ? "• Partie débitrice : " : "• Obligor Party: "}
                     </strong>
                     {isAr
                       ? "يُحدد في اتفاقية الوساطة الرسمية وملحق IMFPA (تُسدد عادة من جانب البائع/المورد أو مناصفة وفق شروط التفاوض)."
+                      : isFr
+                      ? "Stipulé dans l'accord officiel NCNDA/IMFPA (modèle CCI 769) (généralement pris en charge par le fournisseur ou partagé selon les négociations)."
                       : "Stipulated in the official ICC 769 NCNDA/IMFPA agreement (typically paid by the supplier or split per negotiated terms)."}
                   </p>
                   <p>
                     <strong className="text-gray-200">
-                      {isAr ? "• موعد الاستحقاق: " : "• Due Date: "}
+                      {isAr ? "• موعد الاستحقاق: " : isFr ? "• Échéance d'exigibilité : " : "• Due Date: "}
                     </strong>
                     {isAr
                       ? "تستحق العمولة حصراً عند الإفراج المصرفي عن الاعتماد المستندي (DLC / SBLC) وصدور بوالص الشحن وفحص SGS بميناء التحميل."
+                      : isFr
+                      ? "Exigible exclusivement lors du dénouement bancaire de la Lettre de Crédit (DLC / SBLC) et de la remise des connaissements maritimes et du certificat d'inspection SGS."
                       : "Due strictly upon bank settlement of the Letter of Credit (DLC/SBLC) and issuance of Clean on Board Bills of Lading."}
                   </p>
                 </div>
                 <div className="pt-1.5 border-t border-[#181b29] text-[10px] text-gray-500 font-mono">
                   {isAr
                     ? "خاضع لقواعد غرفة التجارة الدولية ICC Model 769 • تعويضات الالتفاف الاتفاقية: 3 أضعاف العمولة المتوقعة"
+                    : isFr
+                    ? "Régie par le modèle de contrat 769 de la CCI • Indemnités forfaitaires en cas de contournement : 3x la commission anticipée"
                     : "Governed by ICC Model Contract 769 • Liquidated circumvention damages: 3x anticipated commission"}
                 </div>
               </div>
