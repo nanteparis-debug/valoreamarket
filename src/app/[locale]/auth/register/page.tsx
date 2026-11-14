@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter, Link } from "@/i18n/routing";
 import { useParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { TurnstileWidget } from "@/components/ui/turnstile-widget";
 import {
   FileBadge2,
   ArrowRight,
@@ -42,6 +43,7 @@ export default function RegisterPage() {
   const [repName, setRepName] = useState("");
   const [repEmail, setRepEmail] = useState("");
   const [agreeLegal, setAgreeLegal] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -71,6 +73,17 @@ export default function RegisterPage() {
         isAr
           ? "يرجى الموافقة على شروط الخدمة وسياسة الخصوصية واتفاقية NCNDA للمتابعة"
           : "Please agree to the Terms, Privacy Policy, and NCNDA to proceed"
+      );
+      return;
+    }
+
+    if (!turnstileToken) {
+      setErrorMessage(
+        isAr
+          ? "يرجى إكمال التحقق الأمني من Cloudflare Turnstile للمتابعة"
+          : locale === "fr"
+          ? "Veuillez valider la vérification de sécurité Cloudflare Turnstile pour continuer"
+          : "Please complete the Cloudflare Turnstile security challenge to continue"
       );
       return;
     }
@@ -337,6 +350,17 @@ export default function RegisterPage() {
                   : "Recorded with audit timestamp and version metadata under Swiss jurisdiction."}
               </div>
             </div>
+
+            {/* Cloudflare Turnstile Bot Protection */}
+            <TurnstileWidget
+              action="register"
+              onVerify={(token) => {
+                setTurnstileToken(token);
+                setErrorMessage("");
+              }}
+              onError={(err) => setErrorMessage(err || "Turnstile challenge failed")}
+              onExpire={() => setTurnstileToken("")}
+            />
 
             <button
               type="submit"

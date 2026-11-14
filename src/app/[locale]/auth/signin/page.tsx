@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
+import { TurnstileWidget } from "@/components/ui/turnstile-widget";
 import {
   ShieldCheck,
   Lock,
@@ -23,6 +24,7 @@ export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mfaCode, setMfaCode] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [step, setStep] = useState<"credentials" | "mfa">("credentials");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +35,18 @@ export default function SignInPage() {
       setError(t.auth.errorRequired);
       return;
     }
+
+    if (!turnstileToken) {
+      setError(
+        locale === "ar"
+          ? "يرجى إكمال التحقق الأمني من Cloudflare Turnstile للمتابعة"
+          : locale === "fr"
+          ? "Veuillez valider la vérification de sécurité Cloudflare Turnstile pour continuer"
+          : "Please complete the Cloudflare Turnstile security challenge to continue"
+      );
+      return;
+    }
+
     setError(null);
     setIsLoading(true);
 
@@ -146,6 +160,17 @@ export default function SignInPage() {
               </span>
               <span className="text-emerald-400 font-bold">{locale === "ar" ? "مشفر" : "Encrypted"}</span>
             </div>
+
+            {/* Cloudflare Turnstile Bot Protection */}
+            <TurnstileWidget
+              action="signin"
+              onVerify={(token) => {
+                setTurnstileToken(token);
+                setError(null);
+              }}
+              onError={(err) => setError(err || "Turnstile verification failed")}
+              onExpire={() => setTurnstileToken("")}
+            />
 
             <button
               type="submit"
