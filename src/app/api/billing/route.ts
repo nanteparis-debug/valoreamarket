@@ -19,10 +19,18 @@ export async function GET(req: NextRequest) {
 
     // Multi-tenant invoice filtering:
     // Brokers and admins see all; Companies see ONLY their own invoices!
-    const invoices =
+    const baseInvoices =
       user.role === "broker" || user.role === "platform_admin"
         ? allInvoices
         : allInvoices.filter((inv) => inv.orgId === user.orgId);
+
+    const invoices = user.isDemoSimulation
+      ? baseInvoices.map((inv) => ({
+          ...inv,
+          invoiceNumber: `DEMO-${inv.invoiceNumber}`,
+          orgName: `[نموذج محاكاة • DEMO] ${inv.orgName}`,
+        }))
+      : baseInvoices;
 
     return NextResponse.json({
       success: true,
@@ -64,6 +72,20 @@ export async function POST(req: NextRequest) {
         { success: false, error: "Invalid plan identifier" },
         { status: 400 }
       );
+    }
+
+    if (authResult.user.isDemoSimulation) {
+      return NextResponse.json({
+        success: true,
+        isDemoSimulation: true,
+        subscription: {
+          plan,
+          status: "active",
+          validUntil: "2027-11-14T00:00:00Z",
+          billingCycle: "annual",
+        },
+        message: `Simulation subscription plan switched to ${plan.toUpperCase()} tier`,
+      });
     }
 
     const updated = gvceStore.updateSubscriptionPlan(plan);

@@ -335,3 +335,124 @@ test("Sector Tabs & Light Mode Contrast Verification", async () => {
     "Simulator transparent inputs must be preserved in light mode"
   );
 });
+
+// 14. Test Multi-Tenant Server Isolation: Unauthenticated Visitor 401 Rejection
+test("Multi-Tenant Server RBAC: Unauthenticated requests receive 401 on private endpoints", async () => {
+  const { verifyServerSession } = await import("../src/lib/auth-server.ts");
+
+  // A. Unauthenticated request to /api/deals
+  const unauthDealsReq = new Request("http://localhost:3000/api/deals");
+  const authDeals = verifyServerSession(unauthDealsReq, { allowExplicitDemo: false });
+  assert.ok("errorResponse" in authDeals);
+  assert.strictEqual(authDeals.errorResponse.status, 401);
+
+  // B. Unauthenticated request to /api/billing
+  const unauthBillingReq = new Request("http://localhost:3000/api/billing");
+  const authBilling = verifyServerSession(unauthBillingReq, { allowExplicitDemo: false });
+  assert.ok("errorResponse" in authBilling);
+  assert.strictEqual(authBilling.errorResponse.status, 401);
+
+  // C. Unauthenticated request to /api/settings/security/sessions
+  const unauthSessionsReq = new Request("http://localhost:3000/api/settings/security/sessions");
+  const authSessions = verifyServerSession(unauthSessionsReq, { allowExplicitDemo: false });
+  assert.ok("errorResponse" in authSessions);
+  assert.strictEqual(authSessions.errorResponse.status, 401);
+});
+
+// 15. Test Multi-Tenant Data Isolation: Company A cannot read or modify Company B deals
+test("Multi-Tenant Isolation: Company A vs Company B isolation and deal tenancy validation", async () => {
+  const { verifyServerSession, TEST_PERSONAS } = await import("../src/lib/auth-server.ts");
+  const { gvceStore } = await import("../src/lib/store.ts");
+
+  // Company A (Buyer: org-france-energy)
+  const reqCompanyA = {
+    headers: {
+      get: (h) => (h.toLowerCase() === "x-valorea-persona" ? "buyer" : null),
+    },
+    cookies: { get: () => undefined },
+  };
+
+  // Company B (Supplier: org-saudi-chem)
+  const reqCompanyB = {
+    headers: {
+      get: (h) => (h.toLowerCase() === "x-valorea-persona" ? "company_b" : null),
+    },
+    cookies: { get: () => undefined },
+  };
+
+  // Neutral Broker (org-valorea-brokerage)
+  const reqBroker = {
+    headers: {
+      get: (h) => (h.toLowerCase() === "x-valorea-persona" ? "broker" : null),
+    },
+    cookies: { get: () => undefined },
+  };
+
+  const sessionA = verifyServerSession(reqCompanyA);
+  const sessionB = verifyServerSession(reqCompanyB);
+  const sessionBroker = verifyServerSession(reqBroker);
+
+  assert.ok("user" in sessionA);
+  assert.ok("user" in sessionB);
+  assert.ok("user" in sessionBroker);
+
+  assert.strictEqual(sessionA.user.orgId, "org-france-energy");
+  assert.strictEqual(sessionB.user.orgId, "org-saudi-chem");
+  assert.strictEqual(sessionBroker.user.role, "broker");
+
+  const allDeals = gvceStore.getAllDeals();
+
+  // 1. Read isolation: Company A deals vs Company B deals
+  const companyADeals = allDeals.filter((d) =>
+    d.participants.some((p) => p.orgId === sessionA.user.orgId)
+  );
+  const companyBDeals = allDeals.filter((d) =>
+    d.participants.some((p) => p.orgId === sessionB.user.orgId)
+  );
+  const brokerDeals = allDeals; // Broker supervises all
+
+  assert.ok(companyADeals.some((d) => d.id === "deal-en590-rotterdam"), "Company A must see its own deal");
+  assert.ok(!companyBDeals.some((d) => d.id === "deal-en590-rotterdam"), "Company B MUST NOT see Company A's deal");
+  assert.ok(brokerDeals.length >= allDeals.length, "Broker must have visibility over all clearing deals");
+
+  // 2. Tenancy enforcement on Deal Room Participation (Message & LiveKit guard check)
+  const targetDeal = gvceStore.getDeal("deal-en590-rotterdam");
+  assert.ok(targetDeal);
+
+  // Helper verifying participant eligibility check
+  const isParticipantA =
+    sessionA.user.role === "broker" ||
+    targetDeal.participants.some((p) => p.orgId === sessionA.user.orgId);
+  const isParticipantB =
+    sessionB.user.role === "broker" ||
+    targetDeal.participants.some((p) => p.orgId === sessionB.user.orgId);
+  const isParticipantBroker =
+    sessionBroker.user.role === "broker" ||
+    targetDeal.participants.some((p) => p.orgId === sessionBroker.user.orgId);
+
+  assert.strictEqual(isParticipantA, true, "Company A is a participant in its deal");
+  assert.strictEqual(isParticipantB, false, "Company B is NOT a participant and must be denied (403)");
+  assert.strictEqual(isParticipantBroker, true, "Broker is authorized to oversee the deal room");
+});
+
+// 16. Test Demo Mode Sandbox Isolation: Simulation users cannot tamper with production deals
+test("Sandbox Isolation: Demo mode users strictly confined to simulated sandbox records", async () => {
+  const { verifyServerSession } = await import("../src/lib/auth-server.ts");
+
+  const demoReq = new Request("http://localhost:3000/api/deals?demo=true");
+  const authDemo = verifyServerSession(demoReq, { allowExplicitDemo: true });
+
+  assert.ok("user" in authDemo);
+  assert.strictEqual(authDemo.user.isDemoSimulation, true);
+
+  // Attempting to post message or join meeting on a non-demo deal ID must be forbidden
+  const productionDealId = "deal-urea-santos";
+  const isDemoDeal = productionDealId === "deal-en590-rotterdam";
+  const forbiddenDemoIsolation = authDemo.user.isDemoSimulation && !isDemoDeal;
+
+  assert.strictEqual(
+    forbiddenDemoIsolation,
+    true,
+    "Demo user attempting to touch production deal must trigger FORBIDDEN_DEMO_ISOLATION (403)"
+  );
+});

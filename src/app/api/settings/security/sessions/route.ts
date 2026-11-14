@@ -12,7 +12,14 @@ export async function GET(req: NextRequest) {
       return authResult.errorResponse;
     }
 
-    const sessions = gvceStore.getActiveSessions();
+    const allSessions = gvceStore.getActiveSessions();
+    const sessions = authResult.user.isDemoSimulation
+      ? allSessions.map((s) => ({
+          ...s,
+          browser: `[نموذج محاكاة • DEMO] ${s.browser}`,
+        }))
+      : allSessions.filter((s) => s.userId === authResult.user.id || authResult.user.role === "platform_admin");
+
     return NextResponse.json({
       success: true,
       isDemoSimulation: Boolean(authResult.user.isDemoSimulation),

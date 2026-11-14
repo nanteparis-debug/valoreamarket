@@ -28,6 +28,18 @@ export async function GET(
   }
 
   const { user } = authResult;
+
+  // Demo Sandbox Isolation:
+  if (user.isDemoSimulation && id !== "deal-en590-rotterdam") {
+    return NextResponse.json(
+      {
+        error: "FORBIDDEN_DEMO_ISOLATION",
+        message: "Simulation mode cannot download or inspect documents from production deals.",
+      },
+      { status: 403 }
+    );
+  }
+
   const isParticipant =
     user.role === "broker" ||
     user.role === "compliance_officer" ||

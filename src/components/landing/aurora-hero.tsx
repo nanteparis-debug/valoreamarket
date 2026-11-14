@@ -157,7 +157,7 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
             <span className="text-2xl sm:text-3xl font-extrabold text-[#d4956b] font-mono" dir="ltr">
-              $14.8B+
+              $14.8B
             </span>
             <span className="text-xs text-gray-400 mt-1">
               {translations.stats.volume}
@@ -165,7 +165,7 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
             <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono" dir="ltr">
-              1,240+
+              31 / 116
             </span>
             <span className="text-xs text-gray-400 mt-1">
               {translations.stats.companies}
@@ -173,14 +173,14 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
           </div>
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
             <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono" dir="ltr">
-              3,800+
+              100%
             </span>
             <span className="text-xs text-gray-400 mt-1">
               {translations.stats.deals}
             </span>
           </div>
           <p className="text-[10px] text-gray-400 font-mono text-center w-full col-span-2 md:col-span-4 mt-2">
-            تقديرات شبكة التداول ونشاط المقاصة التجريبي • Institutional Trading Network & Simulation Estimates
+            مؤشرات استرشادية تشغيلية • Institutional Capacity & Benchmark Specifications
           </p>
         </div>
       </div>

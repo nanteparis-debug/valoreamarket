@@ -76,6 +76,17 @@ export const TEST_PERSONAS: Record<string, AuthenticatedUser> = {
     isVerified: false,
     kybStatus: "pending_review",
   },
+  company_b: {
+    id: "usr-saudi-chem",
+    name: "Fahad Al-Husseini",
+    email: "fahad@saudi-basic-chemicals.com",
+    role: "supplier",
+    orgId: "org-saudi-chem",
+    orgName: "Saudi Basic Chemical Exports LLC",
+    orgCountry: "SA",
+    isVerified: true,
+    kybStatus: "approved",
+  },
 };
 
 /**

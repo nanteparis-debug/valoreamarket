@@ -21,6 +21,7 @@ import {
   FileCheck2,
 } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
+import { BROKERAGE_COMMISSION_POLICY } from "@/lib/pricing-data";
 
 // Sector-specific specification schema definitions
 const SECTOR_SPEC_CONFIG: Record<
@@ -536,6 +537,57 @@ function NewDealForm({ locale }: { locale: string }) {
                     {isAr ? "عمولة الوساطة المقدرة (1.25%): " : "Est. Brokerage Fee (1.25%): "}
                     <span dir="ltr">{formatCurrency(totalContractValue * 0.0125, "USD", locale)}</span>
                   </div>
+                </div>
+              </div>
+
+              {/* Detailed Brokerage Commission Clarification */}
+              <div className="p-4 rounded-2xl bg-[#0f121d] border border-[#1f2233] space-y-2 text-xs">
+                <div className="flex items-center gap-2 font-semibold text-[#d4956b]">
+                  <Info className="w-4 h-4 shrink-0" />
+                  <span>
+                    {isAr
+                      ? `بيان عمولة الوساطة المؤسسية (نطاق المنصة: ${BROKERAGE_COMMISSION_POLICY.rateRangeDisplay})`
+                      : `Institutional Brokerage Policy (Platform Range: ${BROKERAGE_COMMISSION_POLICY.rateRangeDisplay})`}
+                  </span>
+                </div>
+                <div className="space-y-1.5 text-gray-400 leading-relaxed text-[11px] sm:text-xs">
+                  <p>
+                    <strong className="text-gray-200">
+                      {isAr ? "• النسبة المعروضة (1.25%): " : "• Indicative Rate (1.25%): "}
+                    </strong>
+                    {isAr
+                      ? "نسبة استرشادية أولية للشحنات الفردية القياسية بالخطة الاحترافية، وليست نسبة ملزمة نهائية."
+                      : "Indicative benchmark for single shipments under the Professional tier; not a final binding rate."}
+                  </p>
+                  <p>
+                    <strong className="text-gray-200">
+                      {isAr ? "• تحديد النسبة النهائية: " : "• Final Rate Determination: "}
+                    </strong>
+                    {isAr
+                      ? "تُحدد النسبة النهائية بالاتفاق مع الوسيط المعتمد داخل غرفة الصفقة وفق حجم الشحنة ومستوى المخاطر وتدرج الكميات (حتى 0.50% للعقود الكبرى)."
+                      : "Final percentage is agreed with the supervising broker inside the deal room based on volume and terms (tiered down to 0.50% for high-volume contracts)."}
+                  </p>
+                  <p>
+                    <strong className="text-gray-200">
+                      {isAr ? "• الطرف الملتزم بالسداد: " : "• Obligor Party: "}
+                    </strong>
+                    {isAr
+                      ? "يُحدد في اتفاقية الوساطة الرسمية وملحق IMFPA (تُسدد عادة من جانب البائع/المورد أو مناصفة وفق شروط التفاوض)."
+                      : "Stipulated in the official ICC 769 NCNDA/IMFPA agreement (typically paid by the supplier or split per negotiated terms)."}
+                  </p>
+                  <p>
+                    <strong className="text-gray-200">
+                      {isAr ? "• موعد الاستحقاق: " : "• Due Date: "}
+                    </strong>
+                    {isAr
+                      ? "تستحق العمولة حصراً عند الإفراج المصرفي عن الاعتماد المستندي (DLC / SBLC) وصدور بوالص الشحن وفحص SGS بميناء التحميل."
+                      : "Due strictly upon bank settlement of the Letter of Credit (DLC/SBLC) and issuance of Clean on Board Bills of Lading."}
+                  </p>
+                </div>
+                <div className="pt-1.5 border-t border-[#181b29] text-[10px] text-gray-500 font-mono">
+                  {isAr
+                    ? "خاضع لقواعد غرفة التجارة الدولية ICC Model 769 • تعويضات الالتفاف الاتفاقية: 3 أضعاف العمولة المتوقعة"
+                    : "Governed by ICC Model Contract 769 • Liquidated circumvention damages: 3x anticipated commission"}
                 </div>
               </div>
 

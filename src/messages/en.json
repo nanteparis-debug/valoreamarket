@@ -24,16 +24,16 @@
     "referenceCurrency": "Reference"
   },
   "hero": {
-    "badge": "Trusted by companies in 50+ countries",
+    "badge": "Target shipping network spans 50+ countries worldwide",
     "title": "Global Commodities Brokerage",
     "subtitle": "Secure international brokerage connecting verified buyers and suppliers. From crude oil to rare metals — trade with confidence and direct banking settlement.",
     "cta": "Start Trading Today",
     "secondaryCta": "Explore Commodities",
     "stats": {
-      "countries": "Countries (Target Reach)",
-      "deals": "Deals Supervised (Testbed Model)",
-      "companies": "Companies Onboarding & Sandbox",
-      "volume": "Target Clearing Capacity (Simulation)"
+      "countries": "Countries • Target Shipping Reach (Target)",
+      "deals": "Direct Bank Settlement (Non-Custodial DLC/SBLC)",
+      "companies": "31 Standard Commodities • 116 Certified Grades",
+      "volume": "Annual Clearing Capacity (Simulation)"
     },
     "subhead": "Supervised Clearing • Direct Bank Settlement • Absolute Privacy",
     "asvsBadge": "Designed to OWASP ASVS v4.0.3 Level 2",
@@ -59,9 +59,9 @@
     "catalogCode": "Catalog Code:",
     "usdDenominated": "USD Denominated",
     "delivery": "Delivery: FOB / CIF / CFR",
-    "verifiedSpecs": "Verified Specs",
+    "verifiedSpecs": "Benchmark Reference Specs",
     "benchmarkSpecs": "Benchmark Specs:",
-    "coaInspection": "Mandatory Independent SGS Inspection for LC Release",
+    "coaInspection": "Independent shipment inspection (SGS / Intertek) can be requested",
     "usdPerTon": "USD / Metric Ton",
     "supportedIncoterms": "Supported Incoterms:"
   },
