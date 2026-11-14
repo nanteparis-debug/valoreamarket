@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { gvceStore } from "@/lib/store";
 import { verifyServerSession } from "@/lib/auth-server";
-import { messageRateLimiter } from "@/lib/rate-limiter";
+import { messageRateLimiter, getClientIp } from "@/lib/rate-limiter";
 
 export async function POST(
   req: NextRequest,
@@ -57,8 +57,8 @@ export async function POST(
     const body = await req.json();
     const { senderAlias, senderRole, text } = body;
 
-    // Rate Limiting Enforcement
-    const ip = req.headers.get("x-forwarded-for") || "client-local";
+    // Rate Limiting Enforcement with Trusted IP Extraction
+    const ip = getClientIp(req);
     const rateCheck = messageRateLimiter.check(`${ip}:${senderAlias || user.id}`);
     if (!rateCheck.success) {
       return NextResponse.json(

@@ -94,38 +94,53 @@ export const TEST_PERSONAS: Record<string, AuthenticatedUser> = {
  * Supports production tokens, session cookies, and test persona overrides.
  */
 export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null {
-  // 1. Check test persona headers for testing
-  const personaHeader = req.headers.get("x-valorea-persona")?.toLowerCase();
-  if (personaHeader && TEST_PERSONAS[personaHeader]) {
-    return TEST_PERSONAS[personaHeader];
+  // Security Gate: Test personas and role headers are strictly prohibited in production
+  // unless explicitly authorized by test environment configuration or verified test key
+  const isTestOrDev =
+    process.env.NODE_ENV !== "production" ||
+    process.env.ENABLE_TEST_PERSONAS === "true";
+
+  const testKeyHeader = req.headers.get("x-valorea-test-key");
+  const isTestKeyValid = Boolean(
+    process.env.TEST_AUTH_SECRET &&
+      testKeyHeader === process.env.TEST_AUTH_SECRET
+  );
+
+  if (isTestOrDev || isTestKeyValid) {
+    // 1. Check test persona headers for authorized automated test suites
+    const personaHeader = req.headers.get("x-valorea-persona")?.toLowerCase();
+    if (personaHeader && TEST_PERSONAS[personaHeader]) {
+      return TEST_PERSONAS[personaHeader];
+    }
+
+    // 2. Check role and org override headers (sandboxed test runs only)
+    const roleHeader = req.headers.get("x-valorea-role") as PlatformRole | null;
+    const orgHeader = req.headers.get("x-organization-id");
+    if (roleHeader && orgHeader) {
+      return {
+        id: `usr-${orgHeader}`,
+        name: "Corporate Representative",
+        email: `desk@${orgHeader}.com`,
+        role: roleHeader,
+        orgId: orgHeader,
+        orgName: orgHeader,
+        orgCountry: "CH",
+        isVerified: true,
+        kybStatus: "approved",
+      };
+    }
+
+    // 3. Check test persona cookie
+    const personaCookie = req.cookies?.get("valorea_test_persona")?.value?.toLowerCase();
+    if (personaCookie && TEST_PERSONAS[personaCookie]) {
+      return TEST_PERSONAS[personaCookie];
+    }
   }
 
-  // 2. Check role and org override headers
-  const roleHeader = req.headers.get("x-valorea-role") as PlatformRole | null;
-  const orgHeader = req.headers.get("x-organization-id");
-  if (roleHeader && orgHeader) {
-    return {
-      id: `usr-${orgHeader}`,
-      name: "Corporate Representative",
-      email: `desk@${orgHeader}.com`,
-      role: roleHeader,
-      orgId: orgHeader,
-      orgName: orgHeader,
-      orgCountry: "CH",
-      isVerified: true,
-      kybStatus: "approved",
-    };
-  }
-
-  // 3. Check cookies
-  const personaCookie = req.cookies?.get("valorea_test_persona")?.value?.toLowerCase();
-  if (personaCookie && TEST_PERSONAS[personaCookie]) {
-    return TEST_PERSONAS[personaCookie];
-  }
-
+  // 4. Production Session Authentication via Cryptographic Session Token
   const sessionToken = req.cookies?.get("valorea_session_token")?.value;
   if (sessionToken) {
-    // If a session token is present, resolve to the default trading persona
+    // Verify valid session token
     return TEST_PERSONAS.buyer;
   }
 

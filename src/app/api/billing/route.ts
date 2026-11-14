@@ -56,7 +56,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    // Only platform administrators, supervising brokers, or isolated demo sandbox can change subscription tiers
     const authResult = verifyServerSession(req, {
+      allowedRoles: ["broker", "platform_admin"],
       allowExplicitDemo: true,
     });
 

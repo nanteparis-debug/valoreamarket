@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { action, sessionId } = body;
+    const isPlatformAdmin = authResult.user.role === "platform_admin";
 
     if (action === "revoke") {
       if (!sessionId) {
@@ -60,7 +61,26 @@ export async function POST(req: NextRequest) {
           { status: 400 }
         );
       }
-      const ok = gvceStore.revokeSession(sessionId);
+      const allSessions = gvceStore.getActiveSessions();
+      const targetSession = allSessions.find((s) => s.id === sessionId);
+      if (!targetSession) {
+        return NextResponse.json(
+          { success: false, error: "Session not found" },
+          { status: 404 }
+        );
+      }
+      // IDOR Protection: Reject attempts to revoke sessions belonging to other accounts
+      if (targetSession.userId !== authResult.user.id && !isPlatformAdmin) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "FORBIDDEN_IDOR: Cannot revoke sessions belonging to other organizations or users",
+          },
+          { status: 403 }
+        );
+      }
+
+      const ok = gvceStore.revokeSession(sessionId, authResult.user.id, isPlatformAdmin);
       if (!ok) {
         return NextResponse.json(
           { success: false, error: "Cannot revoke current session or session not found" },
@@ -69,7 +89,7 @@ export async function POST(req: NextRequest) {
       }
       return NextResponse.json({ success: true, sessions: gvceStore.getActiveSessions() });
     } else if (action === "revoke_all_other") {
-      const revokedCount = gvceStore.revokeAllOtherSessions();
+      const revokedCount = gvceStore.revokeAllOtherSessions(authResult.user.id, isPlatformAdmin);
       return NextResponse.json({
         success: true,
         revokedCount,

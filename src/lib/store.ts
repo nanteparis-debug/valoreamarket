@@ -791,19 +791,25 @@ class GVCEDataStore {
     return Array.from(this.sessions.values());
   }
 
-  public revokeSession(sessionId: string): boolean {
+  public revokeSession(sessionId: string, requesterUserId?: string, isPlatformAdmin?: boolean): boolean {
     const sess = this.sessions.get(sessionId);
     if (!sess) return false;
     if (sess.isCurrent) return false; // Cannot revoke own active session
+    // IDOR Protection: Prevent users from revoking sessions belonging to other accounts
+    if (requesterUserId && !isPlatformAdmin && sess.userId !== requesterUserId) {
+      return false;
+    }
     return this.sessions.delete(sessionId);
   }
 
-  public revokeAllOtherSessions(): number {
+  public revokeAllOtherSessions(requesterUserId?: string, isPlatformAdmin?: boolean): number {
     let count = 0;
     for (const [id, sess] of this.sessions.entries()) {
       if (!sess.isCurrent) {
-        this.sessions.delete(id);
-        count++;
+        if (!requesterUserId || isPlatformAdmin || sess.userId === requesterUserId) {
+          this.sessions.delete(id);
+          count++;
+        }
       }
     }
     return count;

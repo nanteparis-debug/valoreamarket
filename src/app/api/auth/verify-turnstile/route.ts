@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyTurnstileToken } from "@/lib/turnstile";
+import { getClientIp } from "@/lib/rate-limiter";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,10 +14,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const remoteip =
-      req.headers.get("cf-connecting-ip") ||
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      undefined;
+    const remoteip = getClientIp(req);
 
     const result = await verifyTurnstileToken(token, action, remoteip);
 
