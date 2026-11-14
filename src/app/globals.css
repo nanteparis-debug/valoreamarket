@@ -98,6 +98,20 @@ body {
   will-change: transform, opacity;
 }
 
+@keyframes carouselProgress {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.animate-carousel-progress {
+  animation: carouselProgress linear forwards;
+  will-change: transform;
+}
+
 /* Watermark layout for secure viewer */
 .watermark-overlay {
   background-image: repeating-linear-gradient(

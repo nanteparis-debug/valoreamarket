@@ -397,5 +397,41 @@
     "previewBtn": "Aperçu filigrané",
     "agreementTitle": "Contrat de vente Diesel EN590 & Barème de courtage",
     "agreementTerms": "Vendeur : Fournisseur-Nordic-77 | Acheteur : Acheteur-Alpha-24 | Quantité : 50 000 TM | Prix : 740 USD/TM CIF Rotterdam | Règlement : LC 100% à vue via banques commerciales | Commission : 1,25% USD."
+  },
+  "heroCarousel": {
+    "ariaLabel": "Marchés de matières premières en vedette",
+    "prevSlide": "Diapositive précédente",
+    "nextSlide": "Diapositive suivante",
+    "slideCounter": "Diapositive {current} sur {total}",
+    "goToSlide": "Aller à la diapositive {slide}",
+    "pauseAutoplay": "Mettre en pause le défilement automatique",
+    "resumeAutoplay": "Reprendre le défilement automatique",
+    "statusActive": "Diapositive active",
+    "exploreSector": "Explorer le secteur",
+    "submitRequest": "Déposer une demande d'achat",
+    "slide1": {
+      "badge": "Métaux industriels",
+      "headline": "Approvisionnement en cuivre et aluminium haute pureté",
+      "description": "Cathodes de cuivre Grade A (99,9935 %) enregistrées LME et lingots d'aluminium primaire P1020A. Livraisons directes CIF/FOB avec certificats d'analyse certifiés.",
+      "sector": "metals_industrial"
+    },
+    "slide2": {
+      "badge": "Produits pétroliers raffinés",
+      "headline": "Infrastructures d'exportation et carburants raffinés",
+      "description": "Gazole à très basse teneur en soufre EN 590 (10 ppm) et carburéacteur Jet A-1 certifié. Chargement terminal, affrètement maritime et règlement bancaire direct.",
+      "sector": "refined_petroleum"
+    },
+    "slide3": {
+      "badge": "Gaz naturel et LGN",
+      "headline": "Transport maritime de GNL et logistique cryogénique",
+      "description": "Gaz naturel liquéfié (95 %+ méthane) et mélanges commerciaux GPL réfrigérés. Enlèvement terminal, navires méthaniers et allocation de cargaisons vérifiables.",
+      "sector": "natural_gas_ngls"
+    },
+    "slide4": {
+      "badge": "Matières premières agricoles",
+      "headline": "Négoce et exportation de sucre blanc raffiné et brut",
+      "description": "Sucre de canne blanc raffiné ICUMSA 45 et sucre brut VHP en vrac. Chargement portuaire par convoyeur, inspection SGS avant expédition et exécution sécurisée.",
+      "sector": "sugar"
+    }
   }
 }

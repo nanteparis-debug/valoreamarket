@@ -397,5 +397,41 @@
     "previewBtn": "水印安全预览",
     "agreementTitle": "柴油 EN590 买卖总协议及经纪佣金确认书",
     "agreementTerms": "卖方：供应商-Nordic-77 | 买方：买方-Alpha-24 | 数量：50,000 公吨 | 价格：740 美元/公吨 CIF 鹿特丹 | 结算：商业银行100%即期信用证 | 平台佣金：1.25% 美元结算。"
+  },
+  "heroCarousel": {
+    "ariaLabel": "精选大宗商品市场",
+    "prevSlide": "上一张",
+    "nextSlide": "下一张",
+    "slideCounter": "第 {current} 张，共 {total} 张",
+    "goToSlide": "跳转到第 {slide} 张",
+    "pauseAutoplay": "暂停自动轮播",
+    "resumeAutoplay": "恢复自动轮播",
+    "statusActive": "当前展示",
+    "exploreSector": "浏览板块",
+    "submitRequest": "提交采购需求",
+    "slide1": {
+      "badge": "工业金属",
+      "headline": "高纯度铜与铝金属稳定供应",
+      "description": "LME注册标准A级电解铜板（纯度99.9935%）与P1020A原铝锭。支持CIF/FOB港口直发与独立化验检测凭证。",
+      "sector": "metals_industrial"
+    },
+    "slide2": {
+      "badge": "成品油与石化",
+      "headline": "炼油码头设施与精炼石油产品",
+      "description": "EN 590超低硫柴油（10 PPM）与Jet A-1航空煤油。大型出口码头装运对接与直接银行信用证清算。",
+      "sector": "refined_petroleum"
+    },
+    "slide3": {
+      "badge": "天然气与液化气",
+      "headline": "LNG冷链运输与液化天然气码头供应",
+      "description": "高纯度液化天然气（甲烷含量95%+）与冷冻LPG商品混合物。直连低温储罐与远洋LNG船期运力分配。",
+      "sector": "natural_gas_ngls"
+    },
+    "slide4": {
+      "badge": "农产品与软商品",
+      "headline": "精炼白糖与原糖大宗出口贸易",
+      "description": "优质ICUMSA 45精炼白蔗糖与VHP工业原糖。码头大型传送散装装船、SGS装运前检验与安全跨境交易。",
+      "sector": "sugar"
+    }
   }
 }

@@ -397,5 +397,41 @@
     "previewBtn": "Watermarked Preview",
     "agreementTitle": "Diesel EN590 Sale & Purchase Agreement & Commission Schedule",
     "agreementTerms": "Supplier: Supplier-Nordic-77 | Buyer: Buyer-Alpha-24 | Quantity: 50,000 MT | Price: USD 740/MT CIF Rotterdam | Settlement: 100% LC at sight via banking channels | Brokerage Fee: 1.25% in USD."
+  },
+  "heroCarousel": {
+    "ariaLabel": "Featured Commodity Markets",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "slideCounter": "Slide {current} of {total}",
+    "goToSlide": "Go to slide {slide}",
+    "pauseAutoplay": "Pause automatic slide rotation",
+    "resumeAutoplay": "Resume automatic slide rotation",
+    "statusActive": "Active slide",
+    "exploreSector": "Explore Sector",
+    "submitRequest": "Submit Buying Request",
+    "slide1": {
+      "badge": "Industrial Metals",
+      "headline": "High-Purity Copper & Aluminium Supply",
+      "description": "LME-registered Grade A copper cathodes (99.9935%) and primary aluminium ingots (P1020A). Direct CIF/FOB delivery with certified assay documentation.",
+      "sector": "metals_industrial"
+    },
+    "slide2": {
+      "badge": "Refined Petroleum",
+      "headline": "Petroleum Infrastructure & Refined Products",
+      "description": "Standardized EN 590 Ultra-Low Sulfur Diesel (10 ppm) and Jet A-1 aviation kerosene. Integrated terminal loading, vessel chartering, and direct bank settlement.",
+      "sector": "refined_petroleum"
+    },
+    "slide3": {
+      "badge": "Natural Gas & NGLs",
+      "headline": "LNG Shipping & Cryogenic Gas Logistics",
+      "description": "Liquefied Natural Gas (95%+ methane) and refrigerated LPG commercial mixes. Direct terminal off-take, cryogenic containment, and verifiable cargo allocation.",
+      "sector": "natural_gas_ngls"
+    },
+    "slide4": {
+      "badge": "Agricultural Commodities",
+      "headline": "Refined & Raw Sugar Export Operations",
+      "description": "ICUMSA 45 white refined cane sugar and VHP raw sugar. High-volume bulk vessel loading, pre-shipment SGS inspection, and secured international trade execution.",
+      "sector": "sugar"
+    }
   }
 }

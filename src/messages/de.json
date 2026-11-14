@@ -397,5 +397,41 @@
     "previewBtn": "Vorschau mit Wasserzeichen",
     "agreementTitle": "Diesel EN590 Kaufvertrag und Provisionsvereinbarung",
     "agreementTerms": "Lieferant: Lieferant-Nordic-77 | Käufer: Käufer-Alpha-24 | Menge: 50.000 MT | Preis: USD 740/MT CIF Rotterdam | Abrechnung: 100% L/C Sichtakkreditiv via Geschäftsbanken | Brokerprovision: 1,25% USD."
+  },
+  "heroCarousel": {
+    "ariaLabel": "Ausgewählte Rohstoffmärkte",
+    "prevSlide": "Vorherige Folie",
+    "nextSlide": "Nächste Folie",
+    "slideCounter": "Folie {current} von {total}",
+    "goToSlide": "Zu Folie {slide} wechseln",
+    "pauseAutoplay": "Automatischen Bildwechsel anhalten",
+    "resumeAutoplay": "Automatischen Bildwechsel fortsetzen",
+    "statusActive": "Aktive Folie",
+    "exploreSector": "Sektor erkunden",
+    "submitRequest": "Kaufanfrage einreichen",
+    "slide1": {
+      "badge": "Industriemetalle",
+      "headline": "Lieferung von hochreinem Kupfer und Aluminium",
+      "description": "LME-registrierte Kupferkathoden Grade A (99,9935 %) und Primäraluminiumbarren P1020A. Direkte CIF/FOB-Hafenlieferung mit zertifizierten Prüfberichten.",
+      "sector": "metals_industrial"
+    },
+    "slide2": {
+      "badge": "Raffinierte Erdölprodukte",
+      "headline": "Erdöl-Infrastruktur und Raffinerieprodukte",
+      "description": "Schwefelfreier Diesel EN 590 (10 ppm) und Flugturbinenkraftstoff Jet A-1. Integrierte Terminalverladung, Schiffsfracht und direkte Bankabwicklung.",
+      "sector": "refined_petroleum"
+    },
+    "slide3": {
+      "badge": "Erdgas und NGLs",
+      "headline": "LNG-Schifffahrt und kryogene Gaslogistik",
+      "description": "Flüssigerdgas (95 %+ Methan) und gekühlte Flüssiggas-Mischungen. Direkte Terminalabnahme, Tankschifffahrt und transparente Ladungszuteilung.",
+      "sector": "natural_gas_ngls"
+    },
+    "slide4": {
+      "badge": "Agrarrohstoffe",
+      "headline": "Exporthandel mit Weiß- und Rohzucker",
+      "description": "Raffinierter Rohrzucker ICUMSA 45 und VHP-Rohzucker. Hochvolumige Massengutverladung im Hafen, SGS-Qualitätsprüfung und gesicherter Handel.",
+      "sector": "sugar"
+    }
   }
 }

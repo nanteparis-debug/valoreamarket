@@ -11,6 +11,10 @@ import {
   Globe2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  HeroCarousel,
+  HeroCarouselTranslations,
+} from "@/components/landing/hero-carousel";
 
 interface AuroraHeroProps {
   translations: {
@@ -32,11 +36,12 @@ interface AuroraHeroProps {
     pillarDocs?: string;
     pillarLangs?: string;
   };
+  carouselTranslations?: HeroCarouselTranslations;
 }
 
-export function AuroraHero({ translations }: AuroraHeroProps) {
+export function AuroraHero({ translations, carouselTranslations }: AuroraHeroProps) {
   return (
-    <section className="relative min-h-[78vh] flex flex-col justify-center items-center overflow-hidden pt-20 pb-8 px-4 sm:px-6 lg:px-8">
+    <section className="relative min-h-[78vh] flex flex-col justify-center items-center overflow-hidden pt-20 pb-12 px-4 sm:px-6 lg:px-8">
       {/* Background Aurora Mesh with GPU Acceleration */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Deep Navy/Copper ambient gradient blobs */}
@@ -79,7 +84,7 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
         />
       </div>
 
-      {/* Main Hero Content */}
+      {/* Main Hero Header Content */}
       <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
         {/* Trust Eyebrow Badge */}
         <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#121420]/80 border border-[#b87333]/30 backdrop-blur-md shadow-lg shadow-[#b87333]/5 mb-6 group hover:border-[#b87333]/60 transition-all">
@@ -124,9 +129,19 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
             <span>{translations.secondaryCta}</span>
           </a>
         </div>
+      </div>
 
+      {/* Featured 4-Slide Commodity Hero Carousel */}
+      {carouselTranslations && (
+        <div className="relative z-10 w-full max-w-7xl mx-auto mt-12 mb-8">
+          <HeroCarousel translations={carouselTranslations} />
+        </div>
+      )}
+
+      {/* Key Brokerage Pillars Badges & Stats Strip */}
+      <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center w-full">
         {/* Key Brokerage Pillars Badges */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-gray-400">
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs text-gray-400">
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f1118]/60 border border-[#23273b]">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>{translations.pillarKyc || "KYC & KYB Multi-Stage Verification"}</span>
@@ -146,7 +161,7 @@ export function AuroraHero({ translations }: AuroraHeroProps) {
         </div>
 
         {/* Live Stats Strip */}
-        <div className="mt-12 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="mt-10 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <div className="p-4 sm:p-5 rounded-2xl bg-[#0d0f17]/90 border border-[#23273b] backdrop-blur-md flex flex-col items-center text-center">
             <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono" dir="ltr">
               50+

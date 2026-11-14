@@ -397,5 +397,41 @@
     "previewBtn": "Vista con Marca de Agua",
     "agreementTitle": "Contrato de Compraventa Diésel EN590 y Esquema de Comisión",
     "agreementTerms": "Proveedor: Proveedor-Nordic-77 | Comprador: Comprador-Alpha-24 | Cantidad: 50.000 TM | Precio: 740 USD/TM CIF Rotterdam | Liquidación: LC 100% a la vista bancaria | Comisión: 1,25% USD."
+  },
+  "heroCarousel": {
+    "ariaLabel": "Mercados de materias primas destacados",
+    "prevSlide": "Diapositiva anterior",
+    "nextSlide": "Diapositiva siguiente",
+    "slideCounter": "Diapositiva {current} de {total}",
+    "goToSlide": "Ir a la diapositiva {slide}",
+    "pauseAutoplay": "Pausar avance automático",
+    "resumeAutoplay": "Reanudar avance automático",
+    "statusActive": "Diapositiva activa",
+    "exploreSector": "Explorar sector",
+    "submitRequest": "Enviar solicitud de compra",
+    "slide1": {
+      "badge": "Metales industriales",
+      "headline": "Suministro de cobre y aluminio de alta pureza",
+      "description": "Cátodos de cobre Grado A (99,9935 %) registrados en LME y lingotes de aluminio primario P1020A. Entrega directa CIF/FOB con análisis certificado.",
+      "sector": "metals_industrial"
+    },
+    "slide2": {
+      "badge": "Productos petrolíferos refinados",
+      "headline": "Infraestructura de exportación y combustibles refinados",
+      "description": "Diésel de muy bajo contenido en azufre EN 590 (10 ppm) y queroseno de aviación Jet A-1. Carga en terminales marítimas y liquidación bancaria directa.",
+      "sector": "refined_petroleum"
+    },
+    "slide3": {
+      "badge": "Gas natural y LGN",
+      "headline": "Transporte de GNL y logística criogénica de gas",
+      "description": "Gas natural licuado (95 %+ metano) y mezclas comerciales de GLP refrigerado. Salida directa desde terminales marítimas y asignación verificable de carga.",
+      "sector": "natural_gas_ngls"
+    },
+    "slide4": {
+      "badge": "Materias primas agrícolas",
+      "headline": "Exportación y comercio de azúcar refinado y crudo",
+      "description": "Azúcar de caña blanco refinado ICUMSA 45 y azúcar crudo VHP. Carga a granel en puerto, inspección SGS previa al embarque y ejecución regulada.",
+      "sector": "sugar"
+    }
   }
 }

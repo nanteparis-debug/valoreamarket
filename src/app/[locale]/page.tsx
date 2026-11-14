@@ -17,6 +17,7 @@ export default async function HomePage({
 
   const tNav = await getTranslations({ locale, namespace: "nav" });
   const tHero = await getTranslations({ locale, namespace: "hero" });
+  const tHeroCarousel = await getTranslations({ locale, namespace: "heroCarousel" });
   const tSectors = await getTranslations({ locale, namespace: "sectors" });
   const tHowItWorks = await getTranslations({ locale, namespace: "howItWorks" });
   const tFeatures = await getTranslations({ locale, namespace: "features" });
@@ -50,7 +51,7 @@ export default async function HomePage({
 
       {/* Main Landing Sections */}
       <main>
-        {/* 1. Aurora Hero with Live Stats & Brokerage Badges */}
+        {/* 1. Aurora Hero with Featured Commodities Carousel, Live Stats & Brokerage Badges */}
         <AuroraHero
           translations={{
             badge: tHero("badge"),
@@ -70,6 +71,42 @@ export default async function HomePage({
             pillarDealRooms: tHero("pillarDealRooms"),
             pillarDocs: tHero("pillarDocs"),
             pillarLangs: tHero("pillarLangs"),
+          }}
+          carouselTranslations={{
+            ariaLabel: tHeroCarousel("ariaLabel"),
+            prevSlide: tHeroCarousel("prevSlide"),
+            nextSlide: tHeroCarousel("nextSlide"),
+            slideCounter: tHeroCarousel("slideCounter"),
+            goToSlide: tHeroCarousel("goToSlide"),
+            pauseAutoplay: tHeroCarousel("pauseAutoplay"),
+            resumeAutoplay: tHeroCarousel("resumeAutoplay"),
+            statusActive: tHeroCarousel("statusActive"),
+            exploreSector: tHeroCarousel("exploreSector"),
+            submitRequest: tHeroCarousel("submitRequest"),
+            slide1: {
+              badge: tHeroCarousel("slide1.badge"),
+              headline: tHeroCarousel("slide1.headline"),
+              description: tHeroCarousel("slide1.description"),
+              sector: tHeroCarousel("slide1.sector"),
+            },
+            slide2: {
+              badge: tHeroCarousel("slide2.badge"),
+              headline: tHeroCarousel("slide2.headline"),
+              description: tHeroCarousel("slide2.description"),
+              sector: tHeroCarousel("slide2.sector"),
+            },
+            slide3: {
+              badge: tHeroCarousel("slide3.badge"),
+              headline: tHeroCarousel("slide3.headline"),
+              description: tHeroCarousel("slide3.description"),
+              sector: tHeroCarousel("slide3.sector"),
+            },
+            slide4: {
+              badge: tHeroCarousel("slide4.badge"),
+              headline: tHeroCarousel("slide4.headline"),
+              description: tHeroCarousel("slide4.description"),
+              sector: tHeroCarousel("slide4.sector"),
+            },
           }}
         />
 

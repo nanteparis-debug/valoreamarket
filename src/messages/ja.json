@@ -397,5 +397,41 @@
     "previewBtn": "透かし入りプレビュー",
     "agreementTitle": "ディーゼル EN590 売買合意書および仲介手数料スケジュール",
     "agreementTerms": "売り手: 供給者-Nordic-77 | 買い手: 買い手-Alpha-24 | 数量: 50,000 MT | 価格: 740 USD/MT CIF ロッテルダム | 決済: 商業銀行100%信用状(L/C) | 仲介手数料: 1.25% 米ドル決済。"
+  },
+  "heroCarousel": {
+    "ariaLabel": "注目の国際コモディティ市場",
+    "prevSlide": "前のスライド",
+    "nextSlide": "次のスライド",
+    "slideCounter": "スライド {current} / {total}",
+    "goToSlide": "スライド {slide} を表示",
+    "pauseAutoplay": "自動スライドを一時停止",
+    "resumeAutoplay": "自動スライドを再開",
+    "statusActive": "表示中のスライド",
+    "exploreSector": "商品を見る",
+    "submitRequest": "買付リクエストを送信",
+    "slide1": {
+      "badge": "産業用金属",
+      "headline": "高純度銅およびアルミニウムの国際供給",
+      "description": "LME登録グレードA電気銅（純度99.9935%）および一次アルミニウムインゴット（P1020A）。CIF/FOB港湾納入と公認検査分析証書。",
+      "sector": "metals_industrial"
+    },
+    "slide2": {
+      "badge": "精製石油製品",
+      "headline": "石油輸出インフラと高品質精製燃料",
+      "description": "超低硫黄軽油EN 590（10 ppm以下）およびJet A-1ジェット燃料。出荷ターミナル連携、海上輸送、銀行直接決済。",
+      "sector": "refined_petroleum"
+    },
+    "slide3": {
+      "badge": "天然ガス・NGL",
+      "headline": "LNG海上輸送と極低温ガスロジスティクス",
+      "description": "液化天然ガス（メタン純度95%以上）および冷却LPG商用混合物。受入ターミナル直結と確実な船腹割当。",
+      "sector": "natural_gas_ngls"
+    },
+    "slide4": {
+      "badge": "農業・食品原料",
+      "headline": "精製白糖および粗糖の大口輸出取引",
+      "description": "ICUMSA 45規格精製白糖およびVHP粗糖。港湾バルク積載設備、船積前SGS独立検査、安全な国際取引執行。",
+      "sector": "sugar"
+    }
   }
 }
