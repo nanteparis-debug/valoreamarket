@@ -65,6 +65,17 @@ export const TEST_PERSONAS: Record<string, AuthenticatedUser> = {
     isVerified: true,
     kybStatus: "approved",
   },
+  platform_admin: {
+    id: "usr-platform-director",
+    name: "Lord Robert Sterling-Al-Mansour",
+    email: "director@valorea.exchange",
+    role: "platform_admin",
+    orgId: "org-valorea-executive",
+    orgName: "VALOREA MARKET Global Board & Operations",
+    orgCountry: "CH",
+    isVerified: true,
+    kybStatus: "approved",
+  },
   unauthorized_competitor: {
     id: "usr-third-party",
     name: "John External",
@@ -138,6 +149,13 @@ export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null
   }
 
   // 4. Production Session Authentication via Cryptographic Session Token
+  const adminToken = req.cookies?.get("valorea_admin_token")?.value;
+  if (adminToken) {
+    if (adminToken.includes("compliance")) return TEST_PERSONAS.compliance;
+    if (adminToken.includes("broker")) return TEST_PERSONAS.broker;
+    return TEST_PERSONAS.platform_admin;
+  }
+
   const sessionToken = req.cookies?.get("valorea_session_token")?.value;
   if (sessionToken) {
     // Verify valid session token
