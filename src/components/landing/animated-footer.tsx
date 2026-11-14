@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LANGUAGES } from "@/lib/constants";
 import { ShieldCheck, Globe } from "lucide-react";
@@ -56,14 +57,32 @@ export function AnimatedFooter({
           {/* Brand Info & Mission (2 cols) */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#b87333] to-[#0c0e17] p-[1.5px]">
-                <div className="w-full h-full bg-[#0c0e17] rounded-[9px] flex items-center justify-center">
-                  <ShieldCheck className="w-5 h-5 text-[#d4956b]" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#b87333] to-[#0c0e17] p-[1.5px] shrink-0">
+                <div className="w-full h-full bg-[#0c0e17] rounded-[9px] flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/icon-dark.png"
+                    alt="VALOREA MARKET"
+                    width={36}
+                    height={36}
+                    className="w-full h-full object-contain p-0.5 hidden dark:block"
+                  />
+                  <Image
+                    src="/icon-light.png"
+                    alt="VALOREA MARKET"
+                    width={36}
+                    height={36}
+                    className="w-full h-full object-contain p-0.5 block dark:hidden"
+                  />
                 </div>
               </div>
-              <span className="text-xl font-bold tracking-wider text-white font-mono">
-                VALOREA MARKET
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl font-bold tracking-wider text-white font-mono">
+                  VALOREA MARKET
+                </span>
+                <span className="text-[10px] tracking-widest text-[#d4956b] font-mono font-semibold">
+                  G V C E
+                </span>
+              </div>
             </div>
             <p className="text-gray-400 max-w-sm text-xs leading-relaxed">
               {translations.description}

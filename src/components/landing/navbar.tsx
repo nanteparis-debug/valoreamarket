@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { SUPPORTED_LANGUAGES, type LanguageOption } from "@/lib/constants";
 import {
@@ -79,9 +80,24 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
             href="/"
             className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b87333] rounded-lg p-1"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#b87333] via-[#8b5a2b] to-[#07080c] p-[1.5px] shadow-lg shadow-[#b87333]/20">
-              <div className="w-full h-full bg-[#0c0e17] rounded-[10px] flex items-center justify-center group-hover:bg-[#121524] transition-colors">
-                <ShieldCheck className="w-5 h-5 text-[#d4956b] group-hover:scale-110 transition-transform" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#b87333] via-[#8b5a2b] to-[#07080c] dark:from-[#b87333] dark:to-[#07080c] p-[1.5px] shadow-lg shadow-[#b87333]/20 shrink-0">
+              <div className="w-full h-full bg-[#0c0e17] rounded-[10px] flex items-center justify-center group-hover:bg-[#121524] transition-colors overflow-hidden">
+                <Image
+                  src="/icon-dark.png"
+                  alt="VALOREA MARKET"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain p-0.5 hidden dark:block group-hover:scale-105 transition-transform"
+                  priority
+                />
+                <Image
+                  src="/icon-light.png"
+                  alt="VALOREA MARKET"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain p-0.5 block dark:hidden group-hover:scale-105 transition-transform"
+                  priority
+                />
               </div>
             </div>
             <div className="flex flex-col">
@@ -91,8 +107,9 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
                   {translations.verifiedBadge || "Verified"}
                 </span>
               </span>
-              <span className="text-[10px] text-gray-400 tracking-tight hidden sm:inline-block">
-                {translations.siteSubtitle || "Global Verified Commodities Exchange"}
+              <span className="text-[10px] text-gray-400 tracking-tight hidden sm:flex items-center gap-1.5">
+                <span>{translations.siteSubtitle || "Global Verified Commodities Exchange"}</span>
+                <span className="text-[#d4956b] font-mono font-semibold">GVCE</span>
               </span>
             </div>
           </Link>
