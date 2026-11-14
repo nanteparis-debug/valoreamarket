@@ -108,6 +108,7 @@ export default async function HomePage({
               sector: tHeroCarousel("slide4.sector"),
             },
           }}
+          locale={locale}
         />
 
         {/* 2. Commodity Catalog Bento (7 Sectors & Specs) */}

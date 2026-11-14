@@ -151,4 +151,39 @@ test("Hero Carousel: Global CSS animations and progress keyframes", async () => 
     cssSource.includes(".animate-carousel-progress"),
     "globals.css must define .animate-carousel-progress class"
   );
+  assert.ok(
+    cssSource.includes("@keyframes slideInFromRight") &&
+      cssSource.includes("@keyframes slideInFromLeft") &&
+      cssSource.includes("@keyframes slideOutToLeft") &&
+      cssSource.includes("@keyframes slideOutToRight"),
+    "globals.css must define all 4 directional sliding keyframes"
+  );
+  assert.ok(
+    cssSource.includes(".animate-slide-in-from-right") &&
+      cssSource.includes(".animate-slide-in-from-left") &&
+      cssSource.includes(".animate-slide-out-to-left") &&
+      cssSource.includes(".animate-slide-out-to-right"),
+    "globals.css must define all 4 directional sliding animation classes"
+  );
+});
+
+test("Hero Carousel: RTL vs LTR language-aware sliding direction logic", async () => {
+  const carouselSource = await fs.readFile(
+    "src/components/landing/hero-carousel.tsx",
+    "utf-8"
+  );
+
+  assert.ok(
+    carouselSource.includes("isRtl"),
+    "hero-carousel must detect RTL direction based on locale or document direction"
+  );
+  assert.ok(
+    carouselSource.includes("animate-slide-in-from-left") &&
+      carouselSource.includes("animate-slide-in-from-right"),
+    "hero-carousel must use directional sliding classes based on isRtl and direction"
+  );
+  assert.ok(
+    carouselSource.includes("isTransitioning"),
+    "hero-carousel must track transition state between outgoing and incoming slides"
+  );
 });

@@ -37,9 +37,14 @@ interface AuroraHeroProps {
     pillarLangs?: string;
   };
   carouselTranslations?: HeroCarouselTranslations;
+  locale?: string;
 }
 
-export function AuroraHero({ translations, carouselTranslations }: AuroraHeroProps) {
+export function AuroraHero({
+  translations,
+  carouselTranslations,
+  locale,
+}: AuroraHeroProps) {
   return (
     <section className="relative min-h-[78vh] flex flex-col justify-center items-center overflow-hidden pt-20 pb-12 px-4 sm:px-6 lg:px-8">
       {/* Background Aurora Mesh with GPU Acceleration */}
@@ -134,7 +139,7 @@ export function AuroraHero({ translations, carouselTranslations }: AuroraHeroPro
       {/* Featured 4-Slide Commodity Hero Carousel */}
       {carouselTranslations && (
         <div className="relative z-10 w-full max-w-7xl mx-auto mt-12 mb-8">
-          <HeroCarousel translations={carouselTranslations} />
+          <HeroCarousel translations={carouselTranslations} locale={locale} />
         </div>
       )}
 

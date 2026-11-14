@@ -44,6 +44,7 @@ export interface HeroCarouselTranslations {
 export interface HeroCarouselProps {
   translations: HeroCarouselTranslations;
   className?: string;
+  locale?: string;
 }
 
 interface SlideConfig {
@@ -126,8 +127,12 @@ const SLIDES_CONFIG: SlideConfig[] = [
 
 const AUTOPLAY_INTERVAL = 6000; // 6 seconds
 
-export function HeroCarousel({ translations, className }: HeroCarouselProps) {
+export function HeroCarousel({ translations, className, locale }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState<number | null>(null);
+  const [direction, setDirection] = useState<"forward" | "backward">("forward");
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   const [isPausedByUser, setIsPausedByUser] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -137,6 +142,11 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
+
+  // Determine RTL status from locale or document
+  const isRtl =
+    locale === "ar" ||
+    (typeof document !== "undefined" && document.documentElement.dir === "rtl");
 
   // Check prefers-reduced-motion
   useEffect(() => {
@@ -154,21 +164,48 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
 
   const totalSlides = SLIDES_CONFIG.length;
 
+  // Clean up transition after 700ms animation
+  useEffect(() => {
+    if (!isTransitioning) return;
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+      setPrevIndex(null);
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [isTransitioning]);
+
   const goToSlide = useCallback(
-    (index: number) => {
-      const nextIndex = (index + totalSlides) % totalSlides;
-      setCurrentIndex(nextIndex);
+    (targetIndex: number, forcedDirection?: "forward" | "backward") => {
+      if (isTransitioning) return;
+      const normalizedTarget = (targetIndex + totalSlides) % totalSlides;
+      if (normalizedTarget === currentIndex) return;
+
+      let dir = forcedDirection;
+      if (!dir) {
+        if (currentIndex === totalSlides - 1 && normalizedTarget === 0) {
+          dir = "forward";
+        } else if (currentIndex === 0 && normalizedTarget === totalSlides - 1) {
+          dir = "backward";
+        } else {
+          dir = normalizedTarget > currentIndex ? "forward" : "backward";
+        }
+      }
+
+      setDirection(dir);
+      setPrevIndex(currentIndex);
+      setCurrentIndex(normalizedTarget);
+      setIsTransitioning(true);
       setProgressKey((k) => k + 1);
     },
-    [totalSlides]
+    [currentIndex, isTransitioning, totalSlides]
   );
 
   const nextSlide = useCallback(() => {
-    goToSlide(currentIndex + 1);
+    goToSlide(currentIndex + 1, "forward");
   }, [currentIndex, goToSlide]);
 
   const prevSlide = useCallback(() => {
-    goToSlide(currentIndex - 1);
+    goToSlide(currentIndex - 1, "backward");
   }, [currentIndex, goToSlide]);
 
   const isAutoplayActive =
@@ -185,15 +222,24 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
     return () => clearInterval(timer);
   }, [isAutoplayActive, nextSlide]);
 
-  // Keyboard navigation
+  // Keyboard navigation respecting RTL / LTR orientation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowRight") {
       e.preventDefault();
-      // In RTL, visual direction flips or standard advance
-      nextSlide();
+      // In RTL, ArrowRight visually points backward
+      if (isRtl) {
+        prevSlide();
+      } else {
+        nextSlide();
+      }
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
-      prevSlide();
+      // In RTL, ArrowLeft visually points forward
+      if (isRtl) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
     } else if (e.key === "Home") {
       e.preventDefault();
       goToSlide(0);
@@ -203,7 +249,7 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
     }
   };
 
-  // Touch swipe handling
+  // Touch swipe handling respecting RTL / LTR visual direction
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (e.touches.length === 1) {
       touchStartXRef.current = e.touches[0].clientX;
@@ -222,12 +268,20 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
 
     // Ensure horizontal gesture is dominant
     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (deltaX < 0) {
-        // Swiped left
-        nextSlide();
+      if (isRtl) {
+        // In RTL: dragging right is forward advance (from left to right)
+        if (deltaX > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
       } else {
-        // Swiped right
-        prevSlide();
+        // In LTR: dragging left is forward advance (from right to left)
+        if (deltaX < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
       }
     }
 
@@ -267,12 +321,65 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
         : {activeSlideData.headline} — {activeSlideData.description}
       </div>
 
-      {/* Slides Deck */}
-      <div className="relative w-full h-full">
+      {/* Slides Deck with Language-Aware Directional Transitions */}
+      <div className="relative w-full h-full overflow-hidden">
         {SLIDES_CONFIG.map((slide, index) => {
-          const isActive = index === currentIndex;
+          const isCurrent = index === currentIndex;
+          const isPrevious = index === prevIndex;
+          const isVisible = isCurrent || isPrevious;
           const slideData = translations[slide.key];
           const Icon = slide.icon;
+
+          // Determine directional slide animation class
+          let animationClass = "";
+          if (prefersReducedMotion) {
+            animationClass = isCurrent
+              ? "opacity-100 z-10"
+              : "opacity-0 z-0 pointer-events-none hidden";
+          } else if (isTransitioning) {
+            if (isCurrent) {
+              // Incoming slide
+              if (direction === "forward") {
+                // In LTR: forward slides in from Right to Left
+                // In RTL: forward slides in from Left to Right (inverted)
+                animationClass = isRtl
+                  ? "animate-slide-in-from-left z-10 opacity-100"
+                  : "animate-slide-in-from-right z-10 opacity-100";
+              } else {
+                // Backward slide
+                animationClass = isRtl
+                  ? "animate-slide-in-from-right z-10 opacity-100"
+                  : "animate-slide-in-from-left z-10 opacity-100";
+              }
+            } else if (isPrevious) {
+              // Outgoing slide
+              if (direction === "forward") {
+                // In LTR: forward slides out to Left
+                // In RTL: forward slides out to Right (inverted)
+                animationClass = isRtl
+                  ? "animate-slide-out-to-right z-0 opacity-100"
+                  : "animate-slide-out-to-left z-0 opacity-100";
+              } else {
+                // Backward slide
+                animationClass = isRtl
+                  ? "animate-slide-out-to-left z-0 opacity-100"
+                  : "animate-slide-out-to-right z-0 opacity-100";
+              }
+            } else {
+              animationClass = "opacity-0 z-0 pointer-events-none hidden";
+            }
+          } else {
+            // Stationary state
+            if (isCurrent) {
+              animationClass = "opacity-100 z-10 translate-x-0";
+            } else {
+              animationClass = "opacity-0 z-0 pointer-events-none hidden";
+            }
+          }
+
+          if (!isVisible && isTransitioning) {
+            return null;
+          }
 
           return (
             <div
@@ -282,17 +389,10 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
               aria-label={translations.slideCounter
                 ?.replace("{current}", (index + 1).toString())
                 ?.replace("{total}", totalSlides.toString())}
-              aria-hidden={!isActive}
+              aria-hidden={!isCurrent}
               className={cn(
-                "absolute inset-0 w-full h-full",
-                prefersReducedMotion
-                  ? isActive
-                    ? "opacity-100 z-10"
-                    : "opacity-0 z-0 pointer-events-none"
-                  : "transition-opacity duration-700 ease-in-out",
-                isActive
-                  ? "opacity-100 z-10 pointer-events-auto"
-                  : "opacity-0 z-0 pointer-events-none"
+                "absolute inset-0 w-full h-full overflow-hidden",
+                animationClass
               )}
             >
               {/* Background Next.js Optimized Image */}
@@ -304,10 +404,7 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
                   priority={index === 0}
                   loading={index === 0 ? "eager" : "lazy"}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1280px"
-                  className={cn(
-                    "object-cover transition-transform duration-1000 ease-out",
-                    isActive ? "scale-100" : "scale-105"
-                  )}
+                  className="object-cover"
                   style={{ objectPosition: slide.objectPosition }}
                 />
               </div>
@@ -334,13 +431,14 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
                     "max-w-xl lg:max-w-2xl rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-10",
                     "bg-[#07080c]/75 backdrop-blur-md border border-white/10 shadow-2xl",
                     "transition-all duration-500 ease-out",
-                    isActive
+                    isCurrent
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-4"
                   )}
                 >
                   {/* Sector Pill Badge */}
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border mb-4 shadow-sm backdrop-blur-sm"
+                  <div
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border mb-4 shadow-sm backdrop-blur-sm"
                     style={{
                       backgroundColor: slide.badgeBg,
                       borderColor: slide.badgeBorder,
@@ -353,7 +451,8 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
                     >
                       {slideData.badge}
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full animate-pulse"
+                    <span
+                      className="w-1.5 h-1.5 rounded-full animate-pulse"
                       style={{ backgroundColor: slide.accentColor }}
                     />
                   </div>
@@ -475,7 +574,10 @@ export function HeroCarousel({ translations, className }: HeroCarouselProps) {
                     style={{ animationDuration: `${AUTOPLAY_INTERVAL}ms` }}
                   />
                 )}
-                <span className="font-mono text-[11px] sm:text-xs font-semibold relative z-10" dir="ltr">
+                <span
+                  className="font-mono text-[11px] sm:text-xs font-semibold relative z-10"
+                  dir="ltr"
+                >
                   0{idx + 1}
                 </span>
                 <span className="hidden md:inline relative z-10 truncate max-w-[90px] text-xs">
