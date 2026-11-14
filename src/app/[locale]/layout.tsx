@@ -77,6 +77,18 @@ export async function generateMetadata({
         "x-default": "/en",
       },
     },
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon-dark.png", type: "image/png", media: "(prefers-color-scheme: dark)" },
+        { url: "/icon-light.png", type: "image/png", media: "(prefers-color-scheme: light)" },
+        { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      ],
+      apple: [
+        { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+      shortcut: ["/favicon.ico"],
+    },
     openGraph: {
       type: "website",
       locale: locale === "ar" ? "ar_AE" : locale === "fr" ? "fr_CH" : "en_US",
