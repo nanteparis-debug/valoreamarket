@@ -1,4 +1,9 @@
-import { sanitizeDealMessage, type SanitizeResult } from "./sanitizer.ts";
+import {
+  sanitizeDealMessage,
+  analyzeVerbalTranscript,
+  type SanitizeResult,
+  type VerbalInterceptionResult,
+} from "./sanitizer.ts";
 
 export interface DealParticipant {
   id: string;
@@ -99,6 +104,20 @@ export interface DealDocument {
   downloadCount: number;
 }
 
+export interface ComplianceIncident {
+  id: string;
+  dealId: string;
+  participantAlias: string;
+  channel: "chat" | "audio_video";
+  violationType: string;
+  evasionPattern?: string;
+  rawSnippet: string;
+  sanitizedSnippet: string;
+  actionTaken: "MESSAGE_REDACTED" | "AUTO_MUTE_MICROPHONE" | "BROKER_FLAGGED";
+  timestamp: string;
+  penaltyNotice: string;
+}
+
 export interface DealMessage {
   id: string;
   senderAlias: string;
@@ -106,6 +125,9 @@ export interface DealMessage {
   text: string;
   sanitizedText: string;
   contactViolation: boolean;
+  evasionDetected?: boolean;
+  evasionTypes?: string[];
+  riskScore?: "CLEAN" | "LOW" | "HIGH" | "CRITICAL";
   timestamp: string;
 }
 
@@ -130,6 +152,7 @@ export interface DealItem {
   participants: DealParticipant[];
   messages: DealMessage[];
   documents: DealDocument[];
+  complianceIncidents?: ComplianceIncident[];
   auditLog: Array<{ action: string; actor: string; timestamp: string }>;
 }
 
@@ -664,17 +687,116 @@ class GVCEDataStore {
       text,
       sanitizedText: sanitized.sanitizedText,
       contactViolation: !sanitized.isClean,
+      evasionDetected: sanitized.evasionDetected,
+      evasionTypes: sanitized.evasionTypes,
+      riskScore: sanitized.riskScore,
       timestamp: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZone: "UTC" }) + " UTC",
     };
 
     deal.messages.push(msg);
+
+    if (!sanitized.isClean) {
+      if (!deal.complianceIncidents) deal.complianceIncidents = [];
+      const incident: ComplianceIncident = {
+        id: `inc-${Date.now().toString(36)}`,
+        dealId,
+        participantAlias: senderAlias,
+        channel: "chat",
+        violationType: sanitized.violations.join(", "),
+        evasionPattern: sanitized.evasionTypes?.join(", "),
+        rawSnippet: text.slice(0, 150),
+        sanitizedSnippet: sanitized.sanitizedText.slice(0, 150),
+        actionTaken: "MESSAGE_REDACTED",
+        timestamp: new Date().toISOString(),
+        penaltyNotice:
+          "Liquidated circumvention damages: 3x total anticipated brokerage commission (ICC Model Contract 769 / NCNDA)",
+      };
+      deal.complianceIncidents.push(incident);
+    }
+
     deal.auditLog.push({
-      action: sanitized.isClean ? "MESSAGE_DELIVERED" : "MESSAGE_SANITIZED_VIOLATION",
+      action: sanitized.isClean
+        ? "MESSAGE_DELIVERED"
+        : sanitized.evasionDetected
+        ? "CIRCUMVENTION_EVASION_INTERCEPTED"
+        : "MESSAGE_SANITIZED_VIOLATION",
       actor: senderAlias,
       timestamp: new Date().toISOString(),
     });
 
     return msg;
+  }
+
+  public recordVerbalIncident(
+    dealId: string,
+    participantAlias: string,
+    spokenTranscript: string
+  ): {
+    incident: ComplianceIncident | null;
+    autoMute: boolean;
+    violationDetected: boolean;
+    alertMessageAr: string;
+    alertMessageEn: string;
+    strikesCount: number;
+    penaltyNotice: string;
+  } {
+    const deal = this.deals.get(dealId);
+    const analysis = analyzeVerbalTranscript(spokenTranscript);
+
+    if (!analysis.isViolation) {
+      return {
+        incident: null,
+        autoMute: false,
+        violationDetected: false,
+        alertMessageAr: "الحديث سليم ومتوافق مع قواعد الوساطة.",
+        alertMessageEn: "Verbal stream complies with brokerage rules.",
+        strikesCount: 0,
+        penaltyNotice: analysis.legalClauseNotice,
+      };
+    }
+
+    let incident: ComplianceIncident | null = null;
+    if (deal) {
+      if (!deal.complianceIncidents) deal.complianceIncidents = [];
+      incident = {
+        id: `v-inc-${Date.now().toString(36)}`,
+        dealId,
+        participantAlias,
+        channel: "audio_video",
+        violationType: analysis.detectedCategories.join(", "),
+        rawSnippet: spokenTranscript.slice(0, 150),
+        sanitizedSnippet: "[VERBAL CONTACT ATTEMPT MUTED IN REAL TIME]",
+        actionTaken: "AUTO_MUTE_MICROPHONE",
+        timestamp: new Date().toISOString(),
+        penaltyNotice: analysis.legalClauseNotice,
+      };
+      deal.complianceIncidents.push(incident);
+
+      deal.auditLog.push({
+        action: "AUDIO_SPEECH_LEAK_INTERCEPTED_AUTO_MUTE",
+        actor: participantAlias,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const strikesCount = deal
+      ? (deal.complianceIncidents || []).filter((i) => i.participantAlias === participantAlias).length
+      : 1;
+
+    return {
+      incident,
+      autoMute: true,
+      violationDetected: true,
+      alertMessageAr: analysis.warningMessageAr,
+      alertMessageEn: analysis.warningMessageEn,
+      strikesCount,
+      penaltyNotice: analysis.legalClauseNotice,
+    };
+  }
+
+  public getComplianceIncidents(dealId: string): ComplianceIncident[] {
+    const deal = this.deals.get(dealId);
+    return deal?.complianceIncidents || [];
   }
 
   public authorizeOriginalDownload(dealId: string, docId: string, authorizedOrgId: string): boolean {

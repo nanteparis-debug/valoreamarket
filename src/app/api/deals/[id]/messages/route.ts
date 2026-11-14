@@ -97,9 +97,15 @@ export async function POST(
     return NextResponse.json({
       success: true,
       message: result,
+      contactViolation: result.contactViolation,
+      evasionDetected: result.evasionDetected,
       warning: result.contactViolation
-        ? "Contact information leak was detected and sanitized."
+        ? result.evasionDetected
+          ? "تنبيه خرق أمني: تم رصد محاولة تحايل وإفشاء بيانات تواصل (أروبات/رمز/هاتف). تم حجب الرسالة وتسجيل المخالفة بموجب عقد ICC Model Contract 769 (NCNDA)."
+          : "Contact information leak was detected and sanitized."
         : undefined,
+      legalNotice:
+        "ICC Model Contract 769 (NCNDA) • Liquidated circumvention damages: 3x total anticipated brokerage commission.",
     });
   } catch (err: any) {
     return NextResponse.json(
