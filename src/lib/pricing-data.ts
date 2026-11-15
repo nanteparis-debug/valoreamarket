@@ -86,7 +86,7 @@ export const PLATFORM_PRICING_PLANS: PricingPlan[] = [
       en: "Register Free",
       ar: "سجل مجاناً",
       action: "register",
-      href: "/auth/register",
+      href: "/auth/register?plan=starter",
     },
   },
   {
@@ -130,7 +130,7 @@ export const PLATFORM_PRICING_PLANS: PricingPlan[] = [
       en: "Upgrade to Professional",
       ar: "ترقية للمؤسسات",
       action: "upgrade",
-      href: "/billing",
+      href: "/auth/register?plan=professional",
     },
   },
   {
@@ -174,7 +174,7 @@ export const PLATFORM_PRICING_PLANS: PricingPlan[] = [
       en: "Upgrade to Enterprise",
       ar: "ترقية لباقة المؤسسات",
       action: "upgrade",
-      href: "/billing",
+      href: "/auth/register?plan=enterprise",
     },
   },
 ];

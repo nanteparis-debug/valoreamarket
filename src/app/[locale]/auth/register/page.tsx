@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, Suspense } from "react";
 import { useRouter, Link } from "@/i18n/routing";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import { TurnstileWidget, type TurnstileRef } from "@/components/ui/turnstile-widget";
 import {
@@ -15,7 +15,11 @@ import {
   Clock,
   ExternalLink,
   AlertCircle,
+  CreditCard,
+  Loader2,
+  Sparkles,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const SUPPORTED_INCORPORATION_COUNTRIES = [
   { code: "CH", nameAr: "سويسرا (CH)", nameEn: "Switzerland (CH)", flag: "🇨🇭" },
@@ -30,12 +34,24 @@ export const SUPPORTED_INCORPORATION_COUNTRIES = [
   { code: "DE", nameAr: "ألمانيا (DE)", nameEn: "Germany (DE)", flag: "🇩🇪" },
 ];
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
   const locale = (params?.locale as string) || "en";
   const t = getSubpageTranslations(locale);
   const isAr = locale === "ar";
+
+  const planParam = searchParams.get("plan");
+  const validPlans = ["starter", "professional", "enterprise"] as const;
+  type PlanType = (typeof validPlans)[number];
+
+  const [selectedPlan, setSelectedPlan] = useState<PlanType>(() => {
+    if (planParam && validPlans.includes(planParam as PlanType)) {
+      return planParam as PlanType;
+    }
+    return "starter";
+  });
 
   const [companyName, setCompanyName] = useState("");
   const [regNumber, setRegNumber] = useState("");
@@ -46,7 +62,35 @@ export default function RegisterPage() {
   const [agreeLegal, setAgreeLegal] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const PLAN_OPTIONS = [
+    {
+      id: "starter" as const,
+      name: isAr ? "مكتب المبتدئ" : "Trading Starter",
+      price: isAr ? "مجاني" : "Free",
+      seats: isAr ? "مقعد تداول 1" : "1 Trading Seat",
+      desc: isAr ? "تصفح السوق والتحقق الأساسي" : "Market access & basic KYB",
+      popular: false,
+    },
+    {
+      id: "professional" as const,
+      name: isAr ? "المؤسسات التجارية" : "Professional Desk",
+      price: "$499/mo",
+      seats: isAr ? "5 مقاعد تداول" : "5 Trading Seats",
+      desc: isAr ? "غرف صفقات خاصة ومطابقة الوسيط" : "Deal rooms & broker matching",
+      popular: true,
+    },
+    {
+      id: "enterprise" as const,
+      name: isAr ? "الشركات الكبرى والسيادية" : "Global Enterprise",
+      price: "$1,999/mo",
+      seats: isAr ? "15+ مقعداً" : "15+ Trading Seats",
+      desc: isAr ? "غرف غير محدودة ووسيط مخصص" : "Unlimited rooms & dedicated desk",
+      popular: false,
+    },
+  ];
 
   // Audit document versions accepted
   const legalVersions = {
@@ -89,7 +133,58 @@ export default function RegisterPage() {
       return;
     }
 
-    setSubmitted(true);
+    // Starter plan: Free KYB/KYC verification request
+    if (selectedPlan === "starter") {
+      setSubmitted(true);
+      return;
+    }
+
+    // Paid plans (Professional & Enterprise): Redirect to Lemon Squeezy with copied/prefilled details
+    setIsRedirecting(true);
+
+    const checkoutBase =
+      selectedPlan === "enterprise"
+        ? "https://valoreamarket.lemonsqueezy.com/checkout/buy/29fed9b0-8ff5-4736-947e-8f851dd55675"
+        : "https://valoreamarket.lemonsqueezy.com/checkout/buy/8d9c977f-9b9c-41f4-a61e-92d9897aab37";
+
+    const checkoutUrl = new URL(checkoutBase);
+    // Prefill customer contact details in Lemon Squeezy (fully editable by user on checkout)
+    if (repEmail) {
+      checkoutUrl.searchParams.set("checkout[email]", repEmail.trim());
+    }
+    if (repName) {
+      checkoutUrl.searchParams.set("checkout[name]", repName.trim());
+    }
+    // Pass enterprise context in custom parameters
+    checkoutUrl.searchParams.set("checkout[custom][companyName]", companyName.trim());
+    checkoutUrl.searchParams.set("checkout[custom][regNumber]", regNumber.trim());
+    checkoutUrl.searchParams.set("checkout[custom][country]", country);
+    checkoutUrl.searchParams.set("checkout[custom][plan]", selectedPlan);
+
+    // Persist registration in session storage
+    try {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem(
+          "gvce_pending_registration",
+          JSON.stringify({
+            companyName: companyName.trim(),
+            regNumber: regNumber.trim(),
+            country,
+            repName: repName.trim(),
+            repEmail: repEmail.trim(),
+            plan: selectedPlan,
+            timestamp: new Date().toISOString(),
+          })
+        );
+      }
+    } catch (err) {
+      console.warn("Storage warning:", err);
+    }
+
+    // Redirect to Lemon Squeezy payment gateway
+    setTimeout(() => {
+      window.location.href = checkoutUrl.toString();
+    }, 600);
   };
 
   return (
@@ -103,8 +198,32 @@ export default function RegisterPage() {
           <span>{t.auth.backHome}</span>
         </button>
 
-        {submitted ? (
-          <div className="text-center py-6 space-y-5">
+        {isRedirecting ? (
+          <div className="text-center py-12 space-y-6 animate-in fade-in duration-300">
+            <div className="w-16 h-16 rounded-2xl bg-[#b87333]/15 border border-[#b87333]/30 flex items-center justify-center text-[#d4956b] mx-auto shadow-xl shadow-[#b87333]/20">
+              <Loader2 className="w-8 h-8 animate-spin text-[#d4956b]" />
+            </div>
+
+            <div className="space-y-2">
+              <h2 className="text-2xl font-bold text-white">
+                {isAr ? "تم حفظ بيانات التسجيل المؤسسي" : "Registration Data Captured"}
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-300 max-w-md mx-auto leading-relaxed">
+                {isAr
+                  ? `جاري تحويلك بأمان إلى بوابة الدفع المشفرة لإتمام اشتراك ${companyName || "شركتك"}... تم نسخ معلوماتك لتسهيل عملية الشراء، ولك كامل الحرية في تعديلها داخل بوابة الدفع.`
+                  : `Redirecting securely to payment gateway for ${companyName || "your company"}... Your registered information is copied for easy checkout, with full right to edit it at the gateway.`}
+              </p>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-[#141724] border border-[#23273b] text-xs font-mono text-[#d4956b] inline-flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span>
+                {isAr ? "دفع مشفر ومؤمن عبر Lemon Squeezy" : "256-Bit Encrypted Checkout via Lemon Squeezy"}
+              </span>
+            </div>
+          </div>
+        ) : submitted ? (
+          <div className="text-center py-6 space-y-5 animate-in fade-in duration-300">
             <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto">
               <CheckCircle2 className="w-8 h-8" />
             </div>
@@ -208,6 +327,51 @@ export default function RegisterPage() {
               <p className="text-xs text-gray-400 mt-1">
                 {t.auth.registerSubtitle}
               </p>
+            </div>
+
+            {/* Plan Selector */}
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-gray-300 block">
+                {isAr ? "نوع اشتراك المنصة المختار:" : "Selected Platform Membership Plan:"}
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {PLAN_OPTIONS.map((p) => {
+                  const isSelected = selectedPlan === p.id;
+                  return (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => setSelectedPlan(p.id)}
+                      className={cn(
+                        "p-3 rounded-2xl border text-start transition-all relative flex flex-col justify-between",
+                        isSelected
+                          ? "bg-[#181b29] border-[#b87333] ring-1 ring-[#b87333]/50 shadow-lg shadow-[#b87333]/15"
+                          : "bg-[#10121d] border-[#23273b] hover:border-[#343a56]"
+                      )}
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-white">{p.name}</span>
+                          {p.popular && (
+                            <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#b87333]/20 text-[#ffd700] border border-[#b87333]/40">
+                              {isAr ? "موصى به" : "Popular"}
+                            </span>
+                          )}
+                        </div>
+                        <div className="font-mono text-sm font-extrabold text-[#d4956b]">
+                          {p.price}
+                        </div>
+                        <p className="text-[10px] text-gray-400 leading-tight">
+                          {p.desc}
+                        </p>
+                      </div>
+                      <div className="mt-2 pt-2 border-t border-[#1e2235] text-[10px] text-gray-500 font-mono">
+                        {p.seats}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {errorMessage && (
@@ -368,7 +532,13 @@ export default function RegisterPage() {
               type="submit"
               className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-xs sm:text-sm shadow-lg shadow-[#b87333]/20 transition-all flex items-center justify-center gap-2"
             >
-              <span>{t.auth.registerBtn}</span>
+              <span>
+                {selectedPlan === "starter"
+                  ? t.auth.registerBtn
+                  : selectedPlan === "professional"
+                  ? (isAr ? "متابعة للدفع وتفعيل باقة المحترفين ($499/شهر)" : "Proceed to Payment — Professional Desk ($499/mo)")
+                  : (isAr ? "متابعة للدفع وتفعيل باقة المؤسسات ($1,999/شهر)" : "Proceed to Payment — Enterprise Desk ($1,999/mo)")}
+              </span>
               <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </button>
 
@@ -386,5 +556,19 @@ export default function RegisterPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#07080c] flex items-center justify-center text-gray-400">
+          <Loader2 className="w-6 h-6 animate-spin text-[#d4956b]" />
+        </div>
+      }
+    >
+      <RegisterContent />
+    </Suspense>
   );
 }

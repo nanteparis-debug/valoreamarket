@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Script from "next/script";
 import { Link } from "@/i18n/routing";
 import { Check, Sparkles, ArrowRight, ShieldCheck, Landmark, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -188,10 +187,8 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
       description: translations.starter.description,
       features: translations.starter.features,
       isPopular: false,
-      isExternal: false,
-      cta: translations.registerFree || "Register Free",
-      href: "/auth/register",
-      checkoutUrl: undefined,
+      cta: translations.registerFree || (locale === "ar" ? "سجل مجاناً" : "Register Free"),
+      href: "/auth/register?plan=starter",
     },
     {
       ...PLATFORM_PRICING_PLANS[1],
@@ -199,10 +196,8 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
       description: translations.professional.description,
       features: translations.professional.features,
       isPopular: true,
-      isExternal: false,
       cta: locale === "ar" ? "ترقية للمؤسسات" : (translations.upgrade || "Upgrade to Professional"),
-      href: "/billing",
-      checkoutUrl: "https://valoreamarket.lemonsqueezy.com/checkout/buy/8d9c977f-9b9c-41f4-a61e-92d9897aab37?embed=1",
+      href: "/auth/register?plan=professional",
     },
     {
       ...PLATFORM_PRICING_PLANS[2],
@@ -210,10 +205,8 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
       description: translations.enterprise.description,
       features: translations.enterprise.features,
       isPopular: false,
-      isExternal: false,
       cta: locale === "ar" ? "ترقية لباقة المؤسسات" : (translations.upgrade || "Upgrade to Enterprise"),
-      href: "/billing",
-      checkoutUrl: "https://valoreamarket.lemonsqueezy.com/checkout/buy/29fed9b0-8ff5-4736-947e-8f851dd55675?embed=1",
+      href: "/auth/register?plan=enterprise",
     },
   ];
 
@@ -349,33 +342,18 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
 
               {/* Plan Action CTA */}
               <div className="mt-10 pt-6 border-t border-[#1f2233]">
-                {plan.checkoutUrl ? (
-                  <a
-                    href={plan.checkoutUrl}
-                    className={cn(
-                      "lemonsqueezy-button w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer",
-                      plan.isPopular
-                        ? "bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
-                        : "bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b]"
-                    )}
-                  >
-                    <span>{plan.cta}</span>
-                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-                  </a>
-                ) : (
-                  <Link
-                    href={plan.href}
-                    className={cn(
-                      "w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all",
-                      plan.isPopular
-                        ? "bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
-                        : "bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b]"
-                    )}
-                  >
-                    <span>{plan.cta}</span>
-                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-                  </Link>
-                )}
+                <Link
+                  href={plan.href}
+                  className={cn(
+                    "w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all",
+                    plan.isPopular
+                      ? "bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
+                      : "bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b]"
+                  )}
+                >
+                  <span>{plan.cta}</span>
+                  <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                </Link>
                 <p className="text-[10px] text-gray-500 text-center mt-2.5">
                   {translations.note || "Platform subscription fees billed in USD • Brokerage commissions separate"}
                 </p>
@@ -413,15 +391,6 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
           </Link>
         </div>
       </div>
-      <Script
-        src="https://assets.lemonsqueezy.com/lemon.js"
-        strategy="afterInteractive"
-        onLoad={() => {
-          if (typeof window !== "undefined" && (window as any).createLemonSqueezy) {
-            (window as any).createLemonSqueezy();
-          }
-        }}
-      />
     </section>
   );
 }
