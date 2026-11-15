@@ -125,3 +125,53 @@ test("Admin Auth: getAuthenticatedUser in auth-server.ts honors valorea_admin_to
   assert.strictEqual(user.role, "platform_admin");
   assert.strictEqual(user.email, "director@valorea.exchange");
 });
+
+test("Auth Session: GET /api/auth/session resolves active user session", async () => {
+  const { GET } = await import("../src/app/api/auth/session/route.ts");
+
+  // Unauthenticated
+  const reqUnauth = {
+    headers: new Headers(),
+    cookies: { get: () => undefined },
+  };
+  const resUnauth = await GET(reqUnauth);
+  assert.strictEqual(resUnauth.status, 200);
+  const dataUnauth = await resUnauth.json();
+  assert.strictEqual(dataUnauth.authenticated, false);
+  assert.strictEqual(dataUnauth.user, null);
+
+  // Authenticated with session cookie
+  const reqAuth = {
+    headers: new Headers(),
+    cookies: {
+      get: (name) => {
+        if (name === "valorea_session_token") {
+          return { value: "session_123456_buyer" };
+        }
+        return undefined;
+      },
+    },
+  };
+  const resAuth = await GET(reqAuth);
+  assert.strictEqual(resAuth.status, 200);
+  const dataAuth = await resAuth.json();
+  assert.strictEqual(dataAuth.authenticated, true);
+  assert.ok(dataAuth.user);
+  assert.strictEqual(dataAuth.user.role, "buyer");
+});
+
+test("Auth Session: POST /api/auth/session issues valid session token", async () => {
+  const { POST } = await import("../src/app/api/auth/session/route.ts");
+
+  const req = {
+    json: async () => ({ email: "a.dupont@totalenergies-trading.fr" }),
+  };
+  const res = await POST(req);
+  assert.strictEqual(res.status, 200);
+  const data = await res.json();
+  assert.strictEqual(data.success, true);
+  assert.strictEqual(data.authenticated, true);
+  assert.strictEqual(data.user.role, "buyer");
+  const setCookie = res.headers.get("Set-Cookie");
+  assert.ok(setCookie.includes("valorea_session_token"));
+});

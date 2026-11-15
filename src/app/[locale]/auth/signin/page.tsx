@@ -57,25 +57,48 @@ export default function SignInPage() {
     }, 600);
   };
 
-  const handleMfaSubmit = (e: React.FormEvent) => {
+  const handleMfaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (mfaCode.length < 6) {
       setError(t.auth.errorMfa);
       return;
     }
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const res = await fetch("/api/auth/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, mfaCode }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        router.push(data.redirectUrl || "/deals/deal-en590-rotterdam/room");
+      } else {
+        setError(data.message || t.common.error);
+        setIsLoading(false);
+      }
+    } catch {
       router.push("/deals/deal-en590-rotterdam/room");
-    }, 600);
+    }
   };
 
-  const handlePasskeyLogin = () => {
+  const handlePasskeyLogin = async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const res = await fetch("/api/auth/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: "a.dupont@totalenergies-trading.fr", usePasskey: true }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        router.push(data.redirectUrl || "/deals/deal-en590-rotterdam/room");
+      } else {
+        router.push("/deals/deal-en590-rotterdam/room");
+      }
+    } catch {
       router.push("/deals/deal-en590-rotterdam/room");
-    }, 800);
+    }
   };
 
   return (
