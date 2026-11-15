@@ -126,14 +126,28 @@ export const TEST_PERSONAS: Record<string, AuthenticatedUser> = {
  * Extract authenticated user context from request headers or cookies.
  * Supports production tokens, session cookies, and test persona overrides.
  */
-export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null {
+function getCookieValue(req: any, name: string): string | undefined {
+  if (req?.cookies && typeof req.cookies.get === "function") {
+    const val = req.cookies.get(name)?.value;
+    if (val) return val;
+  }
+  const header = req?.headers?.get ? req.headers.get("cookie") : undefined;
+  if (!header || typeof header !== "string") return undefined;
+  for (const pair of header.split(";")) {
+    const [k, ...v] = pair.trim().split("=");
+    if (k === name) return decodeURIComponent(v.join("="));
+  }
+  return undefined;
+}
+
+export function getAuthenticatedUser(req: NextRequest | any): AuthenticatedUser | null {
   // Security Gate: Test personas and role headers are strictly prohibited in production
   // unless explicitly authorized by test environment configuration or verified test key
   const isTestOrDev =
     process.env.NODE_ENV !== "production" ||
     process.env.ENABLE_TEST_PERSONAS === "true";
 
-  const testKeyHeader = req.headers.get("x-valorea-test-key");
+  const testKeyHeader = req.headers?.get ? req.headers.get("x-valorea-test-key") : null;
   const isTestKeyValid = Boolean(
     process.env.TEST_AUTH_SECRET &&
       testKeyHeader === process.env.TEST_AUTH_SECRET
@@ -141,14 +155,14 @@ export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null
 
   if (isTestOrDev || isTestKeyValid) {
     // 1. Check test persona headers for authorized automated test suites
-    const personaHeader = req.headers.get("x-valorea-persona")?.toLowerCase();
+    const personaHeader = req.headers?.get ? req.headers.get("x-valorea-persona")?.toLowerCase() : null;
     if (personaHeader && TEST_PERSONAS[personaHeader]) {
       return TEST_PERSONAS[personaHeader];
     }
 
     // 2. Check role and org override headers (sandboxed test runs only)
-    const roleHeader = req.headers.get("x-valorea-role") as PlatformRole | null;
-    const orgHeader = req.headers.get("x-organization-id");
+    const roleHeader = req.headers?.get ? (req.headers.get("x-valorea-role") as PlatformRole | null) : null;
+    const orgHeader = req.headers?.get ? req.headers.get("x-organization-id") : null;
     if (roleHeader && orgHeader) {
       return {
         id: `usr-${orgHeader}`,
@@ -164,21 +178,21 @@ export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null
     }
 
     // 3. Check test persona cookie
-    const personaCookie = req.cookies?.get("valorea_test_persona")?.value?.toLowerCase();
+    const personaCookie = getCookieValue(req, "valorea_test_persona")?.toLowerCase();
     if (personaCookie && TEST_PERSONAS[personaCookie]) {
       return TEST_PERSONAS[personaCookie];
     }
   }
 
   // 4. Production Session Authentication via Cryptographic Session Token
-  const adminToken = req.cookies?.get("valorea_admin_token")?.value;
+  const adminToken = getCookieValue(req, "valorea_admin_token");
   if (adminToken) {
     if (adminToken.includes("compliance")) return TEST_PERSONAS.compliance;
     if (adminToken.includes("broker")) return TEST_PERSONAS.broker;
     return TEST_PERSONAS.platform_admin;
   }
 
-  const sessionToken = req.cookies?.get("valorea_session_token")?.value;
+  const sessionToken = getCookieValue(req, "valorea_session_token");
   if (sessionToken) {
     if (sessionToken.includes("unverified_buyer") || sessionToken.includes("unverified")) return TEST_PERSONAS.unverified_buyer;
     if (sessionToken.includes("unverified_supplier")) return TEST_PERSONAS.unverified_supplier;
