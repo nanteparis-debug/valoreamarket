@@ -378,15 +378,15 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
             </span>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Image src="/images/payments/visa.svg" alt="Visa" width={48} height={30} className="h-6 w-auto" />
-          <Image src="/images/payments/mastercard.svg" alt="Mastercard" width={48} height={30} className="h-6 w-auto" />
-          <Image src="/images/payments/amex.svg" alt="American Express" width={48} height={30} className="h-6 w-auto" />
-          <Image src="/images/payments/apple-pay.svg" alt="Apple Pay" width={48} height={30} className="h-6 w-auto" />
-          <Image src="/images/payments/google-pay.svg" alt="Google Pay" width={48} height={30} className="h-6 w-auto" />
-          <Image src="/images/payments/discover.svg" alt="Discover" width={48} height={30} className="h-6 w-auto" />
-          <Image src="/images/payments/swift-sepa.svg" alt="SWIFT & SEPA" width={58} height={30} className="h-6 w-auto" />
-          <Image src="/images/payments/lemon-squeezy.svg" alt="Lemon Squeezy" width={115} height={30} className="h-6 w-auto" />
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Image src="/images/payments/visa.svg" alt="Visa" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/mastercard.svg" alt="Mastercard" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/amex.svg" alt="American Express" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/apple-pay.svg" alt="Apple Pay" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/google-pay.svg" alt="Google Pay" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/discover.svg" alt="Discover" width={84} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/swift-sepa.svg" alt="SWIFT & SEPA" width={110} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/lemon-squeezy.svg" alt="Lemon Squeezy" width={160} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
         </div>
       </div>
 

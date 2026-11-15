@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 40" fill="none">
-  <rect width="64" height="40" rx="6" fill="#016FD0" stroke="#005AA8" stroke-width="1.2"/>
-  <path d="M12 25.5L16.2 14.5H20.4L24.6 25.5H20.7L19.9 23.2H16.7L15.9 25.5H12ZM17.4 20.9H19.2L18.3 17.8L17.4 20.9ZM25 25.5L28.8 14.5H32.2L34.3 21.6L36.4 14.5H39.8L43.6 25.5H40.2L38.4 19.8L35.8 25.5H32.8L30.2 19.8L28.4 25.5H25ZM44.2 25.5V14.5H53.5V17.3H47.4V18.6H53.2V21.4H47.4V22.7H53.5V25.5H44.2Z" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" fill="none">
+  <rect width="80" height="48" rx="8" fill="#016FD0" stroke="#005AA8" stroke-width="1.2"/>
+  <!-- Decorative Amex inner border line -->
+  <rect x="4" y="4" width="72" height="40" rx="5" stroke="#3399EE" stroke-width="1" fill="none" opacity="0.6"/>
+  <text x="40" y="22" text-anchor="middle" fill="#FFFFFF" font-family="'Arial Black', Impact, 'Helvetica Neue', sans-serif" font-weight="900" font-size="9.5" letter-spacing="1.2">AMERICAN</text>
+  <text x="40" y="34" text-anchor="middle" fill="#FFFFFF" font-family="'Arial Black', Impact, 'Helvetica Neue', sans-serif" font-weight="900" font-size="9.5" letter-spacing="1.2">EXPRESS</text>
 </svg>

@@ -1,6 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 40" fill="none">
-  <rect width="64" height="40" rx="6" fill="#0E121E" stroke="#252A40" stroke-width="1.2"/>
-  <circle cx="25" cy="20" r="11" fill="#EB001B"/>
-  <circle cx="39" cy="20" r="11" fill="#F79E1B"/>
-  <path d="M32 12.3A11 11 0 0 0 32 27.7 11 11 0 0 0 32 12.3Z" fill="#FF5F00"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" fill="none">
+  <rect width="80" height="48" rx="8" fill="#0A0D18" stroke="#252A40" stroke-width="1.2"/>
+  <g transform="translate(0, -2)">
+    <!-- Red Circle -->
+    <circle cx="32" cy="23" r="13" fill="#EB001B"/>
+    <!-- Yellow Circle -->
+    <circle cx="48" cy="23" r="13" fill="#F79E1B"/>
+    <!-- Overlapping Intersection -->
+    <path d="M40 12.8A13 13 0 0 0 40 33.2 13 13 0 0 0 40 12.8Z" fill="#FF5F00"/>
+  </g>
+  <!-- Text: mastercard -->
+  <text x="40" y="41" text-anchor="middle" fill="#FFFFFF" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="7.5" letter-spacing="0.2">mastercard</text>
 </svg>
