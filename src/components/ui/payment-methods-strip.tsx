@@ -41,16 +41,16 @@ export function PaymentMethodsStrip({
   return (
     <div
       className={cn(
-        "w-full rounded-2xl bg-[#090b12]/90 border border-[#1d2133] p-5 sm:p-6 backdrop-blur-sm",
+        "w-full rounded-2xl bg-[#0c0e17] border border-[#23273b] p-5 sm:p-6 backdrop-blur-sm shadow-md transition-colors",
         className
       )}
     >
       {showTitle && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-[#181c2e]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-[#23273b]">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <h3 className="text-xs sm:text-sm font-bold text-white tracking-wide flex items-center gap-1.5">
+              <h3 className="text-xs sm:text-sm font-bold text-white [html.light_&]:text-slate-900 tracking-wide flex items-center gap-1.5">
                 <Lock className="w-3.5 h-3.5 text-[#d4956b]" />
                 <span>
                   {isAr
@@ -61,7 +61,7 @@ export function PaymentMethodsStrip({
                 </span>
               </h3>
             </div>
-            <p className="text-[11px] text-gray-400">
+            <p className="text-[11px] text-gray-400 [html.light_&]:text-slate-600">
               {isAr
                 ? "بوابات دفع مشفرة 256-Bit SSL • متوافق مع معايير PCI-DSS المستوى الأول • تسوية بضائع مباشرة بنك-إلى-بنك"
                 : isFr
@@ -72,7 +72,7 @@ export function PaymentMethodsStrip({
 
           <div className="flex items-center gap-3 shrink-0 flex-wrap">
             <TrustpilotBadge locale={locale} variant="mini" />
-            <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 shrink-0">
+            <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-400 [html.light_&]:text-emerald-700 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 shrink-0">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>
                 {isAr ? "دفع آمن 100% ومحمي" : "100% Secure Checkout"}
@@ -86,7 +86,7 @@ export function PaymentMethodsStrip({
       <div className="flex flex-wrap items-center justify-between gap-4">
         {/* Consumer & Corporate Cards & Wallets */}
         <div className="space-y-2">
-          <span className="text-[10px] uppercase font-mono tracking-wider text-gray-400 block">
+          <span className="text-[10px] uppercase font-mono tracking-wider text-gray-400 [html.light_&]:text-slate-500 block">
             {isAr
               ? "الاشتراكات وحسابات التداول (Cards & Digital Wallets):"
               : isFr
@@ -114,7 +114,7 @@ export function PaymentMethodsStrip({
 
         {/* Commodity Cargo Settlement & Security Badges */}
         <div className="space-y-2">
-          <span className="text-[10px] uppercase font-mono tracking-wider text-gray-400 block">
+          <span className="text-[10px] uppercase font-mono tracking-wider text-gray-400 [html.light_&]:text-slate-500 block">
             {isAr
               ? "تسوية الشحنات والضمانات المصرفية (Institutional Escrow):"
               : isFr
@@ -142,20 +142,20 @@ export function PaymentMethodsStrip({
       </div>
 
       {/* Trust Micro-Notices */}
-      <div className="mt-4 pt-3 border-t border-[#151827] flex flex-wrap items-center justify-between gap-2 text-[10px] text-gray-400 font-mono">
+      <div className="mt-4 pt-3 border-t border-[#23273b] flex flex-wrap items-center justify-between gap-2 text-[10px] text-gray-400 [html.light_&]:text-slate-500 font-mono">
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="inline-flex items-center gap-1 text-gray-300">
+          <span className="inline-flex items-center gap-1 text-gray-300 [html.light_&]:text-slate-700">
             <CheckCircle2 className="w-3 h-3 text-[#d4956b]" />
             <span>{isAr ? "الاشتراكات مُعالجة رسمياً عبر Lemon Squeezy" : "Subscriptions Processed via Lemon Squeezy"}</span>
           </span>
           <span>•</span>
-          <span className="inline-flex items-center gap-1 text-gray-300">
+          <span className="inline-flex items-center gap-1 text-gray-300 [html.light_&]:text-slate-700">
             <Landmark className="w-3 h-3 text-emerald-400" />
             <span>{isAr ? "تسوية البضائع عبر اعتمادات مستندية (DLC / SBLC)" : "Cargo Clearing via Irrevocable DLC / SBLC"}</span>
           </span>
         </div>
 
-        <div className="text-gray-400">
+        <div className="text-gray-400 [html.light_&]:text-slate-500">
           {isAr
             ? "حماية بموجب عقد ICC Model 769 • المركز السويسري للتحكيم الدولي (جنيف)"
             : "Governed by ICC Model Contract 769 • Swiss Arbitration Centre (Geneva)"}

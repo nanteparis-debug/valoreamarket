@@ -256,6 +256,7 @@ html.light [class*="bg-[#0c0e15]"] {
 }
 
 /* Primary Content Cards & Bento Panels */
+html.light [class*="bg-[#090b12]"],
 html.light [class*="bg-[#0a0d18]"],
 html.light [class*="bg-[#0b0e17]"],
 html.light [class*="bg-[#0c0e17]"],
@@ -270,6 +271,7 @@ html.light [class*="bg-[#0e111a]"] {
 }
 
 /* Subtle Interactive Card Hover State */
+html.light [class*="bg-[#090b12]"]:hover,
 html.light [class*="bg-[#0a0d18]"]:hover,
 html.light [class*="bg-[#0b0e17]"]:hover,
 html.light [class*="bg-[#0c0e17]"]:hover,
@@ -308,10 +310,13 @@ html.light [class*="bg-[#1b1f2e]"] {
 }
 
 /* Light Mode Borders & Dividers */
+html.light [class*="border-[#151827]"],
 html.light [class*="border-[#161824]"],
 html.light [class*="border-[#181b29]"],
+html.light [class*="border-[#181c2e]"],
 html.light [class*="border-[#1a1d2e]"],
 html.light [class*="border-[#1a1e30]"],
+html.light [class*="border-[#1d2133]"],
 html.light [class*="border-[#1f2233]"],
 html.light [class*="border-[#23273b]"],
 html.light [class*="border-[#262a40]"],
