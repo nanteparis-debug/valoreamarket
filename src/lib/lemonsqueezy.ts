@@ -16,7 +16,9 @@ export function getLemonSqueezyConfig(): LemonSqueezyConfig {
     professionalCheckoutUrl:
       process.env.LEMONSQUEEZY_CHECKOUT_PROFESSIONAL ||
       "https://valoreamarket.lemonsqueezy.com/checkout/buy/8d9c977f-9b9c-41f4-a61e-92d9897aab37",
-    enterpriseCheckoutUrl: process.env.LEMONSQUEEZY_CHECKOUT_ENTERPRISE,
+    enterpriseCheckoutUrl:
+      process.env.LEMONSQUEEZY_CHECKOUT_ENTERPRISE ||
+      "https://valoreamarket.lemonsqueezy.com/checkout/buy/29fed9b0-8ff5-4736-947e-8f851dd55675",
   };
 }
 
