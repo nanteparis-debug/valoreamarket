@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
-import { TurnstileWidget } from "@/components/ui/turnstile-widget";
+import { TurnstileWidget, type TurnstileRef } from "@/components/ui/turnstile-widget";
 import {
   ShieldCheck,
   Lock,
@@ -21,6 +21,7 @@ export default function SignInPage() {
   const locale = (params?.locale as string) || "en";
   const t = getSubpageTranslations(locale);
 
+  const turnstileRef = useRef<TurnstileRef>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mfaCode, setMfaCode] = useState("");
@@ -163,6 +164,7 @@ export default function SignInPage() {
 
             {/* Cloudflare Turnstile Bot Protection */}
             <TurnstileWidget
+              ref={turnstileRef}
               action="signin"
               onVerify={(token) => {
                 setTurnstileToken(token);

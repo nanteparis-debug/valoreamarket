@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter, Link } from "@/i18n/routing";
 import { useParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
-import { TurnstileWidget } from "@/components/ui/turnstile-widget";
+import { TurnstileWidget, type TurnstileRef } from "@/components/ui/turnstile-widget";
 import {
   FileBadge2,
   ArrowRight,
@@ -42,6 +42,7 @@ export default function RegisterPage() {
   const [country, setCountry] = useState(""); // Starts UNSELECTED per requirement
   const [repName, setRepName] = useState("");
   const [repEmail, setRepEmail] = useState("");
+  const turnstileRef = useRef<TurnstileRef>(null);
   const [agreeLegal, setAgreeLegal] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -353,6 +354,7 @@ export default function RegisterPage() {
 
             {/* Cloudflare Turnstile Bot Protection */}
             <TurnstileWidget
+              ref={turnstileRef}
               action="register"
               onVerify={(token) => {
                 setTurnstileToken(token);

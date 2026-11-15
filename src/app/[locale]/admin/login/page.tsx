@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
-import { TurnstileWidget } from "@/components/ui/turnstile-widget";
+import { TurnstileWidget, type TurnstileRef } from "@/components/ui/turnstile-widget";
 import {
   ShieldCheck,
   Lock,
@@ -29,6 +29,7 @@ export default function AdminLoginPage() {
   const isAr = locale === "ar";
 
   // Form State
+  const turnstileRef = useRef<TurnstileRef>(null);
   const [selectedRole, setSelectedRole] = useState<"platform_admin" | "broker" | "compliance_officer">("platform_admin");
   const [email, setEmail] = useState("director@valorea.exchange");
   const [password, setPassword] = useState("");
@@ -90,6 +91,8 @@ export default function AdminLoginPage() {
       if (!res.ok && res.status !== 200) {
         setError(data.message || (isAr ? "فشل التحقق من الهوية الإدارية" : "Authentication failed"));
         setIsLoading(false);
+        turnstileRef.current?.reset();
+        setTurnstileToken("");
         return;
       }
 
@@ -370,6 +373,7 @@ export default function AdminLoginPage() {
                 {isAr ? "حماية Cloudflare Turnstile ضد الروبوتات:" : "Cloudflare Turnstile Bot Verification:"}
               </label>
               <TurnstileWidget
+                ref={turnstileRef}
                 action="admin_signin"
                 theme="dark"
                 onVerify={(token: string) => {
@@ -378,6 +382,9 @@ export default function AdminLoginPage() {
                 }}
                 onError={(err?: string) => {
                   setError(err || null);
+                }}
+                onExpire={() => {
+                  setTurnstileToken("");
                 }}
               />
             </div>
