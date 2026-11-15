@@ -202,8 +202,13 @@ export function AnimatedFooter({
           </div>
         </div>
 
+        {/* Official Trustpilot Verified Ratings & Reviews Showcase Banner */}
+        <div className="pt-10">
+          <TrustpilotBadge locale={currentLocale} variant="card" />
+        </div>
+
         {/* Accepted Payment & Settlement Methods Strip (World-Class B2B & Retail Badges) */}
-        <div className="pt-10 pb-4">
+        <div className="pt-6 pb-4">
           <PaymentMethodsStrip locale={currentLocale} />
         </div>
 
