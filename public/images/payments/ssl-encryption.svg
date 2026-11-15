@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 136 40" fill="none">
+  <rect width="136" height="40" rx="6" fill="#0E121E" stroke="#252A40" stroke-width="1.2"/>
+  <path d="M18 19V16C18 13.8 19.8 12 22 12C24.2 12 26 13.8 26 16V19H27C27.6 19 28 19.4 28 20V26C28 26.6 27.6 27 27 27H17C16.4 27 16 26.6 16 26V20C16 19.4 16.4 19 17 19H18ZM20 19H24V16C24 14.9 23.1 14 22 14C20.9 14 20 14.9 20 16V19ZM22 22C21.4 22 21 22.4 21 23C21 23.6 21.4 24 22 24C22.6 24 23 23.6 23 23C23 22.4 22.6 22 22 22Z" fill="#10B981"/>
+  <text x="34" y="19" fill="#FFFFFF" font-family="monospace, Arial, sans-serif" font-weight="700" font-size="8.5" letter-spacing="0.4">256-BIT SSL</text>
+  <text x="34" y="28" fill="#94A3B8" font-family="monospace, Arial, sans-serif" font-weight="600" font-size="7.5" letter-spacing="0.5">PCI-DSS COMPLIANT</text>
+</svg>

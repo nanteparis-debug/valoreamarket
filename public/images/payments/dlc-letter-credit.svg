@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 40" fill="none">
+  <rect width="148" height="40" rx="6" fill="#0E121E" stroke="#252A40" stroke-width="1.2"/>
+  <path d="M12 24V14L18 10L24 14V24H12ZM14 22H22V15L18 12.3L14 15V22ZM16 17H20V19H16V17Z" fill="#b87333"/>
+  <text x="30" y="19" fill="#FFFFFF" font-family="monospace, Arial, sans-serif" font-weight="700" font-size="9" letter-spacing="0.4">DLC / SBLC (MT700)</text>
+  <text x="30" y="28" fill="#10B981" font-family="monospace, Arial, sans-serif" font-weight="600" font-size="7.5" letter-spacing="0.5">BANK-TO-BANK ESCROW</text>
+</svg>

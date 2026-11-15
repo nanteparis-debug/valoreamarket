@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 40" fill="none">
+  <rect width="76" height="40" rx="6" fill="#0E121E" stroke="#252A40" stroke-width="1.2"/>
+  <path d="M14 26V23H24V26H14ZM15 22V17H17V22H15ZM18.5 22V17H20.5V22H18.5ZM22 22V17H24V22H22ZM19 13L13 16.5V17H25V16.5L19 13Z" fill="#b87333"/>
+  <text x="30" y="19" fill="#FFFFFF" font-family="monospace, Arial, sans-serif" font-weight="700" font-size="9" letter-spacing="0.5">SWIFT</text>
+  <text x="30" y="27" fill="#d4956b" font-family="monospace, Arial, sans-serif" font-weight="600" font-size="7.5" letter-spacing="0.5">SEPA WIRE</text>
+</svg>

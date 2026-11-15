@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LANGUAGES } from "@/lib/constants";
 import { ShieldCheck, Globe, Mail } from "lucide-react";
+import { PaymentMethodsStrip } from "@/components/ui/payment-methods-strip";
 
 interface AnimatedFooterProps {
   currentLocale: string;
@@ -197,8 +198,13 @@ export function AnimatedFooter({
           </div>
         </div>
 
+        {/* Accepted Payment & Settlement Methods Strip (World-Class B2B & Retail Badges) */}
+        <div className="pt-10 pb-4">
+          <PaymentMethodsStrip locale={currentLocale} />
+        </div>
+
         {/* Bottom Rights Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
           <p>{translations.rights.replace("{year}", new Date().getFullYear().toString())}</p>
           <div className="flex items-center gap-4 text-[11px]">
             <span>{translations.badgeUsd || "USD Benchmark Settlement"}</span>

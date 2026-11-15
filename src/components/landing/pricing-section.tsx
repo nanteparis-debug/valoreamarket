@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Check, Sparkles, ArrowRight, ShieldCheck, Landmark, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -361,6 +362,28 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
             </div>
           );
         })}
+      </div>
+
+      {/* Supported Payment Channels Trust Bar */}
+      <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#0a0c13] border border-[#1f2233]">
+        <div className="flex items-center gap-2 text-xs text-gray-400">
+          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>
+            {locale === "ar"
+              ? "طرق الدفع والاشتراك الآمنة المدعومة (بطاقات مصرفية • محافظ رقمية • تحويلات بنكية):"
+              : "Supported Secure Payment & Subscription Channels (Cards • Digital Wallets • Wire):"}
+          </span>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <Image src="/images/payments/visa.svg" alt="Visa" width={48} height={30} className="h-6 w-auto" />
+          <Image src="/images/payments/mastercard.svg" alt="Mastercard" width={48} height={30} className="h-6 w-auto" />
+          <Image src="/images/payments/amex.svg" alt="American Express" width={48} height={30} className="h-6 w-auto" />
+          <Image src="/images/payments/apple-pay.svg" alt="Apple Pay" width={48} height={30} className="h-6 w-auto" />
+          <Image src="/images/payments/google-pay.svg" alt="Google Pay" width={48} height={30} className="h-6 w-auto" />
+          <Image src="/images/payments/discover.svg" alt="Discover" width={48} height={30} className="h-6 w-auto" />
+          <Image src="/images/payments/swift-sepa.svg" alt="SWIFT & SEPA" width={58} height={30} className="h-6 w-auto" />
+          <Image src="/images/payments/lemon-squeezy.svg" alt="Lemon Squeezy" width={115} height={30} className="h-6 w-auto" />
+        </div>
       </div>
 
       {/* Independent Brokerage Commission & Non-Custodial Cargo Settlement Policy Banner */}
