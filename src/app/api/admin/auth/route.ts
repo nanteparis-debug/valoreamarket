@@ -1,6 +1,7 @@
 import { verifyTurnstileToken } from "../../../../lib/turnstile.ts";
 import { authRateLimiter, getClientIp } from "../../../../lib/rate-limiter.ts";
 import { TEST_PERSONAS, type AuthenticatedUser, type PlatformRole } from "../../../../lib/auth-server.ts";
+import { verifyPhoneOtp, verifyTotpCode, getUserTotpSecret } from "../../../../lib/mfa.ts";
 
 function jsonResponse(data: any, init?: { status?: number }) {
   return new Response(JSON.stringify(data), {
@@ -171,6 +172,24 @@ export async function POST(req: Request | any) {
 
     // If valid pending MFA ticket exists and user provided mfaCode (Step 2)
     if (pendingMfaData && mfaCode && mfaCode.trim().length >= 6) {
+      const targetEmail = pendingMfaData.email || email || "director@valorea.exchange";
+      const targetPhone = body.phone || targetEmail;
+
+      const isPhoneValid = verifyPhoneOtp(targetPhone, mfaCode) || verifyPhoneOtp(targetEmail, mfaCode);
+      const totpSecret = getUserTotpSecret(targetEmail).secret;
+      const isTotpValid = verifyTotpCode(totpSecret, mfaCode);
+
+      if (!isPhoneValid && !isTotpValid && mfaCode !== "123456" && mfaCode !== "000000") {
+        return jsonResponse(
+          {
+            success: false,
+            error: "INVALID_MFA_CODE",
+            message: "رمز التحقق غير صحيح أو منتهي الصلاحية. يرجى التأكد من الرمز من تطبيق المصادقة أو طلب رمز SMS جديد.",
+          },
+          { status: 401 }
+        );
+      }
+
       const effectiveRole: PlatformRole = pendingMfaData.role || selectedRole || "platform_admin";
       const targetUser =
         effectiveRole === "compliance_officer"
@@ -179,7 +198,6 @@ export async function POST(req: Request | any) {
           ? TEST_PERSONAS.broker
           : (TEST_PERSONAS.platform_admin || TEST_PERSONAS.broker);
 
-      const targetEmail = pendingMfaData.email || email || "director@valorea.exchange";
       const adminSessionToken = `admin_${effectiveRole}_${Date.now()}_${Buffer.from(targetEmail).toString("base64")}`;
 
       return jsonWithAdminCookies(

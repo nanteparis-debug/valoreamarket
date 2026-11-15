@@ -1,0 +1,40 @@
+# VALOREA MARKET
+
+> Premier Swiss-engineered institutional B2B physical commodities brokerage platform and supervised clearing exchange headquartered in Geneva, Switzerland.
+
+VALOREA MARKET connects verified sovereign buyers, qualified refiners, industrial distributors, and accredited producers across physical commodity transactions through audited bilateral KYC/KYB screening, end-to-end encrypted (E2EE) deal rooms, and internationally recognized ICC banking instruments.
+
+## Core Capabilities & Specialization
+
+- **Physical Commodity Sectors**:
+  - **Energy & Hydrocarbons**: Light Sweet & Heavy Sour Crude Oil, Ultra-Low Sulfur Diesel (EN590 10 ppm), Aviation Kerosene (Jet Fuel A1 / Colonial Grade 54), Liquefied Natural Gas (LNG).
+  - **Fertilizers & Nutrients**: Granular Urea 46% (Prilled / Granular), NPK Formulations, Diammonium Phosphate (DAP), Muriate of Potash (MOP).
+  - **Metals & Mining**: Electrolytic Copper Cathodes (Grade A 99.99% purity, LME standard), Primary Aluminium Ingots (A7/A8), Battery-grade Lithium Carbonate & Hydroxide, Gold Bullion (LBMA Good Delivery).
+  - **Petrochemicals**: High-Density Polyethylene (HDPE), Low-Density Polyethylene (LDPE), Polypropylene (PP), PET Resins.
+  - **Agricultural Staples**: Milling Wheat (Grade 1 & 2), Refined White Cane Sugar (ICUMSA 45), Raw Cane Sugar (ICUMSA 600-1200), Non-GMO Yellow Corn.
+
+- **Regulatory & Compliance Architecture**:
+  - **Sanctions & AML Screening**: Real-time bilateral verification against OFAC (US Treasury), EU Consolidated Financial Sanctions, SECO (Swiss State Secretariat for Economic Affairs), and UN Security Council watchlists.
+  - **Broker Protection & Anti-Circumvention**: Automated digital Non-Circumvention Non-Disclosure Agreements (NCNDA) and Irrevocable Master Fee Protection Agreements (IMFPA) compliant with ICC 400/500/600 provisions.
+  - **E2EE Deal Rooms**: Private WebRTC and document vaults with anti-leak watermarking, verbal audio moderation, and biometric identity verification for principals and mandated intermediaries.
+
+- **Standard Banking & Payment Instruments**:
+  - Irrevocable, Transferable / Non-Transferable Documentary Letters of Credit (DLC MT700) governed by UCP 600.
+  - Standby Letters of Credit (SBLC MT760) governed by ISP98 / URDG 758.
+  - Bank Wire Telegraphic Transfer (TT MT103 / MT202) released upon SGS / Intertek inspection report at loading or discharge port.
+  - Standard Incoterms 2020: CIF (Cost, Insurance & Freight), FOB (Free on Board), CFR (Cost and Freight).
+
+## Key Public Resources
+
+- [Official Portal](https://valoreamarket.com/): Multilingual physical exchange portal (8 supported languages: Arabic, English, French, Spanish, Chinese, Japanese, German, Russian).
+- [Commodity Catalog](https://valoreamarket.com/en/catalog): Live verified listings, technical specifications, and available allocation volumes.
+- [Institutional FAQ](https://valoreamarket.com/en/faq): Direct answers to compliance, KYC/KYB, banking procedures, and deal room access.
+- [About the Exchange](https://valoreamarket.com/en/about): Corporate governance, Swiss desk location, and operational principles.
+- [Brokerage & NCNDA Governance](https://valoreamarket.com/en/legal/ncnda): Legal frameworks protecting mandates and managing fee distribution.
+- [Contact Trading Desk](https://valoreamarket.com/en/contact): Direct institutional desk coordinates at Rue du Rhône 42, Geneva, Switzerland.
+
+## Machine-Readable Files
+
+- [Full Agent Context (llms-full.txt)](https://valoreamarket.com/llms-full.txt): Exhaustive specification, contract stages, and compliance workflows.
+- [Brokerage Fee Schedule (pricing.md)](https://valoreamarket.com/pricing.md): Standard broker fee benchmarking and tier structures.
+- [XML Sitemap](https://valoreamarket.com/sitemap.xml): Complete international multilingual URL manifest with hreflang alternates.

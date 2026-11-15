@@ -5,6 +5,7 @@ import { useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import { TurnstileWidget, type TurnstileRef } from "@/components/ui/turnstile-widget";
+import { MfaVerificationPanel } from "@/components/auth/mfa-verification-panel";
 import {
   ShieldCheck,
   Lock,
@@ -207,33 +208,45 @@ export default function SignInPage() {
             </button>
           </form>
         ) : (
-          <form onSubmit={handleMfaSubmit} className="space-y-4">
-            <div className="text-center p-3 rounded-xl bg-[#141724] border border-[#23273b]">
-              <span className="text-xs text-gray-300 font-mono">{t.auth.mfaTitle}</span>
-              <p className="text-[11px] text-gray-400 mt-0.5">{t.auth.mfaSubtitle}</p>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-400 block mb-1">{t.auth.mfaCodeLabel}</label>
-              <input
-                type="text"
-                maxLength={6}
-                value={mfaCode}
-                onChange={(e) => setMfaCode(e.target.value)}
-                placeholder="123456"
-                className="w-full bg-[#121422] border border-[#23273b] rounded-xl px-4 py-3 text-center text-lg font-mono tracking-widest text-white focus:outline-none focus:border-[#b87333]"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs shadow-lg transition-all flex items-center justify-center gap-2"
-            >
-              <span>{isLoading ? t.common.loading : t.auth.verifyMfaBtn}</span>
-              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-            </button>
-          </form>
+          <MfaVerificationPanel
+            locale={locale}
+            email={email}
+            defaultPhone="+966 50 123 4567"
+            isLoading={isLoading}
+            errorMessage={error}
+            onVerify={async (enteredCode, method, phoneUsed) => {
+              setError(null);
+              setIsLoading(true);
+              try {
+                const res = await fetch("/api/auth/session", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    email,
+                    password,
+                    mfaCode: enteredCode,
+                    phone: phoneUsed,
+                  }),
+                });
+                const data = await res.json();
+                if (data.success) {
+                  router.push(data.redirectUrl || "/deals/deal-en590-rotterdam/room");
+                } else {
+                  setError(data.message || (locale === "ar" ? "رمز المصادقة غير صالح" : "Invalid verification code"));
+                  setIsLoading(false);
+                }
+              } catch {
+                setError(t.common.error);
+                setIsLoading(false);
+              }
+            }}
+            onPasskeyLogin={handlePasskeyLogin}
+            onBack={() => {
+              setStep("credentials");
+              setMfaCode("");
+              setError(null);
+            }}
+          />
         )}
 
         <div className="pt-4 border-t border-[#1f2233] text-center text-xs text-gray-400">

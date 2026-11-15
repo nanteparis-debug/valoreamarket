@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { FloatingThemeToggle } from "@/components/floating-theme-toggle";
 import "../globals.css";
 
-const BASE_URL = "https://gvce.exchange";
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://valoreamarket.com";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -135,6 +135,10 @@ export async function generateMetadata({
         "max-image-preview": "large",
         "max-snippet": -1,
       },
+    },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
     },
     other: {
       "geo.region": "CH-GE",

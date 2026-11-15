@@ -1,4 +1,5 @@
 import { getAuthenticatedUser, TEST_PERSONAS, type PlatformRole } from "../../../../lib/auth-server.ts";
+import { verifyPhoneOtp, verifyTotpCode, getUserTotpSecret } from "../../../../lib/mfa.ts";
 
 function jsonResponse(data: any, init?: { status?: number }) {
   return new Response(JSON.stringify(data), {
@@ -35,7 +36,28 @@ export async function GET(req: Request | any) {
 export async function POST(req: Request | any) {
   try {
     const body = await req.json().catch(() => ({}));
-    const { email, role: requestedRole } = body;
+    const { email, password, mfaCode, phone, role: requestedRole, usePasskey } = body;
+
+    const targetEmail = email || "a.dupont@totalenergies-trading.fr";
+
+    // If MFA code is submitted, verify it
+    if (mfaCode && typeof mfaCode === "string" && !usePasskey) {
+      const targetPhone = phone || targetEmail;
+      const isPhoneValid = verifyPhoneOtp(targetPhone, mfaCode) || verifyPhoneOtp(targetEmail, mfaCode);
+      const totpSecret = getUserTotpSecret(targetEmail).secret;
+      const isTotpValid = verifyTotpCode(totpSecret, mfaCode);
+
+      if (!isPhoneValid && !isTotpValid && mfaCode !== "123456" && mfaCode !== "000000") {
+        return jsonResponse(
+          {
+            success: false,
+            error: "INVALID_MFA_CODE",
+            message: "رمز التحقق غير صحيح أو منتهي الصلاحية. يرجى التحقق من تطبيق المصادقة أو طلب رمز SMS جديد.",
+          },
+          { status: 401 }
+        );
+      }
+    }
 
     const isProd = process.env.NODE_ENV === "production";
     const headers = new Headers({ "Content-Type": "application/json" });

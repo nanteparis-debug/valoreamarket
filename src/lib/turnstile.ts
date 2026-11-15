@@ -36,7 +36,7 @@ export async function verifyTurnstileToken(
   }
 
   const expectedHostnames = new Set(
-    (process.env.TURNSTILE_HOSTNAMES ?? "localhost,127.0.0.1,valoreamarket.vercel.app")
+    (process.env.TURNSTILE_HOSTNAMES ?? "localhost,127.0.0.1,valoreamarket.vercel.app,valoreamarket.com,www.valoreamarket.com")
       .split(",")
       .map((h) => h.trim().toLowerCase())
       .filter(Boolean)

@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import { useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
 import { TurnstileWidget, type TurnstileRef } from "@/components/ui/turnstile-widget";
+import { MfaVerificationPanel } from "@/components/auth/mfa-verification-panel";
 import {
   ShieldCheck,
   Lock,
@@ -407,64 +408,51 @@ export default function AdminLoginPage() {
           </form>
         )}
 
-        {/* Step 2: Multi-Factor Authentication (TOTP) Form */}
+        {/* Step 2: Multi-Factor Authentication (Phone SMS / Authenticator App / Passkey) */}
         {step === "mfa" && (
-          <form onSubmit={handleMfaSubmit} className="space-y-5 animate-in fade-in zoom-in-95 duration-200">
-            <div className="p-4 rounded-2xl bg-[#121524] border border-[#2b334d] text-center space-y-2">
-              <KeyRound className="w-8 h-8 text-[#d4956b] mx-auto animate-bounce" />
-              <h3 className="text-sm font-bold text-white">
-                {isAr ? "المصادقة الثنائية الإلزامية (MFA / TOTP)" : "Mandatory Two-Factor Authentication"}
-              </h3>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                {isAr
-                  ? "أدخل رمز التحقق المكون من 6 أرقام من تطبيق المصادقة المؤسسي الخاص بك (Google Authenticator / YubiKey TOTP)."
-                  : "Enter the 6-digit TOTP verification code from your institutional authenticator device."}
-              </p>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-400 block mb-1 text-center font-mono">
-                {isAr ? "رمز التحقق المكون من 6 أرقام (TOTP):" : "6-DIGIT TOTP AUTHENTICATOR CODE:"}
-              </label>
-              <input
-                type="text"
-                maxLength={6}
-                value={mfaCode}
-                onChange={(e) => setMfaCode(e.target.value.replace(/\D/g, ""))}
-                placeholder="000000"
-                className="w-full bg-[#121422] border-2 border-[#b87333] rounded-xl py-3 text-center text-xl tracking-[0.4em] font-mono font-bold text-white focus:outline-none focus:ring-2 focus:ring-[#b87333]/50"
-                autoFocus
-              />
-            </div>
-
-            <div className="flex items-center justify-between text-xs text-gray-500 font-mono">
-              <span>{isAr ? "مدة صلاحية الرمز: 30 ثانية" : "Window: 30s dynamic rotation"}</span>
-              <button
-                type="button"
-                onClick={() => {
-                  setStep("credentials");
-                  setMfaCode("");
-                  setMfaTicket("");
-                }}
-                className="text-[#d4956b] hover:underline"
-              >
-                {isAr ? "تغيير الحساب" : "Back"}
-              </button>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoading || mfaCode.length < 6}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#c87f3b] hover:to-[#9b6531] text-white text-xs font-semibold shadow-lg shadow-[#b87333]/25 flex items-center justify-center gap-2 transition-all disabled:opacity-40"
-            >
-              <UserCheck className="w-4 h-4" />
-              <span>
-                {isLoading
-                  ? (isAr ? "جاري إنشاء الجلسة الإدارية..." : "Issuing Session...")
-                  : (isAr ? "تأكيد الدخول وبدء الجلسة الإدارية" : "Verify & Start Executive Session")}
-              </span>
-            </button>
-          </form>
+          <MfaVerificationPanel
+            locale={locale}
+            email={email}
+            defaultPhone="+966 50 123 4567"
+            isLoading={isLoading}
+            errorMessage={error}
+            onVerify={async (enteredCode, method, phoneUsed) => {
+              setError(null);
+              setIsLoading(true);
+              try {
+                const res = await fetch("/api/admin/auth", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    email,
+                    password,
+                    mfaCode: enteredCode,
+                    mfaTicket,
+                    phone: phoneUsed,
+                    turnstileToken,
+                    selectedRole,
+                  }),
+                });
+                const data = await res.json();
+                if (data.success && data.redirectUrl) {
+                  router.push(data.redirectUrl);
+                } else {
+                  setError(data.message || (isAr ? "رمز المصادقة غير صالح" : "Invalid verification code"));
+                  setIsLoading(false);
+                }
+              } catch {
+                setError(isAr ? "حدث خطأ في المصادقة" : "MFA verification failed");
+                setIsLoading(false);
+              }
+            }}
+            onPasskeyLogin={handlePasskeyLogin}
+            onBack={() => {
+              setStep("credentials");
+              setMfaCode("");
+              setMfaTicket("");
+              setError(null);
+            }}
+          />
         )}
 
         {/* Security and Legal Notice */}

@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       roomName,
       token,
       e2eeSupported: true,
-      serverUrl: "wss://livekit.gvce.exchange",
+      serverUrl: process.env.LIVEKIT_URL || "wss://livekit.valoreamarket.com",
     });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
