@@ -49,6 +49,13 @@ export function JsonLd({ locale }: JsonLdProps) {
       {
         "@type": "ContactPoint",
         telephone: "+41-22-819-9000",
+        contactType: "General Inquiries & Customer Support",
+        email: "contact@valoreamarket.com",
+        availableLanguage: ["English", "Arabic", "French", "German", "Spanish", "Chinese", "Japanese", "Russian"],
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: "+41-22-819-9000",
         contactType: "Trading Desk & Brokerage",
         email: "desk@valoreamarket.com",
         availableLanguage: ["English", "Arabic", "French", "German", "Spanish", "Chinese", "Japanese", "Russian"],

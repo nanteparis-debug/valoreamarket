@@ -82,14 +82,33 @@ export default function ContactPage() {
                 ))}
               </div>
 
-              <div className="border-t border-[#1f2233] pt-4 space-y-2 text-xs">
+              <div className="border-t border-[#1f2233] pt-4 space-y-2.5 text-xs">
+                <div className="flex items-center gap-2 text-gray-300">
+                  <Mail className="w-3.5 h-3.5 text-emerald-400" />
+                  <a href="mailto:contact@valoreamarket.com" className="font-mono hover:text-white transition-colors">
+                    contact@valoreamarket.com
+                  </a>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-sans">
+                    {locale === "ar" ? "عام ودعم" : "General & Support"}
+                  </span>
+                </div>
                 <div className="flex items-center gap-2 text-gray-300">
                   <Mail className="w-3.5 h-3.5 text-[#d4956b]" />
-                  <span>desk@valorea.exchange</span>
+                  <a href="mailto:desk@valoreamarket.com" className="font-mono hover:text-white transition-colors">
+                    desk@valoreamarket.com
+                  </a>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#b87333]/15 text-[#d4956b] border border-[#b87333]/30 font-sans">
+                    {locale === "ar" ? "مكتب التداول" : "Trading Desk"}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-300">
                   <ShieldCheck className="w-3.5 h-3.5 text-purple-400" />
-                  <span>compliance@valorea.exchange</span>
+                  <a href="mailto:compliance@valoreamarket.com" className="font-mono hover:text-white transition-colors">
+                    compliance@valoreamarket.com
+                  </a>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 font-sans">
+                    {locale === "ar" ? "الامتثال والتحقق" : "Compliance & KYC"}
+                  </span>
                 </div>
               </div>
             </div>

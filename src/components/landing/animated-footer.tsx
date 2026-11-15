@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LANGUAGES } from "@/lib/constants";
-import { ShieldCheck, Globe } from "lucide-react";
+import { ShieldCheck, Globe, Mail } from "lucide-react";
 
 interface AnimatedFooterProps {
   currentLocale: string;
@@ -87,6 +87,15 @@ export function AnimatedFooter({
             <p className="text-gray-400 max-w-sm text-xs leading-relaxed">
               {translations.description}
             </p>
+            <div className="pt-1">
+              <a
+                href="mailto:contact@valoreamarket.com"
+                className="inline-flex items-center gap-2 text-xs font-mono text-gray-300 hover:text-[#d4956b] transition-colors"
+              >
+                <Mail className="w-3.5 h-3.5 text-emerald-400" />
+                <span>contact@valoreamarket.com</span>
+              </a>
+            </div>
             <div className="flex flex-wrap items-center gap-2 pt-2">
               <span className="px-2.5 py-1 rounded bg-[#0d0f17] border border-[#23273b] text-[10px] font-mono text-gray-400">
                 OWASP ASVS L2

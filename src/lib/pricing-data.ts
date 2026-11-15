@@ -174,7 +174,7 @@ export const PLATFORM_PRICING_PLANS: PricingPlan[] = [
       en: "Contact Sales Desk",
       ar: "تواصل مع مكتب المبيعات",
       action: "contact_sales",
-      href: "mailto:desk@valorea.exchange?subject=VALOREA%20MARKET%20Enterprise%20Subscription%20Inquiry",
+      href: "mailto:contact@valoreamarket.com?subject=VALOREA%20MARKET%20Enterprise%20Subscription%20Inquiry",
     },
   },
 ];
@@ -212,5 +212,5 @@ export const BROKERAGE_COMMISSION_POLICY: BrokerageCommissionStructure = {
   settlementNoticeDescription: "VALOREA MARKET does not hold or clear purchase funds for physical commodity shipments. Cargo value is settled directly bank-to-bank via Documentary Letters of Credit (DLC / SBLC). The platform invoices only for membership access and success-based transaction brokerage fees.",
 };
 
-export const SALES_CONTACT_EMAIL = "desk@valorea.exchange";
+export const SALES_CONTACT_EMAIL = "contact@valoreamarket.com";
 

@@ -291,10 +291,10 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       desksTitle: "المكاتب التجارية المعتمدة",
       desksSubtitle: "قنوات الاتصال المباشرة بالمكاتب الإقليمية",
       desks: [
-        { name: "مكتب جنيف (المقر الرئيسي)", role: "الامتثال والحوكمة", email: "geneva.desk@valorea.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
-        { name: "مكتب دبي (الشرق الأوسط)", role: "وساطة الطاقة والوقود", email: "dubai.desk@valorea.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
-        { name: "مكتب سنغافورة (آسيا)", role: "المعادن والغاز الطبيعي", email: "singapore.desk@valorea.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
-        { name: "مكتب هيوستن (الأمريكتان)", role: "النفط الخام والمكثفات", email: "houston.desk@valorea.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
+        { name: "مكتب جنيف (المقر الرئيسي)", role: "الامتثال والحوكمة", email: "geneva.desk@valoreamarket.com", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
+        { name: "مكتب دبي (الشرق الأوسط)", role: "وساطة الطاقة والوقود", email: "dubai.desk@valoreamarket.com", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
+        { name: "مكتب سنغافورة (آسيا)", role: "المعادن والغاز الطبيعي", email: "singapore.desk@valoreamarket.com", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
+        { name: "مكتب هيوستن (الأمريكتان)", role: "النفط الخام والمكثفات", email: "houston.desk@valoreamarket.com", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
       ]
     },
     faq: {
@@ -670,10 +670,10 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       desksTitle: "Accredited Global Desks",
       desksSubtitle: "Direct communication channels to regional hubs",
       desks: [
-        { name: "Geneva Headquarters", role: "Compliance & Governance", email: "geneva.desk@valorea.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
-        { name: "Dubai Regional Desk", role: "Crude & Refined Fuels", email: "dubai.desk@valorea.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
-        { name: "Singapore Regional Desk", role: "Metals & Natural Gas", email: "singapore.desk@valorea.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
-        { name: "Houston Regional Desk", role: "Crude & Condensates", email: "houston.desk@valorea.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
+        { name: "Geneva Headquarters", role: "Compliance & Governance", email: "geneva.desk@valoreamarket.com", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
+        { name: "Dubai Regional Desk", role: "Crude & Refined Fuels", email: "dubai.desk@valoreamarket.com", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
+        { name: "Singapore Regional Desk", role: "Metals & Natural Gas", email: "singapore.desk@valoreamarket.com", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
+        { name: "Houston Regional Desk", role: "Crude & Condensates", email: "houston.desk@valoreamarket.com", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
       ]
     },
     faq: {
@@ -1049,10 +1049,10 @@ export const SUBPAGES_DATA: Record<string, SubpageContent> = {
       desksTitle: "Bureaux de Courtage Agréés",
       desksSubtitle: "Canaux de communication directs",
       desks: [
-        { name: "Siège de Genève", role: "Conformité & Gouvernance", email: "geneva.desk@valorea.exchange", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
-        { name: "Desk Régional Dubaï", role: "Pétrole Brut & Carburants", email: "dubai.desk@valorea.exchange", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
-        { name: "Desk Régional Singapour", role: "Métaux & Gaz Naturel", email: "singapore.desk@valorea.exchange", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
-        { name: "Desk Régional Houston", role: "Brut & Condensats", email: "houston.desk@valorea.exchange", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
+        { name: "Siège de Genève", role: "Conformité & Gouvernance", email: "geneva.desk@valoreamarket.com", phone: "+41 22 819 9200", location: "Rue du Rhône 42, 1204 Genève" },
+        { name: "Desk Régional Dubaï", role: "Pétrole Brut & Carburants", email: "dubai.desk@valoreamarket.com", phone: "+971 4 362 7500", location: "DIFC Gate Precinct 4, Dubai" },
+        { name: "Desk Régional Singapour", role: "Métaux & Gaz Naturel", email: "singapore.desk@valoreamarket.com", phone: "+65 6818 6000", location: "Marina Bay Financial Centre, Tower 2" },
+        { name: "Desk Régional Houston", role: "Brut & Condensats", email: "houston.desk@valoreamarket.com", phone: "+1 713 546 8000", location: "1000 Louisiana St, Houston, TX" }
       ]
     },
     faq: {
