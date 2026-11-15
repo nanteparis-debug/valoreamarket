@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116 22" fill="none">
+  <!-- 5 Green Trustpilot Stars -->
+  <!-- Star 1 -->
+  <rect x="0" y="0" width="20" height="20" rx="3" fill="#00B67A"/>
+  <path d="M10 3.5L11.8 7.3L16 7.9L13 10.8L13.7 15L10 13L6.3 15L7 10.8L4 7.9L8.2 7.3L10 3.5Z" fill="#FFFFFF"/>
+  <path d="M10 3.5V13L13.7 15L13 10.8L16 7.9L11.8 7.3L10 3.5Z" fill="#005128" opacity="0.25"/>
+
+  <!-- Star 2 -->
+  <rect x="24" y="0" width="20" height="20" rx="3" fill="#00B67A"/>
+  <path d="M34 3.5L35.8 7.3L40 7.9L37 10.8L37.7 15L34 13L30.3 15L31 10.8L28 7.9L32.2 7.3L34 3.5Z" fill="#FFFFFF"/>
+  <path d="M34 3.5V13L37.7 15L37 10.8L40 7.9L35.8 7.3L34 3.5Z" fill="#005128" opacity="0.25"/>
+
+  <!-- Star 3 -->
+  <rect x="48" y="0" width="20" height="20" rx="3" fill="#00B67A"/>
+  <path d="M58 3.5L59.8 7.3L64 7.9L61 10.8L61.7 15L58 13L54.3 15L55 10.8L52 7.9L56.2 7.3L58 3.5Z" fill="#FFFFFF"/>
+  <path d="M58 3.5V13L61.7 15L61 10.8L64 7.9L59.8 7.3L58 3.5Z" fill="#005128" opacity="0.25"/>
+
+  <!-- Star 4 -->
+  <rect x="72" y="0" width="20" height="20" rx="3" fill="#00B67A"/>
+  <path d="M82 3.5L83.8 7.3L88 7.9L85 10.8L85.7 15L82 13L78.3 15L79 10.8L76 7.9L80.2 7.3L82 3.5Z" fill="#FFFFFF"/>
+  <path d="M82 3.5V13L85.7 15L85 10.8L88 7.9L83.8 7.3L82 3.5Z" fill="#005128" opacity="0.25"/>
+
+  <!-- Star 5 -->
+  <rect x="96" y="0" width="20" height="20" rx="3" fill="#00B67A"/>
+  <path d="M106 3.5L107.8 7.3L112 7.9L109 10.8L109.7 15L106 13L102.3 15L103 10.8L100 7.9L104.2 7.3L106 3.5Z" fill="#FFFFFF"/>
+  <path d="M106 3.5V13L109.7 15L109 10.8L112 7.9L107.8 7.3L106 3.5Z" fill="#005128" opacity="0.25"/>
+</svg>

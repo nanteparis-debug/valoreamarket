@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 36" fill="none">
+  <!-- Trustpilot Iconic Green Star Icon -->
+  <rect x="2" y="2" width="32" height="32" rx="4" fill="#00B67A"/>
+  <path d="M18 7.5L20.8 13.2L27 14.1L22.5 18.5L23.6 24.7L18 21.8L12.4 24.7L13.5 18.5L9 14.1L15.2 13.2L18 7.5Z" fill="#FFFFFF"/>
+  <path d="M18 7.5V21.8L23.6 24.7L22.5 18.5L27 14.1L20.8 13.2L18 7.5Z" fill="#005128" opacity="0.25"/>
+  <!-- Trustpilot Wordmark -->
+  <text x="42" y="23" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="16" letter-spacing="-0.3">Trustpilot</text>
+</svg>

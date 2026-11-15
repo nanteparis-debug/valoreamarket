@@ -6,6 +6,7 @@ import { Link, useRouter, usePathname } from "@/i18n/routing";
 import { SUPPORTED_LANGUAGES } from "@/lib/constants";
 import { ShieldCheck, Globe, Mail } from "lucide-react";
 import { PaymentMethodsStrip } from "@/components/ui/payment-methods-strip";
+import { TrustpilotBadge } from "@/components/ui/trustpilot-badge";
 
 interface AnimatedFooterProps {
   currentLocale: string;
@@ -107,6 +108,9 @@ export function AnimatedFooter({
               <span className="px-2.5 py-1 rounded bg-[#0d0f17] border border-[#23273b] text-[10px] font-mono text-gray-400">
                 LiveKit WebRTC E2EE
               </span>
+            </div>
+            <div className="pt-2">
+              <TrustpilotBadge locale={currentLocale} variant="mini" />
             </div>
           </div>
 

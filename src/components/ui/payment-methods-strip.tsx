@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { ShieldCheck, Lock, Landmark, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TrustpilotBadge } from "./trustpilot-badge";
 
 interface PaymentMethodsStripProps {
   locale?: string;
@@ -69,11 +70,14 @@ export function PaymentMethodsStrip({
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 shrink-0">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>
-              {isAr ? "دفع آمن 100% ومحمي" : "100% Secure Checkout"}
-            </span>
+          <div className="flex items-center gap-3 shrink-0 flex-wrap">
+            <TrustpilotBadge locale={locale} variant="mini" />
+            <div className="flex items-center gap-2 text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 shrink-0">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>
+                {isAr ? "دفع آمن 100% ومحمي" : "100% Secure Checkout"}
+              </span>
+            </div>
           </div>
         </div>
       )}

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Check, Sparkles, ArrowRight, ShieldCheck, Landmark, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TrustpilotBadge } from "@/components/ui/trustpilot-badge";
 import {
   PLATFORM_PRICING_PLANS,
   BROKERAGE_COMMISSION_POLICY,
@@ -365,14 +366,17 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
       </div>
 
       {/* Supported Payment Channels Trust Bar */}
-      <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#0a0c13] border border-[#1f2233]">
-        <div className="flex items-center gap-2 text-xs text-gray-400">
-          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span>
-            {locale === "ar"
-              ? "طرق الدفع والاشتراك الآمنة المدعومة (بطاقات مصرفية • محافظ رقمية • تحويلات بنكية):"
-              : "Supported Secure Payment & Subscription Channels (Cards • Digital Wallets • Wire):"}
-          </span>
+      <div className="mt-8 flex flex-col lg:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-[#0a0c13] border border-[#1f2233]">
+        <div className="flex items-center gap-3">
+          <TrustpilotBadge locale={locale} variant="mini" />
+          <div className="flex items-center gap-2 text-xs text-gray-400">
+            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+            <span>
+              {locale === "ar"
+                ? "طرق الدفع والاشتراك الآمنة المدعومة:"
+                : "Supported Secure Payment & Subscription Channels:"}
+            </span>
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <Image src="/images/payments/visa.svg" alt="Visa" width={48} height={30} className="h-6 w-auto" />
