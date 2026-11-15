@@ -90,6 +90,39 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const validated = dealSchema.parse(body);
 
+    // -------------------------------------------------------------------------
+    // STRICT REGULATORY COMPLIANCE GATE (ICC 769 / AML / KYB):
+    // Neither Buyer nor Seller may publish or register listings (Buy Requests
+    // or Supply Offers) on VALOREA MARKET unless their KYC/KYB institutional
+    // verification is fully approved (APPROVED / VERIFIED).
+    // -------------------------------------------------------------------------
+    const orgRecord = gvceStore.getVerificationRecords().find((r) => r.orgId === user.orgId);
+    const isKybApproved =
+      user.isVerified &&
+      user.kybStatus === "approved" &&
+      (!orgRecord || orgRecord.status === "approved");
+
+    const isExemptAdmin =
+      user.role === "platform_admin" || user.role === "compliance_officer";
+
+    if (!isKybApproved && !isExemptAdmin) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "KYC_KYB_VERIFICATION_REQUIRED",
+          message:
+            "Regulatory Compliance Mandate: Neither buyers nor suppliers may publish deal listings, purchase requests, or supply offers without full institutional KYC/KYB approval. Your corporate profile is currently unverified or pending review.",
+          messageAr:
+            "قيد تنظيمي إلزامي: لا يمكن لأي من المشتري أو البائع وضع إعلانهما أو تسجيل طلب شراء أو عرض توريد داخل المنصة إلا بعد اكتمال واعتماد التحقق الكامل المؤسسي والشخصي (KYC / KYB). ملف شركتكم لم يُعتمد بعد.",
+          kybStatus: orgRecord?.status || user.kybStatus || "pending_review",
+          orgName: user.orgName,
+          orgId: user.orgId,
+          complianceUrl: "/compliance",
+        },
+        { status: 403 }
+      );
+    }
+
     // 1. Server-side Recalculation of Total Value & Estimated Brokerage Fee
     const recalculatedTotal = Math.round(validated.quantity * validated.pricePerUnit * 100) / 100;
     const standardCommissionRate = 1.25; // Standard 1.25% (range: 0.50% - 1.50%)

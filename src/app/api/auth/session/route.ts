@@ -77,19 +77,27 @@ export async function POST(req: Request | any) {
       } else if (lower.includes("compliance")) {
         user = TEST_PERSONAS.compliance;
         role = "compliance_officer";
+      } else if (lower.includes("unverified_supplier")) {
+        user = TEST_PERSONAS.unverified_supplier;
+        role = "supplier";
+      } else if (lower.includes("unverified") || lower.includes("pending")) {
+        user = TEST_PERSONAS.unverified_buyer;
+        role = "buyer";
       } else if (lower.includes("nordic") || lower.includes("supplier")) {
         user = TEST_PERSONAS.supplier;
         role = "supplier";
       }
-    } else if (requestedRole && TEST_PERSONAS[requestedRole]) {
-      user = TEST_PERSONAS[requestedRole];
-      role = requestedRole as PlatformRole;
+    } else if (requestedRole && (TEST_PERSONAS as any)[requestedRole]) {
+      user = (TEST_PERSONAS as any)[requestedRole];
+      role = user.role;
     }
+
+    const sessionIdentifier = requestedRole || (user.id.includes("unverified-supplier") ? "unverified_supplier" : user.id.includes("unverified-buyer") ? "unverified_buyer" : role);
 
     // Set standard session cookie
     headers.append(
       "Set-Cookie",
-      `valorea_session_token=session_${Date.now()}_${role}; Path=/; HttpOnly; SameSite=Strict; Max-Age=14400${
+      `valorea_session_token=session_${Date.now()}_${sessionIdentifier}; Path=/; HttpOnly; SameSite=Strict; Max-Age=14400${
         isProd ? "; Secure" : ""
       }`
     );

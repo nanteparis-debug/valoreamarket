@@ -19,6 +19,10 @@ import {
   ShieldCheck,
   Building2,
   FileCheck2,
+  Lock,
+  ShieldAlert,
+  AlertTriangle,
+  Loader2,
 } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 import { BROKERAGE_COMMISSION_POLICY } from "@/lib/pricing-data";
@@ -125,6 +129,67 @@ function NewDealForm({ locale }: { locale: string }) {
   const [calculatedCommission, setCalculatedCommission] = useState<number>(0);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  // Regulatory Session & KYC/KYB Compliance State
+  const [currentUser, setCurrentUser] = useState<{
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    orgId: string;
+    orgName: string;
+    isVerified: boolean;
+    kybStatus: "approved" | "pending_review" | "incomplete" | "rejected";
+  } | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+  const fetchSession = async () => {
+    try {
+      setAuthLoading(true);
+      const res = await fetch("/api/auth/session");
+      const data = await res.json();
+      if (data.success && data.user) {
+        setCurrentUser(data.user);
+      } else {
+        setCurrentUser(null);
+      }
+    } catch (err) {
+      console.error("Session check error", err);
+      setCurrentUser(null);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSession();
+  }, []);
+
+  const handleSwitchPersona = async (personaRole: string) => {
+    try {
+      setAuthLoading(true);
+      const res = await fetch("/api/auth/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ role: personaRole }),
+      });
+      const data = await res.json();
+      if (data.success && data.user) {
+        setCurrentUser(data.user);
+        setErrorMessage("");
+      }
+    } catch (err) {
+      console.error("Failed to switch persona", err);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const isKybApproved = Boolean(
+    currentUser && currentUser.isVerified && currentUser.kybStatus === "approved"
+  );
+  const kybStatus = currentUser ? currentUser.kybStatus : "unauthenticated";
+  const orgName = currentUser?.orgName || "";
+
   // Sync state if URL query params change dynamically
   useEffect(() => {
     if (sideParam === "sell" || sideParam === "buy") {
@@ -164,6 +229,16 @@ function NewDealForm({ locale }: { locale: string }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage("");
+
+    // Institutional KYC/KYB Check Guard
+    if (!isKybApproved) {
+      setErrorMessage(
+        isAr
+          ? "قيد تنظيمي إلزامي: لا يمكن لأي من المشتري أو البائع وضع إعلانهما أو تسجيل أي عملية سلع مادية داخل المنصة إلا عند اكتمال التحقق الكامل منهما (KYC / KYB) واعتماد ملف المنشأة رسمياً من إدارة الامتثال."
+          : "Mandatory Regulatory Restriction: Neither buyers nor suppliers may publish listings or register deals until full institutional KYC/KYB verification is approved by compliance."
+      );
+      return;
+    }
 
     if (!numericQuantity || numericQuantity <= 0) {
       setErrorMessage(isAr ? "يرجى تحديد كمية صالحة أكبر من الصفر" : "Please provide a valid quantity greater than zero");
@@ -213,7 +288,12 @@ function NewDealForm({ locale }: { locale: string }) {
           setCalculatedCommission(data.estimatedCommissionUsd || totalContractValue * 0.0125);
           setSubmitted(true);
         } else {
-          setErrorMessage(data.error || (isAr ? "فشل تسجيل العملية" : "Submission failed"));
+          const detail =
+            (isAr ? data.messageAr : data.message) ||
+            data.message ||
+            data.error ||
+            (isAr ? "فشل تسجيل العملية" : "Submission failed");
+          setErrorMessage(detail);
         }
       } catch (err: any) {
         console.error("Submission failed", err);
@@ -323,6 +403,134 @@ function NewDealForm({ locale }: { locale: string }) {
                 {t.common.usdReference} • {isAr ? "وساطة غير إيداعية وتسوية مصرفية مباشرة" : "Non-custodial cargo clearing & peer-to-peer settlement"}
               </p>
             </div>
+
+            {/* Institutional KYC / KYB Verification Gate Banner */}
+            {authLoading ? (
+              <div className="p-4 rounded-2xl bg-[#0f121d] border border-[#23273b] text-xs text-gray-400 flex items-center gap-3">
+                <Loader2 className="w-4 h-4 animate-spin text-[#d4956b]" />
+                <span>{isAr ? "جاري التحقق من الاعتماد المؤسسي وملف الامتثال (KYC / KYB)..." : "Checking institutional KYC/KYB compliance authorization..."}</span>
+              </div>
+            ) : !isKybApproved ? (
+              <div className="p-5 sm:p-6 rounded-2xl bg-[#160f13] border-2 border-amber-500/60 shadow-xl space-y-4">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0 mt-0.5">
+                    <ShieldAlert className="w-6 h-6" />
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <h2 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                        <Lock className="w-4 h-4 text-amber-400" />
+                        <span>
+                          {isAr
+                            ? "نظام النشر مقيد: يتطلب اكتمال التحقق المؤسسي الكامل (KYC / KYB)"
+                            : "Publication Restricted: Mandatory Institutional KYC/KYB Verification"}
+                        </span>
+                      </h2>
+                      <span
+                        className={cn(
+                          "px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold uppercase border",
+                          kybStatus === "pending_review"
+                            ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                            : kybStatus === "incomplete"
+                            ? "bg-sky-500/20 text-sky-300 border-sky-500/40"
+                            : kybStatus === "rejected"
+                            ? "bg-red-500/20 text-red-300 border-red-500/40"
+                            : "bg-gray-500/20 text-gray-300 border-gray-500/40"
+                        )}
+                      >
+                        {kybStatus === "unauthenticated"
+                          ? (isAr ? "غير مسجل الدخول" : "UNAUTHENTICATED")
+                          : kybStatus === "pending_review"
+                          ? (isAr ? "قيد المراجعة الرقابية" : "PENDING REVIEW")
+                          : kybStatus === "incomplete"
+                          ? (isAr ? "وثائق ناقصة" : "INCOMPLETE")
+                          : (isAr ? "غير معتمد" : "REJECTED")}
+                      </span>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-amber-100/90 leading-relaxed">
+                      {isAr
+                        ? "وفقاً لمعايير غرفة التجارة الدولية (ICC) وقوانين مكافحة غسل الأموال (AML) لتداول السلع المادية، لا يمكن لأي من المشتري أو البائع من وضع إعلانهما أو نشر طلبات الشراء وعروض التوريد داخل المنصة إلا عند اكتمال التحقق الكامل منهما (KYC للممثل القانوني و KYB للمنشأة)."
+                        : "Under ICC rules and international AML regulations for physical commodity trading, neither buyers nor sellers may publish listings, buy requests, or supply offers until full corporate verification (KYB) and representative vetting (KYC) are completed and officially approved."}
+                    </p>
+
+                    {orgName && (
+                      <div className="text-xs text-gray-300 font-mono bg-black/40 p-2.5 rounded-xl border border-white/10 flex items-center justify-between flex-wrap gap-2">
+                        <span>
+                          <strong className="text-white">{isAr ? "المنشأة الحالية:" : "Organization:"}</strong> {orgName}
+                        </span>
+                        <span className="text-[11px] text-amber-300">
+                          {isAr ? "الحالة: بانتظار اعتماد ضابط الامتثال" : "Status: Awaiting Compliance Officer Approval"}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Direct Action Buttons */}
+                    <div className="pt-2 flex flex-wrap gap-2.5">
+                      <button
+                        type="button"
+                        onClick={() => router.push("/compliance")}
+                        className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white text-xs font-semibold shadow-md shadow-[#b87333]/20 flex items-center gap-1.5 transition-all"
+                      >
+                        <FileCheck2 className="w-3.5 h-3.5" />
+                        <span>
+                          {isAr
+                            ? "لوحة الامتثال ورفع وثائق التحقق (KYC / KYB)"
+                            : "Compliance Portal & Upload Verification (KYC / KYB)"}
+                        </span>
+                        <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
+                      </button>
+
+                      {!currentUser && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => router.push("/auth/signin")}
+                            className="px-4 py-2 rounded-xl bg-[#141726] border border-[#23273b] hover:border-white/30 text-white text-xs font-semibold flex items-center gap-1.5 transition-all"
+                          >
+                            <Building2 className="w-3.5 h-3.5 text-[#d4956b]" />
+                            <span>{isAr ? "تسجيل الدخول للمؤسسات المعتمدة" : "Sign In with Verified Account"}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => router.push("/auth/register")}
+                            className="px-4 py-2 rounded-xl bg-[#0f111a] border border-[#23273b] hover:border-[#b87333] text-gray-300 hover:text-white text-xs font-semibold transition-all"
+                          >
+                            <span>{isAr ? "طلب تسجيل منشأة جديدة" : "Register New Trading Desk"}</span>
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/40 text-xs flex items-center justify-between flex-wrap gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white flex items-center gap-2">
+                      <span>{isAr ? "التحقق المؤسسي مكتمل ومعتمد (KYC / KYB VERIFIED)" : "Institutional Verification Approved (KYC / KYB VERIFIED)"}</span>
+                      <span className="px-2 py-0.2 rounded-full bg-emerald-500/20 text-emerald-400 font-mono text-[10px]">APPROVED</span>
+                    </div>
+                    <p className="text-gray-400 text-[11px] mt-0.5">
+                      {isAr
+                        ? `الحساب مؤهل بالكامل لطرح الصفقات باسم: ${orgName || currentUser?.name}`
+                        : `Authorized to publish physical commodity orders on behalf of: ${orgName || currentUser?.name}`}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => router.push("/compliance")}
+                  className="text-[11px] text-emerald-400 hover:text-emerald-300 font-mono underline"
+                >
+                  {isAr ? "عرض شهادة الامتثال" : "View Compliance Cert"}
+                </button>
+              </div>
+            )}
 
             {errorMessage && (
               <div className="p-3.5 rounded-xl bg-red-950/40 border border-red-500/40 text-red-300 text-xs flex items-center gap-2">
@@ -655,21 +863,114 @@ function NewDealForm({ locale }: { locale: string }) {
 
               <button
                 type="submit"
-                disabled={isPending}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white font-semibold text-sm shadow-xl shadow-[#b87333]/20 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
+                disabled={isPending || !isKybApproved}
+                className={cn(
+                  "w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-sm shadow-xl flex items-center justify-center gap-2 transition-all",
+                  isKybApproved
+                    ? "bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white shadow-[#b87333]/20"
+                    : "bg-[#181a24] text-gray-400 border border-[#2b2f42] cursor-not-allowed opacity-80"
+                )}
               >
-                <span>
-                  {isPending
-                    ? t.common.loading
-                    : side === "sell"
-                    ? (isAr ? "إرسال عرض توريد معتمد" : "Submit Verified Supply Offer")
-                    : (isAr ? "إرسال طلب شراء معتمد" : "Submit Verified Purchase Request")}
-                </span>
-                <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                {!isKybApproved ? (
+                  <>
+                    <Lock className="w-4 h-4 text-amber-400" />
+                    <span>
+                      {side === "sell"
+                        ? (isAr ? "مغلق: يتطلب اعتماد KYC/KYB لنشر عرض التوريد" : "Locked: Requires Approved KYC/KYB to Post Offer")
+                        : (isAr ? "مغلق: يتطلب اعتماد KYC/KYB لنشر طلب الشراء" : "Locked: Requires Approved KYC/KYB to Post Request")}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span>
+                      {isPending
+                        ? t.common.loading
+                        : side === "sell"
+                        ? (isAr ? "إرسال عرض توريد معتمد" : "Submit Verified Supply Offer")
+                        : (isAr ? "إرسال طلب شراء معتمد" : "Submit Verified Purchase Request")}
+                    </span>
+                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                  </>
+                )}
               </button>
             </div>
           </form>
         )}
+
+        {/* Regulatory Persona Simulator & Interactive Compliance Switcher */}
+        <div className="mt-8 p-5 rounded-2xl bg-[#0a0c13] border border-[#1f2233] text-xs space-y-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <span className="text-gray-400 font-mono flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#d4956b]" />
+              <span>
+                {isAr
+                  ? "محاكي فحص الأهلية الرقابية (KYC / KYB Persona Sandbox):"
+                  : "Regulatory Eligibility Simulator (KYC / KYB Persona Sandbox):"}
+              </span>
+            </span>
+            <span className="text-[11px] text-gray-500 font-mono">
+              {isAr ? "اختبر تفاعل المنصة مع أطراف التداول المعتمدة وغير المعتمدة" : "Test platform behavior across verified & unverified trading entities"}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 font-mono text-[11px]">
+            <button
+              type="button"
+              onClick={() => handleSwitchPersona("buyer")}
+              className={cn(
+                "p-2 rounded-xl border text-center transition-all",
+                currentUser?.id === "usr-buyer-alpha"
+                  ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 font-bold"
+                  : "bg-[#10121d] border-[#23273b] text-gray-400 hover:text-white"
+              )}
+            >
+              <div>🏢 {isAr ? "مشتري معتمد" : "Verified Buyer"}</div>
+              <div className="text-[10px] text-emerald-400 font-sans">{isAr ? "توتال إنرجيز (معتمد ✅)" : "TotalEnergies (Approved)"}</div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSwitchPersona("supplier")}
+              className={cn(
+                "p-2 rounded-xl border text-center transition-all",
+                currentUser?.id === "usr-supplier-nordic"
+                  ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 font-bold"
+                  : "bg-[#10121d] border-[#23273b] text-gray-400 hover:text-white"
+              )}
+            >
+              <div>🏭 {isAr ? "مورد معتمد" : "Verified Supplier"}</div>
+              <div className="text-[10px] text-emerald-400 font-sans">{isAr ? "نورديك ريفاينينغ (معتمد ✅)" : "Nordic Refining (Approved)"}</div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSwitchPersona("unverified_buyer")}
+              className={cn(
+                "p-2 rounded-xl border text-center transition-all",
+                currentUser?.id === "usr-unverified-buyer"
+                  ? "bg-amber-500/15 border-amber-500/50 text-amber-300 font-bold"
+                  : "bg-[#10121d] border-[#23273b] text-gray-400 hover:text-white"
+              )}
+            >
+              <div>⏳ {isAr ? "مشتري غير معتمد" : "Unverified Buyer"}</div>
+              <div className="text-[10px] text-amber-400 font-sans">{isAr ? "جلف إنرجي (قيد المراجعة ⏳)" : "Gulf Energy (Pending)"}</div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSwitchPersona("unverified_supplier")}
+              className={cn(
+                "p-2 rounded-xl border text-center transition-all",
+                currentUser?.id === "usr-unverified-supplier"
+                  ? "bg-amber-500/15 border-amber-500/50 text-amber-300 font-bold"
+                  : "bg-[#10121d] border-[#23273b] text-gray-400 hover:text-white"
+              )}
+            >
+              <div>⚠️ {isAr ? "مورد غير معتمد" : "Unverified Supplier"}</div>
+              <div className="text-[10px] text-amber-400 font-sans">{isAr ? "لاتام ريفاينينغ (ناقص ⚠️)" : "LatAm Refining (Incomplete)"}</div>
+            </button>
+          </div>
+        </div>
       </main>
 
       <footer className="py-6 border-t border-[#1f2233] text-center text-xs text-gray-500 font-mono">

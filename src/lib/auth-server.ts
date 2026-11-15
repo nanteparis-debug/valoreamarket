@@ -98,6 +98,28 @@ export const TEST_PERSONAS: Record<string, AuthenticatedUser> = {
     isVerified: true,
     kybStatus: "approved",
   },
+  unverified_buyer: {
+    id: "usr-unverified-buyer",
+    name: "Tariq Al-Mansoor",
+    email: "tariq@gulf-energy-traders.com",
+    role: "buyer",
+    orgId: "org-gulf-pending",
+    orgName: "Gulf Energy Traders LLC (قيد المراجعة)",
+    orgCountry: "AE",
+    isVerified: false,
+    kybStatus: "pending_review",
+  },
+  unverified_supplier: {
+    id: "usr-unverified-supplier",
+    name: "Carlos Mendoza",
+    email: "c.mendoza@latam-refining-group.br",
+    role: "supplier",
+    orgId: "org-latam-pending",
+    orgName: "LatAm Refining & Commodities (وثائق ناقصة)",
+    orgCountry: "BR",
+    isVerified: false,
+    kybStatus: "incomplete",
+  },
 };
 
 /**
@@ -158,7 +180,12 @@ export function getAuthenticatedUser(req: NextRequest): AuthenticatedUser | null
 
   const sessionToken = req.cookies?.get("valorea_session_token")?.value;
   if (sessionToken) {
-    // Verify valid session token
+    if (sessionToken.includes("unverified_buyer") || sessionToken.includes("unverified")) return TEST_PERSONAS.unverified_buyer;
+    if (sessionToken.includes("unverified_supplier")) return TEST_PERSONAS.unverified_supplier;
+    if (sessionToken.includes("supplier")) return TEST_PERSONAS.supplier;
+    if (sessionToken.includes("broker")) return TEST_PERSONAS.broker;
+    if (sessionToken.includes("compliance")) return TEST_PERSONAS.compliance;
+    if (sessionToken.includes("platform_admin")) return TEST_PERSONAS.platform_admin;
     return TEST_PERSONAS.buyer;
   }
 
