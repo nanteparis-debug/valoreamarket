@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Script from "next/script";
 import { TRUSTPILOT_CONFIG } from "@/lib/trustpilot";
+import { useTheme } from "@/components/theme-provider";
 
 declare global {
   interface Window {
@@ -20,9 +21,11 @@ interface TrustBoxWidgetProps {
 
 export function TrustBoxWidget({ className, locale = "en" }: TrustBoxWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   // Map app locale to Trustpilot supported widget locales
   const trustpilotLocale = locale === "fr" ? "fr-FR" : locale === "de" ? "de-DE" : locale === "es" ? "es-ES" : "en-US";
+  const widgetTheme = theme === "light" ? "light" : "dark";
 
   const reloadWidget = () => {
     if (typeof window !== "undefined" && window.Trustpilot?.loadFromElement && containerRef.current) {
@@ -32,10 +35,10 @@ export function TrustBoxWidget({ className, locale = "en" }: TrustBoxWidgetProps
 
   useEffect(() => {
     reloadWidget();
-  }, [locale]);
+  }, [locale, theme]);
 
   return (
-    <div className={className}>
+    <div className={className} key={`trustbox-${widgetTheme}-${trustpilotLocale}`}>
       <Script
         id="trustpilot-widget-script"
         src={TRUSTPILOT_CONFIG.scriptUrl}
@@ -51,7 +54,7 @@ export function TrustBoxWidget({ className, locale = "en" }: TrustBoxWidgetProps
         data-businessunit-id={TRUSTPILOT_CONFIG.businessUnitId}
         data-style-height="52px"
         data-style-width="100%"
-        data-theme="dark"
+        data-theme={widgetTheme}
       >
         <a
           href={TRUSTPILOT_CONFIG.profileUrl}

@@ -204,9 +204,11 @@ export function AnimatedFooter({
         </div>
 
         {/* Official Trustpilot Verified Ratings & Reviews Showcase Banner & Live Widget */}
-        <div className="pt-10 space-y-3">
-          <TrustpilotBadge locale={currentLocale} variant="card" />
-          <div className="rounded-2xl bg-[#0b0e17] border border-[#23273b] p-3 flex items-center justify-center overflow-hidden">
+        <div className="pt-10 grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+          <div className="lg:col-span-8 flex">
+            <TrustpilotBadge locale={currentLocale} variant="card" className="w-full h-full" />
+          </div>
+          <div className="lg:col-span-4 rounded-2xl bg-[#0c0e17] border border-[#23273b] p-4 flex items-center justify-center overflow-hidden min-h-[72px] shadow-lg">
             <TrustBoxWidget locale={currentLocale} className="w-full" />
           </div>
         </div>

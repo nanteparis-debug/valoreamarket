@@ -2,8 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { Star, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TRUSTPILOT_CONFIG } from "@/lib/trustpilot";
 
 interface TrustpilotBadgeProps {
   locale?: string;
@@ -16,7 +17,7 @@ export function TrustpilotBadge({
   locale = "en",
   variant = "pill",
   className,
-  reviewUrl = "https://www.trustpilot.com/review/valoreamarket.com",
+  reviewUrl = TRUSTPILOT_CONFIG.profileUrl,
 }: TrustpilotBadgeProps) {
   const isAr = locale === "ar";
 
@@ -61,12 +62,12 @@ export function TrustpilotBadge({
         target="_blank"
         rel="noopener noreferrer"
         className={cn(
-          "p-4 rounded-2xl bg-[#0b0e17] border border-[#23273b] hover:border-[#00B67A]/60 transition-all shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4 group",
+          "p-4 rounded-2xl bg-[#0c0e17] border border-[#23273b] hover:border-[#00B67A]/60 transition-all shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group",
           className
         )}
       >
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-[#121624] border border-[#23273b] group-hover:border-[#00B67A]/40 transition-colors">
+          <div className="p-2 rounded-xl bg-[#121624] border border-[#23273b] group-hover:border-[#00B67A]/40 transition-colors shrink-0">
             <Image
               src="/images/trustpilot-logo.svg"
               alt="Trustpilot"
@@ -76,8 +77,8 @@ export function TrustpilotBadge({
             />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-white">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs sm:text-sm font-bold text-white [html.light_&]:text-slate-900">
                 {isAr ? "ممتاز 4.9 من 5" : "Rated Excellent 4.9 / 5"}
               </span>
               <Image
@@ -88,7 +89,7 @@ export function TrustpilotBadge({
                 className="h-3.5 w-auto"
               />
             </div>
-            <p className="text-[11px] text-gray-400 mt-0.5">
+            <p className="text-[11px] text-gray-300 dark:text-gray-400 [html.light_&]:text-slate-600 mt-0.5">
               {isAr
                 ? "تقييمات موثقة من بيوت التجارة والمشترين والموردين الدوليين"
                 : "Verified reviews from international commodity trading desks"}
@@ -96,7 +97,7 @@ export function TrustpilotBadge({
           </div>
         </div>
 
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#141a29] border border-[#23273b] text-xs font-mono text-emerald-400 group-hover:bg-[#00B67A]/10 group-hover:border-[#00B67A]/40 transition-all shrink-0">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#141a29] [html.light_&]:bg-slate-100 border border-[#23273b] [html.light_&]:border-slate-300 text-xs font-mono text-emerald-400 [html.light_&]:text-emerald-700 group-hover:bg-[#00B67A]/10 group-hover:border-[#00B67A]/40 transition-all shrink-0">
           <span>{isAr ? "عرض التقييمات على Trustpilot" : "See Trustpilot Profile"}</span>
           <ExternalLink className="w-3.5 h-3.5 rtl:rotate-180" />
         </div>
@@ -111,11 +112,11 @@ export function TrustpilotBadge({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0a0d18] border border-[#23273b] hover:border-[#00B67A]/60 transition-all shadow-md group",
+        "inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0c0e17] border border-[#23273b] hover:border-[#00B67A]/60 transition-all shadow-md group",
         className
       )}
     >
-      <span className="text-[11px] font-medium text-gray-300">
+      <span className="text-[11px] font-medium text-gray-300 [html.light_&]:text-slate-700">
         {isAr ? "تقييم ممتاز على" : "Rated Excellent on"}
       </span>
       <Image
@@ -132,7 +133,7 @@ export function TrustpilotBadge({
         height={13}
         className="h-3 w-auto"
       />
-      <span className="text-[11px] font-bold text-white font-mono">4.9/5</span>
+      <span className="text-[11px] font-bold text-white [html.light_&]:text-slate-900 font-mono">4.9/5</span>
     </a>
   );
 }

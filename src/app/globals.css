@@ -256,6 +256,8 @@ html.light [class*="bg-[#0c0e15]"] {
 }
 
 /* Primary Content Cards & Bento Panels */
+html.light [class*="bg-[#0a0d18]"],
+html.light [class*="bg-[#0b0e17]"],
 html.light [class*="bg-[#0c0e17]"],
 html.light [class*="bg-[#0d0f17]"],
 html.light [class*="bg-[#0e1017]"],
@@ -268,6 +270,8 @@ html.light [class*="bg-[#0e111a]"] {
 }
 
 /* Subtle Interactive Card Hover State */
+html.light [class*="bg-[#0a0d18]"]:hover,
+html.light [class*="bg-[#0b0e17]"]:hover,
 html.light [class*="bg-[#0c0e17]"]:hover,
 html.light [class*="bg-[#0d0f17]"]:hover,
 html.light [class*="bg-[#0e1017]"]:hover {
