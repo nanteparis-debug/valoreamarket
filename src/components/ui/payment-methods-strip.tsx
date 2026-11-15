@@ -14,19 +14,19 @@ interface PaymentMethodsStripProps {
 }
 
 const PAYMENT_CARDS = [
-  { id: "visa", name: "Visa", src: "/images/payments/visa-official.svg?v=5", width: 96, height: 60 },
-  { id: "mastercard", name: "Mastercard", src: "/images/payments/mastercard-official.svg?v=5", width: 96, height: 60 },
-  { id: "amex", name: "American Express", src: "/images/payments/amex-official.svg?v=5", width: 96, height: 60 },
-  { id: "apple-pay", name: "Apple Pay", src: "/images/payments/apple-pay-official.svg?v=5", width: 96, height: 60 },
-  { id: "google-pay", name: "Google Pay", src: "/images/payments/google-pay-official.svg?v=5", width: 96, height: 60 },
-  { id: "discover", name: "Discover", src: "/images/payments/discover-official.svg?v=5", width: 96, height: 60 },
-  { id: "swift-sepa", name: "SWIFT & SEPA Wire", src: "/images/payments/swift-sepa-official.svg?v=5", width: 120, height: 60 },
-  { id: "lemon-squeezy", name: "Lemon Squeezy (Merchant of Record)", src: "/images/payments/lemon-squeezy-official.svg?v=5", width: 176, height: 60 },
+  { id: "visa", name: "Visa", src: "/images/payments/visa-official.svg?v=6", width: 68, height: 44 },
+  { id: "mastercard", name: "Mastercard", src: "/images/payments/mastercard-official.svg?v=6", width: 68, height: 44 },
+  { id: "amex", name: "American Express", src: "/images/payments/amex-official.svg?v=6", width: 68, height: 44 },
+  { id: "apple-pay", name: "Apple Pay", src: "/images/payments/apple-pay-official.svg?v=6", width: 68, height: 44 },
+  { id: "google-pay", name: "Google Pay", src: "/images/payments/google-pay-official.svg?v=6", width: 68, height: 44 },
+  { id: "discover", name: "Discover", src: "/images/payments/discover-official.svg?v=6", width: 68, height: 44 },
+  { id: "swift-sepa", name: "SWIFT & SEPA Wire", src: "/images/payments/swift-sepa-official.svg?v=6", width: 108, height: 44 },
+  { id: "lemon-squeezy", name: "Lemon Squeezy (Merchant of Record)", src: "/images/payments/lemon-squeezy-official.svg?v=6", width: 152, height: 44 },
 ];
 
 const SETTLEMENT_BADGES = [
-  { id: "dlc", name: "Documentary LC / SBLC", src: "/images/payments/dlc-letter-credit-official.svg?v=5", width: 176, height: 60 },
-  { id: "ssl", name: "256-Bit SSL Encryption", src: "/images/payments/ssl-encryption-official.svg?v=5", width: 166, height: 60 },
+  { id: "dlc", name: "Documentary LC / SBLC", src: "/images/payments/dlc-letter-credit-official.svg?v=6", width: 210, height: 44 },
+  { id: "ssl", name: "256-Bit SSL Encryption", src: "/images/payments/ssl-encryption-official.svg?v=6", width: 190, height: 44 },
 ];
 
 export function PaymentMethodsStrip({
@@ -98,14 +98,14 @@ export function PaymentMethodsStrip({
               <div
                 key={card.id}
                 title={card.name}
-                className="group relative transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#b87333]/20 rounded-xl overflow-hidden shrink-0 border border-slate-200/80 dark:border-transparent [html.light_&]:border-slate-300"
+                className="group relative transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg rounded-md overflow-hidden shrink-0 shadow-xs"
               >
                 <Image
                   src={card.src}
                   alt={card.name}
                   width={card.width}
                   height={card.height}
-                  className="h-10 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                  className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-[1.02]"
                 />
               </div>
             ))}
@@ -126,14 +126,14 @@ export function PaymentMethodsStrip({
               <div
                 key={badge.id}
                 title={badge.name}
-                className="group relative transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/20 rounded-xl overflow-hidden shrink-0 border border-slate-200/80 dark:border-transparent [html.light_&]:border-slate-300"
+                className="group relative transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg rounded-md overflow-hidden shrink-0 shadow-xs"
               >
                 <Image
                   src={badge.src}
                   alt={badge.name}
                   width={badge.width}
                   height={badge.height}
-                  className="h-10 sm:h-11 w-auto object-contain transition-transform group-hover:scale-105"
+                  className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-[1.02]"
                 />
               </div>
             ))}

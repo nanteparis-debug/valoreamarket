@@ -1,11 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 60" fill="none">
-  <rect width="176" height="60" rx="10" fill="#090C16" stroke="#262B40" stroke-width="1.5"/>
-  <!-- Shield & Vault Lock Icon -->
-  <g transform="translate(12, 14)">
-    <path d="M14 2L2 7.5V16.5C2 23.5 7.1 30 14 31.8C20.9 30 26 23.5 26 16.5V7.5L14 2Z" fill="#b87333" opacity="0.2"/>
-    <path d="M14 2L2 7.5V16.5C2 23.5 7.1 30 14 31.8C20.9 30 26 23.5 26 16.5V7.5L14 2Z" stroke="#d4956b" stroke-width="1.8"/>
-    <path d="M10.5 15H17.5V22H10.5V15ZM12.2 15V12.8C12.2 11.8 13 11 14 11C15 11 15.8 11.8 15.8 12.8V15" stroke="#FFFFFF" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 44" fill="none">
+  <!-- Executive Obsidian / Copper Escrow Badge -->
+  <rect width="210" height="44" rx="6" fill="#101422"/>
+  <rect x="0.5" y="0.5" width="209" height="43" rx="5.5" stroke="#D4956B" stroke-width="1" stroke-opacity="0.45"/>
+  <!-- Vault / Escrow Shield Icon -->
+  <g transform="translate(10, 8)">
+    <path d="M14 2L2 7V15C2 21.5 7.1 27 14 28.5C20.9 27 26 21.5 26 15V7L14 2Z" fill="#B87333" opacity="0.25"/>
+    <path d="M14 2L2 7V15C2 21.5 7.1 27 14 28.5C20.9 27 26 21.5 26 15V7L14 2Z" stroke="#D4956B" stroke-width="1.6"/>
+    <path d="M10.5 13H17.5V19.5H10.5V13ZM12.2 13V11C12.2 10.1 13 9.4 14 9.4C15 9.4 15.8 10.1 15.8 11V13" stroke="#FFFFFF" stroke-width="1.4"/>
   </g>
-  <text x="48" y="29" fill="#FFFFFF" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="13" letter-spacing="0.4">DLC / SBLC (MT700)</text>
-  <text x="48" y="43" fill="#10B981" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="10" letter-spacing="0.6">BANK-TO-BANK ESCROW</text>
+  <text x="44" y="21" fill="#FFFFFF" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="11" letter-spacing="0.4">DLC / SBLC (MT700)</text>
+  <text x="44" y="32" fill="#D4956B" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="8.5" letter-spacing="0.6">BANK-TO-BANK ESCROW</text>
 </svg>
