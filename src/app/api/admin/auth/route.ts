@@ -30,6 +30,12 @@ function jsonWithAdminCookies(
       isProd ? "; Secure" : ""
     }`
   );
+  headers.append(
+    "Set-Cookie",
+    `valorea_mfa_pending=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${
+      isProd ? "; Secure" : ""
+    }`
+  );
 
   return new Response(JSON.stringify(data), {
     status: init?.status || 200,
@@ -103,7 +109,7 @@ export async function POST(req: Request | any) {
     }
 
     const body = await req.json();
-    const { email, password, mfaCode, turnstileToken, selectedRole, usePasskey } = body;
+    const { email, password, mfaCode, mfaTicket, turnstileToken, selectedRole, usePasskey } = body;
 
     // 2. Hardware Passkey Authentication Shortcut
     if (usePasskey) {
@@ -128,7 +134,70 @@ export async function POST(req: Request | any) {
       );
     }
 
-    // 3. Cloudflare Turnstile Bot Defense Verification
+    // 3. Multi-Factor Authentication Verification (Step 2 check)
+    // Check if client has a valid pending MFA ticket from Step 1
+    let pendingMfaData: { email: string; role: PlatformRole; ts: number } | null = null;
+    let rawTicket: string | undefined = mfaTicket;
+
+    if (!rawTicket) {
+      if (req.cookies && typeof req.cookies.get === "function") {
+        rawTicket = req.cookies.get("valorea_mfa_pending")?.value;
+      } else if (req.headers) {
+        const cookieHeader =
+          typeof req.headers.get === "function"
+            ? req.headers.get("cookie")
+            : req.headers.cookie;
+        if (cookieHeader) {
+          const match = cookieHeader.match(/valorea_mfa_pending=([^;]+)/);
+          if (match) rawTicket = match[1];
+        }
+      }
+    }
+
+    if (rawTicket) {
+      try {
+        const parsed = JSON.parse(Buffer.from(rawTicket, "base64url").toString("utf8"));
+        if (
+          parsed &&
+          (!email || parsed.email.toLowerCase() === email.toLowerCase()) &&
+          Date.now() - parsed.ts < 300000 // 5 minutes validity
+        ) {
+          pendingMfaData = parsed;
+        }
+      } catch {
+        // invalid ticket format
+      }
+    }
+
+    // If valid pending MFA ticket exists and user provided mfaCode (Step 2)
+    if (pendingMfaData && mfaCode && mfaCode.trim().length >= 6) {
+      const effectiveRole: PlatformRole = pendingMfaData.role || selectedRole || "platform_admin";
+      const targetUser =
+        effectiveRole === "compliance_officer"
+          ? TEST_PERSONAS.compliance
+          : effectiveRole === "broker"
+          ? TEST_PERSONAS.broker
+          : (TEST_PERSONAS.platform_admin || TEST_PERSONAS.broker);
+
+      const targetEmail = pendingMfaData.email || email || "director@valorea.exchange";
+      const adminSessionToken = `admin_${effectiveRole}_${Date.now()}_${Buffer.from(targetEmail).toString("base64")}`;
+
+      return jsonWithAdminCookies(
+        {
+          success: true,
+          user: targetUser,
+          role: effectiveRole,
+          redirectUrl: effectiveRole === "compliance_officer" ? "/compliance" : "/broker",
+          clearanceLevel: "LEVEL_4_EXECUTIVE_DIRECTOR",
+          sessionExpiresIn: 14400, // 4 hours
+          message: "Executive Authentication Succeeded • Clearance Level 4 Granted",
+        },
+        effectiveRole,
+        adminSessionToken
+      );
+    }
+
+    // 4. Cloudflare Turnstile Bot Defense Verification (For Step 1 / Fresh Logins)
     if (!turnstileToken) {
       return jsonResponse(
         {
@@ -157,7 +226,7 @@ export async function POST(req: Request | any) {
       );
     }
 
-    // 4. Primary Credential Verification
+    // 5. Primary Credential Verification
     if (!email || !password) {
       return jsonResponse(
         {
@@ -180,18 +249,6 @@ export async function POST(req: Request | any) {
       );
     }
 
-    // 5. Multi-Factor Authentication (MFA / TOTP) Verification
-    if (!mfaCode || mfaCode.trim().length < 6) {
-      return jsonResponse(
-        {
-          success: false,
-          step: "MFA_REQUIRED",
-          message: "Credentials verified. Please supply 6-digit TOTP / Authenticator code.",
-        },
-        { status: 200 }
-      );
-    }
-
     // Determine targeted institutional role based on email or parameter
     let role: PlatformRole = selectedRole || "platform_admin";
     if (email.includes("compliance")) {
@@ -207,21 +264,47 @@ export async function POST(req: Request | any) {
         ? TEST_PERSONAS.broker
         : (TEST_PERSONAS.platform_admin || TEST_PERSONAS.broker);
 
-    // 6. Generate Signed Executive Session Token
-    const adminSessionToken = `admin_${role}_${Date.now()}_${Buffer.from(email).toString("base64")}`;
-
-    return jsonWithAdminCookies(
-      {
-        success: true,
-        user: targetUser,
+    // If MFA code was provided along with credentials and fresh turnstile in a single request
+    if (mfaCode && mfaCode.trim().length >= 6) {
+      const adminSessionToken = `admin_${role}_${Date.now()}_${Buffer.from(email).toString("base64")}`;
+      return jsonWithAdminCookies(
+        {
+          success: true,
+          user: targetUser,
+          role,
+          redirectUrl: role === "compliance_officer" ? "/compliance" : "/broker",
+          clearanceLevel: "LEVEL_4_EXECUTIVE_DIRECTOR",
+          sessionExpiresIn: 14400,
+          message: "Executive Authentication Succeeded • Clearance Level 4 Granted",
+        },
         role,
-        redirectUrl: role === "compliance_officer" ? "/compliance" : "/broker",
-        clearanceLevel: "LEVEL_4_EXECUTIVE_DIRECTOR",
-        sessionExpiresIn: 14400, // 4 hours
-        message: "Executive Authentication Succeeded • Clearance Level 4 Granted",
-      },
+        adminSessionToken
+      );
+    }
+
+    // Step 1 Success: Credentials & Turnstile verified. Issue pending MFA ticket.
+    const newTicketPayload = {
+      email,
       role,
-      adminSessionToken
+      ts: Date.now(),
+    };
+    const newMfaTicket = Buffer.from(JSON.stringify(newTicketPayload)).toString("base64url");
+
+    const mfaHeaders = new Headers({ "Content-Type": "application/json" });
+    const isProd = process.env.NODE_ENV === "production";
+    mfaHeaders.append(
+      "Set-Cookie",
+      `valorea_mfa_pending=${newMfaTicket}; Path=/; HttpOnly; SameSite=Strict; Max-Age=300${isProd ? "; Secure" : ""}`
+    );
+
+    return new Response(
+      JSON.stringify({
+        success: false,
+        step: "MFA_REQUIRED",
+        mfaTicket: newMfaTicket,
+        message: "Credentials verified. Please supply 6-digit TOTP / Authenticator code.",
+      }),
+      { status: 200, headers: mfaHeaders }
     );
   } catch (error: any) {
     return jsonResponse(

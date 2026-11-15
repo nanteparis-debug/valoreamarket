@@ -35,6 +35,7 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [mfaCode, setMfaCode] = useState("");
+  const [mfaTicket, setMfaTicket] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const [step, setStep] = useState<"credentials" | "mfa">("credentials");
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +98,7 @@ export default function AdminLoginPage() {
       }
 
       if (data.step === "MFA_REQUIRED") {
+        setMfaTicket(data.mfaTicket || "");
         setStep("mfa");
         setIsLoading(false);
       } else if (data.success && data.redirectUrl) {
@@ -130,6 +132,7 @@ export default function AdminLoginPage() {
           email,
           password,
           mfaCode,
+          mfaTicket,
           turnstileToken,
           selectedRole,
         }),
@@ -438,7 +441,11 @@ export default function AdminLoginPage() {
               <span>{isAr ? "مدة صلاحية الرمز: 30 ثانية" : "Window: 30s dynamic rotation"}</span>
               <button
                 type="button"
-                onClick={() => setStep("credentials")}
+                onClick={() => {
+                  setStep("credentials");
+                  setMfaCode("");
+                  setMfaTicket("");
+                }}
                 className="text-[#d4956b] hover:underline"
               >
                 {isAr ? "تغيير الحساب" : "Back"}

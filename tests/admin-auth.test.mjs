@@ -76,6 +76,35 @@ test("Admin Auth: POST /api/admin/auth Passkey FIDO2 fast entrance", async () =>
   assert.strictEqual(data.redirectUrl, "/broker");
 });
 
+test("Admin Auth: Two-step MFA with pending ticket verifies without duplicate Turnstile consumption", async () => {
+  const { POST } = await import("../src/app/api/admin/auth/route.ts");
+
+  // Step 2 with valid pending ticket
+  const ticketPayload = {
+    email: "director@valorea.exchange",
+    role: "platform_admin",
+    ts: Date.now(),
+  };
+  const mfaTicket = Buffer.from(JSON.stringify(ticketPayload)).toString("base64url");
+
+  const reqStep2 = {
+    headers: new Headers([["x-forwarded-for", "127.0.0.1"]]),
+    json: async () => ({
+      email: "director@valorea.exchange",
+      mfaCode: "123456",
+      mfaTicket,
+      selectedRole: "platform_admin",
+    }),
+  };
+
+  const resStep2 = await POST(reqStep2);
+  assert.strictEqual(resStep2.status, 200);
+  const dataStep2 = await resStep2.json();
+  assert.strictEqual(dataStep2.success, true);
+  assert.strictEqual(dataStep2.clearanceLevel, "LEVEL_4_EXECUTIVE_DIRECTOR");
+  assert.strictEqual(dataStep2.redirectUrl, "/broker");
+});
+
 test("Admin Auth: getAuthenticatedUser in auth-server.ts honors valorea_admin_token", async () => {
   const { getAuthenticatedUser } = await import("../src/lib/auth-server.ts");
 
