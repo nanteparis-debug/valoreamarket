@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" fill="none">
-  <rect width="80" height="48" rx="8" fill="#016FD0" stroke="#005AA8" stroke-width="1.2"/>
-  <!-- Decorative Amex inner border line -->
-  <rect x="4" y="4" width="72" height="40" rx="5" stroke="#3399EE" stroke-width="1" fill="none" opacity="0.6"/>
-  <text x="40" y="22" text-anchor="middle" fill="#FFFFFF" font-family="'Arial Black', Impact, 'Helvetica Neue', sans-serif" font-weight="900" font-size="9.5" letter-spacing="1.2">AMERICAN</text>
-  <text x="40" y="34" text-anchor="middle" fill="#FFFFFF" font-family="'Arial Black', Impact, 'Helvetica Neue', sans-serif" font-weight="900" font-size="9.5" letter-spacing="1.2">EXPRESS</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 60" fill="none">
+  <rect width="96" height="60" rx="10" fill="#006FCF" stroke="#005AA8" stroke-width="1.5"/>
+  <!-- Inner Border Line -->
+  <rect x="5" y="5" width="86" height="50" rx="7" stroke="#40A4FF" stroke-width="1.2" fill="none" opacity="0.7"/>
+  <text x="48" y="27" text-anchor="middle" fill="#FFFFFF" font-family="'Arial Black', Impact, 'Helvetica Neue', sans-serif" font-weight="900" font-size="11" letter-spacing="1.5">AMERICAN</text>
+  <text x="48" y="42" text-anchor="middle" fill="#FFFFFF" font-family="'Arial Black', Impact, 'Helvetica Neue', sans-serif" font-weight="900" font-size="11" letter-spacing="1.5">EXPRESS</text>
 </svg>

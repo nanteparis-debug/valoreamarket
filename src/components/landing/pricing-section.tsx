@@ -379,14 +379,14 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2.5">
-          <Image src="/images/payments/visa.svg" alt="Visa" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
-          <Image src="/images/payments/mastercard.svg" alt="Mastercard" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
-          <Image src="/images/payments/amex.svg" alt="American Express" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
-          <Image src="/images/payments/apple-pay.svg" alt="Apple Pay" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
-          <Image src="/images/payments/google-pay.svg" alt="Google Pay" width={80} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
-          <Image src="/images/payments/discover.svg" alt="Discover" width={84} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
-          <Image src="/images/payments/swift-sepa.svg" alt="SWIFT & SEPA" width={110} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
-          <Image src="/images/payments/lemon-squeezy.svg" alt="Lemon Squeezy" width={160} height={48} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/visa-official.svg?v=4" alt="Visa" width={96} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/mastercard-official.svg?v=4" alt="Mastercard" width={96} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/amex-official.svg?v=4" alt="American Express" width={96} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/apple-pay-official.svg?v=4" alt="Apple Pay" width={96} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/google-pay-official.svg?v=4" alt="Google Pay" width={96} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/discover-official.svg?v=4" alt="Discover" width={96} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/swift-sepa-official.svg?v=4" alt="SWIFT & SEPA" width={120} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
+          <Image src="/images/payments/lemon-squeezy-official.svg?v=4" alt="Lemon Squeezy" width={176} height={60} className="h-8 sm:h-9 w-auto object-contain hover:scale-105 transition-transform" />
         </div>
       </div>
 

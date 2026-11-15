@@ -14,19 +14,19 @@ interface PaymentMethodsStripProps {
 }
 
 const PAYMENT_CARDS = [
-  { id: "visa", name: "Visa", src: "/images/payments/visa.svg", width: 80, height: 48 },
-  { id: "mastercard", name: "Mastercard", src: "/images/payments/mastercard.svg", width: 80, height: 48 },
-  { id: "amex", name: "American Express", src: "/images/payments/amex.svg", width: 80, height: 48 },
-  { id: "apple-pay", name: "Apple Pay", src: "/images/payments/apple-pay.svg", width: 80, height: 48 },
-  { id: "google-pay", name: "Google Pay", src: "/images/payments/google-pay.svg", width: 80, height: 48 },
-  { id: "discover", name: "Discover", src: "/images/payments/discover.svg", width: 84, height: 48 },
-  { id: "swift-sepa", name: "SWIFT & SEPA Wire", src: "/images/payments/swift-sepa.svg", width: 110, height: 48 },
-  { id: "lemon-squeezy", name: "Lemon Squeezy (Merchant of Record)", src: "/images/payments/lemon-squeezy.svg", width: 160, height: 48 },
+  { id: "visa", name: "Visa", src: "/images/payments/visa-official.svg?v=4", width: 96, height: 60 },
+  { id: "mastercard", name: "Mastercard", src: "/images/payments/mastercard-official.svg?v=4", width: 96, height: 60 },
+  { id: "amex", name: "American Express", src: "/images/payments/amex-official.svg?v=4", width: 96, height: 60 },
+  { id: "apple-pay", name: "Apple Pay", src: "/images/payments/apple-pay-official.svg?v=4", width: 96, height: 60 },
+  { id: "google-pay", name: "Google Pay", src: "/images/payments/google-pay-official.svg?v=4", width: 96, height: 60 },
+  { id: "discover", name: "Discover", src: "/images/payments/discover-official.svg?v=4", width: 96, height: 60 },
+  { id: "swift-sepa", name: "SWIFT & SEPA Wire", src: "/images/payments/swift-sepa-official.svg?v=4", width: 120, height: 60 },
+  { id: "lemon-squeezy", name: "Lemon Squeezy (Merchant of Record)", src: "/images/payments/lemon-squeezy-official.svg?v=4", width: 176, height: 60 },
 ];
 
 const SETTLEMENT_BADGES = [
-  { id: "dlc", name: "Documentary LC / SBLC", src: "/images/payments/dlc-letter-credit.svg", width: 160, height: 48 },
-  { id: "ssl", name: "256-Bit SSL Encryption", src: "/images/payments/ssl-encryption.svg", width: 150, height: 48 },
+  { id: "dlc", name: "Documentary LC / SBLC", src: "/images/payments/dlc-letter-credit-official.svg?v=4", width: 176, height: 60 },
+  { id: "ssl", name: "256-Bit SSL Encryption", src: "/images/payments/ssl-encryption-official.svg?v=4", width: 166, height: 60 },
 ];
 
 export function PaymentMethodsStrip({

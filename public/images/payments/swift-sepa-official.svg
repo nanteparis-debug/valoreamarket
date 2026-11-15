@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" fill="none">
+  <rect width="120" height="60" rx="10" fill="#090C16" stroke="#262B40" stroke-width="1.5"/>
+  <!-- Classical Bank Pediment & Pillars in Copper -->
+  <g transform="translate(12, 15)">
+    <path d="M13 2L2 8V10H24V8L13 2Z" fill="#d4956b"/>
+    <rect x="4" y="11" width="3.5" height="11" fill="#d4956b"/>
+    <rect x="11.2" y="11" width="3.5" height="11" fill="#d4956b"/>
+    <rect x="18.5" y="11" width="3.5" height="11" fill="#d4956b"/>
+    <rect x="2" y="23" width="22" height="4" rx="0.5" fill="#d4956b"/>
+  </g>
+  <!-- Text: SWIFT & SEPA WIRE -->
+  <text x="44" y="29" fill="#FFFFFF" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="14" letter-spacing="0.8">SWIFT</text>
+  <text x="44" y="43" fill="#d4956b" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="10" letter-spacing="0.8">SEPA WIRE</text>
+</svg>
