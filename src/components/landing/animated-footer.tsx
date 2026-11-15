@@ -7,6 +7,7 @@ import { SUPPORTED_LANGUAGES } from "@/lib/constants";
 import { ShieldCheck, Globe, Mail } from "lucide-react";
 import { PaymentMethodsStrip } from "@/components/ui/payment-methods-strip";
 import { TrustpilotBadge } from "@/components/ui/trustpilot-badge";
+import { TrustBoxWidget } from "@/components/ui/trustpilot-widget";
 
 interface AnimatedFooterProps {
   currentLocale: string;
@@ -202,9 +203,12 @@ export function AnimatedFooter({
           </div>
         </div>
 
-        {/* Official Trustpilot Verified Ratings & Reviews Showcase Banner */}
-        <div className="pt-10">
+        {/* Official Trustpilot Verified Ratings & Reviews Showcase Banner & Live Widget */}
+        <div className="pt-10 space-y-3">
           <TrustpilotBadge locale={currentLocale} variant="card" />
+          <div className="rounded-2xl bg-[#0b0e17] border border-[#23273b] p-3 flex items-center justify-center overflow-hidden">
+            <TrustBoxWidget locale={currentLocale} className="w-full" />
+          </div>
         </div>
 
         {/* Accepted Payment & Settlement Methods Strip (World-Class B2B & Retail Badges) */}

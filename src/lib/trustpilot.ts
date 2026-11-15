@@ -6,6 +6,9 @@
 export const TRUSTPILOT_CONFIG = {
   domain: "valoreamarket.com",
   profileUrl: "https://www.trustpilot.com/review/valoreamarket.com",
+  businessUnitId: "6af9e9b09898c9d06ed4672f",
+  templateId: "56278e9abfbbba0bdcd568bc",
+  scriptUrl: "https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js",
   /**
    * Trustpilot Automatic Feedback Service (AFS) BCC email.
    * Send a copy (BCC) of transactional / order / subscription confirmation emails
