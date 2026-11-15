@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
 
     if (envCheckoutUrl) {
       const url = new URL(envCheckoutUrl);
+      url.searchParams.set("embed", "1");
       if (user?.email) {
         url.searchParams.set("checkout[email]", user.email);
       }

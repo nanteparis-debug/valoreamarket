@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Script from "next/script";
 import { Link, useRouter } from "@/i18n/routing";
 import { useParams, useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
@@ -25,6 +26,21 @@ interface SubscriptionState {
   monthlyPriceUsd: number;
   renewalDate: string;
   billingCycle: string;
+}
+
+declare global {
+  interface Window {
+    createLemonSqueezy?: () => void;
+    LemonSqueezy?: {
+      Url?: {
+        Open: (url: string) => void;
+        Close: () => void;
+      };
+      Setup?: (options: {
+        eventHandler?: (data: { event: string; data?: any }) => void;
+      }) => void;
+    };
+  }
 }
 
 export default function BillingPortalPage() {
@@ -157,6 +173,10 @@ export default function BillingPortalPage() {
       const checkoutData = await checkoutRes.json();
 
       if (checkoutData.success && checkoutData.checkoutUrl) {
+        if (typeof window !== "undefined" && window.LemonSqueezy?.Url?.Open) {
+          window.LemonSqueezy.Url.Open(checkoutData.checkoutUrl);
+          return;
+        }
         window.location.href = checkoutData.checkoutUrl;
         return;
       }
@@ -558,6 +578,22 @@ export default function BillingPortalPage() {
         )}
         </div>
       </div>
+      <Script
+        src="https://assets.lemonsqueezy.com/lemon.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          if (typeof window !== "undefined" && window.createLemonSqueezy) {
+            window.createLemonSqueezy();
+            window.LemonSqueezy?.Setup?.({
+              eventHandler: (event) => {
+                if (event.event === "Checkout.Success") {
+                  fetchBillingData();
+                }
+              },
+            });
+          }
+        }}
+      />
     </ProtectedAccessGate>
   );
 }
