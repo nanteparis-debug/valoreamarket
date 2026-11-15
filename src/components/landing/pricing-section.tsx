@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Script from "next/script";
 import { Link } from "@/i18n/routing";
 import { Check, Sparkles, ArrowRight, ShieldCheck, Landmark, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -190,6 +191,7 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
       isExternal: false,
       cta: translations.registerFree || "Register Free",
       href: "/auth/register",
+      checkoutUrl: undefined,
     },
     {
       ...PLATFORM_PRICING_PLANS[1],
@@ -198,8 +200,9 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
       features: translations.professional.features,
       isPopular: true,
       isExternal: false,
-      cta: translations.getStarted || "Get Started",
-      href: "/auth/register",
+      cta: locale === "ar" ? "ترقية للمؤسسات" : (translations.upgrade || "Upgrade to Professional"),
+      href: "/billing",
+      checkoutUrl: "https://valoreamarket.lemonsqueezy.com/checkout/buy/8d9c977f-9b9c-41f4-a61e-92d9897aab37?embed=1",
     },
     {
       ...PLATFORM_PRICING_PLANS[2],
@@ -207,9 +210,10 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
       description: translations.enterprise.description,
       features: translations.enterprise.features,
       isPopular: false,
-      cta: translations.contactSales,
-      href: `mailto:${SALES_CONTACT_EMAIL}?subject=VALOREA%20MARKET%20Enterprise%20Commodity%20Desk%20Inquiry`,
-      isExternal: true,
+      isExternal: false,
+      cta: locale === "ar" ? "ترقية لباقة المؤسسات" : (translations.upgrade || "Upgrade to Enterprise"),
+      href: "/billing",
+      checkoutUrl: "https://valoreamarket.lemonsqueezy.com/checkout/buy/29fed9b0-8ff5-4736-947e-8f851dd55675?embed=1",
     },
   ];
 
@@ -345,13 +349,18 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
 
               {/* Plan Action CTA */}
               <div className="mt-10 pt-6 border-t border-[#1f2233]">
-                {plan.isExternal ? (
+                {plan.checkoutUrl ? (
                   <a
-                    href={plan.href}
-                    className="w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b] transition-all"
+                    href={plan.checkoutUrl}
+                    className={cn(
+                      "lemonsqueezy-button w-full py-3 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer",
+                      plan.isPopular
+                        ? "bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white shadow-lg shadow-[#b87333]/20"
+                        : "bg-[#141724] hover:bg-[#1a1f30] text-gray-200 border border-[#23273b]"
+                    )}
                   >
-                    <Mail className="w-4 h-4 text-[#d4956b]" />
                     <span>{plan.cta}</span>
+                    <ArrowRight className="w-4 h-4 rtl:rotate-180" />
                   </a>
                 ) : (
                   <Link
@@ -404,6 +413,15 @@ export function PricingSection({ locale = "en", translations }: PricingSectionPr
           </Link>
         </div>
       </div>
+      <Script
+        src="https://assets.lemonsqueezy.com/lemon.js"
+        strategy="afterInteractive"
+        onLoad={() => {
+          if (typeof window !== "undefined" && (window as any).createLemonSqueezy) {
+            (window as any).createLemonSqueezy();
+          }
+        }}
+      />
     </section>
   );
 }

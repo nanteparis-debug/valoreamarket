@@ -171,10 +171,10 @@ export const PLATFORM_PRICING_PLANS: PricingPlan[] = [
       ],
     },
     cta: {
-      en: "Contact Sales Desk",
-      ar: "تواصل مع مكتب المبيعات",
-      action: "contact_sales",
-      href: "mailto:contact@valoreamarket.com?subject=VALOREA%20MARKET%20Enterprise%20Subscription%20Inquiry",
+      en: "Upgrade to Enterprise",
+      ar: "ترقية لباقة المؤسسات",
+      action: "upgrade",
+      href: "/billing",
     },
   },
 ];
