@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { useParams, useSearchParams } from "next/navigation";
 import { getSubpageTranslations } from "@/lib/i18n-subpages";
 import { ProtectedAccessGate } from "@/components/protected-access-gate";
@@ -83,6 +83,7 @@ export default function BillingPortalPage() {
     },
   ];
 
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [subscription, setSubscription] = useState<SubscriptionState | null>(null);
   const [invoices, setInvoices] = useState<InvoiceItem[]>([]);
@@ -134,6 +135,33 @@ export default function BillingPortalPage() {
     if (subscription?.plan === planId) return;
     setUpdatingPlan(true);
     try {
+      if (planId === "starter") {
+        const res = await fetch("/api/billing", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ plan: planId }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          setSubscription(data.subscription);
+        }
+        return;
+      }
+
+      // Paid plans: request Lemon Squeezy checkout link
+      const checkoutRes = await fetch("/api/billing/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId, cycle: billingCycle }),
+      });
+      const checkoutData = await checkoutRes.json();
+
+      if (checkoutData.success && checkoutData.checkoutUrl) {
+        window.location.href = checkoutData.checkoutUrl;
+        return;
+      }
+
+      // Fallback
       const res = await fetch("/api/billing", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -200,6 +228,31 @@ export default function BillingPortalPage() {
             </div>
           </div>
         </div>
+
+        {/* Lemon Squeezy Success Activation Banner */}
+        {searchParams.get("success") === "true" && (
+          <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-between gap-4 text-xs animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+              <div>
+                <span className="font-semibold text-white block">
+                  {locale === "ar" ? "تم تفعيل الاشتراك المؤسسي بنجاح!" : "Subscription Activated Successfully!"}
+                </span>
+                <span className="text-gray-300">
+                  {locale === "ar"
+                    ? "تمت معالجة الدفع عبر Lemon Squeezy وتفعيل حسابك المؤسسي وغرف الصفقات المشفرة بالكامل."
+                    : "Payment processed via Lemon Squeezy. Your institutional membership and deal rooms are now unlocked."}
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={() => router.replace("/billing")}
+              className="text-[11px] font-mono text-emerald-400 hover:text-emerald-300 underline"
+            >
+              {locale === "ar" ? "إغلاق الإشعار" : "Dismiss"}
+            </button>
+          </div>
+        )}
 
         {/* Banking Channel Separation Notice */}
         <div className="p-4 rounded-2xl bg-[#0f121d] border border-[#b87333]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
