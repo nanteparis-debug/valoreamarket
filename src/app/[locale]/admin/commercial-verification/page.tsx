@@ -844,26 +844,26 @@ export default function AdminCommercialVerificationPage() {
       {/* ======================================================== */}
       {selectedCase && (
         <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/70 backdrop-blur-sm transition-opacity">
-          <div className="w-full max-w-4xl h-full bg-[#0a0c14] border-l border-[#1f2233] flex flex-col shadow-2xl overflow-hidden">
+          <div className="w-full max-w-4xl h-full bg-white dark:bg-[#0a0c14] border-l border-gray-200 dark:border-[#1f2233] flex flex-col shadow-2xl overflow-hidden">
             {/* Drawer Header */}
-            <div className="p-4 sm:p-6 border-b border-[#1f2233] bg-[#0e101a] flex items-center justify-between shrink-0">
+            <div className="p-4 sm:p-6 border-b border-gray-200 dark:border-[#1f2233] bg-gray-50 dark:bg-[#0e101a] flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#b87333] to-[#8b5a2b] p-0.5 flex items-center justify-center shadow-md">
                   <ShieldCheck className="w-5 h-5 text-white" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-lg sm:text-xl font-bold text-white font-mono">
+                    <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white font-mono">
                       {selectedCase.referenceNumber}
                     </h2>
-                    <span className="px-2 py-0.5 rounded bg-[#1b1f30] text-[10px] font-mono text-[#d4956b] border border-[#282f48] uppercase">
+                    <span className="px-2 py-0.5 rounded bg-gray-100 dark:bg-[#1b1f30] text-[10px] font-mono text-[#b87333] dark:text-[#d4956b] border border-gray-300 dark:border-[#282f48] uppercase">
                       {selectedCase.countryCode}
                     </span>
                     <span className={cn("px-2 py-0.5 rounded-full border text-[10px] font-medium", getStatusBadge(selectedCase.status).color)}>
                       {isAr ? getStatusBadge(selectedCase.status).labelAr : getStatusBadge(selectedCase.status).labelEn}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-300">
+                  <p className="text-xs text-gray-600 dark:text-gray-300">
                     {selectedCase.targetEntityName} ({selectedCase.targetEntityType})
                   </p>
                 </div>
@@ -872,22 +872,22 @@ export default function AdminCommercialVerificationPage() {
               <button
                 type="button"
                 onClick={() => setSelectedCase(null)}
-                className="p-2 rounded-lg bg-[#141724] border border-[#23273b] hover:border-gray-500 text-gray-400 hover:text-white"
+                className="p-2 rounded-lg bg-white dark:bg-[#141724] border border-gray-200 dark:border-[#23273b] hover:border-gray-400 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex items-center border-b border-[#1f2233] bg-[#0b0d16] px-4 sm:px-6 overflow-x-auto shrink-0 gap-2">
+            <div className="flex items-center border-b border-gray-200 dark:border-[#1f2233] bg-gray-50/50 dark:bg-[#0b0d16] px-4 sm:px-6 overflow-x-auto shrink-0 gap-2">
               <button
                 type="button"
                 onClick={() => setActiveTab("overview")}
                 className={cn(
                   "py-3 px-3 border-b-2 font-medium text-xs whitespace-nowrap transition-colors flex items-center gap-1.5",
                   activeTab === "overview"
-                    ? "border-[#b87333] text-white"
-                    : "border-transparent text-gray-400 hover:text-gray-200"
+                    ? "border-[#b87333] text-gray-900 dark:text-white font-bold"
+                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
               >
                 <Building2 className="w-3.5 h-3.5 text-[#d4956b]" />
@@ -899,13 +899,13 @@ export default function AdminCommercialVerificationPage() {
                 className={cn(
                   "py-3 px-3 border-b-2 font-medium text-xs whitespace-nowrap transition-colors flex items-center gap-1.5",
                   activeTab === "docs"
-                    ? "border-[#b87333] text-white"
-                    : "border-transparent text-gray-400 hover:text-gray-200"
+                    ? "border-[#b87333] text-gray-900 dark:text-white font-bold"
+                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
               >
                 <FileText className="w-3.5 h-3.5 text-[#d4956b]" />
                 <span>{isAr ? "الوثائق والأدلة" : "Trade Docs"}</span>
-                <span className="px-1.5 py-0.2 rounded-full bg-[#1b1f30] text-[10px] font-mono text-gray-300">
+                <span className="px-1.5 py-0.2 rounded-full bg-gray-100 dark:bg-[#1b1f30] text-[10px] font-mono text-gray-700 dark:text-gray-300">
                   {selectedCase.documents.length}
                 </span>
               </button>
@@ -915,8 +915,8 @@ export default function AdminCommercialVerificationPage() {
                 className={cn(
                   "py-3 px-3 border-b-2 font-medium text-xs whitespace-nowrap transition-colors flex items-center gap-1.5",
                   activeTab === "matrix"
-                    ? "border-[#b87333] text-white"
-                    : "border-transparent text-gray-400 hover:text-gray-200"
+                    ? "border-[#b87333] text-gray-900 dark:text-white font-bold"
+                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
               >
                 <Layers className="w-3.5 h-3.5 text-[#d4956b]" />
@@ -928,13 +928,13 @@ export default function AdminCommercialVerificationPage() {
                 className={cn(
                   "py-3 px-3 border-b-2 font-medium text-xs whitespace-nowrap transition-colors flex items-center gap-1.5",
                   activeTab === "checks"
-                    ? "border-[#b87333] text-white"
-                    : "border-transparent text-gray-400 hover:text-gray-200"
+                    ? "border-[#b87333] text-gray-900 dark:text-white font-bold"
+                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
               >
                 <Scale className="w-3.5 h-3.5 text-[#d4956b]" />
                 <span>{isAr ? "مؤشرات التحقق والمصادر" : "Risk Indicators"}</span>
-                <span className="px-1.5 py-0.2 rounded-full bg-[#1b1f30] text-[10px] font-mono text-gray-300">
+                <span className="px-1.5 py-0.2 rounded-full bg-gray-100 dark:bg-[#1b1f30] text-[10px] font-mono text-gray-700 dark:text-gray-300">
                   {selectedCase.checks.length}
                 </span>
               </button>
@@ -944,8 +944,8 @@ export default function AdminCommercialVerificationPage() {
                 className={cn(
                   "py-3 px-3 border-b-2 font-medium text-xs whitespace-nowrap transition-colors flex items-center gap-1.5",
                   activeTab === "decision"
-                    ? "border-[#b87333] text-white"
-                    : "border-transparent text-gray-400 hover:text-gray-200"
+                    ? "border-[#b87333] text-gray-900 dark:text-white font-bold"
+                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
               >
                 <FileBadge className="w-3.5 h-3.5 text-[#d4956b]" />
@@ -957,8 +957,8 @@ export default function AdminCommercialVerificationPage() {
                 className={cn(
                   "py-3 px-3 border-b-2 font-medium text-xs whitespace-nowrap transition-colors flex items-center gap-1.5",
                   activeTab === "audit"
-                    ? "border-[#b87333] text-white"
-                    : "border-transparent text-gray-400 hover:text-gray-200"
+                    ? "border-[#b87333] text-gray-900 dark:text-white font-bold"
+                    : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
               >
                 <Clock className="w-3.5 h-3.5 text-[#d4956b]" />
@@ -1451,17 +1451,17 @@ export default function AdminCommercialVerificationPage() {
       {/* ======================================================== */}
       {showNewCaseModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-          <div className="w-full max-w-xl bg-[#0e101a] border border-[#1f2233] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-[#1f2233] pb-4">
+          <div className="w-full max-w-xl bg-white dark:bg-[#0e101a] border border-gray-200 dark:border-[#1f2233] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-[#1f2233] pb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#b87333] to-[#8b5a2b] p-0.5 flex items-center justify-center shadow-md">
                   <ShieldCheck className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-white">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                     {isAr ? "فتح ملف تحقق تجاري جديد" : "New Verification Case"}
                   </h3>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     {isAr ? "بدء فحص شركة أو شحنة مواد أولية" : "Initiate counterparty or physical cargo diligence"}
                   </p>
                 </div>
@@ -1469,7 +1469,7 @@ export default function AdminCommercialVerificationPage() {
               <button
                 type="button"
                 onClick={() => setShowNewCaseModal(false)}
-                className="p-1 text-gray-400 hover:text-white"
+                className="p-1 text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1477,24 +1477,24 @@ export default function AdminCommercialVerificationPage() {
 
             <form onSubmit={handleCreateCase} className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="text-gray-300 font-semibold block">{isAr ? "اسم الكيان / الشركة:" : "Entity / Company Name:"}</label>
+                <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "اسم الكيان / الشركة:" : "Entity / Company Name:"}</label>
                 <input
                   type="text"
                   required
                   value={newEntityName}
                   onChange={(e) => setNewEntityName(e.target.value)}
                   placeholder={isAr ? "مثال: PetroGulf Trading Ltd" : "e.g., PetroGulf Trading Ltd"}
-                  className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-gray-300 font-semibold block">{isAr ? "نوع الكيان:" : "Entity Type:"}</label>
+                  <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "نوع الكيان:" : "Entity Type:"}</label>
                   <select
                     value={newEntityType}
                     onChange={(e) => setNewEntityType(e.target.value as any)}
-                    className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                   >
                     <option value="company">{isAr ? "شركة عامة" : "Company"}</option>
                     <option value="supplier">{isAr ? "مورّد" : "Supplier"}</option>
@@ -1504,24 +1504,24 @@ export default function AdminCommercialVerificationPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-gray-300 font-semibold block">{isAr ? "كود الدولة (ISO 2):" : "Country (2-letter):"}</label>
+                  <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "كود الدولة (ISO 2):" : "Country (2-letter):"}</label>
                   <input
                     type="text"
                     required
                     maxLength={2}
                     value={newCountryCode}
                     onChange={(e) => setNewCountryCode(e.target.value.toUpperCase())}
-                    className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 uppercase font-mono focus:outline-none focus:border-[#b87333]"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 uppercase font-mono focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-gray-300 font-semibold block">{isAr ? "نطاق التحقيق:" : "Verification Scope:"}</label>
+                <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "نطاق التحقيق:" : "Verification Scope:"}</label>
                 <select
                   value={newScope}
                   onChange={(e) => setNewScope(e.target.value)}
-                  className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                 >
                   <option value="full_investigation">{isAr ? "تحقيق شامل (شركات، عقوبات، وثائق، شحنة)" : "Full Investigation"}</option>
                   <option value="company_due_diligence">{isAr ? "فحص الشركة والسجل التجاري" : "Company Due Diligence"}</option>
@@ -1531,15 +1531,15 @@ export default function AdminCommercialVerificationPage() {
                 </select>
               </div>
 
-              <div className="border-t border-[#1f2233] pt-3 space-y-3">
-                <span className="font-semibold text-gray-300 block">{isAr ? "بيانات السلعة والشحنة (اختياري):" : "Cargo Specifications (Optional):"}</span>
+              <div className="border-t border-gray-200 dark:border-[#1f2233] pt-3 space-y-3">
+                <span className="font-semibold text-gray-800 dark:text-gray-300 block">{isAr ? "بيانات السلعة والشحنة (اختياري):" : "Cargo Specifications (Optional):"}</span>
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     type="text"
                     value={newCommodityName}
                     onChange={(e) => setNewCommodityName(e.target.value)}
                     placeholder={isAr ? "اسم السلعة (مثلاً: EN590 Diesel)" : "Commodity Name"}
-                    className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                   />
                   <div className="flex gap-2">
                     <input
@@ -1547,12 +1547,12 @@ export default function AdminCommercialVerificationPage() {
                       value={newQuantity}
                       onChange={(e) => setNewQuantity(e.target.value)}
                       placeholder={isAr ? "الكمية" : "Qty"}
-                      className="w-2/3 p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                      className="w-2/3 p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                     />
                     <select
                       value={newUnit}
                       onChange={(e) => setNewUnit(e.target.value)}
-                      className="w-1/3 p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                      className="w-1/3 p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                     >
                       <option value="MT">MT</option>
                       <option value="BBL">BBL</option>
@@ -1567,23 +1567,23 @@ export default function AdminCommercialVerificationPage() {
                     value={newVesselName}
                     onChange={(e) => setNewVesselName(e.target.value)}
                     placeholder={isAr ? "اسم الناقلة (Vessel Name)" : "Vessel Name"}
-                    className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                   />
                   <input
                     type="text"
                     value={newVesselImo}
                     onChange={(e) => setNewVesselImo(e.target.value)}
                     placeholder={isAr ? "رقم IMO (مثال: 9412345)" : "Vessel IMO"}
-                    className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                   />
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#1f2233]">
+              <div className="pt-2 flex items-center justify-end gap-2 border-t border-gray-200 dark:border-[#1f2233]">
                 <button
                   type="button"
                   onClick={() => setShowNewCaseModal(false)}
-                  className="px-4 py-2 rounded-xl bg-[#141724] hover:bg-[#1a1f30] text-gray-300 font-medium"
+                  className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-[#141724] dark:hover:bg-[#1a1f30] text-gray-700 dark:text-gray-300 font-medium border border-gray-200 dark:border-transparent transition-colors"
                 >
                   {isAr ? "إلغاء" : "Cancel"}
                 </button>
@@ -1604,17 +1604,17 @@ export default function AdminCommercialVerificationPage() {
       {/* ======================================================== */}
       {showModeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg bg-[#0e101a] border border-[#1f2233] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#1f2233] pb-4">
+          <div className="w-full max-w-lg bg-white dark:bg-[#0e101a] border border-gray-200 dark:border-[#1f2233] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-[#1f2233] pb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 p-0.5 flex items-center justify-center shadow-md">
                   <Lock className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-white">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                     {isAr ? "إعداد إتاحة خدمة التحقق التجاري" : "Service Availability Controls"}
                   </h3>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     {isAr ? "إعداد مركزي آمن يتحكم في مستويات الوصول للخدمة" : "Centralized security access tier configuration"}
                   </p>
                 </div>
@@ -1622,7 +1622,7 @@ export default function AdminCommercialVerificationPage() {
               <button
                 type="button"
                 onClick={() => setShowModeModal(false)}
-                className="p-1 text-gray-400 hover:text-white"
+                className="p-1 text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1630,7 +1630,7 @@ export default function AdminCommercialVerificationPage() {
 
             <form onSubmit={handleSaveMode} className="space-y-4 text-xs">
               <div className="space-y-2">
-                <span className="text-gray-300 font-semibold block">{isAr ? "اختر وضع الإتاحة:" : "Select Mode:"}</span>
+                <span className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "اختر وضع الإتاحة:" : "Select Mode:"}</span>
                 <div className="space-y-2">
                   {[
                     {
@@ -1661,10 +1661,10 @@ export default function AdminCommercialVerificationPage() {
                     <label
                       key={m.id}
                       className={cn(
-                        "block p-3 rounded-2xl border cursor-pointer transition-all",
+                        "block p-3.5 rounded-2xl border cursor-pointer transition-all",
                         selectedNewMode === m.id
-                          ? "bg-[#181b2e] border-[#b87333] shadow-md shadow-[#b87333]/15"
-                          : "bg-[#121422] border-[#23273b] hover:border-gray-500"
+                          ? "availability-mode-card-selected"
+                          : "availability-mode-card-unselected"
                       )}
                     >
                       <div className="flex items-start gap-3">
@@ -1677,10 +1677,10 @@ export default function AdminCommercialVerificationPage() {
                           className="mt-1 text-[#b87333] focus:ring-[#b87333] accent-[#b87333]"
                         />
                         <div className="space-y-1">
-                          <span className="font-semibold text-white block">
+                          <span className="font-bold block text-sm mode-title">
                             {isAr ? m.titleAr : m.titleEn}
                           </span>
-                          <p className="text-gray-400 leading-relaxed">
+                          <p className="text-xs leading-relaxed mode-desc">
                             {isAr ? m.descAr : m.descEn}
                           </p>
                         </div>
@@ -1691,22 +1691,22 @@ export default function AdminCommercialVerificationPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-gray-300 font-semibold block">{isAr ? "سبب التغيير (يسجّل في سجل التدقيق):" : "Reason for Change (Logged to Audit):"}</label>
+                <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "سبب التغيير (يسجّل في سجل التدقيق):" : "Reason for Change (Logged to Audit):"}</label>
                 <input
                   type="text"
                   required
                   value={modeChangeReason}
                   onChange={(e) => setModeChangeReason(e.target.value)}
                   placeholder={isAr ? "مثال: تفعيل الوضع العام بعد اكتمال الحملة التسويقية" : "Reason for audit trail..."}
-                  className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                 />
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#1f2233]">
+              <div className="pt-2 flex items-center justify-end gap-2 border-t border-gray-200 dark:border-[#1f2233]">
                 <button
                   type="button"
                   onClick={() => setShowModeModal(false)}
-                  className="px-4 py-2 rounded-xl bg-[#141724] hover:bg-[#1a1f30] text-gray-300 font-medium"
+                  className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-[#141724] dark:hover:bg-[#1a1f30] text-gray-700 dark:text-gray-300 font-medium border border-gray-200 dark:border-transparent transition-colors"
                 >
                   {isAr ? "إلغاء" : "Cancel"}
                 </button>
@@ -1727,17 +1727,17 @@ export default function AdminCommercialVerificationPage() {
       {/* ======================================================== */}
       {showUploadModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg bg-[#0e101a] border border-[#1f2233] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-[#1f2233] pb-4">
+          <div className="w-full max-w-lg bg-white dark:bg-[#0e101a] border border-gray-200 dark:border-[#1f2233] rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-[#1f2233] pb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#b87333] to-[#8b5a2b] p-0.5 flex items-center justify-center shadow-md">
                   <Upload className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-base sm:text-lg font-bold text-white">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
                     {isAr ? "إرفاق وثيقة تداول مشفرة" : "Register Trade Document"}
                   </h3>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     {isAr ? "فحص النوع والحجم وبصمة SHA-256 المشفرة" : "Format validation and SHA-256 verification"}
                   </p>
                 </div>
@@ -1745,7 +1745,7 @@ export default function AdminCommercialVerificationPage() {
               <button
                 type="button"
                 onClick={() => setShowUploadModal(false)}
-                className="p-1 text-gray-400 hover:text-white"
+                className="p-1 text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1753,23 +1753,23 @@ export default function AdminCommercialVerificationPage() {
 
             <form onSubmit={handleUploadDocument} className="space-y-4 text-xs">
               <div className="space-y-1">
-                <label className="text-gray-300 font-semibold block">{isAr ? "عنوان الوثيقة:" : "Document Title:"}</label>
+                <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "عنوان الوثيقة:" : "Document Title:"}</label>
                 <input
                   type="text"
                   required
                   value={uploadDocTitle}
                   onChange={(e) => setUploadDocTitle(e.target.value)}
                   placeholder={isAr ? "مثال: بوليصة الشحن البحرية B/L #4192" : "e.g., Original Ocean Bill of Lading"}
-                  className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-gray-300 font-semibold block">{isAr ? "نوع الوثيقة:" : "Document Type:"}</label>
+                <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "نوع الوثيقة:" : "Document Type:"}</label>
                 <select
                   value={uploadDocType}
                   onChange={(e) => setUploadDocType(e.target.value as any)}
-                  className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 focus:outline-none focus:border-[#b87333]"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 focus:outline-none focus:border-[#b87333] focus:ring-1 focus:ring-[#b87333]"
                 >
                   <option value="bill_of_lading">{isAr ? "بوليصة شحن بحرية (Bill of Lading)" : "Bill of Lading (B/L)"}</option>
                   <option value="sgs_inspection">{isAr ? "شهادة فحص جودة وكمية (SGS / Saybolt)" : "SGS / Inspection Certificate"}</option>
@@ -1783,55 +1783,55 @@ export default function AdminCommercialVerificationPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-gray-300 font-semibold block">{isAr ? "الملف (PDF, PNG, JPG - حد أقصى 15MB):" : "File (PDF, PNG, JPG - Max 15MB):"}</label>
+                <label className="text-gray-800 dark:text-gray-300 font-semibold block">{isAr ? "الملف (PDF, PNG, JPG - حد أقصى 15MB):" : "File (PDF, PNG, JPG - Max 15MB):"}</label>
                 <input
                   type="file"
                   accept=".pdf,.png,.jpg,.jpeg,.tiff"
                   onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
-                  className="w-full p-2.5 rounded-xl bg-[#141724] border border-[#23273b] text-gray-200 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-[#b87333] file:text-white cursor-pointer"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-[#b87333] file:text-white cursor-pointer"
                 />
               </div>
 
               {/* Extracted Fields for Consistency Matching */}
-              <div className="border-t border-[#1f2233] pt-3 space-y-2">
-                <span className="font-semibold text-gray-300 block">{isAr ? "الحقول المستخرجة للمطابقة الآلية:" : "Extracted Fields for Consistency:"}</span>
+              <div className="border-t border-gray-200 dark:border-[#1f2233] pt-3 space-y-2">
+                <span className="font-semibold text-gray-800 dark:text-gray-300 block">{isAr ? "الحقول المستخرجة للمطابقة الآلية:" : "Extracted Fields for Consistency:"}</span>
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     type="text"
                     value={extractedVessel}
                     onChange={(e) => setExtractedVessel(e.target.value)}
                     placeholder={isAr ? "اسم الناقلة (Vessel Name)" : "Vessel Name"}
-                    className="p-2 rounded-lg bg-[#141724] border border-[#23273b] text-gray-200"
+                    className="p-2 rounded-lg bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400"
                   />
                   <input
                     type="text"
                     value={extractedImo}
                     onChange={(e) => setExtractedImo(e.target.value)}
                     placeholder={isAr ? "رقم IMO" : "IMO #"}
-                    className="p-2 rounded-lg bg-[#141724] border border-[#23273b] text-gray-200"
+                    className="p-2 rounded-lg bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400"
                   />
                   <input
                     type="text"
                     value={extractedQty}
                     onChange={(e) => setExtractedQty(e.target.value)}
                     placeholder={isAr ? "الكمية المذكورة" : "Quantity"}
-                    className="p-2 rounded-lg bg-[#141724] border border-[#23273b] text-gray-200"
+                    className="p-2 rounded-lg bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400"
                   />
                   <input
                     type="text"
                     value={extractedPort}
                     onChange={(e) => setExtractedPort(e.target.value)}
                     placeholder={isAr ? "ميناء التفريغ" : "Discharge Port"}
-                    className="p-2 rounded-lg bg-[#141724] border border-[#23273b] text-gray-200"
+                    className="p-2 rounded-lg bg-white dark:bg-[#141724] border border-gray-300 dark:border-[#23273b] text-gray-900 dark:text-gray-200 placeholder:text-gray-400"
                   />
                 </div>
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-2 border-t border-[#1f2233]">
+              <div className="pt-2 flex items-center justify-end gap-2 border-t border-gray-200 dark:border-[#1f2233]">
                 <button
                   type="button"
                   onClick={() => setShowUploadModal(false)}
-                  className="px-4 py-2 rounded-xl bg-[#141724] hover:bg-[#1a1f30] text-gray-300 font-medium"
+                  className="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-[#141724] dark:hover:bg-[#1a1f30] text-gray-700 dark:text-gray-300 font-medium border border-gray-200 dark:border-transparent transition-colors"
                 >
                   {isAr ? "إلغاء" : "Cancel"}
                 </button>

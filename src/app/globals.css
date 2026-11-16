@@ -303,6 +303,9 @@ html.light [class*="bg-[#161826]"],
 html.light [class*="bg-[#161929]"],
 html.light [class*="bg-[#161a29]"],
 html.light [class*="bg-[#181a27]"],
+html.light [class*="bg-[#181b2a]"],
+html.light [class*="bg-[#181b2c]"],
+html.light [class*="bg-[#181b2e]"],
 html.light [class*="bg-[#181d2e]"],
 html.light [class*="bg-[#1b1f2e]"] {
   background-color: #f1f5f9 !important;
@@ -762,5 +765,67 @@ html.dark .admin-fido2-btn .admin-fido2-badge {
   border: 1px solid rgba(16, 185, 129, 0.2) !important;
   color: #34d399 !important;
 }
+
+/* ========================================================
+   COMMERCIAL VERIFICATION AVAILABILITY MODE CARDS
+   ======================================================== */
+
+html.light .availability-mode-card-selected {
+  background-color: #fffbeb !important; /* amber-50 */
+  border-color: #b87333 !important;
+  box-shadow: 0 4px 14px rgba(184, 115, 51, 0.18), 0 0 0 1px #b87333 !important;
+}
+html.light .availability-mode-card-selected .mode-title {
+  color: #78350f !important; /* amber-900 */
+  font-weight: 700 !important;
+}
+html.light .availability-mode-card-selected .mode-desc {
+  color: #92400e !important; /* amber-800 */
+}
+
+html.light .availability-mode-card-unselected {
+  background-color: #f8fafc !important; /* slate-50 */
+  border-color: #e2e8f0 !important;
+}
+html.light .availability-mode-card-unselected:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+html.light .availability-mode-card-unselected .mode-title {
+  color: #0f172a !important; /* slate-900 */
+  font-weight: 600 !important;
+}
+html.light .availability-mode-card-unselected .mode-desc {
+  color: #475569 !important; /* slate-600 */
+}
+
+html.dark .availability-mode-card-selected {
+  background-color: #181b2e !important;
+  border-color: #b87333 !important;
+  box-shadow: 0 4px 14px rgba(184, 115, 51, 0.25), 0 0 0 1px rgba(184, 115, 51, 0.4) !important;
+}
+html.dark .availability-mode-card-selected .mode-title {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+html.dark .availability-mode-card-selected .mode-desc {
+  color: #cbd5e1 !important;
+}
+
+html.dark .availability-mode-card-unselected {
+  background-color: #121422 !important;
+  border-color: #23273b !important;
+}
+html.dark .availability-mode-card-unselected:hover {
+  border-color: #475569 !important;
+}
+html.dark .availability-mode-card-unselected .mode-title {
+  color: #e2e8f0 !important;
+  font-weight: 600 !important;
+}
+html.dark .availability-mode-card-unselected .mode-desc {
+  color: #94a3b8 !important;
+}
+
 
 
