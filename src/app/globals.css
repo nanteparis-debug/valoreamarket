@@ -442,8 +442,7 @@ html.light #sectors button:not([class*="border-[#b87333]"]):hover {
 
 /* Active Sector Tab Pill in Light Mode */
 html.light #sectors button[class*="border-[#b87333]"],
-html.light button[class*="border-[#b87333]"].bg-\[\#181a27\],
-html.light button[class*="border-[#b87333]"] {
+html.light #sectors button[class*="border-[#b87333]"].bg-\[\#181a27\] {
   background-color: #ffffff !important;
   border-color: #b87333 !important;
   color: #090d16 !important;
@@ -658,4 +657,110 @@ html.light ::-webkit-scrollbar-thumb {
 html.light ::-webkit-scrollbar-thumb:hover {
   background: #b87333;
 }
+
+/* ========================================================
+   ADMIN LOGIN ROLE SELECTOR & AUTHENTICATION WIDGETS
+   ======================================================== */
+
+.admin-role-btn {
+  display: block;
+  width: 100%;
+  padding: 0.625rem 0.5rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Active Role Pill - Luxury Copper (Both Light & Dark) */
+.admin-role-btn-active {
+  background: linear-gradient(135deg, #b87333 0%, #9c5f2b 100%) !important;
+  border: 1px solid #b87333 !important;
+  box-shadow: 0 4px 14px rgba(184, 115, 51, 0.35), 0 0 0 2px rgba(184, 115, 51, 0.25) !important;
+}
+.admin-role-btn-active .admin-role-title {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+.admin-role-btn-active .admin-role-clearance {
+  color: #fef3c7 !important; /* amber-100 */
+  font-weight: 600 !important;
+}
+
+/* Inactive Role Pill - Light Mode */
+html.light .admin-role-btn-inactive {
+  background-color: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05) !important;
+}
+html.light .admin-role-btn-inactive:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #b87333 !important;
+}
+html.light .admin-role-btn-inactive .admin-role-title {
+  color: #0f172a !important; /* dark slate-900 */
+  font-weight: 600 !important;
+}
+html.light .admin-role-btn-inactive .admin-role-clearance {
+  color: #64748b !important; /* slate-500 */
+  font-weight: 500 !important;
+}
+
+/* Inactive Role Pill - Dark Mode */
+html.dark .admin-role-btn-inactive {
+  background-color: #141724 !important;
+  border: 1px solid #23273b !important;
+}
+html.dark .admin-role-btn-inactive:hover {
+  background-color: #1a1e30 !important;
+  border-color: #b87333 !important;
+}
+html.dark .admin-role-btn-inactive .admin-role-title {
+  color: #e2e8f0 !important; /* slate-200 */
+  font-weight: 600 !important;
+}
+html.dark .admin-role-btn-inactive .admin-role-clearance {
+  color: #94a3b8 !important; /* slate-400 */
+  font-weight: 500 !important;
+}
+
+/* FIDO2 Hardware Passkey Button */
+html.light .admin-fido2-btn {
+  background-color: #f8fafc !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+html.light .admin-fido2-btn:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #b87333 !important;
+}
+html.light .admin-fido2-btn .admin-fido2-text {
+  color: #0f172a !important;
+}
+html.light .admin-fido2-btn .admin-fido2-badge {
+  background-color: #ecfdf5 !important;
+  border: 1px solid #a7f3d0 !important;
+  color: #047857 !important;
+}
+
+html.dark .admin-fido2-btn {
+  background: linear-gradient(to right, #171b2d, #121524) !important;
+  border: 1px solid #2b334d !important;
+  color: #ffffff !important;
+}
+html.dark .admin-fido2-btn:hover {
+  background: linear-gradient(to right, #1d2238, #171a2e) !important;
+  border-color: #b87333 !important;
+}
+html.dark .admin-fido2-btn .admin-fido2-text {
+  color: #ffffff !important;
+}
+html.dark .admin-fido2-btn .admin-fido2-badge {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  color: #34d399 !important;
+}
+
 

@@ -252,26 +252,16 @@ export default function AdminLoginPage() {
               type="button"
               onClick={() => handleRoleSelect("platform_admin")}
               className={cn(
-                "p-2.5 rounded-xl border text-center transition-all",
+                "admin-role-btn",
                 selectedRole === "platform_admin"
-                  ? "bg-[#b87333] border-[#b87333] text-white shadow-md shadow-[#b87333]/25 font-bold ring-2 ring-[#b87333]/30"
-                  : "bg-gray-100 dark:bg-[#141724] border-gray-200 dark:border-[#23273b] hover:border-[#b87333]"
+                  ? "admin-role-btn-active"
+                  : "admin-role-btn-inactive"
               )}
             >
-              <span
-                className={cn(
-                  "block text-xs leading-tight font-bold",
-                  selectedRole === "platform_admin" ? "text-white" : "text-gray-800 dark:text-gray-200"
-                )}
-              >
+              <span className="block text-xs leading-tight admin-role-title">
                 {isAr ? "مدير المنصة" : "Platform Admin"}
               </span>
-              <span
-                className={cn(
-                  "text-[10px] font-mono block mt-0.5",
-                  selectedRole === "platform_admin" ? "text-amber-100" : "text-gray-500"
-                )}
-              >
+              <span className="text-[10px] font-mono block mt-0.5 admin-role-clearance">
                 Clearance 4
               </span>
             </button>
@@ -280,26 +270,16 @@ export default function AdminLoginPage() {
               type="button"
               onClick={() => handleRoleSelect("broker")}
               className={cn(
-                "p-2.5 rounded-xl border text-center transition-all",
+                "admin-role-btn",
                 selectedRole === "broker"
-                  ? "bg-[#b87333] border-[#b87333] text-white shadow-md shadow-[#b87333]/25 font-bold ring-2 ring-[#b87333]/30"
-                  : "bg-gray-100 dark:bg-[#141724] border-gray-200 dark:border-[#23273b] hover:border-[#b87333]"
+                  ? "admin-role-btn-active"
+                  : "admin-role-btn-inactive"
               )}
             >
-              <span
-                className={cn(
-                  "block text-xs leading-tight font-bold",
-                  selectedRole === "broker" ? "text-white" : "text-gray-800 dark:text-gray-200"
-                )}
-              >
+              <span className="block text-xs leading-tight admin-role-title">
                 {isAr ? "كبير الوسطاء" : "Lead Broker"}
               </span>
-              <span
-                className={cn(
-                  "text-[10px] font-mono block mt-0.5",
-                  selectedRole === "broker" ? "text-amber-100" : "text-gray-500"
-                )}
-              >
+              <span className="text-[10px] font-mono block mt-0.5 admin-role-clearance">
                 Clearance 3
               </span>
             </button>
@@ -308,26 +288,16 @@ export default function AdminLoginPage() {
               type="button"
               onClick={() => handleRoleSelect("compliance_officer")}
               className={cn(
-                "p-2.5 rounded-xl border text-center transition-all",
+                "admin-role-btn",
                 selectedRole === "compliance_officer"
-                  ? "bg-[#b87333] border-[#b87333] text-white shadow-md shadow-[#b87333]/25 font-bold ring-2 ring-[#b87333]/30"
-                  : "bg-gray-100 dark:bg-[#141724] border-gray-200 dark:border-[#23273b] hover:border-[#b87333]"
+                  ? "admin-role-btn-active"
+                  : "admin-role-btn-inactive"
               )}
             >
-              <span
-                className={cn(
-                  "block text-xs leading-tight font-bold",
-                  selectedRole === "compliance_officer" ? "text-white" : "text-gray-800 dark:text-gray-200"
-                )}
-              >
+              <span className="block text-xs leading-tight admin-role-title">
                 {isAr ? "هيئة الامتثال" : "Compliance"}
               </span>
-              <span
-                className={cn(
-                  "text-[10px] font-mono block mt-0.5",
-                  selectedRole === "compliance_officer" ? "text-amber-100" : "text-gray-500"
-                )}
-              >
+              <span className="text-[10px] font-mono block mt-0.5 admin-role-clearance">
                 Auditor L3
               </span>
             </button>
@@ -346,15 +316,15 @@ export default function AdminLoginPage() {
         <button
           onClick={handlePasskeyLogin}
           disabled={isLoading}
-          className="w-full py-3 px-4 rounded-xl bg-gray-50 hover:bg-gray-100 dark:bg-gradient-to-r dark:from-[#171b2d] dark:to-[#121524] dark:hover:from-[#1d2238] dark:hover:to-[#171a2e] border border-gray-200 dark:border-[#2b334d] hover:border-[#b87333] text-gray-800 dark:text-white text-xs font-semibold flex items-center justify-between transition-all shadow-sm group"
+          className="admin-fido2-btn w-full py-3 px-4 rounded-xl text-xs font-semibold flex items-center justify-between transition-all shadow-sm group"
         >
           <div className="flex items-center gap-2.5">
             <Fingerprint className="w-4 h-4 text-[#d4956b] group-hover:scale-110 transition-transform shrink-0" />
-            <span>
+            <span className="admin-fido2-text">
               {isAr ? "تسجيل دخول فوري بمفتاح الأمان (FIDO2 / YubiKey)" : "Authenticate with Hardware Passkey (FIDO2 / HSM)"}
             </span>
           </div>
-          <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono border border-emerald-500/20 shrink-0">
+          <span className="admin-fido2-badge px-2 py-0.5 rounded text-[10px] font-mono shrink-0">
             FIDO2 Certified
           </span>
         </button>
@@ -500,16 +470,16 @@ export default function AdminLoginPage() {
         )}
 
         {/* Security and Legal Notice */}
-        <div className="p-3.5 rounded-2xl bg-[#090b12] border border-[#1b1f2e] text-[11px] text-gray-400 leading-relaxed font-mono">
-          <p className="text-gray-400">
+        <div className="p-3.5 rounded-2xl bg-amber-500/5 dark:bg-[#090b12] border border-amber-500/20 dark:border-[#1b1f2e] text-[11px] text-gray-700 dark:text-gray-400 leading-relaxed font-mono">
+          <p className="text-gray-700 dark:text-gray-400">
             {isAr ? (
               <>
-                <strong className="text-white block mb-0.5">⚠️ تحذير أمني مؤسسي صارم:</strong>
+                <strong className="text-amber-900 dark:text-white block mb-0.5">⚠️ تحذير أمني مؤسسي صارم:</strong>
                 هذه البوابة مخصصة حصراً للإدارة العليا ووسطاء منصة VALOREA MARKET المعتمدين. يتم تشفير كافة الجلسات وتسجيل عنوان IP والموقع الجغرافي. أي محاولة وصول غير مصرح بها تخضع للملاحقة القانونية بموجب القوانين السويسرية والدولية.
               </>
             ) : (
               <>
-                <strong className="text-white block mb-0.5">⚠️ Institutional Security Notice:</strong>
+                <strong className="text-amber-900 dark:text-white block mb-0.5">⚠️ Institutional Security Notice:</strong>
                 This gateway is strictly reserved for authorized platform executives and supervising brokers. All attempts are monitored, geographically logged, and encrypted. Unauthorized access attempts trigger automatic IP blocklisting and legal escalation.
               </>
             )}

@@ -141,14 +141,14 @@ export function MfaVerificationPanel({
   return (
     <div className="space-y-5 animate-in fade-in zoom-in-95 duration-200">
       {/* Header Banner */}
-      <div className="p-4 rounded-2xl bg-[#121524] border border-[#2b334d] text-center space-y-1.5">
+      <div className="p-4 rounded-2xl bg-gray-50 dark:bg-[#121524] border border-gray-200 dark:border-[#2b334d] text-center space-y-1.5">
         <div className="w-10 h-10 rounded-xl bg-[#b87333]/15 border border-[#b87333]/30 flex items-center justify-center mx-auto text-[#d4956b] mb-1">
           <ShieldCheck className="w-5 h-5" />
         </div>
-        <h3 className="text-sm font-bold text-white">
+        <h3 className="text-sm font-bold text-gray-900 dark:text-white">
           {isAr ? "المصادقة الثنائية الإلزامية (MFA / 2FA)" : "Two-Factor Security Authentication"}
         </h3>
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-gray-600 dark:text-gray-400">
           {isAr
             ? "اختر وسيلة التحقق المفضلة لديك عبر الهاتف أو تطبيق المصادقة"
             : "Choose your preferred verification method: Mobile SMS OTP or Authenticator App"}
@@ -157,14 +157,14 @@ export function MfaVerificationPanel({
 
       {/* Error Message */}
       {errorMessage && (
-        <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 dark:text-rose-400 text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
 
       {/* MFA Method Selection Tabs */}
-      <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-[#101320] border border-[#23273b]">
+      <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-gray-100 dark:bg-[#101320] border border-gray-200 dark:border-[#23273b]">
         {/* Tab 1: Phone SMS */}
         <button
           type="button"
@@ -176,7 +176,7 @@ export function MfaVerificationPanel({
             "py-2 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all",
             activeMethod === "phone"
               ? "bg-[#b87333] text-white shadow-md shadow-[#b87333]/25"
-              : "text-gray-400 hover:text-white hover:bg-[#151928]"
+              : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-[#151928]"
           )}
         >
           <Smartphone className="w-3.5 h-3.5" />
@@ -194,7 +194,7 @@ export function MfaVerificationPanel({
             "py-2 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all",
             activeMethod === "authenticator"
               ? "bg-[#b87333] text-white shadow-md shadow-[#b87333]/25"
-              : "text-gray-400 hover:text-white hover:bg-[#151928]"
+              : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-[#151928]"
           )}
         >
           <KeyRound className="w-3.5 h-3.5" />
@@ -212,7 +212,7 @@ export function MfaVerificationPanel({
             "py-2 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-all",
             activeMethod === "passkey"
               ? "bg-[#b87333] text-white shadow-md shadow-[#b87333]/25"
-              : "text-gray-400 hover:text-white hover:bg-[#151928]"
+              : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-[#151928]"
           )}
         >
           <Fingerprint className="w-3.5 h-3.5" />
@@ -224,25 +224,25 @@ export function MfaVerificationPanel({
       {activeMethod === "phone" && (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs text-gray-400 block mb-1">
+            <label className="text-xs text-gray-600 dark:text-gray-400 block mb-1">
               {isAr ? "رقم الهاتف المسجل لاستلام رمز التحقق (SMS):" : "Registered Mobile Phone Number:"}
             </label>
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Smartphone className="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 rtl:left-auto rtl:right-3" />
+                <Smartphone className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 rtl:left-auto rtl:right-3" />
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+966 50 123 4567"
-                  className="w-full bg-[#121422] border border-[#23273b] rounded-xl pl-9 pr-4 rtl:pr-9 rtl:pl-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#b87333] font-mono dir-ltr"
+                  className="w-full bg-white dark:bg-[#121422] border border-gray-300 dark:border-[#23273b] rounded-xl pl-9 pr-4 rtl:pr-9 rtl:pl-4 py-2.5 text-xs text-gray-900 dark:text-white focus:outline-none focus:border-[#b87333] font-mono dir-ltr"
                 />
               </div>
               <button
                 type="button"
                 onClick={handleSendPhoneOtp}
                 disabled={isSendingOtp || cooldown > 0 || !phone}
-                className="px-4 py-2.5 rounded-xl bg-[#1b2034] hover:bg-[#252c48] border border-[#303858] text-[#d4956b] hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-all disabled:opacity-50 shrink-0"
+                className="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-[#1b2034] dark:hover:bg-[#252c48] border border-gray-300 dark:border-[#303858] text-[#b87333] hover:text-[#9c5f2b] dark:text-[#d4956b] dark:hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-all disabled:opacity-50 shrink-0"
               >
                 {isSendingOtp ? (
                   <RotateCw className="w-3.5 h-3.5 animate-spin" />
@@ -264,14 +264,14 @@ export function MfaVerificationPanel({
 
           {/* SMS Sent Notification */}
           {otpSentNotice && (
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
-              <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-300 text-xs flex items-center gap-2">
+              <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
               <span>{otpSentNotice}</span>
             </div>
           )}
 
           <div>
-            <label className="text-xs text-gray-400 block mb-1 text-center font-mono">
+            <label className="text-xs text-gray-600 dark:text-gray-400 block mb-1 text-center font-mono">
               {isAr ? "أدخل رمز التحقق (OTP) المكون من 6 أرقام:" : "ENTER 6-DIGIT SMS VERIFICATION CODE:"}
             </label>
             <input
@@ -280,7 +280,7 @@ export function MfaVerificationPanel({
               value={code}
               onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
               placeholder="000000"
-              className="w-full bg-[#121422] border-2 border-[#b87333] rounded-xl py-3 text-center text-xl tracking-[0.4em] font-mono font-bold text-white focus:outline-none focus:ring-2 focus:ring-[#b87333]/50"
+              className="w-full bg-white dark:bg-[#121422] border-2 border-[#b87333] rounded-xl py-3 text-center text-xl tracking-[0.4em] font-mono font-bold text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#b87333]/50"
               autoFocus
             />
           </div>
@@ -307,17 +307,17 @@ export function MfaVerificationPanel({
       {/* --- Method 2: Authenticator App (Google / Microsoft / TOTP) --- */}
       {activeMethod === "authenticator" && (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="p-3.5 rounded-xl bg-[#141726] border border-[#262c45] space-y-2 text-xs">
-            <div className="flex items-center justify-between text-gray-300">
+          <div className="p-3.5 rounded-xl bg-gray-50 dark:bg-[#141726] border border-gray-200 dark:border-[#262c45] space-y-2 text-xs">
+            <div className="flex items-center justify-between text-gray-800 dark:text-gray-300">
               <span className="font-semibold">
                 {isAr ? "تطبيق Google / Microsoft Authenticator" : "Google / Microsoft Authenticator"}
               </span>
-              <span className="flex items-center gap-1 font-mono text-[11px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+              <span className="flex items-center gap-1 font-mono text-[11px] text-amber-600 dark:text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
                 <Clock className="w-3 h-3 animate-spin" />
                 {totpSecondsRemaining}s {isAr ? "دوران الرمز" : "rotation"}
               </span>
             </div>
-            <p className="text-gray-400 text-[11px] leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-400 text-[11px] leading-relaxed">
               {isAr
                 ? "افتح تطبيق المصادقة بهاتفك وأدخل الرمز المتغير المكون من 6 أرقام لحساب المنصة."
                 : "Open your mobile authenticator app and enter the active 6-digit verification code."}
@@ -328,22 +328,22 @@ export function MfaVerificationPanel({
               <button
                 type="button"
                 onClick={() => setShowSecretKey(!showSecretKey)}
-                className="text-[11px] text-[#d4956b] hover:underline inline-flex items-center gap-1"
+                className="text-[11px] text-[#b87333] hover:underline inline-flex items-center gap-1 font-medium"
               >
                 <span>{showSecretKey ? (isAr ? "إخفاء مفتاح الإعداد" : "Hide Setup Key") : (isAr ? "عرض مفتاح الإعداد اليدوي للتطبيق" : "Show Manual Setup Key")}</span>
               </button>
 
               {showSecretKey && (
-                <div className="mt-2 p-2.5 rounded-lg bg-[#0b0d14] border border-[#23273b] flex items-center justify-between font-mono text-xs">
-                  <span className="text-gray-300 select-all tracking-wider">{totpSecret}</span>
+                <div className="mt-2 p-2.5 rounded-lg bg-gray-100 dark:bg-[#0b0d14] border border-gray-300 dark:border-[#23273b] flex items-center justify-between font-mono text-xs">
+                  <span className="text-gray-900 dark:text-gray-300 select-all tracking-wider">{totpSecret}</span>
                   <button
                     type="button"
                     onClick={handleCopySecret}
-                    className="p-1.5 rounded hover:bg-[#1a1f33] text-gray-400 hover:text-white transition-colors"
+                    className="p-1.5 rounded hover:bg-gray-200 dark:hover:bg-[#1a1f33] text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                     title={isAr ? "نسخ المفتاح" : "Copy Secret"}
                   >
                     {copiedSecret ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <Check className="w-3.5 h-3.5 text-emerald-500" />
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
@@ -354,7 +354,7 @@ export function MfaVerificationPanel({
           </div>
 
           <div>
-            <label className="text-xs text-gray-400 block mb-1 text-center font-mono">
+            <label className="text-xs text-gray-600 dark:text-gray-400 block mb-1 text-center font-mono">
               {isAr ? "رمز تطبيق المصادقة المكون من 6 أرقام (TOTP):" : "6-DIGIT AUTHENTICATOR APP CODE:"}
             </label>
             <input
@@ -363,7 +363,7 @@ export function MfaVerificationPanel({
               value={code}
               onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))}
               placeholder="000000"
-              className="w-full bg-[#121422] border-2 border-[#b87333] rounded-xl py-3 text-center text-xl tracking-[0.4em] font-mono font-bold text-white focus:outline-none focus:ring-2 focus:ring-[#b87333]/50"
+              className="w-full bg-white dark:bg-[#121422] border-2 border-[#b87333] rounded-xl py-3 text-center text-xl tracking-[0.4em] font-mono font-bold text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#b87333]/50"
               autoFocus
             />
           </div>
@@ -390,12 +390,12 @@ export function MfaVerificationPanel({
       {/* --- Method 3: Hardware Key / Passkey --- */}
       {activeMethod === "passkey" && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-[#141724] border border-[#23273b] text-center space-y-2">
+          <div className="p-4 rounded-xl bg-gray-50 dark:bg-[#141724] border border-gray-200 dark:border-[#23273b] text-center space-y-2">
             <Fingerprint className="w-10 h-10 text-[#d4956b] mx-auto animate-pulse" />
-            <h4 className="text-xs font-bold text-white">
+            <h4 className="text-xs font-bold text-gray-900 dark:text-white">
               {isAr ? "المصادقة الفورية بمفتاح الأمان الفيزيائي FIDO2" : "FIDO2 / Hardware Security Key Fast Login"}
             </h4>
-            <p className="text-[11px] text-gray-400 leading-relaxed">
+            <p className="text-[11px] text-gray-600 dark:text-gray-400 leading-relaxed">
               {isAr
                 ? "اضغط للمصادقة عبر مستشعر البصمة (Touch ID)، التعرف على الوجه، أو مفتاح الأمان (YubiKey NFC)."
                 : "Authenticate instantly with your hardware security key, Touch ID, Face ID, or Windows Hello."}
