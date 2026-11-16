@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -196,23 +195,19 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={dir} className="dark" suppressHydrationWarning>
       <head>
+        {/* Google Tag Manager (gtm.js?id=GTM-NP66LFHP) - Native script tags right after <head> for static detection */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ndataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});`,
+          }}
+        />
         <JsonLd locale={locale} />
         <link rel="image_src" href="/icon.png" />
         <meta name="thumbnail" content="/icon.png" />
-        {/* Google Tag Manager (gtm.js?id=GTM-NP66LFHP) */}
-        <Script
-          id="gtm-loader"
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
-        />
-        <Script id="gtm-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
-          `}
-        </Script>
         <script
           dangerouslySetInnerHTML={{
             __html: `

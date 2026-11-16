@@ -41,14 +41,17 @@ export default function middleware(request: NextRequest) {
   // 3. Fallback to English
   if (!pathnameHasLocale && pathname === "/") {
     const userAgent = request.headers.get("user-agent") || "";
-    // Detect social media link preview bots (WhatsApp, Telegram, Facebook, Twitter, LinkedIn, Slack, etc.)
-    const isSocialBot = /bot|crawler|spider|crawling|facebookexternalhit|whatsapp|telegram|twitter|slack|discord|linkedin|applebot|skype/i.test(
-      userAgent
-    );
+    // Detect search engine crawlers, verification bots (Google Tag Manager / Tag Assistant, Googlebot, etc.) and social media preview bots
+    const isBotOrCrawler =
+      /bot|crawler|spider|crawling|google|tagassistant|gtm|facebookexternalhit|whatsapp|telegram|twitter|slack|discord|linkedin|applebot|skype|curl|wget|python/i.test(
+        userAgent
+      ) ||
+      request.nextUrl.searchParams.has("gtm_debug") ||
+      request.nextUrl.searchParams.has("tagassistant");
 
     const savedLocale = request.cookies.get("NEXT_LOCALE")?.value;
     if (savedLocale && routing.locales.includes(savedLocale as any)) {
-      if (isSocialBot) {
+      if (isBotOrCrawler) {
         return NextResponse.rewrite(new URL(`/${savedLocale}`, request.url));
       }
       return NextResponse.redirect(new URL(`/${savedLocale}`, request.url));
@@ -81,9 +84,9 @@ export default function middleware(request: NextRequest) {
       }
     }
 
-    // CRITICAL: Social bots (WhatsApp, Facebook, etc.) MUST receive HTTP 200 with full HTML & Open Graph tags.
-    // They do NOT follow 307/308 redirects for link previews. Rewrite to target locale instead of redirecting.
-    if (isSocialBot) {
+    // CRITICAL: Verification bots (Google Tag Manager, Googlebot) and social bots (WhatsApp, Facebook, etc.) MUST receive HTTP 200 with full HTML & GTM/OG tags.
+    // They do NOT follow 307/308 redirects for verification or previews. Rewrite to target locale instead of redirecting.
+    if (isBotOrCrawler) {
       return NextResponse.rewrite(new URL(`/${targetLocale}`, request.url));
     }
 
