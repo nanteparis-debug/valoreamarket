@@ -30,10 +30,12 @@ const intlMiddleware = createMiddleware(routing);
 export default function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // Direct bypass for site verification endpoints and root validation files
+  // Direct bypass for site verification endpoints, sitemaps, robots, and root validation files
   if (
     pathname.startsWith("/google") ||
-    pathname.includes("google-site-verification")
+    pathname.includes("google-site-verification") ||
+    pathname.includes("sitemap") ||
+    pathname.includes("robots.txt")
   ) {
     return NextResponse.next();
   }
@@ -114,6 +116,6 @@ export const config = {
   matcher: [
     "/",
     "/(ar|fr|en|es|zh-Hans|ja|de|ru)/:path*",
-    "/((?!api|_next|_vercel|google.*|.*\\..*).*)",
+    "/((?!api|_next|_vercel|google.*|sitemap.*|robots.*|.*\\..*).*)",
   ],
 };
