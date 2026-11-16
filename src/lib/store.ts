@@ -118,6 +118,153 @@ export interface ComplianceIncident {
   penaltyNotice: string;
 }
 
+// ========================================================
+// COMMERCIAL VERIFICATION TYPES (التحقق التجاري)
+// ========================================================
+
+export type CommercialVerificationScope =
+  | "company_due_diligence"
+  | "commodity_documents"
+  | "deal_consistency"
+  | "counterparty_risk"
+  | "full_investigation";
+
+export type CommercialVerificationStatus =
+  | "new"
+  | "in_review"
+  | "needs_info"
+  | "completed"
+  | "archived";
+
+export type VerificationCheckOutcome =
+  | "unverified"             // لم يتم التحقق
+  | "data_reviewed"          // تمت مراجعة البيانات
+  | "needs_human_review"     // تحتاج مراجعة بشرية
+  | "confirmed_from_source"   // تم تأكيدها من المصدر
+  | "inconclusive";          // تعذر التحقق
+
+export type CommercialVerificationDecision =
+  | "pending"
+  | "cleared"
+  | "conditional"
+  | "rejected"
+  | "inconclusive";
+
+export type VerificationAvailabilityMode =
+  | "admin_only"             // الإدارة فقط
+  | "registered_clients"     // عملاء مسجلون
+  | "public_informational";  // صفحة عامة تعريفية
+
+export interface CommercialVerificationDocument {
+  id: string;
+  caseId: string;
+  title: string;
+  documentType:
+    | "bill_of_lading"
+    | "sgs_inspection"
+    | "mt700_lc"
+    | "commercial_invoice"
+    | "certificate_of_origin"
+    | "cargo_manifest"
+    | "sanctions_check"
+    | "corporate_registry"
+    | "other";
+  fileName: string;
+  fileSizeBytes: number;
+  mimeType: string;
+  storageKey: string;
+  sha256Hash: string;
+  extractedFields: Record<string, any>;
+  uploadedByUserId?: string;
+  uploadedByName?: string;
+  createdAt: string;
+}
+
+export interface CommercialVerificationCheck {
+  id: string;
+  caseId: string;
+  category:
+    | "corporate_registry"
+    | "sanctions_pep"
+    | "document_consistency"
+    | "cargo_specs"
+    | "vessel_tracking"
+    | "bank_instrument";
+  title: string;
+  description: string;
+  outcomeStatus: VerificationCheckOutcome;
+  evidenceSource?: string;
+  isExternalProviderConnected: boolean;
+  evidenceDate?: string;
+  findingsSummary?: string;
+  reviewerNotes?: string;
+  performedBy?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CommercialVerificationAuditItem {
+  id: string;
+  caseId: string;
+  action: string;
+  performedByUserId?: string;
+  performedByName?: string;
+  performedByRole?: string;
+  details?: any;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt: string;
+}
+
+export interface CommercialVerificationCase {
+  id: string;
+  referenceNumber: string;
+  organizationId?: string;
+  dealRequestId?: string;
+  targetEntityName: string;
+  targetEntityType: "company" | "supplier" | "buyer" | "broker";
+  countryCode: string;
+  scope: CommercialVerificationScope;
+  status: CommercialVerificationStatus;
+  finalDecision: CommercialVerificationDecision;
+  decisionJustification?: string;
+  reviewerNotes?: string;
+  assignedReviewerId?: string;
+  assignedReviewerName?: string;
+  sharedWithClient: boolean;
+  sharedAt?: string;
+  commodityDetails?: {
+    commodityName?: string;
+    sector?: string;
+    quantity?: number;
+    unit?: string;
+    vesselName?: string;
+    vesselImo?: string;
+    dischargePort?: string;
+    loadingPort?: string;
+    incoterm?: string;
+  };
+  partyDetails?: {
+    buyerName?: string;
+    supplierName?: string;
+    brokerName?: string;
+    shipperName?: string;
+    consigneeName?: string;
+  };
+  documents: CommercialVerificationDocument[];
+  checks: CommercialVerificationCheck[];
+  auditLog: CommercialVerificationAuditItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CommercialVerificationSettings {
+  currentMode: VerificationAvailabilityMode;
+  updatedBy?: string;
+  reason?: string;
+  updatedAt: string;
+}
+
 export interface DealMessage {
   id: string;
   senderAlias: string;
@@ -163,6 +310,12 @@ class GVCEDataStore {
   private matches: Map<string, BrokerMatchItem> = new Map();
   private invoices: Map<string, InvoiceItem> = new Map();
   private sessions: Map<string, UserSessionItem> = new Map();
+  private commercialVerificationSettings: CommercialVerificationSettings = {
+    currentMode: "admin_only",
+    reason: "Default system initialization: Restricted to authorized compliance officers and platform administrators.",
+    updatedAt: new Date().toISOString(),
+  };
+  private commercialCases: Map<string, CommercialVerificationCase> = new Map();
   private currentSubscription = {
     plan: "enterprise" as "starter" | "professional" | "enterprise",
     status: "active",
@@ -935,6 +1088,614 @@ class GVCEDataStore {
       }
     }
     return count;
+  }
+
+  // ========================================================
+  // COMMERCIAL VERIFICATION METHODS (التحقق التجاري)
+  // ========================================================
+
+  public getCommercialVerificationSettings(): CommercialVerificationSettings {
+    return { ...this.commercialVerificationSettings };
+  }
+
+  public setCommercialVerificationMode(
+    mode: VerificationAvailabilityMode,
+    updatedBy: string,
+    reason?: string
+  ): CommercialVerificationSettings {
+    this.commercialVerificationSettings = {
+      currentMode: mode,
+      updatedBy,
+      reason: reason || `Availability mode updated to ${mode}`,
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Log this system-wide action in audit log
+    this.addCommercialAuditLog(
+      "system-settings",
+      "MODE_CHANGED",
+      { id: updatedBy, name: updatedBy, role: "platform_admin" },
+      { newMode: mode, reason }
+    );
+
+    return { ...this.commercialVerificationSettings };
+  }
+
+  public getCommercialCases(options?: {
+    orgId?: string;
+    role?: string;
+    search?: string;
+    status?: string;
+    country?: string;
+    scope?: string;
+    currentAvailabilityMode?: VerificationAvailabilityMode;
+  }): CommercialVerificationCase[] {
+    const isExecutive =
+      options?.role === "platform_admin" ||
+      options?.role === "compliance_officer" ||
+      options?.role === "broker";
+
+    let list = Array.from(this.commercialCases.values());
+
+    // Multi-tenant isolation: If not executive, strictly filter by client's own organization
+    if (!isExecutive) {
+      if (!options?.orgId) {
+        return [];
+      }
+      list = list.filter(
+        (c) => c.organizationId === options.orgId && (c.sharedWithClient || c.status === "new")
+      );
+    }
+
+    // Filter by Status
+    if (options?.status && options.status !== "all") {
+      list = list.filter((c) => c.status === options.status);
+    }
+
+    // Filter by Country
+    if (options?.country && options.country !== "all") {
+      list = list.filter((c) => c.countryCode.toLowerCase() === options.country?.toLowerCase());
+    }
+
+    // Filter by Scope
+    if (options?.scope && options.scope !== "all") {
+      list = list.filter((c) => c.scope === options.scope);
+    }
+
+    // Filter by Search (Entity name, Reference number, Reviewer, Cargo)
+    if (options?.search && options.search.trim() !== "") {
+      const q = options.search.trim().toLowerCase();
+      list = list.filter(
+        (c) =>
+          c.targetEntityName.toLowerCase().includes(q) ||
+          c.referenceNumber.toLowerCase().includes(q) ||
+          (c.assignedReviewerName && c.assignedReviewerName.toLowerCase().includes(q)) ||
+          (c.commodityDetails?.commodityName && c.commodityDetails.commodityName.toLowerCase().includes(q))
+      );
+    }
+
+    // Sort newest first
+    return list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  }
+
+  public getCommercialCase(
+    caseId: string,
+    options?: { orgId?: string; role?: string }
+  ): CommercialVerificationCase | null {
+    const item = this.commercialCases.get(caseId);
+    if (!item) return null;
+
+    const isExecutive =
+      options?.role === "platform_admin" ||
+      options?.role === "compliance_officer" ||
+      options?.role === "broker";
+
+    // Multi-tenant check
+    if (!isExecutive && item.organizationId !== options?.orgId) {
+      return null;
+    }
+
+    return item;
+  }
+
+  public createCommercialCase(
+    data: {
+      targetEntityName: string;
+      targetEntityType: "company" | "supplier" | "buyer" | "broker";
+      countryCode: string;
+      scope?: CommercialVerificationScope;
+      organizationId?: string;
+      dealRequestId?: string;
+      assignedReviewerId?: string;
+      assignedReviewerName?: string;
+      commodityDetails?: CommercialVerificationCase["commodityDetails"];
+      partyDetails?: CommercialVerificationCase["partyDetails"];
+    },
+    actor: { id: string; name: string; role: string }
+  ): CommercialVerificationCase {
+    const id = `cv-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+    const randomSeq = Math.floor(1000 + Math.random() * 9000);
+    const referenceNumber = `CV-${new Date().getFullYear()}-${randomSeq}`;
+    const now = new Date().toISOString();
+
+    // Standard investigative check categories initialized to "unverified"
+    const standardChecks: CommercialVerificationCheck[] = [
+      {
+        id: `chk-corp-${id}`,
+        caseId: id,
+        category: "corporate_registry",
+        title: "National Corporate Registry & Legal Standing",
+        description: "Verification of entity incorporation, active legal status, and official extract validity.",
+        outcomeStatus: "unverified",
+        evidenceSource: "Official National Registry",
+        isExternalProviderConnected: false,
+        findingsSummary: "Awaiting official certified extract or manual registry search confirmation.",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: `chk-sanc-${id}`,
+        caseId: id,
+        category: "sanctions_pep",
+        title: "International Sanctions & PEP Watchlist Screening",
+        description: "Screening of company, directors, and ultimate beneficial owners against OFAC, EU, UN, and UK sanctions.",
+        outcomeStatus: "unverified",
+        evidenceSource: "OFAC / UN / EU Consolidated Lists",
+        isExternalProviderConnected: false,
+        findingsSummary: "Screening against target entity and declared beneficial owners pending compliance cross-check.",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: `chk-doc-${id}`,
+        caseId: id,
+        category: "document_consistency",
+        title: "Cross-Document Data Consistency Matrix",
+        description: "Algorithmic and manual cross-matching of vessel IMO, quantities, ports, and parties across trade documents.",
+        outcomeStatus: "unverified",
+        evidenceSource: "VALOREA Cross-Document Consistency Engine",
+        isExternalProviderConnected: true,
+        findingsSummary: "Awaiting document uploads (B/L, SGS, LC, Invoice) for cross-field consistency verification.",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: `chk-spec-${id}`,
+        caseId: id,
+        category: "cargo_specs",
+        title: "Commodity Quality & Inspection Specifications",
+        description: "Verification of laboratory analysis parameters (density, sulfur, moisture, ASTM standards) from accredited surveyors.",
+        outcomeStatus: "unverified",
+        evidenceSource: "Accredited Surveyor (SGS / Saybolt / Intertek)",
+        isExternalProviderConnected: false,
+        findingsSummary: "Certificate of Analysis / Inspection report verification pending direct surveyor confirmation.",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: `chk-vsl-${id}`,
+        caseId: id,
+        category: "vessel_tracking",
+        title: "Maritime Vessel Tracking & Voyage History",
+        description: "Verification of vessel IMO, flag, AIS tracking, and past calls to sanctioned ports.",
+        outcomeStatus: "unverified",
+        evidenceSource: "Satellite AIS / Lloyd's Maritime Registry",
+        isExternalProviderConnected: false,
+        findingsSummary: "Live satellite AIS position and historical voyage log pending manual maritime registry verification.",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        id: `chk-bank-${id}`,
+        caseId: id,
+        category: "bank_instrument",
+        title: "Financial Instrument & Documentary Credit (MT700 LC)",
+        description: "Verification of Letter of Credit terms, issuing bank SWIFT routing, and conformity with UCP 600 rules.",
+        outcomeStatus: "unverified",
+        evidenceSource: "SWIFT MT700 / Issuing Bank Verification",
+        isExternalProviderConnected: false,
+        findingsSummary: "Documentary credit consistency check pending advising bank validation.",
+        createdAt: now,
+        updatedAt: now,
+      },
+    ];
+
+    const newCase: CommercialVerificationCase = {
+      id,
+      referenceNumber,
+      organizationId: data.organizationId,
+      dealRequestId: data.dealRequestId,
+      targetEntityName: data.targetEntityName,
+      targetEntityType: data.targetEntityType,
+      countryCode: data.countryCode.toUpperCase(),
+      scope: data.scope || "full_investigation",
+      status: "new",
+      finalDecision: "pending",
+      assignedReviewerId: data.assignedReviewerId || actor.id,
+      assignedReviewerName: data.assignedReviewerName || actor.name,
+      sharedWithClient: false,
+      commodityDetails: data.commodityDetails,
+      partyDetails: data.partyDetails,
+      documents: [],
+      checks: standardChecks,
+      auditLog: [
+        {
+          id: `aud-${Date.now()}-1`,
+          caseId: id,
+          action: "CASE_CREATED",
+          performedByUserId: actor.id,
+          performedByName: actor.name,
+          performedByRole: actor.role,
+          details: {
+            targetEntityName: data.targetEntityName,
+            countryCode: data.countryCode,
+            scope: data.scope || "full_investigation",
+          },
+          createdAt: now,
+        },
+      ],
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    this.commercialCases.set(id, newCase);
+    return newCase;
+  }
+
+  public updateCommercialCase(
+    caseId: string,
+    updates: Partial<CommercialVerificationCase>,
+    actor: { id: string; name: string; role: string }
+  ): CommercialVerificationCase | null {
+    const existing = this.commercialCases.get(caseId);
+    if (!existing) return null;
+
+    const now = new Date().toISOString();
+    const updated: CommercialVerificationCase = {
+      ...existing,
+      ...updates,
+      updatedAt: now,
+    };
+
+    updated.auditLog.unshift({
+      id: `aud-${Date.now()}-${Math.random().toString(36).substring(2, 5)}`,
+      caseId,
+      action: "CASE_UPDATED",
+      performedByUserId: actor.id,
+      performedByName: actor.name,
+      performedByRole: actor.role,
+      details: updates,
+      createdAt: now,
+    });
+
+    this.commercialCases.set(caseId, updated);
+    return updated;
+  }
+
+  public addCommercialDocument(
+    caseId: string,
+    docData: Omit<CommercialVerificationDocument, "id" | "caseId" | "createdAt">,
+    actor: { id: string; name: string; role: string }
+  ): CommercialVerificationDocument | null {
+    const targetCase = this.commercialCases.get(caseId);
+    if (!targetCase) return null;
+
+    const now = new Date().toISOString();
+    const docId = `doc-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
+
+    const newDoc: CommercialVerificationDocument = {
+      id: docId,
+      caseId,
+      title: docData.title,
+      documentType: docData.documentType,
+      fileName: docData.fileName,
+      fileSizeBytes: docData.fileSizeBytes,
+      mimeType: docData.mimeType,
+      storageKey: docData.storageKey,
+      sha256Hash: docData.sha256Hash,
+      extractedFields: docData.extractedFields || {},
+      uploadedByUserId: actor.id,
+      uploadedByName: actor.name,
+      createdAt: now,
+    };
+
+    targetCase.documents.push(newDoc);
+    targetCase.updatedAt = now;
+
+    // Transition case from 'new' to 'in_review' if still 'new'
+    if (targetCase.status === "new") {
+      targetCase.status = "in_review";
+    }
+
+    targetCase.auditLog.unshift({
+      id: `aud-${Date.now()}-${Math.random().toString(36).substring(2, 5)}`,
+      caseId,
+      action: "DOCUMENT_UPLOADED",
+      performedByUserId: actor.id,
+      performedByName: actor.name,
+      performedByRole: actor.role,
+      details: {
+        docId,
+        title: newDoc.title,
+        documentType: newDoc.documentType,
+        sha256Hash: newDoc.sha256Hash,
+      },
+      createdAt: now,
+    });
+
+    return newDoc;
+  }
+
+  public updateCommercialCheck(
+    caseId: string,
+    checkId: string,
+    updates: Partial<CommercialVerificationCheck>,
+    actor: { id: string; name: string; role: string }
+  ): CommercialVerificationCheck | null {
+    const targetCase = this.commercialCases.get(caseId);
+    if (!targetCase) return null;
+
+    const check = targetCase.checks.find((c) => c.id === checkId);
+    if (!check) return null;
+
+    const now = new Date().toISOString();
+    Object.assign(check, updates, { updatedAt: now, performedBy: actor.name });
+    targetCase.updatedAt = now;
+
+    targetCase.auditLog.unshift({
+      id: `aud-${Date.now()}-${Math.random().toString(36).substring(2, 5)}`,
+      caseId,
+      action: "CHECK_UPDATED",
+      performedByUserId: actor.id,
+      performedByName: actor.name,
+      performedByRole: actor.role,
+      details: {
+        checkId,
+        category: check.category,
+        outcomeStatus: check.outcomeStatus,
+        findingsSummary: check.findingsSummary,
+      },
+      createdAt: now,
+    });
+
+    return check;
+  }
+
+  public makeCaseDecision(
+    caseId: string,
+    data: {
+      decision: CommercialVerificationDecision;
+      justification: string;
+      reviewerNotes?: string;
+      shareWithClient: boolean;
+      status?: CommercialVerificationStatus;
+    },
+    actor: { id: string; name: string; role: string }
+  ): CommercialVerificationCase | null {
+    const targetCase = this.commercialCases.get(caseId);
+    if (!targetCase) return null;
+
+    const now = new Date().toISOString();
+    targetCase.finalDecision = data.decision;
+    targetCase.decisionJustification = data.justification;
+    if (data.reviewerNotes !== undefined) {
+      targetCase.reviewerNotes = data.reviewerNotes;
+    }
+    targetCase.sharedWithClient = data.shareWithClient;
+    if (data.shareWithClient && !targetCase.sharedAt) {
+      targetCase.sharedAt = now;
+    }
+    targetCase.status = data.status || (data.decision === "pending" ? "in_review" : "completed");
+    targetCase.updatedAt = now;
+
+    targetCase.auditLog.unshift({
+      id: `aud-${Date.now()}-${Math.random().toString(36).substring(2, 5)}`,
+      caseId,
+      action: "DECISION_MADE",
+      performedByUserId: actor.id,
+      performedByName: actor.name,
+      performedByRole: actor.role,
+      details: {
+        decision: data.decision,
+        sharedWithClient: data.shareWithClient,
+        justificationSnippet: data.justification.substring(0, 100),
+      },
+      createdAt: now,
+    });
+
+    return targetCase;
+  }
+
+  public addCommercialAuditLog(
+    caseId: string,
+    action: string,
+    actor: { id: string; name: string; role: string },
+    details?: any,
+    ipAddress?: string,
+    userAgent?: string
+  ): CommercialVerificationAuditItem {
+    const now = new Date().toISOString();
+    const auditItem: CommercialVerificationAuditItem = {
+      id: `aud-${Date.now()}-${Math.random().toString(36).substring(2, 5)}`,
+      caseId,
+      action,
+      performedByUserId: actor.id,
+      performedByName: actor.name,
+      performedByRole: actor.role,
+      details,
+      ipAddress,
+      userAgent,
+      createdAt: now,
+    };
+
+    const targetCase = this.commercialCases.get(caseId);
+    if (targetCase) {
+      targetCase.auditLog.unshift(auditItem);
+    }
+
+    return auditItem;
+  }
+
+  /**
+   * Cross-Document Data Consistency Engine
+   * Compares extracted parameters across Bills of Lading, SGS Inspection, LC (MT700), and Commercial Invoice.
+   */
+  public calculateCrossDocumentConsistency(caseId: string): Array<{
+    field: string;
+    fieldAr: string;
+    status: "match" | "discrepancy" | "pending_documents";
+    documentsCompared: string[];
+    values: Record<string, string>;
+    notes: string;
+  }> {
+    const targetCase = this.commercialCases.get(caseId);
+    if (!targetCase || targetCase.documents.length === 0) {
+      return [
+        {
+          field: "Vessel Name & IMO",
+          fieldAr: "اسم الناقلة ورقم IMO",
+          status: "pending_documents",
+          documentsCompared: [],
+          values: {},
+          notes: "بانتظار رفع بوليصة الشحن (B/L) وشهادة الفحص (SGS) لإجراء المطابقة الآلية.",
+        },
+        {
+          field: "Cargo Net Quantity & Tolerance",
+          fieldAr: "كمية الشحنة الصافية ونسبة التفاوت",
+          status: "pending_documents",
+          documentsCompared: [],
+          values: {},
+          notes: "بانتظار رفع الفاتورة التجارية وبوليصة الشحن.",
+        },
+        {
+          field: "Port of Loading & Discharge",
+          fieldAr: "ميناء الشحن والتفريغ",
+          status: "pending_documents",
+          documentsCompared: [],
+          values: {},
+          notes: "بانتظار مطابقة شروط الاعتماد المستندي (LC) مع بيانات الناقلة.",
+        },
+        {
+          field: "Consignee & Shipper Identities",
+          fieldAr: "بيانات المرسل والمرسل إليه",
+          status: "pending_documents",
+          documentsCompared: [],
+          values: {},
+          notes: "بانتظار فحص تطابق الأطراف التجارية في مستندات التداول.",
+        },
+      ];
+    }
+
+    // Examine extracted fields in attached documents
+    const docMap = new Map<string, Record<string, any>>();
+    for (const doc of targetCase.documents) {
+      docMap.set(doc.documentType, doc.extractedFields || {});
+    }
+
+    const bl = docMap.get("bill_of_lading");
+    const sgs = docMap.get("sgs_inspection");
+    const inv = docMap.get("commercial_invoice");
+    const lc = docMap.get("mt700_lc");
+
+    const results: Array<{
+      field: string;
+      fieldAr: string;
+      status: "match" | "discrepancy" | "pending_documents";
+      documentsCompared: string[];
+      values: Record<string, string>;
+      notes: string;
+    }> = [];
+
+    // 1. Vessel Comparison
+    const vesselValues: Record<string, string> = {};
+    if (bl?.vesselName) vesselValues["Bill of Lading"] = `${bl.vesselName} (IMO: ${bl.vesselImo || "N/A"})`;
+    if (sgs?.vesselName) vesselValues["SGS Inspection"] = `${sgs.vesselName} (IMO: ${sgs.vesselImo || "N/A"})`;
+    if (Object.keys(vesselValues).length < 2) {
+      results.push({
+        field: "Vessel Name & IMO",
+        fieldAr: "اسم الناقلة ورقم IMO",
+        status: "pending_documents",
+        documentsCompared: Object.keys(vesselValues),
+        values: vesselValues,
+        notes: "يتطلب وثيقتين على الأقل (B/L و SGS) للتحقق من تطابق الناقلة.",
+      });
+    } else {
+      const match =
+        bl?.vesselName?.toLowerCase().trim() === sgs?.vesselName?.toLowerCase().trim() &&
+        (!bl?.vesselImo || !sgs?.vesselImo || bl.vesselImo === sgs.vesselImo);
+      results.push({
+        field: "Vessel Name & IMO",
+        fieldAr: "اسم الناقلة ورقم IMO",
+        status: match ? "match" : "discrepancy",
+        documentsCompared: Object.keys(vesselValues),
+        values: vesselValues,
+        notes: match
+          ? "تطابق تام في اسم الناقلة ورقم المنظمة البحرية الدولية (IMO) بين البوليصة وتقرير الفحص."
+          : "⚠️ تعارض في اسم الناقلة أو رقم IMO بين بوليصة الشحن وشهادة الفحص!",
+      });
+    }
+
+    // 2. Quantity Comparison
+    const qtyValues: Record<string, string> = {};
+    if (bl?.quantity) qtyValues["Bill of Lading"] = `${bl.quantity} ${bl.unit || "MT"}`;
+    if (sgs?.quantity) qtyValues["SGS Inspection"] = `${sgs.quantity} ${sgs.unit || "MT"}`;
+    if (inv?.quantity) qtyValues["Commercial Invoice"] = `${inv.quantity} ${inv.unit || "MT"}`;
+    if (Object.keys(qtyValues).length < 2) {
+      results.push({
+        field: "Cargo Net Quantity & Tolerance",
+        fieldAr: "كمية الشحنة الصافية ونسبة التفاوت",
+        status: "pending_documents",
+        documentsCompared: Object.keys(qtyValues),
+        values: qtyValues,
+        notes: "بانتظار مستندات إضافية لمقارنة الكميات.",
+      });
+    } else {
+      const nums = Object.values(qtyValues).map((v) => parseFloat(v));
+      const min = Math.min(...nums);
+      const max = Math.max(...nums);
+      // Tolerance allowed in bulk commodity trade is usually 0.5% - 2%
+      const diffPercent = min > 0 ? ((max - min) / min) * 100 : 0;
+      const match = diffPercent <= 2.0;
+      results.push({
+        field: "Cargo Net Quantity & Tolerance",
+        fieldAr: "كمية الشحنة الصافية ونسبة التفاوت",
+        status: match ? "match" : "discrepancy",
+        documentsCompared: Object.keys(qtyValues),
+        values: qtyValues,
+        notes: match
+          ? `الكميات متسقة ضمن حدود التفاوت الملاحي المسموح به (${diffPercent.toFixed(2)}% فرق).`
+          : `⚠️ فرق غير مبرر في الكميات يتجاوز نسبة التفاوت الملاحي (${diffPercent.toFixed(2)}%). يتطلب مراجعة بشرية.`,
+      });
+    }
+
+    // 3. Ports Comparison
+    const portValues: Record<string, string> = {};
+    if (bl?.dischargePort) portValues["Bill of Lading"] = `Discharge: ${bl.dischargePort}`;
+    if (lc?.dischargePort) portValues["Letter of Credit"] = `Discharge: ${lc.dischargePort}`;
+    if (Object.keys(portValues).length < 2) {
+      results.push({
+        field: "Port of Discharge",
+        fieldAr: "ميناء التفريغ",
+        status: "pending_documents",
+        documentsCompared: Object.keys(portValues),
+        values: portValues,
+        notes: "يتطلب بوليصة الشحن وشروط الاعتماد المستندي لمقارنة ميناء الوصول.",
+      });
+    } else {
+      const match = bl?.dischargePort?.toLowerCase().trim() === lc?.dischargePort?.toLowerCase().trim();
+      results.push({
+        field: "Port of Discharge",
+        fieldAr: "ميناء التفريغ",
+        status: match ? "match" : "discrepancy",
+        documentsCompared: Object.keys(portValues),
+        values: portValues,
+        notes: match
+          ? "تطابق ميناء التفريغ المعتمد في الاعتماد المستندي مع بوليصة الشحن."
+          : "⚠️ تعارض في ميناء التفريغ بين الاعتماد المستندي وبوليصة الشحن!",
+      });
+    }
+
+    return results;
   }
 }
 

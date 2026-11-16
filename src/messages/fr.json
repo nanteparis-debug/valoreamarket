@@ -21,7 +21,8 @@
     "billing": "Abonnements et facturation",
     "verifiedBadge": "Vérifié",
     "siteSubtitle": "Bourse mondiale des matières premières vérifiées",
-    "referenceCurrency": "Devise de référence"
+    "referenceCurrency": "Devise de référence",
+    "commercialVerification": "Vérification commerciale"
   },
   "hero": {
     "badge": "Réseau d'expédition cible couvrant plus de 50 pays",

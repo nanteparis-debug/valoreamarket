@@ -34,6 +34,7 @@ interface NavbarProps {
     verifiedBadge?: string;
     siteSubtitle?: string;
     referenceCurrency?: string;
+    commercialVerification?: string;
   };
 }
 
@@ -139,6 +140,13 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all"
             >
               {currentLocale === "ar" ? "سياسة الوساطة" : "Brokerage Policy"}
+            </Link>
+            <Link
+              href="/verification"
+              className="px-3 py-1 text-xs font-medium text-gray-300 hover:text-white hover:bg-[#161824] rounded-full transition-all flex items-center gap-1"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-[#d4956b]" />
+              <span>{translations.commercialVerification || (currentLocale === "ar" ? "التحقق التجاري" : "Verification")}</span>
             </Link>
 
             {/* Role-Gated Operational Desk Gateway */}
@@ -289,6 +297,14 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
             >
               {currentLocale === "ar" ? "سياسة الوساطة والتسوية" : "Brokerage Policy"}
             </Link>
+            <Link
+              href="/verification"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded-lg text-sm text-gray-200 hover:bg-[#161824] flex items-center gap-2"
+            >
+              <ShieldCheck className="w-4 h-4 text-[#d4956b]" />
+              <span>{translations.commercialVerification || (currentLocale === "ar" ? "التحقق التجاري" : "Verification")}</span>
+            </Link>
 
             {/* Role-Gated Operations Sub-section */}
             <div className="pt-2 mt-2 border-t border-[#1f2233]">
@@ -311,6 +327,14 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
                 >
                   <Lock className="w-3 h-3 text-[#d4956b]" />
                   <span>{translations.compliance || "Compliance"}</span>
+                </Link>
+                <Link
+                  href="/admin/commercial-verification"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-3 py-1.5 rounded-lg text-xs text-gray-300 hover:bg-[#161824] flex items-center gap-1.5 col-span-2 text-[#d4956b]"
+                >
+                  <Lock className="w-3 h-3 text-[#d4956b]" />
+                  <span>{currentLocale === "ar" ? "لوحة التحقق التجاري (إدارة)" : "Commercial Verification Admin"}</span>
                 </Link>
                 <Link
                   href="/billing"

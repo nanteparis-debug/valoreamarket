@@ -21,7 +21,8 @@
     "billing": "Abonnements & Rechnungen",
     "verifiedBadge": "Verifiziert",
     "siteSubtitle": "Globale Verifizierte Rohstoffbörse",
-    "referenceCurrency": "Referenzwährung"
+    "referenceCurrency": "Referenzwährung",
+    "commercialVerification": "Kommerzielle Verifizierung"
   },
   "hero": {
     "badge": "Ziel-Versandnetzwerk umfasst mehr als 50 Länder weltweit",

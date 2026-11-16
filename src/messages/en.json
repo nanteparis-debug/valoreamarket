@@ -21,7 +21,8 @@
     "billing": "Subscriptions & Invoicing",
     "verifiedBadge": "Verified",
     "siteSubtitle": "Global Verified Commodities Exchange",
-    "referenceCurrency": "Reference"
+    "referenceCurrency": "Reference",
+    "commercialVerification": "Commercial Verification"
   },
   "hero": {
     "badge": "Target shipping network spans 50+ countries worldwide",

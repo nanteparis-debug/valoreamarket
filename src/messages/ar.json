@@ -21,7 +21,8 @@
     "billing": "الاشتراكات والفوترة",
     "verifiedBadge": "معتمد",
     "siteSubtitle": "بورصة السلع العالمية الموثّقة",
-    "referenceCurrency": "مرجع التسعير"
+    "referenceCurrency": "مرجع التسعير",
+    "commercialVerification": "التحقق التجاري"
   },
   "hero": {
     "badge": "نطاق الشحن المستهدف يشمل أكثر من 50 دولة حول العالم",

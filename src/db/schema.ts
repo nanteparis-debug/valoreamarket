@@ -74,6 +74,44 @@ export const sectorEnum = pgEnum("sector", [
   "sugar",
 ]);
 
+export const commercialVerificationScopeEnum = pgEnum("commercial_verification_scope", [
+  "company_due_diligence",
+  "commodity_documents",
+  "deal_consistency",
+  "counterparty_risk",
+  "full_investigation",
+]);
+
+export const commercialVerificationStatusEnum = pgEnum("commercial_verification_status", [
+  "new",
+  "in_review",
+  "needs_info",
+  "completed",
+  "archived",
+]);
+
+export const verificationCheckOutcomeEnum = pgEnum("verification_check_outcome", [
+  "unverified",             // لم يتم التحقق
+  "data_reviewed",          // تمت مراجعة البيانات
+  "needs_human_review",     // تحتاج مراجعة بشرية
+  "confirmed_from_source",   // تم تأكيدها من المصدر
+  "inconclusive",           // تعذر التحقق
+]);
+
+export const commercialVerificationDecisionEnum = pgEnum("commercial_verification_decision", [
+  "pending",
+  "cleared",
+  "conditional",
+  "rejected",
+  "inconclusive",
+]);
+
+export const verificationAvailabilityModeEnum = pgEnum("verification_availability_mode", [
+  "admin_only",             // الإدارة فقط (الافتراضي)
+  "registered_clients",     // عملاء مسجلون
+  "public_informational",   // صفحة عامة تعريفية
+]);
+
 // ========================
 // USERS & ORGANIZATIONS
 // ========================
@@ -589,4 +627,102 @@ export const sessions = pgTable("sessions", {
 }, (table) => [
   index("sessions_user_idx").on(table.userId),
   index("sessions_token_idx").on(table.sessionToken),
+]);
+
+// ===============================================
+// COMMERCIAL VERIFICATION (التحقق التجاري)
+// ===============================================
+
+export const commercialVerificationSettings = pgTable("commercial_verification_settings", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  currentMode: verificationAvailabilityModeEnum("current_mode").default("admin_only").notNull(),
+  updatedBy: uuid("updated_by").references(() => users.id),
+  reason: text("reason"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const commercialVerificationCases = pgTable("commercial_verification_cases", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  referenceNumber: varchar("reference_number", { length: 64 }).notNull().unique(),
+  organizationId: uuid("organization_id").references(() => organizations.id),
+  dealRequestId: uuid("deal_request_id").references(() => dealRequests.id),
+  targetEntityName: varchar("target_entity_name", { length: 255 }).notNull(),
+  targetEntityType: varchar("target_entity_type", { length: 64 }).notNull(), // company | supplier | buyer | broker
+  countryCode: varchar("country_code", { length: 2 }).notNull(),
+  scope: commercialVerificationScopeEnum("scope").default("full_investigation").notNull(),
+  status: commercialVerificationStatusEnum("status").default("new").notNull(),
+  finalDecision: commercialVerificationDecisionEnum("final_decision").default("pending").notNull(),
+  decisionJustification: text("decision_justification"),
+  reviewerNotes: text("reviewer_notes"),
+  assignedReviewerId: uuid("assigned_reviewer_id").references(() => users.id),
+  assignedReviewerName: varchar("assigned_reviewer_name", { length: 255 }),
+  sharedWithClient: boolean("shared_with_client").default(false).notNull(),
+  sharedAt: timestamp("shared_at", { withTimezone: true }),
+  commodityDetails: jsonb("commodity_details"),
+  partyDetails: jsonb("party_details"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+}, (table) => [
+  uniqueIndex("cv_case_ref_idx").on(table.referenceNumber),
+  index("cv_case_org_idx").on(table.organizationId),
+  index("cv_case_status_idx").on(table.status),
+  index("cv_case_country_idx").on(table.countryCode),
+  index("cv_case_scope_idx").on(table.scope),
+]);
+
+export const commercialVerificationDocuments = pgTable("commercial_verification_documents", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  caseId: uuid("case_id").notNull().references(() => commercialVerificationCases.id, { onDelete: "cascade" }),
+  title: varchar("title", { length: 255 }).notNull(),
+  documentType: varchar("document_type", { length: 64 }).notNull(), // bill_of_lading | sgs_inspection | mt700_lc | commercial_invoice | certificate_of_origin | cargo_manifest | sanctions_check | corporate_registry | other
+  fileName: varchar("file_name", { length: 255 }).notNull(),
+  fileSizeBytes: integer("file_size_bytes").notNull(),
+  mimeType: varchar("mime_type", { length: 128 }).notNull(),
+  storageKey: varchar("storage_key", { length: 512 }).notNull(),
+  sha256Hash: varchar("sha256_hash", { length: 64 }).notNull(),
+  extractedFields: jsonb("extracted_fields"), // key-values extracted for cross-checking (vessel, quantity, ports, etc.)
+  uploadedByUserId: uuid("uploaded_by_user_id").references(() => users.id),
+  uploadedByName: varchar("uploaded_by_name", { length: 255 }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (table) => [
+  index("cv_doc_case_idx").on(table.caseId),
+  index("cv_doc_type_idx").on(table.documentType),
+]);
+
+export const commercialVerificationChecks = pgTable("commercial_verification_checks", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  caseId: uuid("case_id").notNull().references(() => commercialVerificationCases.id, { onDelete: "cascade" }),
+  category: varchar("category", { length: 64 }).notNull(), // corporate_registry | sanctions_pep | document_consistency | cargo_specs | vessel_tracking | bank_instrument
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  outcomeStatus: verificationCheckOutcomeEnum("outcome_status").default("unverified").notNull(),
+  evidenceSource: varchar("evidence_source", { length: 255 }), // e.g. "Infogreffe", "OFAC/EU Consolidated", "SGS Portal", "UN/IMO Vessel DB", or "Unconfigured"
+  isExternalProviderConnected: boolean("is_external_provider_connected").default(false).notNull(),
+  evidenceDate: timestamp("evidence_date", { withTimezone: true }),
+  findingsSummary: text("findings_summary"),
+  reviewerNotes: text("reviewer_notes"),
+  performedBy: varchar("performed_by", { length: 255 }),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+}, (table) => [
+  index("cv_check_case_idx").on(table.caseId),
+  index("cv_check_category_idx").on(table.category),
+  index("cv_check_outcome_idx").on(table.outcomeStatus),
+]);
+
+export const commercialVerificationAuditLog = pgTable("commercial_verification_audit_log", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  caseId: uuid("case_id").references(() => commercialVerificationCases.id, { onDelete: "cascade" }),
+  action: varchar("action", { length: 128 }).notNull(), // CASE_CREATED | STATUS_CHANGED | DECISION_MADE | DOCUMENT_UPLOADED | DOCUMENT_DOWNLOADED | CHECK_UPDATED | MODE_CHANGED | REPORT_SHARED
+  performedByUserId: uuid("performed_by_user_id").references(() => users.id),
+  performedByName: varchar("performed_by_name", { length: 255 }),
+  performedByRole: varchar("performed_by_role", { length: 64 }),
+  details: jsonb("details"),
+  ipAddress: varchar("ip_address", { length: 45 }),
+  userAgent: text("user_agent"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (table) => [
+  index("cv_audit_case_idx").on(table.caseId),
+  index("cv_audit_action_idx").on(table.action),
+  index("cv_audit_created_idx").on(table.createdAt),
 ]);

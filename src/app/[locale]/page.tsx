@@ -46,6 +46,7 @@ export default async function HomePage({
           verifiedBadge: tNav("verifiedBadge"),
           siteSubtitle: tNav("siteSubtitle"),
           referenceCurrency: tNav("referenceCurrency"),
+          commercialVerification: tNav("commercialVerification"),
         }}
       />
 

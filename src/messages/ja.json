@@ -21,7 +21,8 @@
     "billing": "サブスクリプションと請求",
     "verifiedBadge": "認証済み",
     "siteSubtitle": "グローバル検証済みコモディティ取引所",
-    "referenceCurrency": "基準通貨"
+    "referenceCurrency": "基準通貨",
+    "commercialVerification": "商業検証"
   },
   "hero": {
     "badge": "世界50カ国以上をカバーする目標輸送ネットワーク",

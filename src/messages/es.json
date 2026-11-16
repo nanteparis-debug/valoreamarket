@@ -21,7 +21,8 @@
     "billing": "Suscripciones y Facturación",
     "verifiedBadge": "Verificado",
     "siteSubtitle": "Bolsa Global de Materias Primas Verificadas",
-    "referenceCurrency": "Referencia"
+    "referenceCurrency": "Referencia",
+    "commercialVerification": "Verificación Comercial"
   },
   "hero": {
     "badge": "La red de envío objetivo abarca más de 50 países en el mundo",

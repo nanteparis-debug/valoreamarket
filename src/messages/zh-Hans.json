@@ -21,7 +21,8 @@
     "billing": "订阅与账单",
     "verifiedBadge": "已认证",
     "siteSubtitle": "全球验证大宗商品交易所",
-    "referenceCurrency": "参考币种"
+    "referenceCurrency": "参考币种",
+    "commercialVerification": "商业尽调验证"
   },
   "hero": {
     "badge": "目标航运网络覆盖全球 50 多个国家",
