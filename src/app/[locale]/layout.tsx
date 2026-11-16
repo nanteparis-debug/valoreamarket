@@ -11,6 +11,7 @@ import { FloatingThemeToggle } from "@/components/floating-theme-toggle";
 import "../globals.css";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://valoreamarket.com";
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-NP66LFHP";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -198,11 +199,11 @@ export default async function LocaleLayout({
         <JsonLd locale={locale} />
         <link rel="image_src" href="/icon.png" />
         <meta name="thumbnail" content="/icon.png" />
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager (gtm.js?id=GTM-NP66LFHP) */}
         <Script
           id="gtm-loader"
           strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtm.js?id=GTM-W9P4V88P"
+          src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
         />
         <Script id="gtm-init" strategy="afterInteractive">
           {`
@@ -230,7 +231,7 @@ export default async function LocaleLayout({
         {/* Google Tag Manager (noscript fallback) */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-W9P4V88P"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
