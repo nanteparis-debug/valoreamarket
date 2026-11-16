@@ -42,12 +42,27 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [adminUser, setAdminUser] = useState<any | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
   const currentLang =
     SUPPORTED_LANGUAGES.find((l) => l.code === currentLocale) ||
     SUPPORTED_LANGUAGES[2]; // Default to English
+
+  useEffect(() => {
+    // Check if an administrative executive session is active
+    fetch("/api/admin/auth")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.authenticated && data?.user) {
+          setAdminUser(data.user);
+        } else {
+          setAdminUser(null);
+        }
+      })
+      .catch(() => setAdminUser(null));
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -158,6 +173,18 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               <Lock className="w-3 h-3 text-[#d4956b]" />
               <span>{currentLocale === "ar" ? "مكتب العمليات" : "Desk Portal"}</span>
             </Link>
+
+            {/* Dynamic Admin Indicator when logged in */}
+            {adminUser && (
+              <Link
+                href="/admin/commercial-verification"
+                className="px-3 py-1 text-xs font-semibold text-amber-300 bg-amber-500/15 border border-amber-500/35 hover:bg-amber-500/25 rounded-full transition-all flex items-center gap-1.5 shadow-sm ml-1"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                <span>{currentLocale === "ar" ? "لوحة الإدارة" : "Admin Console"}</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              </Link>
+            )}
           </nav>
 
           {/* Right Action Bar */}
@@ -224,22 +251,37 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
               )}
             </div>
 
-            {/* Sign in Button */}
-            <Link
-              href="/auth/signin"
-              className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
-            >
-              {translations.signIn}
-            </Link>
+            {/* User Auth State & Actions */}
+            {adminUser ? (
+              <Link
+                href="/admin/commercial-verification"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#141724] border border-amber-500/40 text-amber-300 hover:text-white text-xs font-medium shadow-md shadow-amber-500/10 hover:border-amber-500/70 transition-all"
+                title={adminUser.email}
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                <span>{adminUser.name?.split(" ")[0] || "Executive"}</span>
+                <span className="text-[10px] uppercase font-mono px-1 py-0.5 rounded bg-black/40 text-amber-300 border border-amber-500/25">
+                  {adminUser.role === "platform_admin" ? "Director" : "Compliance"}
+                </span>
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/auth/signin"
+                  className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
+                >
+                  {translations.signIn}
+                </Link>
 
-            {/* Primary CTA */}
-            <Link
-              href="/auth/register"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white text-sm font-medium shadow-md shadow-[#b87333]/20 hover:shadow-lg hover:shadow-[#b87333]/30 transition-all"
-            >
-              <span>{translations.getStarted}</span>
-              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-            </Link>
+                <Link
+                  href="/auth/register"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#b87333] to-[#8b5a2b] hover:from-[#d4956b] hover:to-[#b87333] text-white text-sm font-medium shadow-md shadow-[#b87333]/20 hover:shadow-lg hover:shadow-[#b87333]/30 transition-all"
+                >
+                  <span>{translations.getStarted}</span>
+                  <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -268,6 +310,30 @@ export function Navbar({ currentLocale, translations }: NavbarProps) {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#0a0c13] border-b border-[#23273b] px-4 pt-3 pb-6 space-y-4 animate-in fade-in slide-in-from-top-4 duration-200">
+          {/* Executive Active Admin Alert Banner */}
+          {adminUser && (
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                <div className="flex flex-col">
+                  <span className="text-xs font-semibold text-amber-300">
+                    {currentLocale === "ar" ? "جلسة الإدارة المؤسسية نشطة" : "Active Admin Session"}
+                  </span>
+                  <span className="text-[10px] text-gray-400">
+                    {adminUser.role === "platform_admin" ? "Director Level 4" : "Compliance Officer"}
+                  </span>
+                </div>
+              </div>
+              <Link
+                href="/admin/commercial-verification"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-2.5 py-1 rounded-md bg-[#b87333] hover:bg-[#d4956b] text-white text-[11px] font-semibold transition-all shadow-sm"
+              >
+                {currentLocale === "ar" ? "لوحة الإدارة" : "Console"}
+              </Link>
+            </div>
+          )}
+
           <nav className="flex flex-col space-y-1">
             <Link
               href="/catalog"

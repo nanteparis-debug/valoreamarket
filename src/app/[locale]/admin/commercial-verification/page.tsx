@@ -604,6 +604,16 @@ export default function AdminCommercialVerificationPage() {
                 </span>
               </button>
 
+              {/* Return to Platform Link */}
+              <Link
+                href="/"
+                className="p-2 rounded-lg bg-[#141724] border border-[#23273b] hover:border-gray-500 text-gray-300 hover:text-white transition-all flex items-center gap-1.5 text-xs"
+                title={isAr ? "العودة إلى المنصة الرئيسية" : "Return to Platform"}
+              >
+                <Globe className="w-4 h-4 text-[#d4956b]" />
+                <span className="hidden sm:inline">{isAr ? "المنصة" : "Platform"}</span>
+              </Link>
+
               {/* Refresh Button */}
               <button
                 type="button"

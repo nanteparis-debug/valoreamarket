@@ -14,6 +14,7 @@ const PUBLIC_PATHS = [
   { path: "legal/cookies", priority: 0.5, changeFrequency: "monthly" as const },
   { path: "legal/ncnda", priority: 0.6, changeFrequency: "monthly" as const },
   { path: "legal/brokerage", priority: 0.6, changeFrequency: "monthly" as const },
+  { path: "verification", priority: 0.8, changeFrequency: "weekly" as const },
   { path: "auth/signin", priority: 0.5, changeFrequency: "monthly" as const },
   { path: "auth/register", priority: 0.6, changeFrequency: "monthly" as const },
 ];

@@ -126,7 +126,7 @@ export async function POST(req: Request | any) {
         {
           success: true,
           user: targetUser,
-          redirectUrl: role === "compliance_officer" ? "/compliance" : "/broker",
+          redirectUrl: role === "broker" ? "/broker" : "/admin/commercial-verification",
           clearanceLevel: "LEVEL_4_EXECUTIVE_DIRECTOR",
           message: "Passkey FIDO2 HSM Cryptographic Attestation Succeeded",
         },
@@ -205,7 +205,7 @@ export async function POST(req: Request | any) {
           success: true,
           user: targetUser,
           role: effectiveRole,
-          redirectUrl: effectiveRole === "compliance_officer" ? "/compliance" : "/broker",
+          redirectUrl: effectiveRole === "broker" ? "/broker" : "/admin/commercial-verification",
           clearanceLevel: "LEVEL_4_EXECUTIVE_DIRECTOR",
           sessionExpiresIn: 14400, // 4 hours
           message: "Executive Authentication Succeeded • Clearance Level 4 Granted",
@@ -290,7 +290,7 @@ export async function POST(req: Request | any) {
           success: true,
           user: targetUser,
           role,
-          redirectUrl: role === "compliance_officer" ? "/compliance" : "/broker",
+          redirectUrl: role === "broker" ? "/broker" : "/admin/commercial-verification",
           clearanceLevel: "LEVEL_4_EXECUTIVE_DIRECTOR",
           sessionExpiresIn: 14400,
           message: "Executive Authentication Succeeded • Clearance Level 4 Granted",
