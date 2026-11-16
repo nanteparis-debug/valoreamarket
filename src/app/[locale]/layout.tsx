@@ -157,7 +157,7 @@ export async function generateMetadata({
       },
     },
     verification: {
-      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+      google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "google3c8a19d48f2b292e",
       yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
     },
     other: {

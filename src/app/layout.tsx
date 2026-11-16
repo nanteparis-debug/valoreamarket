@@ -44,6 +44,9 @@ export const metadata: Metadata = {
       "Premier international B2B commodities brokerage platform connecting verified buyers and suppliers.",
     images: ["/icon.png"],
   },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "google3c8a19d48f2b292e",
+  },
 };
 
 export default function RootLayout({
