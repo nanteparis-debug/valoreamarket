@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -27,8 +28,18 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
 
+  let baseUrl = BASE_URL;
+  try {
+    const headerList = await headers();
+    const host = headerList.get("x-forwarded-host") || headerList.get("host");
+    const proto = headerList.get("x-forwarded-proto") || "https";
+    if (host) {
+      baseUrl = `${proto}://${host}`;
+    }
+  } catch {}
+
   return {
-    metadataBase: new URL(BASE_URL),
+    metadataBase: new URL(baseUrl),
     title: {
       default:
         locale === "ar"
@@ -92,7 +103,7 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       locale: locale === "ar" ? "ar_AE" : locale === "fr" ? "fr_CH" : "en_US",
-      url: `${BASE_URL}/${locale}`,
+      url: `${baseUrl}/${locale}`,
       siteName: "VALOREA MARKET",
       title:
         locale === "ar"
@@ -104,10 +115,18 @@ export async function generateMetadata({
           : "Secure international B2B commodities brokerage connecting verified buyers and suppliers with audited compliance and supervised deal rooms.",
       images: [
         {
-          url: `${BASE_URL}/og-preview.png`,
+          url: `${baseUrl}/icon.png`,
+          width: 512,
+          height: 512,
+          alt: "VALOREA MARKET Platform Icon",
+          type: "image/png",
+        },
+        {
+          url: `${baseUrl}/og-preview.png`,
           width: 1200,
           height: 630,
           alt: "VALOREA MARKET Global Verified Commodities Exchange",
+          type: "image/png",
         },
       ],
     },
@@ -122,7 +141,7 @@ export async function generateMetadata({
           ? "منصة وساطة دولية آمنة للسلع المادية بين الشركات عبر 7 قطاعات رئيسية."
           : "Institutional B2B commodity brokerage platform connecting verified trading entities across 7 primary physical sectors.",
       creator: "@valorea_market",
-      images: [`${BASE_URL}/og-preview.png`],
+      images: [`${baseUrl}/icon.png`, `${baseUrl}/og-preview.png`],
     },
     robots: {
       index: true,
@@ -141,6 +160,8 @@ export async function generateMetadata({
       yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
     },
     other: {
+      image_src: `${baseUrl}/icon.png`,
+      thumbnail: `${baseUrl}/icon.png`,
       "geo.region": "CH-GE",
       "geo.placename": "Geneva",
       "geo.position": "46.2044;6.1432",
@@ -174,6 +195,8 @@ export default async function LocaleLayout({
     <html lang={locale} dir={dir} className="dark" suppressHydrationWarning>
       <head>
         <JsonLd locale={locale} />
+        <link rel="image_src" href="/icon.png" />
+        <meta name="thumbnail" content="/icon.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
