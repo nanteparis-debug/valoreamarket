@@ -15,6 +15,7 @@ interface TurnstileRenderOptions {
   sitekey: string;
   action?: string;
   theme?: "light" | "dark" | "auto";
+  language?: string;
   callback?: (token: string) => void;
   "error-callback"?: (error?: any) => void;
   "expired-callback"?: () => void;
@@ -47,6 +48,7 @@ export interface TurnstileWidgetProps {
   onError?: (err?: string) => void;
   onExpire?: () => void;
   theme?: "light" | "dark" | "auto";
+  language?: string;
   className?: string;
 }
 
@@ -58,6 +60,7 @@ export const TurnstileWidget = forwardRef<TurnstileRef, TurnstileWidgetProps>(
       onError,
       onExpire,
       theme = "dark",
+      language,
       className = "",
     },
     ref
@@ -107,6 +110,7 @@ export const TurnstileWidget = forwardRef<TurnstileRef, TurnstileWidgetProps>(
           sitekey: siteKey,
           action,
           theme,
+          language: language || "auto",
           callback: (token: string) => {
             callbacksRef.current.onVerify?.(token);
           },
