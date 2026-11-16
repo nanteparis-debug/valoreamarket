@@ -47,6 +47,7 @@ export function MfaVerificationPanel({
   const [phone, setPhone] = useState(defaultPhone);
   const [isSendingOtp, setIsSendingOtp] = useState(false);
   const [otpSentNotice, setOtpSentNotice] = useState<string | null>(null);
+  const [otpNoticeType, setOtpNoticeType] = useState<"success" | "warning" | "error">("success");
   const [cooldown, setCooldown] = useState(0);
 
   // Authenticator App State
@@ -105,19 +106,41 @@ export function MfaVerificationPanel({
       const res = await fetch("/api/auth/mfa/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, phone, channel: "sms" }),
+        body: JSON.stringify({ email, phone, channel: "sms", locale }),
       });
       const data = await res.json();
       if (data.success) {
         setCooldown(60);
-        const notice = isAr
-          ? `تم إرسال رمز التحقق الأمني بنجاح إلى هاتفك ${data.maskedPhone} (رمز التجربة: ${data.demoCode})`
-          : `Verification code sent via SMS to ${data.maskedPhone} (Demo code: ${data.demoCode})`;
-        setOtpSentNotice(notice);
+        if (data.isRealSms) {
+          setOtpNoticeType("success");
+          setOtpSentNotice(
+            isAr
+              ? `تم إرسال رمز التحقق الأمني الفعلي بنجاح إلى هاتفك المحمول ${data.maskedPhone} عبر رسالة نصية قصيرة (SMS).`
+              : `Security verification code sent successfully via SMS to ${data.maskedPhone}.`
+          );
+        } else if (data.demoCode) {
+          setOtpNoticeType("warning");
+          setOtpSentNotice(
+            isAr
+              ? `(وضع تجريبي - مطلوب ربط مزود SMS) تم توليد رمز التجربة: ${data.demoCode}`
+              : `(Demo Mode - Real SMS requires provider) Code: ${data.demoCode}`
+          );
+        } else {
+          setOtpNoticeType("success");
+          setOtpSentNotice(isAr ? (data.messageAr || "تم إرسال الرمز بنجاح") : (data.messageEn || "Code sent successfully"));
+        }
+      } else {
+        setOtpNoticeType("error");
+        setOtpSentNotice(
+          isAr
+            ? (data.messageAr || "تعذر إرسال رمز التحقق عبر SMS")
+            : (data.messageEn || data.error || "Failed to send SMS OTP")
+        );
       }
     } catch {
+      setOtpNoticeType("error");
       setOtpSentNotice(
-        isAr ? "تعذر إرسال الرمز، يمكنك استخدام الرمز التجريبي 123456" : "SMS send simulated. You may use 123456."
+        isAr ? "تعذر الاتصال بخدمة إرسال الرسائل القصيرة." : "Could not connect to SMS service."
       );
     } finally {
       setIsSendingOtp(false);
@@ -264,9 +287,27 @@ export function MfaVerificationPanel({
 
           {/* SMS Sent Notification */}
           {otpSentNotice && (
-            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-300 text-xs flex items-center gap-2">
-              <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
-              <span>{otpSentNotice}</span>
+            <div
+              className={cn(
+                "p-3 rounded-xl border text-xs flex items-center gap-2",
+                otpNoticeType === "success" &&
+                  "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-300",
+                otpNoticeType === "warning" &&
+                  "bg-amber-500/10 border-amber-500/30 text-amber-700 dark:text-amber-300",
+                otpNoticeType === "error" &&
+                  "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400"
+              )}
+            >
+              {otpNoticeType === "success" && (
+                <Check className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0" />
+              )}
+              {otpNoticeType === "warning" && (
+                <Clock className="w-4 h-4 text-amber-500 dark:text-amber-400 shrink-0" />
+              )}
+              {otpNoticeType === "error" && (
+                <AlertCircle className="w-4 h-4 text-rose-500 dark:text-rose-400 shrink-0" />
+              )}
+              <span className="leading-relaxed">{otpSentNotice}</span>
             </div>
           )}
 
