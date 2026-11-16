@@ -30,6 +30,14 @@ const intlMiddleware = createMiddleware(routing);
 export default function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  // Direct bypass for site verification endpoints and root validation files
+  if (
+    pathname.startsWith("/google") ||
+    pathname.includes("google-site-verification")
+  ) {
+    return NextResponse.next();
+  }
+
   // Check if pathname already has a supported locale
   const pathnameHasLocale = routing.locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
@@ -106,6 +114,6 @@ export const config = {
   matcher: [
     "/",
     "/(ar|fr|en|es|zh-Hans|ja|de|ru)/:path*",
-    "/((?!api|_next|_vercel|.*\\..*).*)",
+    "/((?!api|_next|_vercel|google.*|.*\\..*).*)",
   ],
 };
