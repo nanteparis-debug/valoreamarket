@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { headers } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -197,6 +198,20 @@ export default async function LocaleLayout({
         <JsonLd locale={locale} />
         <link rel="image_src" href="/icon.png" />
         <meta name="thumbnail" content="/icon.png" />
+        {/* Google Tag Manager */}
+        <Script
+          id="gtm-loader"
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtm.js?id=GTM-W9P4V88P"
+        />
+        <Script id="gtm-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+          `}
+        </Script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -212,6 +227,15 @@ export default async function LocaleLayout({
         />
       </head>
       <body className="bg-[#07080c] text-white dark:text-[#f8fafc] antialiased min-h-screen transition-colors duration-300">
+        {/* Google Tag Manager (noscript fallback) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-W9P4V88P"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             {children}
