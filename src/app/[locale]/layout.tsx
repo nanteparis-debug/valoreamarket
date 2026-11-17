@@ -12,9 +12,9 @@ import "../globals.css";
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://valoreamarket.com";
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-NP66LFHP";
 const PILOT_SCRIPT_URL =
-  process.env.NEXT_PUBLIC_PILOT_SCRIPT_URL || "http://127.0.0.1:3000/pilot.js";
+  process.env.NEXT_PUBLIC_PILOT_SCRIPT_URL || "https://valorea-traffic-pilot-wwkr.vercel.app/pilot.js";
 const PILOT_SITE_ID =
-  process.env.NEXT_PUBLIC_PILOT_SITE_ID || "03608c20-ce93-4953-ad21-4714296083c1";
+  process.env.NEXT_PUBLIC_PILOT_SITE_ID || "39af74ae-07a5-4734-bf2c-e4c616477900";
 
 export const viewport: Viewport = {
   width: "device-width",
