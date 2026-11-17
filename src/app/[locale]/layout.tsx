@@ -11,6 +11,10 @@ import "../globals.css";
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || "https://valoreamarket.com";
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-NP66LFHP";
+const PILOT_SCRIPT_URL =
+  process.env.NEXT_PUBLIC_PILOT_SCRIPT_URL || "http://127.0.0.1:3000/pilot.js";
+const PILOT_SITE_ID =
+  process.env.NEXT_PUBLIC_PILOT_SITE_ID || "03608c20-ce93-4953-ad21-4714296083c1";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -204,6 +208,12 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ndataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});`,
           }}
+        />
+        {/* Pilot Analytics Tracking */}
+        <script
+          defer
+          src={PILOT_SCRIPT_URL}
+          data-site-id={PILOT_SITE_ID}
         />
         <JsonLd locale={locale} />
         <link rel="image_src" href="/icon.png" />
